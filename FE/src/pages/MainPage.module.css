@@ -1,0 +1,7 @@
+/* 전체 */
+.FlexColumn {
+  margin: 50px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
