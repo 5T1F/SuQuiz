@@ -987,14 +987,14 @@ function getResult() {
 
 [플로우 차트](https://lab.ssafy.com/s10-webmobile1-sub1/S10P11B302/-/blob/master/docs/SUQUIZ_%ED%94%8C%EB%A1%9C%EC%9A%B0%EC%B0%A8%ED%8A%B8.png?ref_type=heads)
 
-[기능 명세서]()
+[기능 명세서](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EA%B8%B0%EB%8A%A5_%EB%AA%85%EC%84%B8%EC%84%9C.pdf)
 
-[ERD]()
+[ERD](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_ERD.png)
 
 [와이어프레임](https://lab.ssafy.com/s10-webmobile1-sub1/S10P11B302/-/blob/master/docs/SUQUIZ_%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84.png)
 
-[시스템 아키텍쳐]()
+[시스템 아키텍쳐](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EC%8B%9C%ED%80%80%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.png?ref_type=heads)
 
-[시퀀스 다이어그램]()
+[시퀀스 다이어그램](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuIZ_%EC%8B%9C%EC%8A%A4%ED%85%9C_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png)
 
 [화면 설계서]()
