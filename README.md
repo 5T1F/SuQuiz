@@ -25,7 +25,7 @@
 
 | 📌 **조담현** | 📌 **김현준** | 📌 **안윤철** | 📌 **최은희** | 📌 **정혜진** |
 | ------ | ------ | ------ | ------ | ------ |
-|<img src="/uploads/47ea2c79c838ee8fcc9244acd2d976a1/해적담현.png" height="120"/>|<img src="/uploads/8dd637d3d146e3abd751672dcf9c7f2f/다오현준.jfif" height="120"/>|<img src="/uploads/7c1a56575129252aad34ab1fb1a5729d/모스윤철.jpg"  height="120"/>|<img src="/uploads/d968a8f64979b765c4c27dcc5e664975/은희우니.png" height="120"/>|<img src="/uploads/7e0975dda902668908f3a503680849c3/마리드혜진.png" height="120"/>
+|<img src="/uploads/560a424f6f5b2104f64942a2706b2e8c/담현로두마니.png" height="120"/>|<img src="/uploads/9c66b9a77e3391966612f7dc5c593f41/현준다오.png" height="120"/>|<img src="/uploads/440be7d76a7fab44bc0cd0b841264e0b/모스윤철.png"  height="120"/>|<img src="/uploads/11749ef346a4a833a4c96f9252a4a258/은희우니.png" height="120"/>|<img src="/uploads/a8e77996b9e2aa7daafa2814141f6764/마리드혜진.png" height="120"/>
 |**👑팀장**|🖥️**개발 팀장**|👨‍💻**BE 팀장**|👩‍💻**FE 팀장**|📝**형상 관리자**|
 |백엔드|백엔드|백엔드|프론트엔드|프론트엔드|
 | 커뮤니케이션, 발표 |  개발 총괄, git 관리 | 간식 수급, DB | UI/UX 디자인 | 형상 관리(노션, JIRA) |
@@ -163,7 +163,7 @@
 
 # ERD 설계
 
-![SuQuiz_ERD.png]
+![SuQuiz_ERD](/uploads/9afa7aa3a41b77ad9d59fb34c4977873/SuQuiz_ERD.png)
 
 # 와이어 프레임
 
@@ -171,7 +171,11 @@
 
 # 시스템 아키텍처
 
+![SuQuiZ_시스템_아키텍처](/uploads/0453f44b67979902641be711cc83787d/SuQuIZ_시스템_아키텍처.png)
+
 # 시퀀스 다이어그램
+
+![SuQuiz_시퀀스_다이어그램](/uploads/ee472ae7518e7eb19d31d4479fade408/SuQuiz_시퀀스_다이어그램.png)
 
 # 화면 설계서
 
