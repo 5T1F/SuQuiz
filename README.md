@@ -155,7 +155,7 @@
 
 # 플로우 차트
 
-![플로우차트]()
+![SuQuiz_플로우_차트](/uploads/240c3110a2519b6badc1e5f18aac4ecd/SuQuiz_플로우_차트.png)
 
 
 # 기능 명세서
@@ -985,7 +985,7 @@ function getResult() {
 
 # 프로젝트 산출물
 
-[플로우 차트](https://lab.ssafy.com/s10-webmobile1-sub1/S10P11B302/-/blob/master/docs/SUQUIZ_%ED%94%8C%EB%A1%9C%EC%9A%B0%EC%B0%A8%ED%8A%B8.png?ref_type=heads)
+[플로우 차트](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%ED%94%8C%EB%A1%9C%EC%9A%B0_%EC%B0%A8%ED%8A%B8.png)
 
 [기능 명세서](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EA%B8%B0%EB%8A%A5_%EB%AA%85%EC%84%B8%EC%84%9C.pdf)
 
