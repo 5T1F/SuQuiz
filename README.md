@@ -155,7 +155,7 @@
 
 # 플로우 차트
 
-![플로우차트](/uploads/a3fa27830e4017dfd2a154811a269ad0/플로우차트.png)
+![플로우차트]()
 
 
 # 기능 명세서
@@ -163,11 +163,17 @@
 
 # ERD 설계
 
-![SUQUIZ_ERD]()
+![SuQuiz_ERD.png]
 
 # 와이어 프레임
 
-![피그마](/uploads/239aae282084bbea202efce42a4e57c2/피그마.PNG)
+![피그마]()
+
+# 시스템 아키텍처
+
+# 시퀀스 다이어그램
+
+# 화면 설계서
 
 # 코드 컨벤션
 
@@ -970,9 +976,7 @@ function getResult() {
 
 [네이버 JavaScript 코딩 컨벤션](https://github.com/naver/eslint-config-naver/blob/master/STYLE_GUIDE.md)
 
-# 시스템 아키텍처
 
-# 시퀀스 다이어그램
 
 
 # 프로젝트 산출물
