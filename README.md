@@ -118,10 +118,8 @@
 
 ## 페르소나
 
-
-<img src="/uploads/4ef8caff27a77e8360ef5192400156ea/페르소나1.png" width="800"/>
-
-<img src="/uploads/aca7f9c2ab4bb496e8f81620ef8f38e5/페르소나2.png" width="800"/>
+![persona1](/uploads/9dfbf7187b1b983455aacde3078175df/persona1.png)
+![persona2](/uploads/c495dd49711e56c2de2b03d36fd7f4d4/persona2.png)
 
 - 후천적으로 장애를 얻게 된 장애인
 - 장애가 있는 사람과 소통하고 싶은 비 장애인 (가족, 주변 친구들)
@@ -991,10 +989,10 @@ function getResult() {
 
 [ERD](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_ERD.png)
 
-[와이어프레임](https://lab.ssafy.com/s10-webmobile1-sub1/S10P11B302/-/blob/master/docs/SUQUIZ_%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84.png)
+[와이어프레임]()
 
 [시스템 아키텍쳐](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EC%8B%9C%ED%80%80%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.png?ref_type=heads)
 
 [시퀀스 다이어그램](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuIZ_%EC%8B%9C%EC%8A%A4%ED%85%9C_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png)
 
-[화면 설계서]()
+[화면 정의서](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%ED%99%94%EB%A9%B4_%EC%A0%95%EC%9D%98%EC%84%9C.pdf)
