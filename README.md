@@ -2,14 +2,14 @@
 
 
 # 서비스 소개
-> **💡 후천적 청각 장애인 또는 그들과 소통하고 싶은 사람들을 위한
- 퀴즈 기반 수어 교육 서비스💡**
+> 💡 후천적 청각 장애인 또는 그들과 소통하고 싶은 사람들을 위한
+ **퀴즈 기반 수어 교육 서비스**💡
 
 
-> **Easy Peasy Lemon SuQuizy!** 
+> <b>*Easy Peasy Lemon SuQuizy!*</b>
 > 수퀴즈와 함께라면 수어 학습도 식은 죽 먹기!
 
-> 수어를 뜻하는 手와, 문제를 뜻하는 영단어 Quiz 를 합친 **수퀴즈(SuQuiz)는 게이미피케이션을 접목하여 사용자가 서로 경쟁하고 협동하며 즐겁게 수어를 학습할 수 있는 서비스**입니다.
+> 수어를 뜻하는 手와 문제를 뜻하는 영단어 Quiz 를 합친 <b>수퀴즈(SuQuiz)</b>는 게이미피케이션을 접목하여, 사용자가 **퀴즈 게임을 통해 쉽고 즐겁게 수어를 학습할 수 있는 서비스**입니다.
 
 
 
@@ -26,7 +26,7 @@
 | 📌 **조담현** | 📌 **김현준** | 📌 **안윤철** | 📌 **최은희** | 📌 **정혜진** |
 | ------ | ------ | ------ | ------ | ------ |
 |<img src="/uploads/560a424f6f5b2104f64942a2706b2e8c/담현로두마니.png" height="120"/>|<img src="/uploads/9c66b9a77e3391966612f7dc5c593f41/현준다오.png" height="120"/>|<img src="/uploads/440be7d76a7fab44bc0cd0b841264e0b/모스윤철.png"  height="120"/>|<img src="/uploads/11749ef346a4a833a4c96f9252a4a258/은희우니.png" height="120"/>|<img src="/uploads/a8e77996b9e2aa7daafa2814141f6764/마리드혜진.png" height="120"/>
-|**👑팀장**|🖥️**개발 팀장**|👨‍💻**BE 팀장**|👩‍💻**FE 팀장**|📝**형상 관리자**|
+|**👑팀장**|🖥️**개발 팀장**|👨‍💻**BE 리더**|👩‍💻**FE 리더**|📝**형상 관리자**|
 |백엔드|백엔드|백엔드|프론트엔드|프론트엔드|
 | PM, 영상, 발표 |  개발 총괄, git 관리 | 모션인식, DB | UI/UX 디자인 | 형상 관리, webRTC |
 |[![Github](https://img.shields.io/badge/soberdam-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/soberdam)|[![Github](https://img.shields.io/badge/HyunEnn-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HyunEnn)|[![Github](https://img.shields.io/badge/yuncheol%20AHN-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yuncheol-AHN)|[![Github](https://img.shields.io/badge/gilukji226-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gilukji226) |[![Github](https://img.shields.io/badge/pado7sea-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pado7sea)
@@ -52,15 +52,22 @@
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">  **React.js**
 
 
-<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"> **redux**
+<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"> **Recoil**
 
+React Query
 
+Tailnwind CSS
   
 <img src="https://img.shields.io/badge/spring%20boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">  **Spring boot**
 
 
 <img src="https://img.shields.io/badge/spring%20data%20JPA-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> **Spring data JPA**
 
+Hibernate
+
+Django
+
+Mediapipe
 
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">  **MySQL**
 
@@ -86,6 +93,7 @@
 
 <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jirasoftware&logoColor=white"> **Jira**
 
+Gerrit
 
 # 기획 배경
 
@@ -111,7 +119,7 @@
 
 [기사4. 법만 만들고 공식 수어 교육기관은 '0'](https://news.sbs.co.kr/news/endPage.do?news_id=N1006682335)
 
-<img src="/uploads/1d7827d66f8913dc2129643c6f33e50b/조회수.png" width="500"/>
+<img src="/uploads/2c495201a840203d8417384b4c92f428/캡처.PNG" width="500"/>
 
 [그림1. 차시가 늘어날수록 반비례하는 조회수.
 출처 : 경기도평생학습포털](https://www.gseek.kr/member/rl/courseInfo/onCourseCsInfo.do?p=pMenuId=OTOP&courseSeq=1424&courseCsSeq=1&courseCateCode=E540) </details>
@@ -123,37 +131,61 @@
 
 - 후천적으로 장애를 얻게 된 장애인
 - 장애가 있는 사람과 소통하고 싶은 비 장애인 (가족, 주변 친구들)
+- **수어를 처음부터 시작하는 기초 수어 학습자**
 
 # 📌 핵심 기능
 
-- **웹 화상 RTC**를 통해서 다같이 모여 실시간으로 퀴즈를 맞추는 방식으로 학습합니다.
-- 제시어를 단어나 그림으로 제시하고, 참가자가 이 제시어를 **수어에 해당하는 동작으로 맞췄을 시에 정답**
-- 퀴즈의 정답 유무를 판별하는 기능은 **모션인식**과 **Teachable Machine**을 통해 구현합니다.
+- **웹 화상 RTC**를 통해서 실시간으로 퀴즈를 맞추는 방식으로 학습합니다.
+- 참가자가 제시어에 해당하는 단어를 **수어에 해당하는 동작으로 맞췄을 시에 정답**
+- 퀴즈의 정답 유무를 판별하는 기능은 **모션인식과 학습 모델을 통해 구현**합니다.
 - 수어학습자료는 **국립국어원 open API**를 이용합니다.
 
 
-### 학습하기
+### 1. **[학습하기]**
 
-- 스테이지: 난이도별, 주제별로 구성된 학습 스테이지가 있습니다.
-- 학습 영상: 국립국어원 API를 활용하여 제공되는 학습 영상과 단어 카드를 통해 학습할 수 있습니다.
-- 학습 모드: 채팅 및 알림 기능 비활성화로 집중된 학습 환경을 제공합니다.
+- **기초 자음과 모음, 숫자를 카드형식으로 학습하고, 이를 웹캠에서 따라해볼 수 있음**
 
-### 퀴즈 - 대전 모드
+ + 단어를 학습 + 단어장에 저장하여 단어 학습 가능
 
-- 웹 기반 화상 채팅: 다른 사용자와 화상으로 수어동작과 얼굴을 보면서 실시간으로 경쟁합니다.
-- 그림 그리기 : 한명씩 출제자가 돌아가며, 제시어에 해당되는 단어를 그림으로 그립니다. 
-- 정답 채점 : 나머지 참가자는 단어를 추론하고 해당하는 수어 동작을 따라하여 점수를 획득합니다.
+### 2. **[싱글플레이(워들)]**
 
-### 퀴즈 - 협동 모드
+- **학습하기를 통해 배운 기초 자음과 모음으로, 자음과 모음의 합성을 통해 단어 학습 가능**
 
-- 웹 기반 화상 채팅: 다른 사용자와 화상으로 수어동작과 얼굴을 보면서 실시간으로 협동합니다.
-- 카운트다운 : 화면이 블라인드 되고, 카운트다운이 끝나면 참가자는 제시어에 해당하는 수어 동작을 따라합니다. 
-- 정답 채점 : 모든 참가자가 수어 동작에 해당하는 자세를 동시에 취하면 점수를 획득합니다.
+<details><summary>워들 게임 상세설명</summary>
+    
+<img src="/uploads/c537af14cce19036c9976a314b84c8f8/꼬들.PNG" width = 500>
+
+- 랜덤으로 제시된 단어를 수어로 하나씩 자리를 맞추는 게임
+- 정확한 자리에 해당하는 자모음이면 초록색, 존재하는 자모음이나 자리가 다르면 노란색, 없는 자모음이면 회색으로 표시되며
+- 최소한의 횟수에 단어를 맞추는 것이 게임의 목표
+- 단어를 맞추면 그 단어에 해당하는 수어 영상을 보여줌
+- 매일 정답 단어가 달라짐 → 게임 결과를 SNS 공유 가능 </details>
+    
+
+### 3. **[멀티플레이(행맨)]**
+
+**싱글 플레이(워들)에서 배운 단어로, 다른 사용자와 경쟁하며 학습한 단어를 응용 및 복습 가능**
+
+- 행맨은 수어 영상에 해당하는 제시어를 정해진 카운트 안에 맞추는 게임으로, 단어를 많이 알수록 유리한 게임
+- 행맨의 이미지 및 게임 이름 수정 예정
+- *행맨 게임 상세설명*
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/75e3cd0a-7b05-464c-985a-da8058ac78c0/41b870e4-c7b0-4adf-bd12-0fc790a0aa7e/Untitled.png)
+    
+    - 제시어의 수어 영상을 보여줌
+    - 제시어의 글자 수 만큼 빈칸이 있음
+        1. 한 사람씩 돌아가면서 자음/모음을 수어로 동작함
+        2. 제시어에 그 자음/모음이 있으면 빈칸이 채워지고, 맞추면 한 번 더 자음/모음을 수어로 할 기회가 주어짐
+        3. 자기 차례에 제시어를 모두 완성시키면 승리
+
+ 
+
+<aside>
+💡 **기초 자음모음 → 단어 → 응용 및 복습으로 유저 교육 시나리오가 구성**되어 있음
+
+</aside>
 
 
-# 플로우 차트
-
-![SuQuiz_플로우_차트](/uploads/240c3110a2519b6badc1e5f18aac4ecd/SuQuiz_플로우_차트.png)
 
 
 # 기능 명세서
