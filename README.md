@@ -189,23 +189,19 @@ Gerrit
 # 기능 명세서
 
 
-
 # ERD 설계
-
+<img src="/uploads/940cc26c224080a5c94fe3f0672e0ba6/SuQuiz_ERD.png">
 
 # 와이어 프레임
-
+<img src="">
 
 
 # 시스템 아키텍처
-
+<img src="/uploads/6e2e1b9ed595d772d75d30b2a5951c09/SUQUIZ_시스템_아키텍처.png">
 
 
 # 시퀀스 다이어그램
-
-
-
-# 화면 정의서
+<img src="/uploads/09aa2acb6611016fb42aea11614b9d44/SUQUIZ_시퀀스다이어그램.png">
 
 
 
@@ -1015,14 +1011,16 @@ function getResult() {
 
 # 프로젝트 산출물
 
-[기능 명세서]
+[기능 명세서](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EA%B8%B0%EB%8A%A5_%EB%AA%85%EC%84%B8%EC%84%9C.pdf)
 
 [ERD]
+[ERD](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_ERD.png)
 
 [와이어프레임]
 
-[시스템 아키텍쳐]
 
-[시퀀스 다이어그램]
+[시스템 아키텍처](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EC%8B%9C%EC%8A%A4%ED%85%9C_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png)
+
+[시퀀스 다이어그램](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EC%8B%9C%ED%80%80%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.png)
 
 [화면 정의서]
