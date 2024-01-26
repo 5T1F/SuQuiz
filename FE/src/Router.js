@@ -3,7 +3,7 @@ import App from "./components/App";
 import MainPage from "./pages/MainPage";
 import ScrollToTop from "./components/ScrollToTop";
 
-function Main() {
+function Router() {
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -16,4 +16,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default Router;
