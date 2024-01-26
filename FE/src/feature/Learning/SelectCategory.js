@@ -5,13 +5,13 @@ function SelectCategory() {
   const [selectedSubArea, setSelectedSubArea] = useState("");
   const [start, setStart] = useState(false);
 
-  const mainCategories = ["consonants", "vowels", "numbers", "words", "vocabulary"];
-  const subCategories = ["subArea1", "subArea2", "subArea3"];
+  const mainCategories = ["자음", "모음", "숫자", "낱말", "단어장"];
+  const subCategories = ["동물", "사물", "일상"];
 
   const handleMainCategorySelect = (category) => {
     setSelectedArea(category);
-    setStart(category !== "words");
-    if (category !== "words") setSelectedSubArea("");
+    setStart(category !== "낱말");
+    if (category !== "낱말") setSelectedSubArea("");
   };
 
   const handleSubCategorySelect = (subCategory) => {
@@ -29,7 +29,7 @@ function SelectCategory() {
       ))}
 
       {/* '낱말' 선택 시 추가적인 선택지 */}
-      {selectedArea === "words" &&
+      {selectedArea === "낱말" &&
         subCategories.map((subCategory) => (
           <button key={subCategory} onClick={() => handleSubCategorySelect(subCategory)}>
             {subCategory}
@@ -40,7 +40,7 @@ function SelectCategory() {
       {start && (
         <div>
           선택한 카테고리: {selectedArea}
-          {selectedArea === "words" && <div>선택한 서브 카테고리: {selectedSubArea}</div>}
+          {selectedArea === "낱말" && <div>선택한 서브 카테고리: {selectedSubArea}</div>}
           <div>시작하기</div>
         </div>
       )}
