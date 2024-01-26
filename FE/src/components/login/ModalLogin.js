@@ -8,6 +8,7 @@ export default function ModalContent({ setModalOpen }) {
   const closeModal = () => {
     setModalOpen(false);
   };
+  //테스트 게릿
 
   // 모달 외부 클릭시 끄기 처리
   // Modal 창을 useRef로 취득
