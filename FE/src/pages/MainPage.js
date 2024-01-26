@@ -1,6 +1,6 @@
 import Container from "../components/Container";
 
-export default function MyMainPage() {
+export default function MainPage() {
   return (
     <>
       <Container>
