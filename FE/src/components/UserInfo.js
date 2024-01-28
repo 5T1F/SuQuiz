@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 export default function NavbarSide() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // 로그아웃
   // const onLogoutHandler = (e) => {
