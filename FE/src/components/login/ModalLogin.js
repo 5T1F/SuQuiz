@@ -1,14 +1,13 @@
 import { useEffect, useRef } from "react";
 import styles from "./Modal.module.css";
-import Naver from "../../feature/login/Naver";
-import Kakao from "../../feature/login/Kakao";
+import Naver from "../../feature/login/NaverLogin";
+import Kakao from "../../feature/login/KakaoLogin";
 
 export default function ModalContent({ setModalOpen }) {
   // 모달 끄기 (X버튼 onClick 이벤트 핸들러)
   const closeModal = () => {
     setModalOpen(false);
   };
-  //테스트 게릿
 
   // 모달 외부 클릭시 끄기 처리
   // Modal 창을 useRef로 취득

@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import UserInfo from "./UserInfo";
 
 export default function Nav() {
   return (
@@ -7,11 +8,9 @@ export default function Nav() {
         <NavLink to="/">SuQuiz</NavLink>
       </div>
       <div>
-        <NavLink to="/bookmark">단어장</NavLink>
+        <NavLink to="/learning/bookmark">단어장</NavLink>
       </div>
-      <div>
-        <NavLink to="/mypage">마이페이지</NavLink>
-      </div>
+      <UserInfo />
     </nav>
   );
 }
