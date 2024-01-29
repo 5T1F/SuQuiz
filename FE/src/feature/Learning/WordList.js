@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./WordList.module.css";
-import Flashcard from "./Flashcard";
 
 export default function WordList({ wordsProp, setCurrentWord }) {
   // console.log("WordList에서 받은 wordsProp:", wordsProp); // 초기 props 값 확인
@@ -36,7 +35,7 @@ export default function WordList({ wordsProp, setCurrentWord }) {
     <>
       <div>
         {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
-        {words.map((word, index) => (
+        {wordsProp.map((word, index) => (
           <div
             key={index}
             onClick={() => handleWordClick(word)}

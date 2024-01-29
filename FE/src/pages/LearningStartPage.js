@@ -5,48 +5,79 @@ import SideMenu from "../feature/Learning/SideMenu";
 import { useLocation } from "react-router-dom";
 import styles from "./LearningStartPage.module.css";
 
-const wordLists = {
-  자음: [
-    { word: "ㄱ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㄴ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㄷ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㄹ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㅁ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㅂ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㅅ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    // ... 추가적인 자음
-  ],
-  모음: [
-    { word: "ㅏ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㅑ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㅓ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㅕ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㅗ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㅛ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㅜ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "ㅠ", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    // ... 추가적인 모음
-  ],
-  숫자: [
-    { word: "1", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "2", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "3", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    // ... 추가적인 숫자
-  ],
-  낱말: [
-    { word: "사과", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "바나나", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "포도", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    // ... 추가적인 낱말
-  ],
-  단어장: [
-    { word: "학교", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "도서관", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    { word: "병원", status: "before", videoUrl: "https://www.youtube.com/embed/3eQaabQQm-g?si=OQAtsp5lUZPZvtK_" },
-    // ... 추가적인 단어장 내용
-  ],
-  // ... 추가적인 카테고리 및 단어 목록
-};
+const wordList = [
+  {
+    word: "ㄱ",
+    videoUrl: "https://example.com/video-ㄱ.mp4",
+    category: "자음",
+    isBookmarked: false,
+    status: "before",
+  },
+  {
+    word: "ㄴ",
+    videoUrl: "https://example.com/video-ㄱ.mp4",
+    category: "자음",
+    isBookmarked: false,
+    status: "before",
+  },
+  {
+    word: "ㄷ",
+    videoUrl: "https://example.com/video-ㄱ.mp4",
+    category: "자음",
+    isBookmarked: false,
+    status: "before",
+  },
+  {
+    word: "ㅏ",
+    videoUrl: "https://example.com/video-ㅏ.mp4",
+    category: "모음",
+    isBookmarked: false,
+    status: "before",
+  },
+  {
+    word: "ㅑ",
+    videoUrl: "https://example.com/video-ㅏ.mp4",
+    category: "모음",
+    isBookmarked: false,
+    status: "before",
+  },
+  {
+    word: "ㅓ",
+    videoUrl: "https://example.com/video-ㅏ.mp4",
+    category: "모음",
+    isBookmarked: false,
+    status: "before",
+  },
+  {
+    word: "1",
+    videoUrl: "https://example.com/video-1.mp4",
+    category: "숫자",
+    isBookmarked: true,
+    status: "before",
+  },
+  {
+    word: "2",
+    videoUrl: "https://example.com/video-1.mp4",
+    category: "숫자",
+    isBookmarked: true,
+    status: "before",
+  },
+  {
+    word: "3",
+    videoUrl: "https://example.com/video-1.mp4",
+    category: "숫자",
+    isBookmarked: true,
+    status: "before",
+  },
+  {
+    word: "사과",
+    videoUrl: "https://example.com/video-사과.mp4",
+    category: "낱말",
+    isBookmarked: true,
+    status: "before",
+  },
+  // 여기에 추가적인 단어들을 포함시킬 수 있습니다.
+];
 
 export default function LearningStartPage() {
   const location = useLocation();
@@ -61,7 +92,7 @@ export default function LearningStartPage() {
           <SideMenu
             selectedMain={selectedMain}
             selectedSub={selectedSub}
-            wordLists={wordLists}
+            wordList={wordList}
             setCurrentWord={setCurrentWord}
           />
         </div>

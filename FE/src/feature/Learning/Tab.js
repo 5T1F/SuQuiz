@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import WordList from "./WordList";
-// import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
+import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
 
-function Tab({ selectedMain, selectedSub, wordLists, setCurrentWord }) {
-  const [activeTab, setActiveTab] = useState(selectedMain || "자음"); // '자음'을 기본값으로 설정
+function CustomTab({ selectedMain, selectedSub, wordList, setCurrentWord }) {
+  const [activeTab, setActiveTab] = useState(selectedMain || "자음");
+
+  // 카테고리 가져오는 api 대신
+  const mainCategories = ["자음", "모음", "숫자", "낱말", "단어장"];
+  // const subCategories = ["동물", "사물", "일상"];
 
   useEffect(() => {
     if (selectedMain) {
@@ -11,40 +15,39 @@ function Tab({ selectedMain, selectedSub, wordLists, setCurrentWord }) {
     }
   }, [selectedMain]);
 
-  const TabButton = ({ id, label }) => (
-    <button
-      onClick={() => setActiveTab(id)}
-      style={{
-        fontWeight: activeTab === id ? "bold" : "normal",
-        borderBottom: activeTab === id ? "2px solid black" : "none",
-      }}
-    >
-      {label}
-    </button>
-  );
-
-  // console.log("활성화된 탭:", activeTab);
-  // console.log("활성화된 탭에 해당되는 단어리스트", wordLists[activeTab]);
-
   return (
-    <>
-      <div>탭</div>
-      <div>
-        <TabButton id="자음" label="자음" />
-        <TabButton id="모음" label="모음" />
-        <TabButton id="숫자" label="숫자" />
-        <TabButton id="낱말" label="낱말" />
-        <TabButton id="단어장" label="단어장" />
-      </div>
-      <div>
-        {wordLists[activeTab] ? (
-          <WordList wordsProp={wordLists[activeTab]} setCurrentWord={setCurrentWord} />
-        ) : (
-          <div>해당 탭에 단어 목록이 없습니다.</div>
+    <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
+      <TabsHeader>
+        {mainCategories.map(
+          (
+            category,
+            index // index 변수 추가
+          ) => (
+            <Tab key={index} value={category}>
+              <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+                {category}
+              </div>
+            </Tab>
+          )
         )}
-      </div>
-    </>
+      </TabsHeader>
+      <TabsBody>
+        {wordList.map(
+          (
+            word,
+            index // index 변수 추가, word 변수 사용
+          ) => (
+            <TabPanel key={index} value={word.category}>
+              <WordList
+                wordsProp={wordList.filter((w) => w.category === word.category)}
+                setCurrentWord={setCurrentWord}
+              />
+            </TabPanel>
+          )
+        )}
+      </TabsBody>
+    </Tabs>
   );
 }
 
-export default Tab;
+export default CustomTab;
