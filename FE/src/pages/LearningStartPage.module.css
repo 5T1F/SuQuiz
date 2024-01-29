@@ -1,0 +1,13 @@
+.layout {
+  display: flex;
+}
+
+.sideMenu {
+  border: 5px solid red;
+  width: 100%;
+}
+
+.learningScreen {
+  border: 5px solid violet;
+  width: 100%;
+}

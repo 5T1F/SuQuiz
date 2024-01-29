@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styles from "./WordList.module.css";
+import Flashcard from "./Flashcard";
 
-export default function WordList({ wordsProp }) {
+export default function WordList({ wordsProp, setCurrentWord }) {
   // console.log("WordList에서 받은 wordsProp:", wordsProp); // 초기 props 값 확인
   const [words, setWords] = useState(wordsProp || []);
-  const [currentWord, setCurrentWord] = useState(null);
+  // const [currentWord, setCurrentWord] = useState(null);
 
   useEffect(() => {
     // 외부에서 전달받은 단어 목록으로 초기화
@@ -32,17 +33,19 @@ export default function WordList({ wordsProp }) {
   }
 
   return (
-    <div>
-      {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
-      {words.map((word, index) => (
-        <div
-          key={index}
-          onClick={() => handleWordClick(word)}
-          className={`${styles["word-box"]} ${styles[word.status]}`}
-        >
-          {word.word} - {word.status}
-        </div>
-      ))}
-    </div>
+    <>
+      <div>
+        {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
+        {words.map((word, index) => (
+          <div
+            key={index}
+            onClick={() => handleWordClick(word)}
+            className={`${styles["word-box"]} ${styles[word.status]}`}
+          >
+            {word.word} - {word.status}
+          </div>
+        ))}
+      </div>
+    </>
   );
 }

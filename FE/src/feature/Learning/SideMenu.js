@@ -1,9 +1,16 @@
 import Tab from "./Tab";
+// import Search from "./Search";
 
-export default function SideMenu({ selectedMain, selectedSub }) {
+export default function SideMenu({ selectedMain, selectedSub, wordLists, setCurrentWord }) {
   return (
     <>
-      <Tab selectedMain={selectedMain} selectedSub={selectedSub} />
+      {/* <Search wordList={wordLists[selectedMain]} /> */}
+      <Tab
+        selectedMain={selectedMain}
+        selectedSub={selectedSub}
+        wordLists={wordLists}
+        setCurrentWord={setCurrentWord}
+      />
     </>
   );
 }
