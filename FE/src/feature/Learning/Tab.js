@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import WordList from "./WordList";
+// import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
 
 function Tab({ selectedMain, selectedSub, wordLists, setCurrentWord }) {
   const [activeTab, setActiveTab] = useState(selectedMain || "자음"); // '자음'을 기본값으로 설정
