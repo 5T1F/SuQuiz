@@ -1,14 +1,14 @@
-import Tab from "./Tab";
+import CustomTab from "./CustomTab";
 // import Search from "./Search";
 
-export default function SideMenu({ selectedMain, selectedSub, wordLists, setCurrentWord }) {
+export default function SideMenu({ selectedMain, selectedSub, wordList, setCurrentWord }) {
   return (
     <>
       {/* <Search wordList={wordLists[selectedMain]} /> */}
-      <Tab
+      <CustomTab
         selectedMain={selectedMain}
         selectedSub={selectedSub}
-        wordLists={wordLists}
+        wordList={wordList}
         setCurrentWord={setCurrentWord}
       />
     </>
