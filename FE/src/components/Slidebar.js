@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import ModalMakeFriend from "./makeFriend/ModalMakeFriend";
+import ModalMakeFriend from "../feature/makeFriend/ModalMakeFriend";
 
 import styles from "./Slidebar.module.css"; // 스타일 파일을 import
 
