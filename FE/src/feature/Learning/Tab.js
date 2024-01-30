@@ -17,10 +17,22 @@ function CustomTab({ selectedMain, selectedSub, wordList, setCurrentWord }) {
 
   return (
     <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
-      <TabsHeader>
+      <TabsHeader
+        className="rounded-none border-b border-blue-gray-50 bg-transparent p-0"
+        indicatorProps={{
+          className: "bg-transparent border-b-2 border-gray-900 shadow-none rounded-none",
+        }}
+      >
         {mainCategories.map((category) => (
-          <Tab key={category} value={category}>
-            <div>{category}</div>
+          <Tab
+            key={category}
+            value={category}
+            onClick={() => setActiveTab(category)}
+            className={`transition duration-300 ease-in-out ${
+              activeTab === category ? "text-blue-500 border-b-2 border-blue-500" : "cursor-pointer hover:text-blue-500"
+            }`}
+          >
+            {category}
           </Tab>
         ))}
       </TabsHeader>

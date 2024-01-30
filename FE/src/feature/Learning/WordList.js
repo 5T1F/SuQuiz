@@ -1,32 +1,26 @@
 import React, { useState, useEffect } from "react";
-import styles from "./WordList.module.css";
 
 export default function WordList({ wordsProp, setCurrentWord }) {
-  // console.log("WordList에서 받은 wordsProp:", wordsProp); // 초기 props 값 확인
   const [words, setWords] = useState(wordsProp || []);
-  // const [currentWord, setCurrentWord] = useState(null);
 
   useEffect(() => {
-    // 외부에서 전달받은 단어 목록으로 초기화
-    setWords(wordsProp || []);
+    setWords(words || []);
   }, [wordsProp]);
 
   const handleWordClick = (clickedWord) => {
-    setWords(
-      words.map((word) => {
-        if (word.word === clickedWord.word) {
-          return { ...word, status: "now" };
-        } else if (word.status === "now") {
-          return { ...word, status: "after" };
-        }
-        return word;
-      })
-    );
+    const updatedWords = words.map((word) => {
+      if (word.word === clickedWord.word) {
+        return { ...word, status: "now" };
+      } else if (word.status === "now") {
+        return { ...word, status: "after" };
+      }
+      return word;
+    });
 
+    setWords(updatedWords);
     setCurrentWord(clickedWord);
   };
 
-  // words가 비어있거나 undefined인 경우 대비
   if (!words || words.length === 0) {
     return <div>단어 목록이 비어 있습니다.</div>;
   }
@@ -35,11 +29,13 @@ export default function WordList({ wordsProp, setCurrentWord }) {
     <>
       <div>
         {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
-        {wordsProp.map((word, index) => (
+        {words.map((word) => (
           <div
-            key={index}
+            key={word.word}
             onClick={() => handleWordClick(word)}
-            className={`${styles["word-box"]} ${styles[word.status]}`}
+            className={`p-2 m-1 border border-black cursor-pointer ${
+              word.status === "before" ? "bg-white" : word.status === "now" ? "bg-yellow-300" : "bg-gray-400"
+            }`}
           >
             {word.word} - {word.status}
           </div>
