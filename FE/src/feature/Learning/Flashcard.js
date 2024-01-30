@@ -12,7 +12,9 @@ const Flashcard = ({ currentWord }) => {
     <>
       <div onClick={toggleCard}>
         {showVideo ? (
-          <div>{currentWord.word}에 해당하는 수어영상</div>
+          <div width="320" height="240">
+            {currentWord.word}에 해당하는 수어영상
+          </div>
         ) : (
           <video width="320" height="240" controls>
             <source src={currentWord.videoUrl} type="video/mp4" />

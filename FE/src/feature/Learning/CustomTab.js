@@ -15,35 +15,39 @@ function CustomTab({ selectedMain, wordList, setCurrentWord }) {
   }, [selectedMain]);
 
   return (
-    <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
-      <TabsHeader
-        className="flex rounded-none border-b border-blue-gray-50 bg-transparent p-0"
-        indicatorProps={{
-          className: "bg-transparent border-b-2 border-blue-900 shadow-none rounded-none",
-        }}
-      >
-        {mainCategories.map((category) => (
-          <Tab
-            key={category}
-            value={category}
-            onClick={() => setActiveTab(category)}
-            className={`flex-1 ${activeTab === category ? " border-blue-500" : "cursor-pointer hover:text-blue-500"}`}
-          >
-            {category}
-          </Tab>
-        ))}
-      </TabsHeader>
-      <TabsBody>
-        {mainCategories.map(
-          (category) =>
-            activeTab === category && (
-              <TabPanel key={category} value={category}>
-                <WordList wordsProp={wordList.filter((w) => w.category === category)} setCurrentWord={setCurrentWord} />
-              </TabPanel>
-            )
-        )}
-      </TabsBody>
-    </Tabs>
+    <>
+      <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
+        <TabsHeader className="p-1 text-sm text-gray-600 bg-gray-500/5 rounded-xl">
+          {mainCategories.map((category) => (
+            <Tab
+              key={category}
+              value={category}
+              onClick={() => setActiveTab(category)}
+              className={`flex items-center h-6 font-medium rounded-lg outline-none ${
+                activeTab === category
+                  ? "border-blue-500 text-yellow-500 shadow bg-white"
+                  : "text-gray-500 cursor-pointer  hover:text-yellow-500 hover:ring-2 hover:ring-yellow-500 hover:ring-inset"
+              }`}
+            >
+              {category}
+            </Tab>
+          ))}
+        </TabsHeader>
+        <TabsBody className="py-1">
+          {mainCategories.map(
+            (category) =>
+              activeTab === category && (
+                <TabPanel key={category} value={category}>
+                  <WordList
+                    wordsProp={wordList.filter((w) => w.category === category)}
+                    setCurrentWord={setCurrentWord}
+                  />
+                </TabPanel>
+              )
+          )}
+        </TabsBody>
+      </Tabs>
+    </>
   );
 }
 

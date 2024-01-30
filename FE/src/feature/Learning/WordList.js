@@ -27,14 +27,19 @@ export default function WordList({ wordsProp, setCurrentWord }) {
 
   return (
     <>
-      <div>
+      {/* 단어사이 간격  space-y-1  */}
+      <div className="space-y-1">
         {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
         {words.map((word) => (
           <div
             key={word.word}
             onClick={() => handleWordClick(word)}
-            className={`p-2 m-1 border border-black cursor-pointer ${
-              word.status === "before" ? "bg-white" : word.status === "now" ? "bg-yellow-300" : "bg-gray-400"
+            className={`flex items-center justify-center h-8 rounded-lg outline-none ${
+              word.status === "before"
+                ? "bg-white shadow"
+                : word.status === "now"
+                ? "bg-yellow-200 shadow"
+                : "bg-gray-200 shadow-inner"
             }`}
           >
             {word.word} - {word.status}
