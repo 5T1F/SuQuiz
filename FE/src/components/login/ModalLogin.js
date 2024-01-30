@@ -1,44 +1,41 @@
-import { useEffect, useRef } from "react";
-import styles from "./Modal.module.css";
+import React, { useRef, useEffect } from "react";
+import styles from "./ModalLogin.module.css";
 import Naver from "../../feature/login/NaverLogin";
 import Kakao from "../../feature/login/KakaoLogin";
 
-export default function ModalContent({ setModalOpen }) {
-  // 모달 끄기 (X버튼 onClick 이벤트 핸들러)
-  const closeModal = () => {
-    setModalOpen(false);
+const Modal = ({ onClose }) => {
+  const modalRef = useRef();
+
+  const handleClickInside = (event) => {
+    // 모달 내부를 클릭한 경우 이벤트 전파를 중지시킴
+    event.stopPropagation();
   };
 
-  // 모달 외부 클릭시 끄기 처리
-  // Modal 창을 useRef로 취득
-  const modalRef = useRef < HTMLDivElement > null;
-
   useEffect(() => {
-    // 이벤트 핸들러 함수
-    const handler = (event) => {
-      // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
+    const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setModalOpen(false);
+        onClose();
       }
     };
 
-    // 이벤트 핸들러 등록
-    document.addEventListener("mousedown", handler);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      // 이벤트 핸들러 해제
-      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, [onClose]);
 
   return (
-    <div className={styles.container}>
-      <div>I'm a modal dialog</div>
-      <Naver />
-      <Kakao />
-      <button className={styles.close} onClick={closeModal}>
-        X
-      </button>
+    <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
+      <div className={styles.modalContent}>
+        <span className={styles.close} onClick={onClose}>
+          &times;
+        </span>
+        <Naver />
+        <Kakao />
+      </div>
     </div>
   );
-}
+};
+
+export default Modal;
