@@ -3,6 +3,7 @@ import Container from "../components/Container";
 import Flashcard from "../feature/Learning/Flashcard";
 import SideMenu from "../feature/Learning/SideMenu";
 import { useLocation } from "react-router-dom";
+import UserView from "../feature/Learning/UserView";
 
 const wordList = [
   {
@@ -97,16 +98,19 @@ export default function LearningStartPage() {
           />
         </div>
         {/* 학습 화면 */}
-        <div className="border-4 border-violet-500 w-full">
+        <div className="px-40 border-4 border-violet-500 w-full">
           {/* 플래시 카드 */}
           <div className="border-4 border-yellow-500 w-full">
             플래시카드
             {currentWord && <Flashcard currentWord={currentWord} />}
           </div>
           {/* 유저 실시간 화면 */}
-          <div className="border-4 border-orange-500 w-full">유저 실시간 화면</div>
-          <div>
-            <button class="flex whitespace-nowrap items-center h-8 px-5 font-medium rounded-lg outline-none ring-2 ring-yellow-600 ring-inset text-gray-800 hover:text-yellow-600">
+          <div className="border-4 border-orange-500 w-full">
+            유저 실시간 화면
+            <UserView />
+          </div>
+          <div className="flex justify-between">
+            <button class="ml-auto h-8 px-5 font-medium rounded-lg outline-none ring-2 ring-yellow-600 ring-inset text-gray-800 hover:text-yellow-600">
               학습 종료
             </button>
           </div>
