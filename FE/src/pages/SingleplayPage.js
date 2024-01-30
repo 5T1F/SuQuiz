@@ -1,9 +1,12 @@
-import Wordle from "../feature/singleplay/Wordle";
+import Container from "../components/Container";
+import Wordle from "../feature/Singleplay/Wordle";
 
 export default function SingleplayPage() {
   return (
     <>
-      <Wordle></Wordle>
+      <Container>
+        <Wordle></Wordle>
+      </Container>
     </>
   );
 }
