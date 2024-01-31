@@ -5,7 +5,18 @@
   top: 0;
   right: 0;
   height: 100%;
-  width: 250px;
+  width: 30%;
   background: #eee;
   z-index: 950; /* overlay의 z-index 설정 (Nav보다 낮은 값으로 설정) */
+}
+
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
 }

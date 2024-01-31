@@ -9,12 +9,16 @@ const UserInfo = ({ children }) => {
     setIsSlidebarOpen(!isSlidebarOpen);
   };
 
+  const closeSlidebar = () => {
+    setIsSlidebarOpen(false);
+  };
+
   return (
     <>
       <div className={styles.userInfoContainer}>
         <button onClick={toggleSlidebar}>마이페이지</button>
         {isSlidebarOpen && <div className={styles.overlay} onClick={toggleSlidebar} />}
-        {isSlidebarOpen && <Slidebar />} {/* 사이드바가 열려 있을 때만 렌더링 */}
+        {isSlidebarOpen && <Slidebar onClose={closeSlidebar} />} {/* 사이드바가 열려 있을 때만 렌더링 */}
         <div>{children}</div>
       </div>
     </>

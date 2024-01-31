@@ -1,8 +1,9 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
-import Nav from "../components/Nav";
+// import Nav from "../components/Nav";
 import Container from "../components/Container";
-import ModalLogin from "../components/ModalLogin"; // 모달 컴포넌트를 import
+import ModalLogin from "../components/login/ModalLogin"; // 모달 컴포넌트를 import
 
 import styles from "./MainPage.module.css";
 
@@ -22,11 +23,28 @@ export default function MainPage() {
 
   return (
     <>
-      <Container>
+      {/* <Nav /> */}
+      {/* <Container>
         <button onClick={handleLoginClick}>로그인</button>
         <h1>***********메인페이지***********</h1>
         <div className={styles.quizStartBtn}>퀴즈 시작</div>
         <div className={styles.learningStartBtn}>학습 시작</div>
+      </Container> */}
+      <Container>
+        <h1>***********메인페이지***********</h1>
+        <div>
+          <button onClick={handleLoginClick}>로그인</button>
+        </div>
+        <div className={styles.quizStartBtn}>
+          <Link to="/quizLobby">
+            <button>퀴즈 시작</button>
+          </Link>
+        </div>
+        <div className={styles.learningStartBtn}>
+          <Link to="/learning">
+            <button>학습 시작</button>
+          </Link>
+        </div>
       </Container>
 
       {/* modalOpen이 true일 때만 모달 렌더링 */}

@@ -1,7 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import styles from "./ModalLogin.module.css";
-import Naver from "../feature/login/NaverLogin";
-import Kakao from "../feature/login/KakaoLogin";
+import styles from "./ModalMakeFriend.module.css";
 
 const Modal = ({ onClose }) => {
   const modalRef = useRef();
@@ -28,11 +26,16 @@ const Modal = ({ onClose }) => {
   return (
     <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
       <div className={styles.modalContent}>
-        <span className={styles.close} onClick={onClose}>
-          &times;
-        </span>
-        <Naver />
-        <Kakao />
+        <div>친구 추가</div>
+        <div>
+          <input type="text" placeholder="유저 닉네임"></input>
+        </div>
+        <div>
+          <button className={styles.close} onClick={onClose}>
+            취소
+          </button>
+          <button>요청</button>
+        </div>
       </div>
     </div>
   );
