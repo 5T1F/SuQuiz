@@ -6,7 +6,6 @@ const FriendList = ({ data }) => {
     <>
       {/* 단어사이 간격  space-y-1  */}
       <div className="space-y-1 h-2/3 p-1 border-4 border-orange-500">
-        <h2>Friends List</h2>
         {data == null ? (
           <ul>
             {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}

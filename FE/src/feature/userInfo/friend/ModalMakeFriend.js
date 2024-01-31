@@ -5,6 +5,8 @@ import ModalNoMatchingUser from "./ModalNoMatchingUser";
 import styles from "./ModalMakeFriend.module.css";
 
 const Modal = ({ onClose }) => {
+  // 로그인 완성 되면 채우기 *************************
+  const userId = null; // 친구 요청 목록을 위해
   const modalRef = useRef();
   const [searchValue, setSearchValue] = useState("");
   // 모달창 노출 여부 state
@@ -24,6 +26,34 @@ const Modal = ({ onClose }) => {
     event.stopPropagation();
   };
 
+  const handleSendFriendRequest = async () => {
+    try {
+      const requestBody = {
+        fromNickname: userId,
+        toNickname: searchValue,
+      };
+
+      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/request`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+        // 성공적으로 요청이 완료된 경우
+        console.log("Friend request sent successfully!");
+      } else {
+        // 요청이 실패한 경우
+        console.error("Failed to send friend request.");
+      }
+    } catch (error) {
+      // 오류 발생 시
+      console.error("Error sending friend request:", error);
+    }
+  };
+
   const handleSearch = () => {
     // 여기에서 API 요청을 보내도록 작성
     const requestBody = { search: searchValue };
@@ -37,7 +67,7 @@ const Modal = ({ onClose }) => {
       .then((data) => {
         // 요청에 대한 응답을 처리
         console.log(data);
-        // 친구 요청 보내는 함수 쓰기**********************************
+        handleSendFriendRequest();
         onClose();
       })
       .catch((error) => {
