@@ -30,12 +30,14 @@ const Modal = ({ onClose }) => {
 
     fetch(`${process.env.REACT_APP_API_ROOT}/users/friends?search=${searchValue}`, {
       method: "GET",
+      body: requestBody,
       // 기타 필요한 설정들 추가
     })
       .then((response) => response.json())
       .then((data) => {
         // 요청에 대한 응답을 처리
         console.log(data);
+        // 친구 요청 보내는 함수 쓰기**********************************
         onClose();
       })
       .catch((error) => {
