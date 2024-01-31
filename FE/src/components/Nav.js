@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/logoShort.png";
-import UserInfo from "./UserInfo";
+import UserInfo from "../feature/userInfo/UserInfo";
 import styles from "./Nav.module.css";
 
 export default function Nav() {

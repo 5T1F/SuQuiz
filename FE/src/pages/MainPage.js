@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 // import Nav from "../components/Nav";
 import Container from "../components/Container";
-import ModalLogin from "../components/login/ModalLogin"; // 모달 컴포넌트를 import
+import ModalLogin from "../feature/login/ModalLogin"; // 모달 컴포넌트를 import
 
 import styles from "./MainPage.module.css";
 
