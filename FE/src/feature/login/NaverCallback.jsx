@@ -10,7 +10,7 @@ const NaverCallback = async (props) => {
     console.log(state);
 
     axios
-      .post("/users/login/naver", {
+      .post(`${process.env.REACT_APP_API_ROOT}/users/login/naver`, {
         authorizationCode: code,
         state: state,
       })
@@ -22,7 +22,7 @@ const NaverCallback = async (props) => {
         // window.location.href = "/";
         // 아래는 현재 페이지를 새로운 페이지로 덮어 씌우기 때문에 이전 페이지로 이동이 불가능
         // 보안상 아래가 나을듯
-        // window.location.replace('/');
+        window.location.replace("/");
       })
       .catch((err) => {
         //에러발생 시 경고처리 후 메인페이지로 전환

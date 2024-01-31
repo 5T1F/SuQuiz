@@ -1,5 +1,4 @@
-/* 모달창을 화면 중앙. 최상단에 노출 */
-.container {
+.modal {
   /* 모달창 크기 */
   width: 300px;
   height: 200px;
@@ -10,20 +9,28 @@
   /* 중앙 배치 */
   /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
   /* translate는 본인의 크기 기준으로 작동한다. */
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  /* 모달창 디자인 */
-  background-color: gray;
-  border: 1px solid black;
-  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* 모달창 내부 X버튼 */
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
 .close {
-  position: absolute;
-  right: 10px;
-  top: 10px;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
 }
