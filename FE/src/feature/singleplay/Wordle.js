@@ -1,67 +1,90 @@
-function generateHangulWord() {
-  // 한글 자모 배열
-  const firstLetter = ["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
-  const middleLetter = [
-    "ㅏ",
-    "ㅑ",
-    "ㅓ",
-    "ㅕ",
-    "ㅗ",
-    "ㅛ",
-    "ㅜ",
-    "ㅠ",
-    "ㅡ",
-    "ㅣ",
-    "ㅐ",
-    "ㅒ",
-    "ㅔ",
-    "ㅖ",
-    "ㅢ",
-    "ㅚ",
-    "ㅟ",
-  ];
-  const lastLetter = ["", "ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
-  const doubleLetters = ["ㄲ", "ㄸ", "ㅃ", "ㅆ", "ㅉ"]; // 된소리 목록
-
-  let word = "";
-  let letterCount = 0;
-
-  while (letterCount < 5) {
-    // 자모 랜덤 선택
-    const firstIndex = Math.floor(Math.random() * firstLetter.length);
-    const middleIndex = Math.floor(Math.random() * middleLetter.length);
-    let lastIndex = Math.floor(Math.random() * lastLetter.length);
-
-    // 총 자모 수 확인 및 조정
-    let currentLetterCount = 2; // 초성과 중성은 항상 포함
-    if (doubleLetters.includes(firstLetter[firstIndex])) {
-      currentLetterCount++; // 된소리인 경우 추가 계산
-    }
-
-    if (lastLetter[lastIndex] !== "") {
-      currentLetterCount++; // 종성이 있는 경우
-    }
-    if (letterCount + currentLetterCount > 5) {
-      lastIndex = 0; // 종성 제거
-    }
-
-    // 유니코드로 한글 문자 생성
-    const hangulChar = String.fromCharCode(0xac00 + firstIndex * 588 + middleIndex * 28 + lastIndex);
-    word += hangulChar;
-    letterCount += currentLetterCount;
-  }
-
-  return word;
-}
+// Wordle.js
+import React, { useState, useEffect } from "react";
+import GameBoard from "./GameBoard";
+import Keyboard from "./Keyboard";
+import Notification from "./Notification";
 
 export default function Wordle() {
+  const [database, setDatabase] = useState([]);
+  const [rightGuess, setRightGuess] = useState("");
+  const [currentRow, setCurrentRow] = useState(1);
+  const [currentGuess, setCurrentGuess] = useState("");
+  const [currentLetterPosition, setCurrentLetterPosition] = useState(1);
+  const [notification, setNotification] = useState("");
+
+  const MAX_LETTERS_PER_ROW = 5;
+  const MAX_ATTEMPTS = 6;
+
+  useEffect(() => {
+    // 데이터베이스 로딩 등의 초기화 작업 수행
+    loadWords();
+  }, []);
+
+  const loadWords = async () => {
+    try {
+      const response = await fetch("./resources/assets/json/database.json");
+      const data = await response.json();
+      setDatabase(data.words);
+      setRightGuess(getOneRandomWord(data.words));
+    } catch (error) {
+      console.error("Error loading words:", error);
+    }
+  };
+
+  const getOneRandomWord = (wordsList) => {
+    const shuffleIndex = Math.floor(Math.random() * wordsList.length);
+    return wordsList[shuffleIndex].toLowerCase();
+  };
+
+  const handleKeyPress = (letter) => {
+    if (currentGuess.length >= MAX_LETTERS_PER_ROW) {
+      setNotification("Reach Max letter per row");
+      return;
+    }
+
+    setCurrentGuess(currentGuess + letter);
+    setCurrentLetterPosition(currentLetterPosition + 1);
+  };
+
+  const handleBackspace = () => {
+    if (currentGuess.length === 0) {
+      setNotification("Could not erase when is an empty guess");
+      return;
+    }
+
+    setCurrentGuess(currentGuess.slice(0, -1));
+    setCurrentLetterPosition(currentLetterPosition - 1);
+  };
+
+  const handleEnter = () => {
+    if (currentGuess.length === 0) {
+      setNotification("Empty guess");
+      return;
+    }
+
+    if (currentGuess.toLowerCase() === rightGuess) {
+      setNotification("You guessed right! Game over!");
+      // 게임 종료 로직 추가
+      return;
+    }
+
+    if (currentRow >= MAX_ATTEMPTS) {
+      setNotification("Reach Max Attempts");
+      // 게임 종료 로직 추가
+      return;
+    }
+
+    // 다음 행으로 이동
+    setCurrentRow(currentRow + 1);
+    setCurrentGuess("");
+    setCurrentLetterPosition(1);
+  };
+
   return (
-    <>
-      <h1>워들</h1>
-      <div>오늘의 단어 정답은? 두구두구두구</div>
-      <div>
-        -{">"} {generateHangulWord()}{" "}
-      </div>
-    </>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <GameBoard currentRow={currentRow} currentGuess={currentGuess} />
+      <Keyboard handleKeyPress={handleKeyPress} handleBackspace={handleBackspace} handleEnter={handleEnter} />
+      <Notification message={notification} />
+    </div>
   );
 }
