@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import styles from "./ModalMakeFriend.module.css";
+import styles from "./ModalNoMatchingUser.module.css";
 
 const Modal = ({ onClose }) => {
   const modalRef = useRef();
@@ -26,16 +26,11 @@ const Modal = ({ onClose }) => {
   return (
     <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
       <div className={styles.modalContent}>
-        <div>친구 추가</div>
-        <div>
-          <input type="text" placeholder="유저 닉네임"></input>
-        </div>
-        <div>
-          <button className={styles.close} onClick={onClose}>
-            취소
-          </button>
-          <button>요청</button>
-        </div>
+        <span className={styles.close} onClick={onClose}>
+          &times;
+        </span>
+        <p>모달입니다.</p>
+        <p>일치하는 사용자 없음</p>
       </div>
     </div>
   );

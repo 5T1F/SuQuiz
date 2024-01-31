@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import Slidebar from "../../components/Slidebar";
+
+import Slidebar from "./Slidebar";
+
 import styles from "./USerInfo.module.css";
 
 const UserInfo = ({ children }) => {
