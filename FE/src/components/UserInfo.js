@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-// import { useDispatch } from "react-redux";
+import Slidebar from "./Slidebar";
+import styles from "./USerInfo.module.css";
 
-export default function NavbarSide() {
-  // const dispatch = useDispatch();
+const UserInfo = ({ children }) => {
+  const [isSlidebarOpen, setIsSlidebarOpen] = useState(false);
 
-  // 로그아웃
-  // const onLogoutHandler = (e) => {
-  //   dispatch(authAction.logout()).then((response) => {
-  //     if (response.payload.message === "success") {
-  //       alert("로그아웃이 완료되었습니다");
-  //       window.location.replace("/");
-  //       deleteUserInfo();
-  //     } else {
-  //       alert("로그아웃에 실패하였습니다. 다시 시도해주세요");
-  //     }
-  //   });
-  // };
+  const toggleSlidebar = () => {
+    setIsSlidebarOpen(!isSlidebarOpen);
+  };
 
-  const [state, setState] = useState({ right: false });
-}
+  return (
+    <>
+      <div className={styles.userInfoContainer}>
+        <button onClick={toggleSlidebar}>마이페이지</button>
+        {isSlidebarOpen && <div className={styles.overlay} onClick={toggleSlidebar} />}
+        {isSlidebarOpen && <Slidebar />} {/* 사이드바가 열려 있을 때만 렌더링 */}
+        <div>{children}</div>
+      </div>
+    </>
+  );
+};
+
+export default UserInfo;

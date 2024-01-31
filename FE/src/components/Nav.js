@@ -1,16 +1,22 @@
 import { NavLink } from "react-router-dom";
+import Logo from "../assets/logoShort.png";
 import UserInfo from "./UserInfo";
+import styles from "./Nav.module.css";
 
 export default function Nav() {
   return (
-    <nav>
-      <div>
-        <NavLink to="/">SuQuiz</NavLink>
+    <nav className={styles.navContainer}>
+      <div className={styles.navItem}>
+        <NavLink to="/">
+          <img src={Logo} alt="logo" width={148} height={64.32} />
+        </NavLink>
       </div>
-      <div>
+      <div className={styles.navItem}>
         <NavLink to="/learning/bookmark">단어장</NavLink>
       </div>
-      <UserInfo />
+      <div className={styles.navItem}>
+        <UserInfo />
+      </div>
     </nav>
   );
 }
