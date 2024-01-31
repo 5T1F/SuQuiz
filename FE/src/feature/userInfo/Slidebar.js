@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import ModalMakeFriend from "../feature/makeFriend/ModalMakeFriend";
+import ModalMakeFriend from "./makeFriend/ModalMakeFriend";
+import FriendList from "./friendList/FriendList";
 
 import styles from "./Slidebar.module.css"; // 스타일 파일을 import
 
@@ -33,6 +34,7 @@ const Slidebar = ({ onClose }) => {
           <button onClick={openModal}>친구추가</button>
           <input type="text" placeholder="친구 닉네임"></input>
           <button>검색</button>
+          <FriendList />
         </div>
         <div>채팅</div>
       </div>

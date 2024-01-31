@@ -13,8 +13,6 @@ export default function Nav() {
       </div>
       <div className={styles.navItem}>
         <NavLink to="/learning/bookmark">단어장</NavLink>
-      </div>
-      <div className={styles.navItem}>
         <UserInfo />
       </div>
     </nav>
