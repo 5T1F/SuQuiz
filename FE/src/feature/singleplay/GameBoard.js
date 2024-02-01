@@ -1,39 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 
-const GameBoard = ({ colors, currentGuess }) => {
-  const renderRow = (rowIndex) => {
+function Gameboard({ inputString, history, colors }) {
+  // history가 배열이 아닌 경우 배열로 변환
+  const historyArray = Array.isArray(history) ? history : [history];
+
+  const renderCells = (input) => {
     const cells = [];
-    for (let i = 0; i < 5; i++) {
-      const index = (rowIndex - 1) * 5 + i;
-      const cellStyle = {
-        width: "40px", // 각 셀의 너비
-        height: "40px", // 각 셀의 높이
-        backgroundColor: colors[index] || "white", // 셀의 배경색
-        border: "1px solid black", // 셀의 테두리
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      };
+    let charIndex = 0;
+    for (let row = 0; row < 6; row++) {
+      const rowCells = []; // 각 줄의 셀을 담을 배열
+      for (let col = 0; col < 5; col++) {
+        const currentChar = input[charIndex] || ""; // 현재 인덱스의 문자를 가져옴
+        const cellStyle = {
+          width: "40px", // 각 셀의 너비
+          height: "40px", // 각 셀의 높이
+          backgroundColor: colors[charIndex] || "white", // 셀의 배경색
+          border: "1px solid black", // 셀의 테두리
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        };
 
+        rowCells.push(
+          <div key={`${row}-${col}`} style={cellStyle}>
+            {currentChar ? currentChar : ""}
+          </div>
+        );
+        charIndex++; // 다음 문자 인덱스로 이동
+      }
       cells.push(
-        <div key={i} style={cellStyle}>
-          {currentGuess[index] ? currentGuess[index] : ""}
+        <div className="flex" key={row}>
+          {rowCells}
         </div>
-      );
+      ); // 각 줄의 셀을 추가
     }
     return cells;
   };
 
-  const rows = [];
-  for (let i = 1; i <= 6; i++) {
-    rows.push(
-      <div key={i} style={{ display: "flex", marginBottom: "5px" }}>
-        {renderRow(i)}
-      </div>
-    );
-  }
+  // 이전 입력 기록과 현재 입력을 합쳐서 하나의 그리드에 표시
+  const combinedInput = [...historyArray, inputString].join("");
+  const combinedCells = renderCells(combinedInput);
 
-  return <div className="game-board">{rows}</div>;
-};
+  return <div>{combinedCells}</div>;
+}
 
-export default GameBoard;
+export default Gameboard;

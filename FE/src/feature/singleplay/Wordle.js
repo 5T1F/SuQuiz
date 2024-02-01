@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Keyboard from "./Keyboard";
 import Notification from "./Notification";
-import Test from "./Test";
+import Gameboard from "./Gameboard";
 
 const Wordle = () => {
   const MAX_LETTERS_PER_ROW = 5;
@@ -44,11 +44,11 @@ const Wordle = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div>테스트</div>
-      <Test
+      <Gameboard
         inputString={inputString}
         history={history}
         colors={["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}
-      ></Test>
+      ></Gameboard>
       <Notification message={notification} />
       <Keyboard handleKeyPress={handleKeyPress} handleBackspace={handleBackspace} handleEnter={handleEnter} />
     </div>
