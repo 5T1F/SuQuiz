@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Keyboard from "./Keyboard";
 import Notification from "./Notification";
-import Gameboard from "./Gameboard";
+import Gameboard from "./Gameboard"; //여기때문에 오류가 난다. Gameboard.js 가 자꾸 GameBoard.js 로 바뀌어서..
 import SingleplayModal from "./SingleplayModal";
 
 const Wordle = () => {
