@@ -26,7 +26,31 @@ const Modal = ({ onClose }) => {
     event.stopPropagation();
   };
 
-  const handleSendFriendRequest = async () => {
+  const handleSearch = () => {
+    // 여기에서 API 요청을 보내도록 작성
+    const requestBody = { search: searchValue };
+
+    fetch(`${process.env.REACT_APP_API_ROOT}/users/friends?search=${searchValue}`, {
+      method: "GET",
+      body: requestBody,
+      // 기타 필요한 설정들 추가
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // 요청에 대한 응답을 처리
+        console.log(data);
+        handleSendFriendRequest(searchValue);
+        onClose();
+      })
+      .catch((error) => {
+        // 경고 모달 띄우고
+        handleNoMatchingUser();
+        // 요청 모달 닫기
+        // onClose(); // 두개 다 닫힘;;;;;
+      });
+  };
+
+  const handleSendFriendRequest = async (searchValue) => {
     try {
       const requestBody = {
         fromNickname: userId,
@@ -54,30 +78,6 @@ const Modal = ({ onClose }) => {
     }
   };
 
-  const handleSearch = () => {
-    // 여기에서 API 요청을 보내도록 작성
-    const requestBody = { search: searchValue };
-
-    fetch(`${process.env.REACT_APP_API_ROOT}/users/friends?search=${searchValue}`, {
-      method: "GET",
-      body: requestBody,
-      // 기타 필요한 설정들 추가
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // 요청에 대한 응답을 처리
-        console.log(data);
-        handleSendFriendRequest();
-        onClose();
-      })
-      .catch((error) => {
-        // 경고 모달 띄우고
-        handleNoMatchingUser();
-        // 요청 모달 닫기
-        // onClose(); // 두개 다 닫힘;;;;;
-      });
-  };
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -96,7 +96,7 @@ const Modal = ({ onClose }) => {
     <>
       <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
         <div className={styles.modalContent}>
-          <div>친구 추가</div>
+          <p>친구 추가</p>
           <div>
             <input
               type="text"

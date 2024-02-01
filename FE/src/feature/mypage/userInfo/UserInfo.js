@@ -37,10 +37,10 @@ const UserInfo = () => {
               className={`flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow`}
               key={index}
             >
-              {index === 1 && <div>{property}</div>}
-              {index === 2 && <img src="property" alt="프로필사진" />}
-              {index === 3 && <div>레벨 : {property}</div>}
-              {index === 4 && <div>경험치 : {property}</div>}
+              <p>{property.nickname}</p>
+              <img src="${property.profileImage}" alt="프로필사진" />
+              <p>레벨 : {property.level}</p>
+              <p>경험치 : {property.exp}</p>
             </li>
           ))}
         </ul>

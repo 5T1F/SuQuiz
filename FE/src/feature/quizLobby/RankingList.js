@@ -2,14 +2,21 @@ import React, { useState, useEffect } from "react";
 import styles from "./RankingList.module.css";
 
 const RankingList = () => {
-  const [ranking, setRanking] = useState([]);
+  // 로그인 구현하면 고치기!!!!!*********************************************
+  const userId = null;
+
+  const [rankingData, setRankingData] = useState(null);
 
   useEffect(() => {
     const fetchRanking = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}`); // !!!API 경로 채워야 됨!!!
+        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/ranking`); // !!!API 경로 채워야 됨!!!
         const data = await response.json();
-        setRanking(data.nickname);
+        if (data.data) {
+          setRankingData(data.data);
+        } else {
+          console.error("Error fetching data:", data.message);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -22,18 +29,23 @@ const RankingList = () => {
     <>
       {/* 단어사이 간격  space-y-1  */}
       <div className="space-y-1">
-        <h2>Ranking</h2>
-        <ul>
-          {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
-          {ranking.map((nickname, index) => (
-            <li
-              className="flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow"
-              key={index}
-            >
-              {nickname}
-            </li>
-          ))}
-        </ul>
+        {rankingData ? (
+          <>
+            <h2>My Rank: {rankingData.myRank}</h2>
+            <ul>
+              {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
+              {rankingData.ranking.slice(0, 13).map((entry, index) => (
+                <li key={index}>
+                  <p>Nickname: {entry.nickname}</p>
+                  <p>Level: {entry.level}</p>
+                  <p>Exp: {entry.exp}</p>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <div>일치하는 결과가 없습니다.</div>
+        )}
       </div>
     </>
   );

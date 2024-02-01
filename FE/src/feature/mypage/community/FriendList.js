@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import ModalMakeFriend from "../friend/ModalMakeFriend";
+import ModalEndFriendship from "../friend/ModalEndFriendship";
 import SearchFriend from "../friend/SearchFriend";
 
 import styles from "./FriendList.module.css";
@@ -11,16 +12,28 @@ const FriendList = () => {
   const [friends, setFriends] = useState([]);
   const [filterFriend, setFilterFriend] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [endModalOpen, setEndModalOpen] = useState(false);
   const [doSearch, setDoSearch] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [toNickname, setToNickname] = useState("");
 
   // 함수를 전달하여 클릭 시 모달 열기
-  const openModal = () => {
+  const openMakeModal = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const closeMakeModal = () => {
     setIsModalOpen(false);
+  };
+
+  // 함수를 전달하여 클릭 시 모달 열기
+  const openEndModal = (friendNickname) => {
+    setToNickname(friendNickname);
+    setEndModalOpen(true);
+  };
+
+  const closeEndModal = () => {
+    setEndModalOpen(false);
   };
 
   const handleSearchFriend = () => {
@@ -55,7 +68,7 @@ const FriendList = () => {
     <>
       {/* 단어사이 간격  space-y-1  */}
       <div className="space-y-1 h-2/3 p-1 border-4 border-orange-500">
-        <button onClick={openModal}>친구추가</button>
+        <button onClick={openMakeModal}>친구추가</button>
         <form>
           <input
             type="text"
@@ -76,13 +89,17 @@ const FriendList = () => {
               >
                 <p>Nickname: {friend.nickname}</p>
                 <p>Level: {friend.level}</p>
+                <button>채팅</button>
+                <button onClick={() => openEndModal(friend.nickname)}>&times;</button>
               </li>
             ))}
           </ul>
         )}
         {doSearch && <SearchFriend data={filterFriend} />}
       </div>
-      {isModalOpen && <ModalMakeFriend onClose={closeModal} />} {/* 모달이 열려 있을 때만 렌더링 */}
+      {isModalOpen && <ModalMakeFriend onClose={closeMakeModal} />} {/* 모달이 열려 있을 때만 렌더링 */}
+      {endModalOpen && <ModalEndFriendship onClose={closeEndModal} friendNickname={toNickname} />}{" "}
+      {/* 모달이 열려 있을 때만 렌더링 */}
     </>
   );
 };
