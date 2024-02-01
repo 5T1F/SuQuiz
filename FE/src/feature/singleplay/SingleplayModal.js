@@ -1,6 +1,7 @@
 import React from "react";
 
 const SingleplayModal = ({ result, onClose }) => {
+  // 모달 창 내용 수정해야 함
   return (
     <div className="modal">
       <div className="modal-content">
