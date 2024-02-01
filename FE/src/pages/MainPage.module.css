@@ -1,0 +1,17 @@
+/* 전체 */
+.FlexColumn {
+  margin: 50px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.quizStart {
+  border: 5px solid red;
+  width: 100%;
+}
+
+.learningStart {
+  border: 5px solid violet;
+  width: 100%;
+}

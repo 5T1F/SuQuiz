@@ -1,7 +1,24 @@
+<div align="center">
+<img src="https://capsule-render.vercel.app/api?type=venom&color=0:BCF3BB,100:FFE46A&height=300&section=header&text=SuQuiz%20(수퀴즈)&fontSize=90" />
+</div>
+
 # SuQuiz(수퀴즈) : 수어 학습 서비스
+### 목차
+[1. 서비스 소개](#서비스-소개)   
+[2. 제작 기간 및 참여 인원](#제작-기간-및-참여-인원)   
+[3. 사용 기술](#사용-기술)   
+[4. 기획 배경](#기획-배경)   
+[5. 핵심 기능](#핵심-기능)   
+[6. ERD 설계](#erd)      
+[7. 와이어 프레임](#와이어-프레임)    
+[8. 시스템 아키텍처](#시스템-아키텍처)   
+[9. 시퀀스 다이어그램](#시퀀스-다이어그램)   
+[10. 코드 컨벤션](#코드-컨벤션)   
+[11. 프로젝트 산출물](#프로젝트-산출물)
 
+&nbsp;
 
-# 서비스 소개
+## 서비스 소개
 > 💡 후천적 청각 장애인 또는 그들과 소통하고 싶은 사람들을 위한
  **퀴즈 기반 수어 교육 서비스**💡
 
@@ -9,103 +26,91 @@
 > <b>*Easy Peasy Lemon SuQuizy!*</b>
 > 수퀴즈와 함께라면 수어 학습도 식은 죽 먹기!
 
-> 수어를 뜻하는 手와 문제를 뜻하는 영단어 Quiz 를 합친 <b>수퀴즈(SuQuiz)</b>는 게이미피케이션을 접목하여, 사용자가 **퀴즈 게임을 통해 쉽고 즐겁게 수어를 학습할 수 있는 서비스**입니다.
+>  <b>수퀴즈(SuQuiz)</b>는 수어를 뜻하는 手와 문제를 뜻하는 영단어 Quiz 의 합성어로, 게이미피케이션을 접목하여 **퀴즈 게임을 통해 쉽고 즐겁게 수어를 학습할 수 있는 서비스**입니다.
+
+&nbsp;
+
+## 제작 기간 및 참여 인원
 
 
+### 제작 기간
 
-# 제작 기간 및 참여 인원
+2024.01.08 ~ 2024.02.16 (6주)  
 
+### 참여 인원
 
-## 제작 기간
-
-2024.01.08 ~ 2024.02.16 (6주)
-
-## 참여 인원
 
 
 | 📌 **조담현** | 📌 **김현준** | 📌 **안윤철** | 📌 **최은희** | 📌 **정혜진** |
-| ------ | ------ | ------ | ------ | ------ |
+| :------: | :------: | :------: | :------: | :------: |
 |<img src="/uploads/560a424f6f5b2104f64942a2706b2e8c/담현로두마니.png" height="120"/>|<img src="/uploads/9c66b9a77e3391966612f7dc5c593f41/현준다오.png" height="120"/>|<img src="/uploads/440be7d76a7fab44bc0cd0b841264e0b/모스윤철.png"  height="120"/>|<img src="/uploads/11749ef346a4a833a4c96f9252a4a258/은희우니.png" height="120"/>|<img src="/uploads/a8e77996b9e2aa7daafa2814141f6764/마리드혜진.png" height="120"/>
 |**👑팀장**|🖥️**개발 팀장**|👨‍💻**BE 리더**|👩‍💻**FE 리더**|📝**형상 관리자**|
 |백엔드|백엔드|백엔드|프론트엔드|프론트엔드|
 | PM, 영상, 발표 |  개발 총괄, git 관리 | 모션인식, DB | UI/UX 디자인 | 형상 관리, webRTC |
-|[![Github](https://img.shields.io/badge/soberdam-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/soberdam)|[![Github](https://img.shields.io/badge/HyunEnn-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HyunEnn)|[![Github](https://img.shields.io/badge/yuncheol%20AHN-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yuncheol-AHN)|[![Github](https://img.shields.io/badge/gilukji226-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gilukji226) |[![Github](https://img.shields.io/badge/pado7sea-121013?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pado7sea)
+|[![Github](https://img.shields.io/badge/soberdam-434343?style=for-the-badge&logo=github&logoColor=white)](https://github.com/soberdam)|[![Github](https://img.shields.io/badge/HyunEnn-59CAEF?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HyunEnn)|[![Github](https://img.shields.io/badge/yuncheol%20AHN-FFC605?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yuncheol-AHN)|[![Github](https://img.shields.io/badge/gilukji226-7DF475?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gilukji226) |[![Github](https://img.shields.io/badge/pado7sea-EB3A9D?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pado7sea)|
 
 
+&nbsp;
+
+## 사용 기술
+
+<div align="center">   
+
+### 🚀  Stacks  🚀
+
+#### FE ####
+<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css(scss)-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+<br>
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+<br>
+<img src="https://img.shields.io/badge/openVidu-000000?style=for-the-badge&logo=openVidu&logoColor=white">
+<br>
+<img src="https://img.shields.io/badge/Recoil-3578E5?style=for-the-badge&logo=Recoil&logoColor=white"> <img src="https://img.shields.io/badge/React Query-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white">
+<br>
+<img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=for-the-badge&logo=TailwindCSS&logoColor=white"> 
+
+#### BE #### 
+<img src="https://img.shields.io/badge/spring%20boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/spring%20data%20JPA-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<br>
+<img src="https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white">
+<br>
+<img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=Django&logoColor=white">
+<br>
+<img src="https://img.shields.io/badge/Mediapipe-000000?style=for-the-badge&logo=Mediapipe&logoColor=white">   
+
+#### Infra
+<img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonAWS&logoColor=white">  
+<img src="https://img.shields.io/badge/EC2-FF9900?style=for-the-badge&logo=amazonEC2&logoColor=white">  
+<img src="https://img.shields.io/badge/Docker-000000?style=for-the-badge&logo=Docker&logoColor=white">  
+<img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white">  
 
 
-# 사용 기술
+&nbsp;
+### 🔨  Tools 🔨 
+
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white"> <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white">
 
 
-## 🚀  Stacks
+&nbsp;
+### 👥  Collaboration  👥
 
 
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> **HTML**
+<img src="https://img.shields.io/badge/gitlab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white"> <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white"> <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jirasoftware&logoColor=white"> <img src="https://img.shields.io/badge/Gerrit-EEEEEE?style=for-the-badge&logo=Gerrit&logoColor=black"> 
 
+</div>
+&nbsp;   
 
-  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">  **CSS(SCSS)**
-
-
-  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> **JavaScript**
-
-
-  <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">  **React.js**
-
-
-<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"> **Recoil**
-
-React Query
-
-Tailnwind CSS
-  
-<img src="https://img.shields.io/badge/spring%20boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">  **Spring boot**
-
-
-<img src="https://img.shields.io/badge/spring%20data%20JPA-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> **Spring data JPA**
-
-Hibernate
-
-Django
-
-Mediapipe
-
-<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">  **MySQL**
-
-
-
-## 🔨  Tools
-
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" alt="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" width="40px" /> **Figma**
-
-
-<img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" alt="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" width="40px" /> **Git**
-
-
-
-## 👥  Collaboration
-
-
-<img src="https://img.shields.io/badge/gitlab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white"> **Gitlab**
-
-
-<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white"> **Notion**
-
-
-<img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jirasoftware&logoColor=white"> **Jira**
-
-Gerrit
-
-# 기획 배경
+## 기획 배경
 
 
 - 청각장애 발생의 주된 원인 중 후천적 원인의 비율은 2008년 87.2%에서 2017년 92.4%로 5.2% 증가하였으며, **선천적 원인에 비해 후천적 청각장애 발생 비율이 더 높습니다.**
-[참고자료 - 기사1](https://www.e-asr.org/m/journal/view.php?number=498)
+<sup>[참고자료 - 기사1](https://www.e-asr.org/m/journal/view.php?number=498)</sup>
 
-- 청각장애인은 손을 이용하는 언어인 수어(手語)를 주된 의사소통 수단으로 쓰지만, 이들에 대한 **전문적 수어 교육은 제대로 이뤄지지 않는다**는 조사 결과가 나왔습니다.[참고자료 - 기사2](https://www.yna.co.kr/view/AKR20200111044600004)
+- 청각장애인은 손을 이용하는 언어인 수어(手語)를 주된 의사소통 수단으로 쓰지만, 이들에 대한 **전문적 수어 교육은 제대로 이뤄지지 않는다**는 조사 결과가 나왔습니다.<sup>[참고자료 - 기사2](https://www.yna.co.kr/view/AKR20200111044600004)</sup>
 - '청각장애인 고용차별 및 고용개선방안 실태조사'에서 청각장애인 응답자 과반(55.6%)이 수어를 학교 선후배나 친구에게 배웠다고 응답했습니다.
 - 그러나 정식적인 수어 교육을 받았다는 응답 비율은 학교 교사에게서 배웠다는 응답은 29.1%, 전문 수어 강사로부터 교육받은 비율은 5.9%에 그쳤습니다.
 - **청각장애인 교육을 위해 가장 필요한 지원으로 17.5%의 응답자가 '농인에게 맞는 교재개발'(17.5%)** 이라고 답했습니다.
-- 혼자 학습하고 복습하는 인터넷 강의는 **지속적이지 못한 학습 방식**입니다. (참고자료 - 그림1)
+- 혼자 학습하고 복습하는 인터넷 강의는 **지속적이지 못한 학습 방식**입니다. <sup>[참고자료 - 그림1](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/uploads/2c495201a840203d8417384b4c92f428/%EC%BA%A1%EC%B2%98.PNG)</sup>
 
 - 이에 **지속적이며 즐거운 방식으로 수어를 학습할 수 있는 창구의 필요성**을 느껴, **게이미피케이션을 접목한 수화 교육 서비스 ‘수퀴즈’를 기획**하였습니다.
 
@@ -124,16 +129,19 @@ Gerrit
 [그림1. 차시가 늘어날수록 반비례하는 조회수.
 출처 : 경기도평생학습포털](https://www.gseek.kr/member/rl/courseInfo/onCourseCsInfo.do?p=pMenuId=OTOP&courseSeq=1424&courseCsSeq=1&courseCateCode=E540) </details>
 
-## 페르소나
-
-![persona1](/uploads/9dfbf7187b1b983455aacde3078175df/persona1.png)
-![persona2](/uploads/c495dd49711e56c2de2b03d36fd7f4d4/persona2.png)
+&nbsp;
+### 페르소나
+<div align="center">
+<img src="/uploads/9dfbf7187b1b983455aacde3078175df/persona1.png" width = 550> <img src="/uploads/c495dd49711e56c2de2b03d36fd7f4d4/persona2.png" width = 550>
+</div>
 
 - 후천적으로 장애를 얻게 된 장애인
 - 장애가 있는 사람과 소통하고 싶은 비 장애인 (가족, 주변 친구들)
 - **수어를 처음부터 시작하는 기초 수어 학습자**
 
-# 📌 핵심 기능
+&nbsp;
+
+## 핵심 기능
 
 - **웹 화상 RTC**를 통해서 실시간으로 퀴즈를 맞추는 방식으로 학습합니다.
 - 참가자가 제시어에 해당하는 단어를 **수어에 해당하는 동작으로 맞췄을 시에 정답**
@@ -141,13 +149,13 @@ Gerrit
 - 수어학습자료는 **국립국어원 open API**를 이용합니다.
 
 
-### 1. **[학습하기]**
+#### 1. **[학습하기]**
 
 - **기초 자음과 모음, 숫자를 카드형식으로 학습하고, 이를 웹캠에서 따라해볼 수 있음**
 
  + 단어를 학습 + 단어장에 저장하여 단어 학습 가능
 
-### 2. **[싱글플레이(워들)]**
+#### 2. **[싱글플레이(워들)]**
 
 - **학습하기를 통해 배운 기초 자음과 모음으로, 자음과 모음의 합성을 통해 단어 학습 가능**
 
@@ -162,7 +170,7 @@ Gerrit
 - 매일 정답 단어가 달라짐 → 게임 결과를 SNS 공유 가능 </details>
     
 
-### 3. **[멀티플레이(행맨)]**
+#### 3. **[멀티플레이(행맨)]**
 
 - **싱글 플레이(워들)에서 배운 단어로, 다른 사용자와 경쟁하며 학습한 단어를 응용 및 복습 가능**
 
@@ -181,28 +189,32 @@ Gerrit
  
 
 
-### `💡 기초 자음모음 → 단어 → 응용 및 복습으로 교육 시나리오가 구성되어 있음`
+> #### `💡 기초 자음모음 → 단어 → 응용 및 복습으로 교육 시나리오가 구성되어 있음`
 
 
+&nbsp;
 
-
-# ERD 설계
+## ERD
 <img src="/uploads/940cc26c224080a5c94fe3f0672e0ba6/SuQuiz_ERD.png">
 
-# 와이어 프레임
-<img src="">
+&nbsp;
 
+## 와이어 프레임
+<img src="/uploads/d9d11ed7f8a556da608172c2517427d5/SuQuiz_와이어_프레임.png">
 
-# 시스템 아키텍처
+&nbsp;
+
+## 시스템 아키텍처
 <img src="/uploads/6e2e1b9ed595d772d75d30b2a5951c09/SUQUIZ_시스템_아키텍처.png">
 
+&nbsp;
 
-# 시퀀스 다이어그램
+## 시퀀스 다이어그램
 <img src="/uploads/09aa2acb6611016fb42aea11614b9d44/SUQUIZ_시퀀스다이어그램.png">
 
+&nbsp;
 
-
-# 코드 컨벤션
+## 코드 컨벤션
 
 
 ```
@@ -224,15 +236,15 @@ Gerrit
 
 ```
 
-## 상세 컨벤션
+### 상세 컨벤션
 
 <details><summary>깃 커밋 메시지 컨벤션</summary>
 
-## 커밋 메시지 컨벤션
+### 커밋 메시지 컨벤션
 
 <aside>
 
-### 1. 커밋 유형 지정
+#### 1. 커밋 유형 지정
 
 - 커밋 유형은 영어 대문자로 작성하기
     
@@ -253,19 +265,19 @@ Gerrit
     | !BREAKING CHANGE | 커다란 API 변경의 경우 |
     | !HOTFIX | 급하게 치명적인 버그를 고쳐야 하는 경우 |
 
-### 2. 제목과 본문을 빈행으로 분리
+#### 2. 제목과 본문을 빈행으로 분리
 
 - 커밋 유형 이후 제목과 본문은 한글로 작성하여 내용이 잘 전달될 수 있도록 할 것
 - 본문에는 변경한 내용과 이유 설명 (어떻게보다는 무엇 & 왜를 설명)
 - 커밋 리뷰
 
-### 3. 제목 첫 글자는 대문자로, 끝에는 `.` 금지
+#### 3. 제목 첫 글자는 대문자로, 끝에는 `.` 금지
 
-### 4. 제목은 영문 기준 50자 이내로 할 것
+#### 4. 제목은 영문 기준 50자 이내로 할 것
 
-### 5. 자신의 코드가 직관적으로 바로 파악할 수 있다고 생각하지 말자
+#### 5. 자신의 코드가 직관적으로 바로 파악할 수 있다고 생각하지 말자
 
-### 6. 여러가지 항목이 있다면 글머리 기호를 통해 가독성 높이기
+#### 6. 여러가지 항목이 있다면 글머리 기호를 통해 가독성 높이기
 
 ```
 - 변경 내용 1
@@ -275,7 +287,7 @@ Gerrit
 
 </aside>
 
-### CLI에서 커밋 메시지 여러 줄로 작성하는 방법
+#### CLI에서 커밋 메시지 여러 줄로 작성하는 방법
 
 <aside>
 ✅ **쌍따옴표를 닫지 말고 개행하며 작성 → 다 작성한 후에 쌍따옴표를 닫으면 작성 완료**
@@ -291,7 +303,7 @@ git commit -m "FEAT: 회원가입 기능 추가
 
 <details><summary>Java 컨벤션</summary>
 
-### 1. 파일 공통
+#### 1. 파일 공통
 
 **1.1. encoding : UTF-8**
 
@@ -301,7 +313,7 @@ git commit -m "FEAT: 회원가입 기능 추가
 
 IDEA에서 설정 가능
 
-### 2. 이름(Naming)
+#### 2. 이름(Naming)
 
 **2.1. 식별자에는 영문/숫자/언더스코어만 허용**
 
@@ -363,7 +375,7 @@ IDEA에서 설정 가능
 
 **2.8. 메서드 이름에 소문자 카멜표기법 적용**
 
-### 3. 선언(Declarations)
+#### 3. 선언(Declarations)
 
 클래스, 필드, 메서드, 변수값, import문 등의 소스 구성요소를 선언할 때 고려해야할 규칙이다.
 
@@ -440,7 +452,7 @@ long형의 숫자에는 마지막에 대문자 'L’을 붙인다. 소문자 'l�
 
 `long base = 54423234211L;`
 
-### 4. 들여쓰기 (Indentation)
+#### 4. 들여쓰기 (Indentation)
 
 들여쓰기는 코드의 계층을 구분하기 위해
 
@@ -543,7 +555,7 @@ long형의 숫자에는 마지막에 대문자 'L’을 붙인다. 소문자 'l�
     return false;
 }`
 
-### 6**. 공백 (Whitespace)**
+#### 6**. 공백 (Whitespace)**
 
 **6.1. 주석문 기호 전후의 공백 삽입**
 
@@ -570,7 +582,7 @@ System.out.print(true); // 주석 기호 앞 뒤로 공백
 
 <details><summary>JavaScript 컨벤션</summary>
 
-### 1. 파일 공통
+#### 1. 파일 공통
 
 **1.1. encoding : UTF-8**
 
@@ -580,7 +592,7 @@ System.out.print(true); // 주석 기호 앞 뒤로 공백
 
 IDEA에서 설정 가능
 
-### 2. 이름(Naming)
+#### 2. 이름(Naming)
 
 **2.1. 식별자에는 영문/숫자/언더스코어만 허용**
 
@@ -639,7 +651,7 @@ IDEA에서 설정 가능
  _privateCustomObjectName;
  _privateCustomObjectName._privatePropertyName;`
 
-### 3. 선언(Declarations)
+#### 3. 선언(Declarations)
 
 **3.1. 변수**
 
@@ -910,7 +922,7 @@ import * from './AirbnbStyleGuide';
 import * as AirbnbStyleGuide from './AirbnbStyleGuide';
 ```
 
-### 5. 조건 확인하기
+#### 5. 조건 확인하기
 
 **5.1. 삼중 등호 연산자인 `===`, `!==`만 사용한다.**
 
@@ -930,7 +942,7 @@ if (numberB === 777) {
 }
 ```
 
-### 6. 반환하기 (RETURN)
+#### 6. 반환하기 (RETURN)
 
 **6.1. 함수 내에서 반환은 한 번만 한다.**
 
@@ -1004,20 +1016,22 @@ function getResult() {
 [네이버 JavaScript 코딩 컨벤션](https://github.com/naver/eslint-config-naver/blob/master/STYLE_GUIDE.md)
 
 
+&nbsp;
 
-
-# 프로젝트 산출물
+## 프로젝트 산출물
 
 [기능 명세서](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EA%B8%B0%EB%8A%A5_%EB%AA%85%EC%84%B8%EC%84%9C.pdf)
 
-[ERD]
 [ERD](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_ERD.png)
 
-[와이어프레임]
+[와이어프레임](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EC%99%80%EC%9D%B4%EC%96%B4_%ED%94%84%EB%A0%88%EC%9E%84.png?ref_type=heads)
 
 
 [시스템 아키텍처](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EC%8B%9C%EC%8A%A4%ED%85%9C_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png)
 
 [시퀀스 다이어그램](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EC%8B%9C%ED%80%80%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.png)
 
-[화면 정의서]
+[화면 정의서](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%ED%99%94%EB%A9%B4_%EC%A0%95%EC%9D%98%EC%84%9C.pdf?ref_type=heads)
+
+&nbsp;
+&nbsp;
