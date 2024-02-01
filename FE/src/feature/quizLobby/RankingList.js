@@ -31,14 +31,22 @@ const RankingList = () => {
       <div className="space-y-1">
         {rankingData ? (
           <>
-            <h2>My Rank: {rankingData.myRank}</h2>
+            <div>
+              <h1>userId</h1>
+              <h2>My Rank: {rankingData.myRank}</h2>
+            </div>
+            <div className="flex">
+              <p>Nickname</p>
+              <p>Level</p>
+              <p>Exp</p>
+            </div>
             <ul>
               {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
               {rankingData.ranking.slice(0, 13).map((entry, index) => (
                 <li key={index}>
-                  <p>Nickname: {entry.nickname}</p>
-                  <p>Level: {entry.level}</p>
-                  <p>Exp: {entry.exp}</p>
+                  <p>N: {entry.nickname}</p>
+                  <p>L: {entry.level}</p>
+                  <p>E: {entry.exp}</p>
                 </li>
               ))}
             </ul>
