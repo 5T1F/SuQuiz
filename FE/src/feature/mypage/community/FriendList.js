@@ -6,35 +6,13 @@ import SearchFriend from "../friend/SearchFriend";
 import styles from "./FriendList.module.css";
 
 const FriendList = () => {
+  // 로그인하면 수정!!*********************************************
+  const userId = null;
   const [friends, setFriends] = useState([]);
+  const [filterFriend, setFilterFriend] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [doSearch, setDoSearch] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [friendListData, setFriendListData] = useState([]); // FriendList에 전달할 데이터 상태
-
-  // 함수를 전달하여 클릭 시 검색하기
-  const handleSearchFriend = () => {
-    setDoSearch(true);
-    // 여기에서 API 요청을 보내도록 작성
-    const requestBody = { search: searchValue };
-
-    fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/{userId}?nickname=${searchValue}`, {
-      method: "GET",
-      body: requestBody,
-      // 기타 필요한 설정들 추가
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // 요청에 대한 응답을 처리
-        console.log(data);
-        // API 응답을 받아서 friendListData 상태를 업데이트
-        setFriendListData(data.friends);
-      })
-      .catch((error) => {
-        // 친구 없을 때
-        console.error("Error fetching data:", error);
-      });
-  };
 
   // 함수를 전달하여 클릭 시 모달 열기
   const openModal = () => {
@@ -45,12 +23,26 @@ const FriendList = () => {
     setIsModalOpen(false);
   };
 
+  const handleSearchFriend = () => {
+    // friends 리스트에서 searchValue를 포함하는 객체들을 filterFriend 리스트에 필터링하여 담는 부분
+    const filteredFriends = friends.filter((friend) => friend.nickname.includes(searchValue));
+    setFilterFriend(filteredFriends);
+
+    setDoSearch(true);
+  };
+
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/{userId}`); // API 경로
+        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/${userId}`); // API 경로
         const data = await response.json();
-        setFriends(data.friends);
+        // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
+        if (data.status === "success" && data.data) {
+          setFriends(data.data);
+        } else {
+          // 응답이 성공이 아니거나 data.data가 없을 경우에 대한 처리
+          console.error("Error fetching data:", data.message);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -64,13 +56,15 @@ const FriendList = () => {
       {/* 단어사이 간격  space-y-1  */}
       <div className="space-y-1 h-2/3 p-1 border-4 border-orange-500">
         <button onClick={openModal}>친구추가</button>
-        <input
-          type="text"
-          placeholder="친구 닉네임"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        ></input>
-        <button onClick={handleSearchFriend}>검색</button>
+        <form>
+          <input
+            type="text"
+            placeholder="친구 닉네임"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          ></input>
+          <button onClick={handleSearchFriend}>검색</button>
+        </form>
         <h2>Friends List</h2>
         {!doSearch && (
           <ul>
@@ -80,12 +74,13 @@ const FriendList = () => {
                 className={`flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow`}
                 key={index}
               >
-                {friend}
+                <p>Nickname: {friend.nickname}</p>
+                <p>Level: {friend.level}</p>
               </li>
             ))}
           </ul>
         )}
-        {doSearch && <SearchFriend data={friendListData} />}
+        {doSearch && <SearchFriend data={filterFriend} />}
       </div>
       {isModalOpen && <ModalMakeFriend onClose={closeModal} />} {/* 모달이 열려 있을 때만 렌더링 */}
     </>

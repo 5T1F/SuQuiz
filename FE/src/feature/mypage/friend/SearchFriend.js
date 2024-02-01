@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./SearchFriend.module.css";
 
-const FriendList = ({ data }) => {
+const SearchFriendList = ({ data }) => {
   return (
     <>
       {/* 단어사이 간격  space-y-1  */}
@@ -26,4 +26,4 @@ const FriendList = ({ data }) => {
   );
 };
 
-export default FriendList;
+export default SearchFriendList;
