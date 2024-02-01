@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Keyboard from "./Keyboard";
 import Notification from "./Notification";
 import Gameboard from "./Gameboard";
+import SingleplayModal from "./SingleplayModal";
 
 const Wordle = () => {
   const MAX_LETTERS_PER_ROW = 5;
@@ -13,11 +14,15 @@ const Wordle = () => {
   const [inputString, setInputString] = useState(""); // 사용자 입력값 상태
   const [history, setHistory] = useState([]); // 이전 입력 기록을 저장할 배열
   const [currentRow, setCurrentRow] = useState(1);
+  const [showModal, setShowModal] = useState(false);
+  const [gameResult, setGameResult] = useState(null); // "win" or "lose"
 
   // Keyboard 컴포넌트에서 문자를 전달받아 inputString 상태 업데이트
   const handleKeyPress = (letter) => {
     if (inputString.length < MAX_LETTERS_PER_ROW) {
       setInputString(inputString + letter);
+    } else {
+      setNotification("5개 이상의 글자를 입력할 수 없습니다.");
     }
   };
 
@@ -27,18 +32,42 @@ const Wordle = () => {
 
   const handleEnter = () => {
     if (inputString.length === MAX_LETTERS_PER_ROW) {
-      // 5개의 글자를 입력했을 때 채점 또는 다른 동작 수행
+      // 5개의 글자를 입력했을 때
       setNotification("입력완료");
       console.log("Entered value:", inputString);
 
-      setHistory((prevHistory) => [...prevHistory, inputString]); // history 배열에 inputString 값 추가
-      setInputString(""); // inputString 초기화
-      setCurrentRow(currentRow + 1); // 다음 줄로 이동
-      console.log("history", history);
+      let result;
+      if (inputString === rightGuess) {
+        // 정답과 일치하는 경우
+        result = "win";
+        setNotification("정답입니다! 게임 종료");
+        handleGameEnd(result); // 게임 결과에 따라 모달을 표시
+      } else if (currentRow === MAX_ATTEMPTS) {
+        // 최대 시도 횟수를 초과한 경우
+        result = "lose";
+        setNotification("최대 시도 횟수를 초과했습니다. 게임 종료");
+        handleGameEnd(result); // 게임 결과에 따라 모달을 표시
+      } else {
+        setHistory((prevHistory) => [...prevHistory, inputString]); // history 배열에 inputString 값 추가
+        setInputString(""); // inputString 초기화
+        setCurrentRow(currentRow + 1); // 다음 줄로 이동
+      }
     } else {
       setNotification("5개의 글자를 입력하세요.");
       console.log("5개의 글자를 입력하세요.");
     }
+  };
+
+  // 게임 결과에 따라 모달을 보여줌
+  const handleGameEnd = (result) => {
+    setGameResult(result);
+    setShowModal(true);
+  };
+
+  // 모달 닫기
+  const closeModal = () => {
+    setShowModal(false);
+    setGameResult(null);
   };
 
   return (
@@ -51,6 +80,7 @@ const Wordle = () => {
       ></Gameboard>
       <Notification message={notification} />
       <Keyboard handleKeyPress={handleKeyPress} handleBackspace={handleBackspace} handleEnter={handleEnter} />
+      {showModal && <SingleplayModal result={gameResult} onClose={closeModal} />}
     </div>
   );
 };
