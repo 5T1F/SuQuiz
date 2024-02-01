@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Keyboard from "./Keyboard";
 import Notification from "./Notification";
-import Gameboard from "./Gameboard"; //여기때문에 오류가 난다. Gameboard.js 가 자꾸 GameBoard.js 로 바뀌어서..
+import GameBoard from "./GameBoard";
 import SingleplayModal from "./SingleplayModal";
 
 const Wordle = () => {
@@ -73,11 +73,11 @@ const Wordle = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div>테스트</div>
-      <Gameboard
+      <GameBoard
         inputString={inputString}
         history={history}
         colors={["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}
-      ></Gameboard>
+      />
       <Notification message={notification} />
       <Keyboard handleKeyPress={handleKeyPress} handleBackspace={handleBackspace} handleEnter={handleEnter} />
       {showModal && <SingleplayModal result={gameResult} onClose={closeModal} />}

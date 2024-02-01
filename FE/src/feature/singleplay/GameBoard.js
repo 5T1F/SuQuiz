@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Gameboard({ inputString, history, colors }) {
+function GameBoard({ inputString, history, colors }) {
   // history가 배열이 아닌 경우 배열로 변환
   const historyArray = Array.isArray(history) ? history : [history];
 
@@ -44,4 +44,4 @@ function Gameboard({ inputString, history, colors }) {
   return <div>{combinedCells}</div>;
 }
 
-export default Gameboard;
+export default GameBoard;
