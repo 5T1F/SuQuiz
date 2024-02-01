@@ -37,7 +37,7 @@ function Gameboard({ inputString, history, colors }) {
     return cells;
   };
 
-  // 이전 입력 기록과 현재 입력을 합쳐서 하나의 그리드에 표시
+  // 이전 입력 기록과 현재 입력을 합쳐서 하나의 그리드에 표시함
   const combinedInput = [...historyArray, inputString].join("");
   const combinedCells = renderCells(combinedInput);
 
