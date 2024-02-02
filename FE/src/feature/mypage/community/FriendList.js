@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import ModalMakeFriend from "../friend/ModalMakeFriend";
 import ModalEndFriendship from "../friend/ModalEndFriendship";
 import SearchFriend from "../friend/SearchFriend";
+import Chatting from "../community/Chatting";
 
 import styles from "./FriendList.module.css";
 
@@ -16,6 +17,7 @@ const FriendList = () => {
   const [doSearch, setDoSearch] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [toNickname, setToNickname] = useState("");
+  const [selectedFriend, setSelectedFriend] = useState(null);
 
   // 함수를 전달하여 클릭 시 모달 열기
   const openMakeModal = () => {
@@ -34,6 +36,10 @@ const FriendList = () => {
 
   const closeEndModal = () => {
     setEndModalOpen(false);
+  };
+
+  const handleChatButtonClick = (friend) => {
+    setSelectedFriend(friend);
   };
 
   const handleSearchFriend = () => {
@@ -66,37 +72,40 @@ const FriendList = () => {
 
   return (
     <>
-      {/* 단어사이 간격  space-y-1  */}
-      <div className="space-y-1 h-2/3 p-1 border-4 border-orange-500">
-        <button onClick={openMakeModal}>친구추가</button>
-        <form>
-          <input
-            type="text"
-            placeholder="친구 닉네임"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          ></input>
-          <button onClick={handleSearchFriend}>검색</button>
-        </form>
-        <h2>Friends List</h2>
-        {!doSearch && (
-          <ul>
-            {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
-            {friends.map((friend, index) => (
-              <li
-                className={`flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow`}
-                key={index}
-              >
-                <p>Nickname: {friend.nickname}</p>
-                <p>Level: {friend.level}</p>
-                <button>채팅</button>
-                <button onClick={() => openEndModal(friend.nickname)}>&times;</button>
-              </li>
-            ))}
-          </ul>
-        )}
-        {doSearch && <SearchFriend data={filterFriend} />}
-      </div>
+      {selectedFriend === null ? (
+        <div className="space-y-1 h-2/3 p-1 border-4 border-orange-500">
+          <button onClick={openMakeModal}>친구추가</button>
+          <form>
+            <input
+              type="text"
+              placeholder="친구 닉네임"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            ></input>
+            <button onClick={handleSearchFriend}>검색</button>
+          </form>
+          <h2>Friends List</h2>
+          {!doSearch && (
+            <ul>
+              {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
+              {friends.map((friend, index) => (
+                <li
+                  className={`flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow`}
+                  key={index}
+                >
+                  <p>Nickname: {friend.nickname}</p>
+                  <p>Level: {friend.level}</p>
+                  <button onClick={() => handleChatButtonClick(friend)}>채팅</button>
+                  <button onClick={() => openEndModal(friend.nickname)}>&times;</button>
+                </li>
+              ))}
+            </ul>
+          )}
+          {doSearch && <SearchFriend data={filterFriend} />}
+        </div>
+      ) : (
+        <Chatting friend={selectedFriend} />
+      )}
       {isModalOpen && <ModalMakeFriend onClose={closeMakeModal} />} {/* 모달이 열려 있을 때만 렌더링 */}
       {endModalOpen && <ModalEndFriendship onClose={closeEndModal} friendNickname={toNickname} />}{" "}
       {/* 모달이 열려 있을 때만 렌더링 */}

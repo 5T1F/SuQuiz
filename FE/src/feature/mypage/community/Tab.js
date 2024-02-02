@@ -27,6 +27,7 @@ function CustomTab({ selectedMain }) {
       {activeTab === "FriendList" && <FriendList />}
       {activeTab === "WaitingFriendList" && <WaitingFriendList userId={userId} />}
       {activeTab === "Chatting" && <Chatting />}
+      {/* 채팅 탭으로 바꿀 때 최근 채팅했던 친구를 넘겨줘야 됨 */}
     </>
   );
 }
