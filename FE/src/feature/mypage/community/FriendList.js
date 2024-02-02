@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import ModalMakeFriend from "../friend/ModalMakeFriend";
-import ModalEndFriendship from "../friend/ModalEndFriendship";
-import SearchFriend from "../friend/SearchFriend";
+import ModalMakeFriend from "./friend/ModalMakeFriend";
+import ModalEndFriendship from "./friend/ModalEndFriendship";
+import SearchFriend from "./friend/SearchFriend";
 import Chatting from "../community/Chatting";
 
 import styles from "./FriendList.module.css";
