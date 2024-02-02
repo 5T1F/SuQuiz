@@ -6,7 +6,6 @@ const UserInfo = () => {
   // 로그인하면 수정!!*********************************************
   const userId = null;
   const [userInfoData, setUserInfoData] = useState([]);
-  const [userProperty, serUserProperty] = useState("");
 
   useEffect(() => {
     const fetchUserInfo = async () => {
