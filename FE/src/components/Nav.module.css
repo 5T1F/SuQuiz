@@ -5,15 +5,34 @@
   top: 0;
   left: 0;
   width: 100%;
+  height: 10vh;
   z-index: 1000; /* 네비게이션 바의 z-index 설정 */
+  display: flex;
+  justify-content: center;
+  background: #fff; /* 예시로 배경 추가 */
+}
+
+.navContainer > div {
+  width: 80%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background: #fff; /* 예시로 배경 추가 */
+}
+
+.navLogo {
+  display: block;
+  float: left;
+  flex-shrink: 0;
 }
 
 .navItem {
-  margin-right: 20px;
+  float: right;
+  display: flex;
+  align-items: center;
+}
+
+.navItem > div {
+  float: left;
+  padding-left: 30px;
 }
