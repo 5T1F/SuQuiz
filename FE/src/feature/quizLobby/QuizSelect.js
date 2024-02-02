@@ -1,17 +1,43 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import ModalNoMatchingRoom from "./ModalNoMatchingRoom";
+import ModalFullRoom from "./ModalFullRoom";
+
 import styles from "./QuizSelect.module.css";
 
 const QuizSelect = () => {
   // 로그인 구현하면 수정!!**************************
   const userId = null;
   const [codeValue, setCodeValue] = useState("");
-
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
-  const navigateMultiplay = (isManager) => {
+  // 모달창 노출 여부 state
+  const [noMatchingModalOpen, setNoMatchingModalOpen] = useState(false);
+  const [fullRoomModalOpen, setFullRoomModalOpen] = useState(false);
+
+  // 함수를 전달하여 클릭 시 모달 열기
+  const handleNoMatchingRoom = () => {
+    setNoMatchingModalOpen(true);
+  };
+
+  // 함수를 전달하여 모달 닫기
+  const handleCloseModalNoMatchingRoom = () => {
+    setNoMatchingModalOpen(false);
+  };
+
+  // 함수를 전달하여 클릭 시 모달 열기
+  const handleFullRoom = () => {
+    setFullRoomModalOpen(true);
+  };
+
+  // 함수를 전달하여 모달 닫기
+  const handleCloseModalFullRoom = () => {
+    setFullRoomModalOpen(false);
+  };
+
+  const navigateWaitingRoom = (isManager) => {
     if (isManager) {
       fetch(`${process.env.REACT_APP_API_ROOT}/quizrooms/${userId}`, {
         method: "POST",
@@ -40,7 +66,8 @@ const QuizSelect = () => {
                 if (data === "true") {
                   // 퀴즈룸 입장
                 } else {
-                  // 만석으로 입장 불가 모달
+                  // 해당 방이 존재하지 않습니다 모달
+                  handleNoMatchingRoom();
                 }
               })
               .catch((error) => {
@@ -49,6 +76,7 @@ const QuizSelect = () => {
               });
           } else {
             // 만석으로 입장 불가 모달
+            handleFullRoom();
           }
         })
         .catch((error) => {
@@ -78,11 +106,11 @@ const QuizSelect = () => {
           <div>멀티플레이</div>
           {isHovered ? (
             <>
-              <div className={`h-15 p-1 border-4 border-blue-500`} onClick={() => navigateMultiplay(true)}>
+              <div className={`h-15 p-1 border-4 border-blue-500`} onClick={() => navigateWaitingRoom(true)}>
                 방 만들기
               </div>
               <div className={`h-15 p-1 border-4 border-green-500`}>
-                <div onClick={() => navigateMultiplay(false)}>코드로 입장하기</div>
+                <div onClick={() => navigateWaitingRoom(false)}>코드로 입장하기</div>
                 <input
                   type="text"
                   placeholder="입장 코드를 입력하세요"
@@ -102,6 +130,10 @@ const QuizSelect = () => {
           </Link>
         </div>*/}
       </div>
+
+      {/* modalOpen이 true일 때만 모달 렌더링 */}
+      {noMatchingModalOpen && <ModalNoMatchingRoom onClose={handleCloseModalNoMatchingRoom} />}
+      {fullRoomModalOpen && <ModalFullRoom onClose={handleCloseModalFullRoom} />}
     </>
   );
 };
