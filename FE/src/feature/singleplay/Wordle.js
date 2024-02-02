@@ -117,7 +117,13 @@ const Wordle = () => {
       <div>테스트</div>
       <GameBoard inputString={inputString} history={history} colors={colors} />
       <Notification message={notification} />
-      <Keyboard handleKeyPress={handleKeyPress} handleBackspace={handleBackspace} handleEnter={handleEnter} />
+      <Keyboard
+        handleKeyPress={handleKeyPress}
+        handleBackspace={handleBackspace}
+        handleEnter={handleEnter}
+        inputString={inputString}
+        rightGuess={rightGuess}
+      />
       {showModal && <SingleplayModal result={gameResult} onClose={closeModal} />}
     </div>
   );
