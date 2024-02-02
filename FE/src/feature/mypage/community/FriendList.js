@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import ModalMakeFriend from "../friend/ModalMakeFriend";
-import ModalEndFriendship from "../friend/ModalEndFriendship";
-import SearchFriend from "../friend/SearchFriend";
+import ModalMakeFriend from "./friend/ModalMakeFriend";
+import ModalEndFriendship from "./friend/ModalEndFriendship";
+import SearchFriend from "./friend/SearchFriend";
 
 import styles from "./FriendList.module.css";
 
@@ -67,7 +67,7 @@ const FriendList = () => {
   return (
     <>
       {/* 단어사이 간격  space-y-1  */}
-      <div className="space-y-1 h-2/3 p-1 border-4 border-orange-500">
+      <div className="p-1 space-y-1 border-4 border-orange-500 h-2/3">
         <button onClick={openMakeModal}>친구추가</button>
         <form>
           <input
