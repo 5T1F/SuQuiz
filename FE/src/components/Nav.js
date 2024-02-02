@@ -18,17 +18,21 @@ export default function Nav() {
 
   return (
     <nav className={styles.navContainer}>
-      <div className={styles.navItem}>
-        <NavLink to="/">
-          <img src={Logo} alt="logo" width={148} height={64.32} />
-        </NavLink>
-      </div>
-      <div className={styles.navItem}>
-        <NavLink to="/learning/bookmark">단어장</NavLink>
-        <div className={styles.userInfoContainer}>
-          <button onClick={toggleSlidebar}>마이페이지</button>
-          {isSlidebarOpen && <div className={styles.overlay} onClick={toggleSlidebar} />}
-          {isSlidebarOpen && <Slidebar onClose={closeSlidebar} />} {/* 사이드바가 열려 있을 때만 렌더링 */}
+      <div>
+        <div className={styles.navLogo}>
+          <NavLink to="/">
+            <img src={Logo} alt="logo" width={130} />
+          </NavLink>
+        </div>
+        <div className={styles.navItem}>
+          <div>
+            <NavLink to="/learning/bookmark">단어장</NavLink>
+          </div>
+          <div className={styles.userInfoContainer}>
+            <button onClick={toggleSlidebar}>마이페이지</button>
+            {isSlidebarOpen && <div className={styles.overlay} onClick={toggleSlidebar} />}
+            {isSlidebarOpen && <Slidebar onClose={closeSlidebar} />} {/* 사이드바가 열려 있을 때만 렌더링 */}
+          </div>
         </div>
       </div>
     </nav>
