@@ -1,7 +1,9 @@
 import React, { useRef, useEffect } from "react";
-import styles from "./ModalLogin.module.css";
+
 import Naver from "../../feature/login/NaverLogin";
 import Kakao from "../../feature/login/KakaoLogin";
+
+import styles from "./ModalLogin.module.css";
 
 const Modal = ({ onClose }) => {
   const modalRef = useRef();

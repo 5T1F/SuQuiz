@@ -73,7 +73,7 @@ const FriendList = () => {
   return (
     <>
       {selectedFriend === null ? (
-        <div className="space-y-1 h-2/3 p-1 border-4 border-orange-500">
+        <div className="p-1 space-y-1 border-4 border-orange-500 h-2/3">
           <button onClick={openMakeModal}>친구추가</button>
           <form>
             <input
