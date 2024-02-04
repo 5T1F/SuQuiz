@@ -11,6 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 52px; /* 컨트롤 ;;*/
 }
 
 .value {

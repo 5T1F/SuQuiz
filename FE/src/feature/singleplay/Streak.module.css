@@ -1,0 +1,30 @@
+.streakContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.streakRow {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.streakItem {
+  width: 13px;
+  height: 13px;
+  margin: 1px;
+  border-radius: 25%;
+}
+
+.correct {
+  background-color: rgb(123, 228, 123);
+}
+
+.incorrect {
+  background-color: rgb(243, 158, 158);
+}
+
+.notSolved {
+  background-color: rgb(169, 167, 167);
+}
