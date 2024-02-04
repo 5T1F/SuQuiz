@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RecordItem from "./RecordItem";
 import styles from "./SingleplayModal.module.css";
+import StreakDisplay from "./StreakDisplay";
+import { dailyResult } from "../../apis/singleplayApi";
+import TrialSpread from "./TrialSpread";
 
 const SingleplayModal = ({ result, onClose }) => {
+  const [streakData, setStreakData] = useState(null);
+
+  //나중에 그냥 api에서 받아온 값으로 고쳐
+  const trialSpreadData = [0, 3, 49, 79, 40, 17];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await dailyResult();
+        setStreakData(result.data.streak);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <div className={styles.modal}>
@@ -24,11 +45,15 @@ const SingleplayModal = ({ result, onClose }) => {
           <div className="flex row">
             <div className={styles.trialContainer}>
               <div>도전분포</div>
-              <div>~도전분포컴포넌트~</div>
+              <div>
+                <TrialSpread trialSpreadData={trialSpreadData} />
+              </div>
             </div>
             <div className={styles.streakContainer}>
               <div>오늘의 단어 스트릭</div>
-              <div>~스트릭컴포넌트~</div>
+              <div>
+                <StreakDisplay streakData={streakData} />
+              </div>
             </div>
           </div>
           <div>
