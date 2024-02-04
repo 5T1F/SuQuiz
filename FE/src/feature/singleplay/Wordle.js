@@ -7,7 +7,7 @@ import SingleplayModal from "./SingleplayModal";
 const Wordle = () => {
   const MAX_LETTERS_PER_ROW = 5;
   const MAX_ATTEMPTS = 6;
-  const [rightGuess] = useState("ㄱㅗㅇㅈㅜ");
+  const [rightGuess] = useState("ㄱㄱㄱㄱㄱ");
   const [colors, setColors] = useState(Array(MAX_LETTERS_PER_ROW * MAX_ATTEMPTS).fill("white"));
   const [notification, setNotification] = useState("");
   const [inputString, setInputString] = useState(""); // 사용자 입력값 상태
