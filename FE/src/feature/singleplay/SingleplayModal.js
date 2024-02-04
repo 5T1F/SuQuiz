@@ -18,12 +18,18 @@ const SingleplayModal = ({ result, onClose }) => {
           <div className="flex row">
             <RecordItem label="전체도전" value={188} color="green" />
             <RecordItem label="정답률" value={`100%`} color="blue" />
-            <RecordItem label="최근 연속 정답 기록" value={188} color="yellow" />
-            <RecordItem label="최다 연속 정답 기록" value={188} color="red" />
+            <RecordItem label={"최근 연속\n정답 기록"} value={188} color="yellow" />
+            <RecordItem label={"최다 연속\n정답 기록"} value={188} color="red" />
           </div>
           <div className="flex row">
-            <div>도전 분포</div>
-            <div>오늘의 단어 스트릭</div>
+            <div className={styles.trialContainer}>
+              <div>도전분포</div>
+              <div>~도전분포컴포넌트~</div>
+            </div>
+            <div className={styles.streakContainer}>
+              <div>오늘의 단어 스트릭</div>
+              <div>~스트릭컴포넌트~</div>
+            </div>
           </div>
           <div>
             <button>더 풀어보기</button>

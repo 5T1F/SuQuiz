@@ -6,8 +6,8 @@ const RecordItem = ({ label, value, color }) => {
     <>
       <div className={styles.container}>
         <div className={`record-item ${color}`}>
-          <div>{label}</div>
-          <div>{value}</div>
+          <div className={styles.label}>{label}</div>
+          <div className={styles.value}>{value}</div>
         </div>
       </div>
     </>
