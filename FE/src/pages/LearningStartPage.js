@@ -23,7 +23,7 @@ export default function LearningStartPage() {
     };
 
     fetchData();
-  }, [selectedMain]);
+  }, [selectedMain, selectedSub]);
 
   return (
     <Container>

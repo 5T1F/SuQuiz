@@ -3,8 +3,9 @@ import React, { useState, useEffect } from "react";
 export default function WordList({ wordsProp, setCurrentWord }) {
   const [words, setWords] = useState([...wordsProp, { status: "before" }]);
 
+  console.log(words);
   useEffect(() => {
-    setWords(words || []);
+    setWords([...wordsProp, { status: "before" }]); // 자꾸 초기화 되는 문제
   }, [wordsProp]);
 
   const handleWordClick = (clickedWord) => {
@@ -17,7 +18,14 @@ export default function WordList({ wordsProp, setCurrentWord }) {
       return word;
     });
 
-    setWords(updatedWords);
+    const newWords = updatedWords.map((word, index) => {
+      if (index === words.findIndex((w) => w.wordName === clickedWord.wordName)) {
+        return { ...word, status: "now" };
+      }
+      return word;
+    });
+
+    setWords(newWords);
     setCurrentWord(clickedWord);
   };
 
@@ -29,9 +37,9 @@ export default function WordList({ wordsProp, setCurrentWord }) {
     <>
       {/* 단어사이 간격  space-y-1  */}
       <div className="space-y-1">
-        {words.map((word) => (
+        {words.map((word, index) => (
           <div
-            key={word.wordName}
+            key={index}
             onClick={() => handleWordClick(word)}
             className={`flex items-center justify-center h-8 rounded-lg outline-none ${
               word.status === "before"
