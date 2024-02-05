@@ -66,10 +66,11 @@ public class AuthController {
     public ResponseEntity<CommonResponse> checkNickname(@PathVariable String email) {
         Boolean validNick = oAuthLoginService.findNickname(email);
         if(validNick) {
+            OAuthLoginService.nicknameResponse nicknameResponse = oAuthLoginService.firstSelect(email);
             return new ResponseEntity<>(CommonResponse.builder()
                     .status(HttpStatus.OK.value())
                     .message("닉네임이 있습니다.")
-                    .data(validNick)
+                    .data(nicknameResponse)
                     .build(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(CommonResponse.builder()

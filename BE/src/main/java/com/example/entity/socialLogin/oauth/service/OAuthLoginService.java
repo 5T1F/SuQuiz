@@ -72,6 +72,12 @@ public class OAuthLoginService {
         } else
             return true;
     }
+
+    public nicknameResponse firstSelect(String email) {
+        Optional<User> findEmail = userRepository.findByEmail(email);
+        String nickname = findEmail.get().getNickname();
+        return new nicknameResponse(nickname);
+    }
     public boolean findAllNickname(String nickname) {
         Optional<User> findNickname = userRepository.findByNickname(nickname);
         // 닉네임을 가진 유저가 있으면 false, 없으면 true
@@ -114,6 +120,12 @@ public class OAuthLoginService {
     @AllArgsConstructor
     public static class nicknameRequest {
         private final String email;
+        private final String nickname;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class nicknameResponse {
         private final String nickname;
     }
 
