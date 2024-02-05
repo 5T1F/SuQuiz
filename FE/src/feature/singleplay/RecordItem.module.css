@@ -1,0 +1,21 @@
+.container {
+  border: 3px solid rgb(185, 34, 255);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 52px; /* 컨트롤 ;;*/
+}
+
+.value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

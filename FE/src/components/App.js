@@ -23,7 +23,6 @@ export default function App() {
             <Outlet />
           </body>
         </div>
-
         <Footer className={styles.footer} />
       </div>
     </>
