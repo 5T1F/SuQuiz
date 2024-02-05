@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 export default function WordList({ wordsProp, setCurrentWord }) {
-  const [words, setWords] = useState(wordsProp || []);
+  const [words, setWords] = useState([...wordsProp, { status: "before" }]);
 
   useEffect(() => {
     setWords(words || []);
@@ -9,7 +9,7 @@ export default function WordList({ wordsProp, setCurrentWord }) {
 
   const handleWordClick = (clickedWord) => {
     const updatedWords = words.map((word) => {
-      if (word.word === clickedWord.word) {
+      if (word.wordName === clickedWord.wordName) {
         return { ...word, status: "now" };
       } else if (word.status === "now") {
         return { ...word, status: "after" };
@@ -29,10 +29,9 @@ export default function WordList({ wordsProp, setCurrentWord }) {
     <>
       {/* 단어사이 간격  space-y-1  */}
       <div className="space-y-1">
-        {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
         {words.map((word) => (
           <div
-            key={word.word}
+            key={word.wordName}
             onClick={() => handleWordClick(word)}
             className={`flex items-center justify-center h-8 rounded-lg outline-none ${
               word.status === "before"
@@ -42,7 +41,7 @@ export default function WordList({ wordsProp, setCurrentWord }) {
                 : "bg-gray-200 shadow-inner"
             }`}
           >
-            {word.word} - {word.status}
+            {word.wordName} - {word.status}
           </div>
         ))}
       </div>

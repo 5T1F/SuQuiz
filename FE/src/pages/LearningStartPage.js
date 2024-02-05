@@ -1,88 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "../components/Container";
 import Flashcard from "../feature/Learning/Flashcard";
 import SideMenu from "../feature/Learning/SideMenu";
 import { useLocation } from "react-router-dom";
 import UserView from "../feature/Learning/UserView";
-
-const wordList = [
-  {
-    word: "ㄱ",
-    videoUrl: "https://example.com/video-ㄱ.mp4",
-    category: "자음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "ㄴ",
-    videoUrl: "https://example.com/video-ㄱ.mp4",
-    category: "자음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "ㄷ",
-    videoUrl: "https://example.com/video-ㄱ.mp4",
-    category: "자음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "ㅏ",
-    videoUrl: "https://example.com/video-ㅏ.mp4",
-    category: "모음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "ㅑ",
-    videoUrl: "https://example.com/video-ㅏ.mp4",
-    category: "모음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "ㅓ",
-    videoUrl: "https://example.com/video-ㅏ.mp4",
-    category: "모음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "1",
-    videoUrl: "https://example.com/video-1.mp4",
-    category: "숫자",
-    isBookmarked: true,
-    status: "before",
-  },
-  {
-    word: "2",
-    videoUrl: "https://example.com/video-1.mp4",
-    category: "숫자",
-    isBookmarked: true,
-    status: "before",
-  },
-  {
-    word: "3",
-    videoUrl: "https://example.com/video-1.mp4",
-    category: "숫자",
-    isBookmarked: true,
-    status: "before",
-  },
-  {
-    word: "사과",
-    videoUrl: "https://example.com/video-사과.mp4",
-    category: "낱말",
-    isBookmarked: true,
-    status: "before",
-  },
-  // 여기에 추가적인 단어들을 포함시킬 수 있습니다.
-];
+import { wordsfromCategory } from "../apis/learningApi";
 
 export default function LearningStartPage() {
   const location = useLocation();
   const { selectedMain, selectedSub } = location.state || { selectedMain: null, selectedSub: null };
   const [currentWord, setCurrentWord] = useState(null);
+  const [wordList, setWordList] = useState([]);
+  console.log(selectedMain, selectedSub);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await wordsfromCategory(selectedMain);
+        setWordList(data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [selectedMain]);
 
   return (
     <Container>
@@ -110,7 +51,7 @@ export default function LearningStartPage() {
             <UserView />
           </div>
           <div className="flex justify-between">
-            <button class="ml-auto h-8 px-5 font-medium rounded-lg outline-none ring-2 ring-yellow-600 ring-inset text-gray-800 hover:text-yellow-600">
+            <button className="ml-auto h-8 px-5 font-medium rounded-lg outline-none ring-2 ring-yellow-600 ring-inset text-gray-800 hover:text-yellow-600">
               학습 종료
             </button>
           </div>

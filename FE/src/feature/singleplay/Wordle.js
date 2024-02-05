@@ -113,7 +113,7 @@ const Wordle = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center h-screen">
       <div>테스트</div>
       <GameBoard inputString={inputString} history={history} colors={colors} />
       <Notification message={notification} />

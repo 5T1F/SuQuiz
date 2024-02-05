@@ -26,9 +26,11 @@ const CardBox = ({ currentWord, toggleBookmark }) => {
           {currentWord.isBookmarked ? "☆" : "☆"}
         </button>
       </div>
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="flex justify-center items-center">
         {isFlipped ? (
-          <div className="text-white">해당 영상의 수어 뜻 : {currentWord.word}</div>
+          <div className="flex justify-center items-center text-white h-20">
+            해당 영상의 수어 뜻 : {currentWord.wordName}
+          </div>
         ) : (
           <video controls>
             <source src={currentWord.videoUrl} type="video/mp4" />

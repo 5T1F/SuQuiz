@@ -4,10 +4,7 @@ import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/re
 
 function CustomTab({ selectedMain, wordList, setCurrentWord }) {
   const [activeTab, setActiveTab] = useState(selectedMain || "자음");
-
-  // 카테고리 가져오는 api 대신
   const mainCategories = ["자음", "모음", "숫자", "낱말", "단어장"];
-
   useEffect(() => {
     if (selectedMain) {
       setActiveTab(selectedMain);
