@@ -16,6 +16,10 @@ oauth:
       auth: https://nid.naver.com
       api: https://openapi.naver.com
 
+server:
+  servlet:
+    context-path: /api
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
