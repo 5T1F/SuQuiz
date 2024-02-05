@@ -106,7 +106,7 @@ public class AuthController {
             return new ResponseEntity<>(CommonResponse.builder()
                     .status(HttpStatus.OK.value())
                     .message("닉네임 생성이 가능합니다.")
-                    .data(findNickname)
+                    .data(!findNickname)
                     .build(), HttpStatus.OK);
         }
 
