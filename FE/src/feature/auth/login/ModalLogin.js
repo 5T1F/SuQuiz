@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
-import Naver from "../../feature/login/NaverLogin";
-import Kakao from "../../feature/login/KakaoLogin";
+import Naver from "./NaverLogin";
+import Kakao from "./KakaoLogin";
 
 import styles from "./ModalLogin.module.css";
 

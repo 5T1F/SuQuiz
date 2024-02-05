@@ -1,14 +1,14 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
+import { useAuthStore } from "../app/store";
 import Container from "../components/Container";
 import Players from "../feature/multiplay/Players";
 import Bottombox from "../feature/multiplay/Bottombox";
 import Sidebar from "../feature/multiplay/Sidebar";
 
 const WaitingPage = () => {
-  // 로그인 구현하면 수정하기!!****************
-  const userId = null;
+  const userId = useAuthStore((state) => state.user);
 
   const location = useLocation();
   const isManager = location.state.manager;
