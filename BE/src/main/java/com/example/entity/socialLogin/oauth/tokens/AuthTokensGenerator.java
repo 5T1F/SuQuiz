@@ -4,7 +4,6 @@ import com.example.entity.socialLogin.oauth.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-
 import java.util.Date;
 
 @Component

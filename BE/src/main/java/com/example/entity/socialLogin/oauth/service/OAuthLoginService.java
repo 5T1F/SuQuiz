@@ -1,14 +1,16 @@
 package com.example.entity.socialLogin.oauth.service;
 
+import com.example.entity.socialLogin.oauth.oauthApi.params.OAuthLoginParams;
+import com.example.entity.socialLogin.oauth.oauthApi.response.OAuthInfoResponse;
+import com.example.entity.socialLogin.oauth.oauthApi.response.RequestOAuthInfoService;
+import com.example.entity.socialLogin.oauth.tokens.AuthTokens;
+import com.example.entity.socialLogin.oauth.tokens.AuthTokensGenerator;
 import com.example.entity.user.domain.OAuthProvider;
 import com.example.entity.user.domain.User;
 import com.example.entity.user.repository.UserRepository;
-import com.example.entity.socialLogin.oauth.oauthApi.params.OAuthLoginParams;
-import com.example.entity.socialLogin.oauth.oauthApi.response.OAuthInfoResponse;
-import com.example.entity.socialLogin.oauth.tokens.AuthTokens;
-import com.example.entity.socialLogin.oauth.oauthApi.response.RequestOAuthInfoService;
-import com.example.entity.socialLogin.oauth.tokens.AuthTokensGenerator;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +36,8 @@ public class OAuthLoginService {
         OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params);
         OAuthProvider oAuthProvider = oAuthInfoResponse.getOAuthProvider();
         String email = oAuthInfoResponse.getEmail();
-        Long memberId = findOrCreateMember(oAuthInfoResponse);
-        AuthTokens authTokens = authTokensGenerator.generate(memberId);
+        Long userId = findOrCreateMember(oAuthInfoResponse);
+        AuthTokens authTokens = authTokensGenerator.generate(userId);
 
         return new LoginResult(oAuthProvider,email,authTokens);
     }

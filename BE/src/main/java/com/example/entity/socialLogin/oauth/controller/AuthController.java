@@ -5,10 +5,8 @@ import com.example.entity.socialLogin.oauth.oauthApi.client.RevokeTokenResponseD
 import com.example.entity.socialLogin.oauth.oauthApi.params.KakaoLoginParams;
 import com.example.entity.socialLogin.oauth.oauthApi.params.NaverLoginParams;
 import com.example.entity.socialLogin.oauth.oauthApi.params.NaverLogoutParams;
-import com.example.entity.socialLogin.oauth.oauthApi.response.OAuthInfoResponse;
 import com.example.entity.socialLogin.oauth.service.OAuthLoginService;
 import com.example.entity.socialLogin.oauth.service.OAuthLogoutService;
-import com.example.entity.socialLogin.oauth.tokens.AuthTokens;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
