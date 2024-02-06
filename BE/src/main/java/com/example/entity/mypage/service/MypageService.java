@@ -20,11 +20,11 @@ public class MypageService {
     private final UserRepository userRepository;
     private final SingleHistoryRepository singleHistoryRepository;
 
-    public MypageDto.UserResponse find(String email) {
+    public MypageDto.UserResponse find(Long userId) {
         /**
          * nickname, profile image, level, exp
          */
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
@@ -40,7 +40,7 @@ public class MypageService {
 
     public MypageDto.NicknameModifyResoponse modify(MypageDto.NicknameModifyRequest request) {
 
-        Optional<User> optionalUser = userRepository.findByEmail(request.getEmail());
+        Optional<User> optionalUser = userRepository.findById(request.getUserId());
         if (optionalUser.isPresent()) {
             /**
              * toBuiler()를 통해 값을 변경하면 UserBuiler Class를 통해 변수값을 변경하는 것
@@ -61,9 +61,9 @@ public class MypageService {
         }
     }
 
-    public MypageDto.UserWordleResponse userWordleResponse(String email) {
+    public MypageDto.UserWordleResponse userWordleResponse(Long userId) {
 
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
 
             // user
