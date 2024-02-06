@@ -62,16 +62,46 @@ public class AuthController {
     }
 
     // 닉네임이 있는지 판단 여부를 위한 요청
-    @GetMapping("/login/checkNickname/{email}")
-    public ResponseEntity<CommonResponse> checkNickname(@PathVariable String email) {
-        Boolean validNick = oAuthLoginService.findNickname(email);
-        if(validNick) {
+//    @GetMapping("/login/checkNickname/{email}")
+//    public ResponseEntity<CommonResponse> checkNickname(@PathVariable String email) {
+//        Boolean validNick = oAuthLoginService.findNickname(email);
+//        if(validNick) {
+//            OAuthLoginService.nicknameResponse nicknameResponse = oAuthLoginService.firstSelect(email);
+//            return new ResponseEntity<>(CommonResponse.builder()
+//                    .status(HttpStatus.OK.value())
+//                    .message("닉네임이 있습니다.")
+//                    .data(nicknameResponse)
+//                    .build(), HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(CommonResponse.builder()
+//                    .status(HttpStatus.OK.value())
+//                    .message("닉네임이 없습니다.")
+//                    .data(validNick)
+//                    .build(), HttpStatus.OK);
+//        }
+//    }
+
+    @GetMapping("/login/checkNickname/{email}/{provider}")
+    public ResponseEntity<CommonResponse> checkNickname(
+            @PathVariable String email,
+            @PathVariable String provider
+    ) {
+        boolean validNick = oAuthLoginService.findNicknameAndProvider(email, provider);
+        if (validNick) {
             OAuthLoginService.nicknameResponse nicknameResponse = oAuthLoginService.firstSelect(email);
-            return new ResponseEntity<>(CommonResponse.builder()
-                    .status(HttpStatus.OK.value())
-                    .message("닉네임이 있습니다.")
-                    .data(nicknameResponse)
-                    .build(), HttpStatus.OK);
+            if (nicknameResponse != null) {
+                return new ResponseEntity<>(CommonResponse.builder()
+                        .status(HttpStatus.OK.value())
+                        .message("닉네임이 있습니다.")
+                        .data(nicknameResponse)
+                        .build(), HttpStatus.OK);
+            } else {
+                // nicknameResponse가 null인 경우에 대한 처리
+                return new ResponseEntity<>(CommonResponse.builder()
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .message("닉네임 조회 중 오류 발생")
+                        .build(), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } else {
             return new ResponseEntity<>(CommonResponse.builder()
                     .status(HttpStatus.OK.value())

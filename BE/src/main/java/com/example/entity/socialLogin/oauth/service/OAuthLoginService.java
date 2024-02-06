@@ -64,13 +64,32 @@ public class OAuthLoginService {
         return userRepository.save(user).getId();
     }
 
-    public Boolean findNickname(String email) {
+//    public Boolean findNickname(String email) {
+//        Optional<User> findUser = userRepository.findByEmail(email);
+//        String nickname = findUser.get().getNickname();
+//        if(nickname == null) {
+//            return false;
+//        } else
+//            return true;
+//    }
+
+    public boolean findNicknameAndProvider(String email, String provider) {
         Optional<User> findUser = userRepository.findByEmail(email);
-        String nickname = findUser.get().getNickname();
-        if(nickname == null) {
-            return false;
-        } else
-            return true;
+        if (findUser.isPresent()) {
+            User user = findUser.get();
+            if (OAuthProvider.KAKAO.name().equalsIgnoreCase(provider)) {
+                return checkNickname(user.getEmail(), OAuthProvider.KAKAO);
+            } else if (OAuthProvider.NAVER.name().equalsIgnoreCase(provider)) {
+                return checkNickname(user.getEmail(), OAuthProvider.NAVER);
+            }
+        }
+        return false;
+    }
+
+    private boolean checkNickname(String email, OAuthProvider provider) {
+        User findUser = userRepository.findByEmailAndOAuthProvider(email, provider);
+        String nickname = findUser.getNickname();
+        return nickname != null;
     }
 
     public nicknameResponse firstSelect(String email) {
