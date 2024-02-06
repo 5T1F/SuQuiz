@@ -49,7 +49,6 @@ const Flashcard = ({ currentWord }) => {
   const toggleCard = () => {
     setIsFlipped(!isFlipped);
   };
-
   const toggleBookmark = async () => {
     try {
       if (currentWord.isBookmarked) {
