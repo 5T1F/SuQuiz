@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+import { addWordsByUser, deleteWordsByUser } from "../../apis/learningApi";
 
 const CardBox = ({ currentWord, toggleBookmark }) => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -23,7 +24,7 @@ const CardBox = ({ currentWord, toggleBookmark }) => {
             toggleBookmark();
           }}
         >
-          {currentWord.isBookmarked ? "☆" : "☆"}
+          {currentWord.isBookmarked ? "북마크에서 빼기" : "북마크추가하기"}
         </button>
       </div>
       <div className="flex justify-center items-center">
@@ -50,9 +51,25 @@ const Flashcard = ({ currentWord }) => {
     setIsFlipped(!isFlipped);
   };
 
-  const toggleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-    // 북마크 상태 변경 로직을 여기에 추가 (예: API 호출)
+  const toggleBookmark = async () => {
+    // currentWord 매개변수 제거
+    const wordUser = {
+      userEmail: "dummy@example.com",
+      wordName: currentWord.wordName,
+    };
+    try {
+      if (currentWord.isBookmarked) {
+        // isBookmarked 상태로 북마크 여부 확인
+        await deleteWordsByUser(wordUser);
+        console.log("북마크에서 해제: ", currentWord);
+      } else {
+        await addWordsByUser(wordUser);
+        console.log("북마크에 추가: ", currentWord);
+      }
+      setIsBookmarked(!isBookmarked);
+    } catch (error) {
+      console.error("Error toggling bookmark:", error);
+    }
   };
 
   return <CardBox currentWord={{ ...currentWord, isBookmarked }} toggleBookmark={toggleBookmark} />;
