@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import WordList from "./WordList";
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
-import { wordsfromCategory } from "../../apis/learningApi";
+import { allWordsByUser, wordsfromCategory } from "../../apis/learningApi";
 
 function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
   const mainCategories = ["자음", "모음", "숫자", "낱말", "단어장"];
@@ -9,14 +9,25 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
   const [wordsProp, setWordsProp] = useState([]);
 
   const activeTabWords = useMemo(() => {
-    return wordsProp.filter((word) => word.category === activeTab);
+    if (activeTab === "단어장") {
+      return wordsProp;
+    } else {
+      return wordsProp.filter((word) => word.category === activeTab);
+    }
   }, [wordsProp, activeTab]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await wordsfromCategory(1, activeTab); // activeTab에 따라 단어 불러오기
-        setWordsProp(data.data);
+        let data = [];
+        if (activeTab === "단어장") {
+          const response = await allWordsByUser("asd@naver.com"); //////////////유저이메일 수정할 것
+          data = response.data.wordList;
+        } else {
+          const response = await wordsfromCategory(1, activeTab); ///////////////유저아이디 수정할 것
+          data = response.data;
+        }
+        setWordsProp(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

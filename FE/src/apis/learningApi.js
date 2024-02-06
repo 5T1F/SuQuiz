@@ -117,7 +117,11 @@ export async function allWordsByUser(userEmail) {
 }
 
 // 단어장에 단어 추가
-export async function addWordsByUser(userWord) {
+export async function addWordsByUser(userEmail, wordName) {
+  const userWord = {
+    userEmail: userEmail,
+    wordName: wordName,
+  };
   try {
     const response = await fetch(BASE_URL + "/bookmarks/words", {
       method: "POST",
