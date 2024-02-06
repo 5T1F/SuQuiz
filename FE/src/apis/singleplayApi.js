@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/wordle";
+const BASE_URL = process.env.REACT_APP_API_ROOT + "/wordle";
 
 // 오늘의 문제풀이 여부
 export async function isSolved(userId) {

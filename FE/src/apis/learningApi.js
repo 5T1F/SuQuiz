@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = process.env.REACT_APP_API_ROOT;
 
 // 전체 주제명 조회 (1 일상 2 관계 3 감정 ...등)
 export async function AllSubject() {

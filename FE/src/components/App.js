@@ -9,7 +9,8 @@ import styles from "./App.module.css";
 import "./App.font.css";
 
 export default function App() {
-  const user = useAuthStore((state) => state.user);
+  // const user = useAuthStore((state) => state.user);
+  const user = "하하";
 
   return (
     <>
