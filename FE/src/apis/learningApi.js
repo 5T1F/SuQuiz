@@ -24,9 +24,9 @@ export async function AllSubject() {
 }
 
 // 주제별 단어 목록 조회
-export async function AllWordWithSubject(subjectName) {
+export async function AllWordWithSubject(userId, subjectName) {
   try {
-    const response = await fetch(`${BASE_URL}/subject/all`, {
+    const response = await fetch(`${BASE_URL}/subject/all/${userId}/`, {
       method: "GET",
       body: JSON.stringify({ subjectName: subjectName }),
     });
@@ -71,9 +71,9 @@ export async function allWords() {
 }
 
 // 카테고리별 단어 조회
-export async function wordsfromCategory(category) {
+export async function wordsfromCategory(userId, category) {
   try {
-    const response = await fetch(`${BASE_URL}/word/categoryWords?category=${category}`, {
+    const response = await fetch(`${BASE_URL}/word/categoryWords/${userId}?category=${category}`, {
       method: "GET",
     });
     if (!response.ok) {
@@ -94,9 +94,9 @@ export async function wordsfromCategory(category) {
 }
 
 // 단어장에 저장한 모든 단어 목록 조회
-export async function allWordsByUser(user) {
+export async function allWordsByUser(userEmail) {
   try {
-    const response = await fetch(`${BASE_URL}/bookmarks/words?user=${user}`, {
+    const response = await fetch(`${BASE_URL}/bookmarks/words?user=${userEmail}`, {
       method: "GET",
     });
     if (!response.ok) {
@@ -137,7 +137,7 @@ export async function addWordsByUser(userWord) {
 }
 
 // 단어장에서 단어 삭제
-export async function deleteWordsByUser(word) {
+export async function deleteWordsByUser(userWord) {
   try {
     const response = await fetch(BASE_URL + "/bookmarks/words", {
       method: "DELETE",

@@ -16,13 +16,11 @@ export default function App() {
     <>
       <Nav className={styles.nav} />
       <div className={styles.bodyAndFooter}>
-        <div>
-          <body className={styles.body}>
-            {/* 로그인 안하면 메인페이지에서 못 벗어남 */}
-            {/* 로그인 모달 연결되게 바꿔보자~~~ */}
-            {user == null ? <Navigate to={"/"} /> : <></>}
-            <Outlet />
-          </body>
+        <div className={styles.body}>
+          {/* 로그인 안하면 메인페이지에서 못 벗어남 */}
+          {/* 로그인 모달 연결되게 바꿔보자~~~ */}
+          {user == null ? <Navigate to={"/"} /> : <></>}
+          <Outlet />
         </div>
         <Footer className={styles.footer} />
       </div>
