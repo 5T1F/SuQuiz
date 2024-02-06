@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SubjectService {
 
-    SubjectDTO.Response findAllSubWith(String subjectName) throws Exception;
+    SubjectDTO.Response findAllSubWith(long userId, String subjectName) throws Exception;
 
     List<SubjectDTO.AllSubject> findAll();
 

@@ -40,7 +40,7 @@ public class EntityAndDtoConversionService {
     }
     public List<WordDTO.WordResponseDto> mapWordEntitiesToDto(List<Word> wordList) {
         return wordList.stream()
-                .map(word -> WordDTO.WordResponseDto.builder().wordName(word.getWordName()).build())
+                .map(word -> WordDTO.WordResponseDto.builder().wordName(word.getWordName()).subjectName(word.getSubject().getSubjectName()).category(word.getCategory().name()).videoUrl(word.getVideoUrl()).build())
                 .collect(Collectors.toList());
     }
 

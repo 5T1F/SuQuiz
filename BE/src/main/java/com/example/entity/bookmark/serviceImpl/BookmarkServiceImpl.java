@@ -39,6 +39,21 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
+    public BookmarkDTO.checkResponse findAllByUserId(long userId) {
+        Optional<User> findUser = userRepository.findById(userId);
+        if(findUser.isPresent()) {
+            List<Bookmark> list = bookmarkRepository.findAllByUser(findUser.get());
+            BookmarkDTO.checkResponse response = conversionService.checkBookmarkEntityToDto(list);
+            return response;
+        } else {
+            // User가 없는 경우에 대한 처리
+            return BookmarkDTO.checkResponse.builder()
+                    .wordList(Collections.emptyList())  // 빈 리스트 또는 null로 설정
+                    .build();
+        }
+    }
+
+    @Override
     public void addWordsByUser(String email, String wordName) {
         Optional<User> findEmail = userRepository.findByEmail(email);
         Word findWord = wordRepository.findByWordName(wordName);
