@@ -111,15 +111,21 @@ public class OAuthLoginService {
 
     @Transactional
     public Boolean registerNickname(nicknameRequest request) {
-        Optional<User> findUser = userRepository.findByEmail(request.getEmail());
+        OAuthProvider provider;
 
-
-        if (findUser.isPresent()) {
-            User user = findUser.get();
-            System.out.println("user.getEmail() = " + user.getEmail());
-            user.changeNickname(request.getNickname());
+        try {
+            provider = OAuthProvider.valueOf(request.getProvider().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return false; // 잘못된 provider 값인 경우
         }
 
+        User user = userRepository.findByEmailAndOAuthProvider(request.getEmail(), provider);
+
+        if (user == null) {
+            return false; // 사용자를 찾을 수 없는 경우
+        }
+
+        user.changeNickname(request.getNickname());
         return true;
     }
 
@@ -143,6 +149,7 @@ public class OAuthLoginService {
     @AllArgsConstructor
     public static class nicknameRequest {
         private final String email;
+        private final String provider;
         private final String nickname;
     }
 
