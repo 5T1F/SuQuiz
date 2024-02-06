@@ -13,7 +13,7 @@ const CardBox = ({ currentWord, toggleBookmark }) => {
     <div
       className={`flex flex-col items-center w-96 mx-auto my-5 p-4 border border-gray-300 shadow-md
                 transition duration-500 transform hover:shadow-xl cursor-pointer
-                ${isFlipped ? "bg-yellow-500" : "bg-white"}`}
+                ${isFlipped ? "bg-blue-500" : "bg-white"}`}
       onClick={toggleCard}
     >
       <div className="flex justify-between w-full">
@@ -24,7 +24,7 @@ const CardBox = ({ currentWord, toggleBookmark }) => {
             toggleBookmark();
           }}
         >
-          {currentWord.bookmarked ? "북마크에서 빼기" : "북마크추가하기"}
+          {currentWord.isBookmarked ? "북마크 추가된 상태" : "북마크 추가하고싶냐?"}
         </button>
       </div>
       <div className="flex justify-center items-center">
@@ -52,7 +52,7 @@ const Flashcard = ({ currentWord }) => {
 
   const toggleBookmark = async () => {
     try {
-      if (currentWord.bookmarked) {
+      if (currentWord.isBookmarked) {
         await deleteWordsByUser("asd@naver.com", currentWord.wordName);
         console.log("북마크에서 해제: ", currentWord);
       } else {

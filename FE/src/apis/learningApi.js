@@ -141,10 +141,18 @@ export async function addWordsByUser(userEmail, wordName) {
 }
 
 // 단어장에서 단어 삭제
-export async function deleteWordsByUser(userWord) {
+export async function deleteWordsByUser(userEmail, wordName) {
+  const userWord = {
+    userEmail: userEmail,
+    wordName: wordName,
+  };
   try {
     const response = await fetch(BASE_URL + "/bookmarks/words", {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userWord),
     });
 
     if (!response.ok) {
