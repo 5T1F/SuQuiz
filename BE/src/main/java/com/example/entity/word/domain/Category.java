@@ -3,5 +3,5 @@ package com.example.entity.word.domain;
 
 
 public enum Category {
-    CONSONANT, VOWEL, NUMBER, WORD
+    자음, 모음, 숫자, 낱말
 }
