@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from "react";
 import WordList from "./WordList";
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
+import { wordsfromCategory } from "../../apis/learningApi";
 
-function CustomTab({ selectedMain, wordList, setCurrentWord }) {
+function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
   const [activeTab, setActiveTab] = useState(selectedMain || "자음");
-
-  // 카테고리 가져오는 api 대신
   const mainCategories = ["자음", "모음", "숫자", "낱말", "단어장"];
+  const [wordsProp, setWordsProp] = useState([]);
 
   useEffect(() => {
-    if (selectedMain) {
-      setActiveTab(selectedMain);
-    }
-  }, [selectedMain]);
+    setActiveTab(selectedMain);
+    const fetchData = async () => {
+      try {
+        const data = await wordsfromCategory(selectedMain);
+        setWordsProp(data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [selectedMain, selectedSub]);
 
   return (
     <>
@@ -38,10 +46,7 @@ function CustomTab({ selectedMain, wordList, setCurrentWord }) {
             (category) =>
               activeTab === category && (
                 <TabPanel key={category} value={category}>
-                  <WordList
-                    wordsProp={wordList.filter((w) => w.category === category)}
-                    setCurrentWord={setCurrentWord}
-                  />
+                  <WordList wordsProp={wordsProp} setCurrentWord={setCurrentWord} />
                 </TabPanel>
               )
           )}
