@@ -1,5 +1,6 @@
-import ReactDOM from 'react-dom/client';
-import Main from './Main';
+import ReactDOM from "react-dom/client";
+import Router from "./Router";
+import "./index.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Main />);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Router />);

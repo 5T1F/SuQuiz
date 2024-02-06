@@ -1,0 +1,18 @@
+.word-box {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.before {
+  background-color: white;
+}
+
+.now {
+  background-color: yellow;
+}
+
+.after {
+  background-color: grey;
+}
