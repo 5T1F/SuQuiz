@@ -80,7 +80,7 @@ public class AuthController {
 //                    .build(), HttpStatus.OK);
 //        }
 //    }
-
+    // 닉네임이 있는지 판단 여부를 위한 요청
     @GetMapping("/login/checkNickname/{email}/{provider}")
     public ResponseEntity<CommonResponse> checkNickname(
             @PathVariable String email,
@@ -88,7 +88,7 @@ public class AuthController {
     ) {
         boolean validNick = oAuthLoginService.findNicknameAndProvider(email, provider);
         if (validNick) {
-            OAuthLoginService.nicknameResponse nicknameResponse = oAuthLoginService.firstSelect(email);
+            OAuthLoginService.NicknameResponse nicknameResponse = oAuthLoginService.firstSelect(email);
             if (nicknameResponse != null) {
                 return new ResponseEntity<>(CommonResponse.builder()
                         .status(HttpStatus.OK.value())

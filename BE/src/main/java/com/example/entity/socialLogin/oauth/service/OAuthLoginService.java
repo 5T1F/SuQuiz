@@ -37,9 +37,11 @@ public class OAuthLoginService {
         OAuthProvider oAuthProvider = oAuthInfoResponse.getOAuthProvider();
         String email = oAuthInfoResponse.getEmail();
         Long userId = findOrCreateMember(oAuthInfoResponse);
+        Optional<User> findUser = userRepository.findById(userId);
+        String nickname = findUser.get().getNickname();
         AuthTokens authTokens = authTokensGenerator.generate(userId);
 
-        return new LoginResult(oAuthProvider,email,authTokens);
+        return new LoginResult(userId, oAuthProvider, nickname, email, authTokens);
     }
 
     private Long findOrCreateMember(OAuthInfoResponse oAuthInfoResponse) {
@@ -92,10 +94,10 @@ public class OAuthLoginService {
         return nickname != null;
     }
 
-    public nicknameResponse firstSelect(String email) {
+    public NicknameResponse firstSelect(String email) {
         Optional<User> findEmail = userRepository.findByEmail(email);
         String nickname = findEmail.get().getNickname();
-        return new nicknameResponse(nickname);
+        return new NicknameResponse(nickname);
     }
     public boolean findAllNickname(String nickname) {
         Optional<User> findNickname = userRepository.findByNickname(nickname);
@@ -130,7 +132,9 @@ public class OAuthLoginService {
     @Data
     @AllArgsConstructor
     public static class LoginResult {
+        private final Long userId;
         private final OAuthProvider oAuthProvider;
+        private final String nickname;
         private final String email;
         private final AuthTokens authTokens;
     }
@@ -144,7 +148,7 @@ public class OAuthLoginService {
 
     @Data
     @AllArgsConstructor
-    public static class nicknameResponse {
+    public static class NicknameResponse {
         private final String nickname;
     }
 
