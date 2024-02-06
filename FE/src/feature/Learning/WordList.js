@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 export default function WordList({ wordsProp, setCurrentWord }) {
-  const [words, setWords] = useState(wordsProp || []);
+  const [words, setWords] = useState([...wordsProp, { status: "before" }]);
 
+  console.log(words);
   useEffect(() => {
-    setWords(words || []);
+    setWords([...wordsProp, { status: "before" }]); // 자꾸 초기화 되는 문제
   }, [wordsProp]);
 
   const handleWordClick = (clickedWord) => {
     const updatedWords = words.map((word) => {
-      if (word.word === clickedWord.word) {
+      if (word.wordName === clickedWord.wordName) {
         return { ...word, status: "now" };
       } else if (word.status === "now") {
         return { ...word, status: "after" };
@@ -17,7 +18,14 @@ export default function WordList({ wordsProp, setCurrentWord }) {
       return word;
     });
 
-    setWords(updatedWords);
+    const newWords = updatedWords.map((word, index) => {
+      if (index === words.findIndex((w) => w.wordName === clickedWord.wordName)) {
+        return { ...word, status: "now" };
+      }
+      return word;
+    });
+
+    setWords(newWords);
     setCurrentWord(clickedWord);
   };
 
@@ -29,10 +37,9 @@ export default function WordList({ wordsProp, setCurrentWord }) {
     <>
       {/* 단어사이 간격  space-y-1  */}
       <div className="space-y-1">
-        {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
-        {words.map((word) => (
+        {words.map((word, index) => (
           <div
-            key={word.word}
+            key={index}
             onClick={() => handleWordClick(word)}
             className={`flex items-center justify-center h-8 rounded-lg outline-none ${
               word.status === "before"
@@ -42,7 +49,7 @@ export default function WordList({ wordsProp, setCurrentWord }) {
                 : "bg-gray-200 shadow-inner"
             }`}
           >
-            {word.word} - {word.status}
+            {word.wordName} - {word.status}
           </div>
         ))}
       </div>
