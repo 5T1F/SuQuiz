@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AllSubject } from "../../apis/learningApi";
 
 export default function SelectCategory() {
+  const navigate = useNavigate();
   const [selectedMain, setSelectedMain] = useState("");
   const [selectedSub, setSelectedSub] = useState("");
-  const navigate = useNavigate();
 
   const mainCategories = ["자음", "모음", "숫자", "낱말", "단어장"];
-  const subCategories = ["동물", "사물", "일상"];
+  const [subCategories, setSubCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await AllSubject();
+        setSubCategories(data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleMainCategoryChange = (category) => {
     setSelectedMain(category);
@@ -45,9 +59,12 @@ export default function SelectCategory() {
         <div className="flex flex-col justify-start items-center gap-6">
           <div className="text-yellow-950 text-base font-black">낱말 주제를 고르세요</div>
           <div className="flex justify-center items-center gap-6">
-            {subCategories.map((subCategory) => (
-              <CategoryButton key={subCategory} category={subCategory} onClick={handleSubCategoryChange} />
-            ))}
+            {subCategories.map((item, index) => {
+              if (index >= 1) {
+                return <CategoryButton key={index} category={item.subjectName} onClick={handleSubCategoryChange} />;
+              }
+              return null; // index가 2보다 작은 경우에는 아무것도 렌더링하지 않음
+            })}
           </div>
         </div>
       )}

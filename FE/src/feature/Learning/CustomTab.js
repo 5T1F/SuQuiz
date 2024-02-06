@@ -1,17 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import WordList from "./WordList";
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
+import { wordsfromCategory } from "../../apis/learningApi";
 
-function CustomTab({ selectedMain, wordList, setCurrentWord }) {
-  const [activeTab, setActiveTab] = useState(selectedMain || "자음");
-
-  // 카테고리 가져오는 api 대신
+function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
   const mainCategories = ["자음", "모음", "숫자", "낱말", "단어장"];
+  const [activeTab, setActiveTab] = useState(selectedMain || "자음");
+  const [wordsProp, setWordsProp] = useState([]);
+
+  const activeTabWords = useMemo(() => {
+    return wordsProp.filter((word) => word.category === activeTab);
+  }, [wordsProp, activeTab]);
 
   useEffect(() => {
-    if (selectedMain) {
-      setActiveTab(selectedMain);
-    }
+    const fetchData = async () => {
+      try {
+        const data = await wordsfromCategory(1, activeTab); // activeTab에 따라 단어 불러오기
+        setWordsProp(data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [activeTab]);
+
+  useEffect(() => {
+    setActiveTab(selectedMain);
   }, [selectedMain]);
 
   return (
@@ -22,7 +37,7 @@ function CustomTab({ selectedMain, wordList, setCurrentWord }) {
             <Tab
               key={category}
               value={category}
-              onClick={() => setActiveTab(category)}
+              onClick={() => setActiveTab(category)} // 탭 클릭 시 activeTab 업데이트
               className={`flex items-center h-6 font-medium rounded-lg outline-none ${
                 activeTab === category
                   ? "border-blue-500 text-yellow-500 shadow bg-white"
@@ -38,10 +53,7 @@ function CustomTab({ selectedMain, wordList, setCurrentWord }) {
             (category) =>
               activeTab === category && (
                 <TabPanel key={category} value={category}>
-                  <WordList
-                    wordsProp={wordList.filter((w) => w.category === category)}
-                    setCurrentWord={setCurrentWord}
-                  />
+                  <WordList wordsProp={activeTabWords} setCurrentWord={setCurrentWord} />
                 </TabPanel>
               )
           )}

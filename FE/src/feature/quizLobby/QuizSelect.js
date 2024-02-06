@@ -1,47 +1,141 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import ModalNoMatchingRoom from "./ModalNoMatchingRoom";
+import ModalFullRoom from "./ModalFullRoom";
 
 import styles from "./QuizSelect.module.css";
 
 const QuizSelect = () => {
-  const [ranking, setRanking] = useState([]);
+  // 로그인 구현하면 수정!!**************************
+  const userId = null;
+  const [codeValue, setCodeValue] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchRanking = async () => {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}`); // !!!API 경로 채워야 됨!!!
-        const data = await response.json();
-        setRanking(data.nickname);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // 모달창 노출 여부 state
+  const [noMatchingModalOpen, setNoMatchingModalOpen] = useState(false);
+  const [fullRoomModalOpen, setFullRoomModalOpen] = useState(false);
 
-    fetchRanking();
-  }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 호출
+  // 함수를 전달하여 클릭 시 모달 열기
+  const handleNoMatchingRoom = () => {
+    setNoMatchingModalOpen(true);
+  };
+
+  // 함수를 전달하여 모달 닫기
+  const handleCloseModalNoMatchingRoom = () => {
+    setNoMatchingModalOpen(false);
+  };
+
+  // 함수를 전달하여 클릭 시 모달 열기
+  const handleFullRoom = () => {
+    setFullRoomModalOpen(true);
+  };
+
+  // 함수를 전달하여 모달 닫기
+  const handleCloseModalFullRoom = () => {
+    setFullRoomModalOpen(false);
+  };
+
+  const navigateWaitingRoom = (isManager) => {
+    if (isManager) {
+      fetch(`${process.env.REACT_APP_API_ROOT}/quizrooms/${userId}`, {
+        method: "POST",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setCodeValue(data);
+        })
+        .catch((error) => {
+          // 오류 발생 시
+          console.error("Error making quiz room request:", error);
+        });
+    } else {
+      fetch(`${process.env.REACT_APP_API_ROOT}/quizrooms/isFull/${codeValue}`, {
+        method: "POST",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data === "true") {
+            // 퀴즈룸 입장
+            fetch(`${process.env.REACT_APP_API_ROOT}/quizrooms/enter/${codeValue}`, {
+              method: "POST",
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data === "true") {
+                  // 퀴즈룸 입장
+                } else {
+                  // 해당 방이 존재하지 않습니다 모달
+                  handleNoMatchingRoom();
+                }
+              })
+              .catch((error) => {
+                // 오류 발생 시
+                console.error("Error making quiz room request:", error);
+              });
+          } else {
+            // 만석으로 입장 불가 모달
+            handleFullRoom();
+          }
+        })
+        .catch((error) => {
+          // 오류 발생 시
+          console.error("Error making quiz room request:", error);
+        });
+    }
+    navigate("/multiplay", {
+      state: {
+        manager: isManager,
+        enterCode: codeValue,
+      },
+    });
+  };
 
   return (
     <>
       <div className="flex">
-        <div className="w-1/6 p-1 border-4 border-yellow-500">
-          <Link to="/singleplay">
-            <button>싱글플레이</button>
-          </Link>
+        <Link to="/singleplay">
+          <div className="h-40 p-1 border-4 border-yellow-500">싱글플레이</div>
+        </Link>
+        <div
+          className={`h-40 p-1 border-4 border-gray-500`}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div>멀티플레이</div>
+          {isHovered ? (
+            <>
+              <div className={`h-15 p-1 border-4 border-blue-500`} onClick={() => navigateWaitingRoom(true)}>
+                방 만들기
+              </div>
+              <div className={`h-15 p-1 border-4 border-green-500`}>
+                <div onClick={() => navigateWaitingRoom(false)}>코드로 입장하기</div>
+                <input
+                  type="text"
+                  placeholder="입장 코드를 입력하세요"
+                  value={codeValue}
+                  onChange={(e) => setCodeValue(e.target.value)}
+                />
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
-        <div className="w-1/6 p-1 border-4 border-gray-500">
-          <Link to="/multiplay">
-            <button>멀티플레이</button>
-          </Link>
-        </div>
+
         {/*<div className="w-1/6 p-1 border-4 border-pink-500">
           <Link to="/tutorial">
             <button>튜토리얼</button>
           </Link>
         </div>*/}
       </div>
+
+      {/* modalOpen이 true일 때만 모달 렌더링 */}
+      {noMatchingModalOpen && <ModalNoMatchingRoom onClose={handleCloseModalNoMatchingRoom} />}
+      {fullRoomModalOpen && <ModalFullRoom onClose={handleCloseModalFullRoom} />}
     </>
   );
 };
 
 export default QuizSelect;
-//test

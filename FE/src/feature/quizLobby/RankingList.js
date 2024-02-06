@@ -44,9 +44,9 @@ const RankingList = () => {
               {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
               {rankingData.ranking.slice(0, 13).map((entry, index) => (
                 <li key={index}>
-                  <p>N: {entry.nickname}</p>
-                  <p>L: {entry.level}</p>
-                  <p>E: {entry.exp}</p>
+                  <p>{entry.nickname}</p>
+                  <p>{entry.level}</p>
+                  <p>{entry.exp}</p>
                 </li>
               ))}
             </ul>

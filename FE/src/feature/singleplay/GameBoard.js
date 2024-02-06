@@ -14,11 +14,12 @@ function GameBoard({ inputString, history, colors }) {
         const cellStyle = {
           width: "40px", // 각 셀의 너비
           height: "40px", // 각 셀의 높이
-          backgroundColor: colors[charIndex] || "white", // 셀의 배경색
-          border: "1px solid black", // 셀의 테두리
+          backgroundColor: colors[row * 5 + col] || "white", // 셀의 배경
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          borderRadius: "15%",
+          margin: "3px 2px",
         };
 
         rowCells.push(
