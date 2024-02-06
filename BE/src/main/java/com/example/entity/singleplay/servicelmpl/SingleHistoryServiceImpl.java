@@ -8,10 +8,8 @@ import com.example.entity.singleplay.service.SingleHistoryService;
 import com.example.entity.singleplay.repository.SingleHistoryRepository;
 import com.example.entity.user.repository.UserRepository;
 import com.example.entity.global.service.EntityAndDtoConversionService;
-import com.example.entity.word.domain.DailyWord;
 import com.example.entity.word.domain.Word;
 import com.example.entity.word.repository.WordRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -32,7 +30,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
     private static QuestDto.DailyResponse dailyResponse;
     @Override
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void createDaily() {
         System.out.println("create daily quest");
         List<Word> words = wordRepository.findAll();

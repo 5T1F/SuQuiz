@@ -20,11 +20,12 @@ public class MypageService {
     private final UserRepository userRepository;
     private final SingleHistoryRepository singleHistoryRepository;
 
-    public MypageDto.UserResponse find(String email) {
+    public MypageDto.UserResponse find(long userId) {
         /**
          * nickname, profile image, level, exp
          */
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findById(userId);
+        System.out.println("유저 : " + optionalUser.get().getId());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 

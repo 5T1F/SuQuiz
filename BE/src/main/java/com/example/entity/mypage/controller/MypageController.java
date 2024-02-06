@@ -24,15 +24,16 @@ public class MypageController {
      * GET : query parameter
      * POST, PUT, DELETE : request body
      */
-    @GetMapping("/find/{userId}")
-    public ResponseEntity<CommonResponse<MypageDto.UserResponse>> find(@PathVariable(value = "userId") String email) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<CommonResponse<MypageDto.UserResponse>> find(@PathVariable(value = "userId") long userId) {
         /**
          * nickname, profile image, level, exp
          */
-        MypageDto.UserResponse response = mypageService.find(email);
+        MypageDto.UserResponse response = mypageService.find(userId);
+
         return new ResponseEntity<>(CommonResponse.<MypageDto.UserResponse>builder()
                 .status(HttpStatus.OK.value())
-                .message("success : find user nickname")
+                .message("success : find user")
                 .data(response)
                 .build(), HttpStatus.OK);
     }
