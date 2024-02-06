@@ -10,6 +10,7 @@ import com.example.entity.user.domain.Level;
 import com.example.entity.user.domain.User;
 import com.example.entity.user.repository.LevelRepository;
 import com.example.entity.user.repository.UserRepository;
+import com.example.entity.word.domain.Category;
 import com.example.entity.word.domain.Word;
 import com.example.entity.word.repository.WordRepository;
 import lombok.RequiredArgsConstructor;
@@ -90,7 +91,7 @@ public class QuizroomServiceImpl implements QuizroomService {
                 user.updateIsPlaying();
             }
 
-            List<Word> allWord = wordRepository.findAll();
+            List<Word> allWord = wordRepository.findByCategory(Category.낱말);
             List<Word> selectedWords = new ArrayList<>();
             Random random = new Random();
             for(int i=0; i<3; i++) {

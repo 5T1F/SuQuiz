@@ -31,7 +31,7 @@ public class QuizroomController {
         }
         else {
             return new ResponseEntity<>(CommonResponse.builder()
-                    .status(HttpStatus.BAD_REQUEST.value())
+                    .status(HttpStatus.OK.value())
                     .message("퀴즈룸 생성 실패")
                     .data("")
                     .build(), HttpStatus.BAD_REQUEST);
@@ -127,12 +127,12 @@ public class QuizroomController {
 
     // 퀴즈 룸 멀티게임 종료
 
-    @PutMapping("/end/{roomId}")
+    @PutMapping("/end/{quizroomId}")
     public ResponseEntity<CommonResponse> endQuizgame(@PathVariable Long quizroomId, @RequestBody List<EndQuizDto.Request> requests) {
         List<EndQuizDto.Response> resultList = quizroomService.endQuizgame(quizroomId, requests);
         return new ResponseEntity<>(CommonResponse.builder()
                 .status(HttpStatus.OK.value())
-                .message("퀴즈게임 종료 성공")
+                .message("퀴즈게임 종료")
                 .data(resultList)
                 .build(), HttpStatus.OK);
     }
