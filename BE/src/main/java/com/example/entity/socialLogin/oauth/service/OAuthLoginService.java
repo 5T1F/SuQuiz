@@ -76,29 +76,29 @@ public class OAuthLoginService {
 //    }
 
     public boolean findNicknameAndProvider(String email, String provider) {
-        Optional<User> findUser = userRepository.findByEmail(email);
-        if (findUser.isPresent()) {
-            User user = findUser.get();
-            if (OAuthProvider.KAKAO.name().equalsIgnoreCase(provider)) {
-                return checkNickname(user.getEmail(), OAuthProvider.KAKAO);
-            } else if (OAuthProvider.NAVER.name().equalsIgnoreCase(provider)) {
-                return checkNickname(user.getEmail(), OAuthProvider.NAVER);
-            }
+        if (OAuthProvider.KAKAO.name().equalsIgnoreCase(provider)) {
+            return checkNickname(email, OAuthProvider.KAKAO);
+        } else if (OAuthProvider.NAVER.name().equalsIgnoreCase(provider)) {
+            return checkNickname(email, OAuthProvider.NAVER);
         }
         return false;
     }
 
     private boolean checkNickname(String email, OAuthProvider provider) {
         User findUser = userRepository.findByEmailAndOAuthProvider(email, provider);
+        if(findUser == null) {
+            return false;
+        }
         String nickname = findUser.getNickname();
         return nickname != null;
     }
 
-    public NicknameResponse firstSelect(String email) {
-        Optional<User> findEmail = userRepository.findByEmail(email);
-        String nickname = findEmail.get().getNickname();
-        return new NicknameResponse(nickname);
-    }
+//    public NicknameResponse selectUser(String email) {
+//        Optional<User> findEmail = userRepository.findByEmail(email);
+//        String nickname = findEmail.get().getNickname();
+//        return new NicknameResponse(nickname);
+//    }
+
     public boolean findAllNickname(String nickname) {
         Optional<User> findNickname = userRepository.findByNickname(nickname);
         // 닉네임을 가진 유저가 있으면 false, 없으면 true
@@ -113,7 +113,7 @@ public class OAuthLoginService {
     public Boolean registerNickname(nicknameRequest request) {
         Optional<User> findUser = userRepository.findByEmail(request.getEmail());
 
-        
+
         if (findUser.isPresent()) {
             User user = findUser.get();
             System.out.println("user.getEmail() = " + user.getEmail());

@@ -87,25 +87,19 @@ public class AuthController {
             @PathVariable String provider
     ) {
         boolean validNick = oAuthLoginService.findNicknameAndProvider(email, provider);
+        // true면 닉네임이 있음, false면 없음
         if (validNick) {
-            OAuthLoginService.NicknameResponse nicknameResponse = oAuthLoginService.firstSelect(email);
-            if (nicknameResponse != null) {
-                return new ResponseEntity<>(CommonResponse.builder()
-                        .status(HttpStatus.OK.value())
-                        .message("닉네임이 있습니다.")
-                        .data(nicknameResponse)
-                        .build(), HttpStatus.OK);
-            } else {
-                // nicknameResponse가 null인 경우에 대한 처리
-                return new ResponseEntity<>(CommonResponse.builder()
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                        .message("닉네임 조회 중 오류 발생")
-                        .build(), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } else {
+
             return new ResponseEntity<>(CommonResponse.builder()
                     .status(HttpStatus.OK.value())
-                    .message("닉네임이 없습니다.")
+                    .message("닉네임이 있습니다.(가입 회원)")
+                    .data(validNick)
+                    .build(), HttpStatus.OK);
+        } else {
+            // nicknameResponse가 null인 경우에 대한 처리
+            return new ResponseEntity<>(CommonResponse.builder()
+                    .status(HttpStatus.OK.value())
+                    .message("닉네임이 없습니다.(초기 회원)")
                     .data(validNick)
                     .build(), HttpStatus.OK);
         }
