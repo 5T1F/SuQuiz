@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 export default function WordList({ wordsProp, setCurrentWord }) {
   const [words, setWords] = useState(wordsProp);
 
-  console.log(words);
   useEffect(() => {
     // wordsProp을 직접적으로 설정하도록 변경
     setWords(wordsProp);

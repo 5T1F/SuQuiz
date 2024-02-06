@@ -23,6 +23,7 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
         if (activeTab === "단어장") {
           const response = await allWordsByUser("asd@naver.com"); //////////////유저이메일 수정할 것
           data = response.data.wordList;
+          console.log(data);
         } else {
           const response = await wordsfromCategory(1, activeTab); ///////////////유저아이디 수정할 것
           data = response.data;
