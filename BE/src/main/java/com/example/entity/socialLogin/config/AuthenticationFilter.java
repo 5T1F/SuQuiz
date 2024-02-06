@@ -20,7 +20,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     // filter를 거치지 않을 특정 url
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return request.getServletPath().startsWith("/users/login");
+        String path = request.getServletPath();
+        return path.startsWith("/users/login/") || path.equals("/api/naver/callback") || path.equals("/naver/callback")
+                || path.equals("/api/kakao/callback") || path.equals("/kakao/callback");
     }
 
     private static final String TOKEN_HEADER = "Authorization";
