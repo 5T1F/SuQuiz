@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import UserInfo from "./userInfo/UserInfo";
 import Community from "./community/Community";

@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 
+import { useUserNicknameStore } from "../../../../app/store";
 import ModalNoMatchingUser from "./ModalNoMatchingUser";
 
 import styles from "./ModalMakeFriend.module.css";
 
 const ModalEndFriendship = ({ onClose, friendNickname }) => {
-  // 로그인 완성 되면 채우기 *************************
-  const userId = null; // 친구 요청 목록을 위해
+  // const {userNickname,setUserNickname} = useUserNicknameStore(); // 친구 요청 목록을 위해
+  const userNickname = "DummyUser2";
   const modalRef = useRef();
 
   const handleClickInside = (event) => {
@@ -16,7 +17,7 @@ const ModalEndFriendship = ({ onClose, friendNickname }) => {
   const handleEndFriendship = async () => {
     try {
       const requestBody = {
-        fromNickname: userId,
+        fromNickname: userNickname,
         toNickname: friendNickname,
       };
 
@@ -28,8 +29,8 @@ const ModalEndFriendship = ({ onClose, friendNickname }) => {
         body: JSON.stringify(requestBody),
       });
       const data = await response.json();
-
-      if (data.status === "ok") {
+      console.log(requestBody);
+      if (data.status === 200) {
         console.log(`친구 관계가 성공적으로 삭제되었습니다.`);
         // 여기에 성공 처리에 대한 로직을 추가하세요.
       } else {

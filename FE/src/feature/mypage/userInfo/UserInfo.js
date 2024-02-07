@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  useAuthStore,
-  useTokenStore,
-  useProviderStore,
-  useUserEmailStore,
-  useUserNicknameStore,
-} from "../../../app/store";
+import { useAuthStore, useTokenStore } from "../../../app/store";
 import ModalModify from "../../auth/modify/ModalModify";
-
-import styles from "./USerInfo.module.css";
 
 const UserInfo = () => {
   const { userId, setUserId } = useAuthStore();
-  const { provider, setProvider } = useProviderStore();
-  const { userEmail, setUserEmail } = useUserEmailStore();
-  const { userNickname, setUserNickname } = useUserNicknameStore();
   const { accessToken, setAccessToken } = useTokenStore();
   const [userInfoData, setUserInfoData] = useState(null);
   // 모달창 노출 여부 state
@@ -56,78 +45,18 @@ const UserInfo = () => {
         };
   };
 
-  const params = {
-    client_id: process.env.REACT_APP_KAKAO_REST_API_KEY,
-    logout_redirect_uri: `${process.env.REACT_APP_API_ROOT}/logout/kakao`,
-  };
-
-  // 객체를 쿼리 문자열로 변환하는 함수
-  const stringParams = (params) => {
-    return Object.keys(params)
-      .map((key) => key + "=" + params[key])
-      .join("&");
-  };
-
-  const handleKakaoLogout = async () => {
-    try {
-      console.log(accessToken);
-      const queryString = stringParams(params);
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/logout/kakao?${queryString}`, {
-        method: "GET",
-        headers: {
-          Athorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      } else {
-        setUserId(0);
-        setAccessToken(null);
-        setUserEmail(null);
-        setUserNickname(null);
-        setProvider(null);
-        alert("로그아웃 완료");
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  const handleNaverLogout = async () => {
-    try {
-      console.log(accessToken);
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/logout/naver`, {
-        method: "POST",
-        headers: {
-          Athorization: `Bearer ${accessToken}`,
-        },
-        body: {
-          accessToken: accessToken,
-          serviceProvider: "NAVER",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      } else {
-        setUserId(0);
-        setAccessToken(null);
-        setUserEmail(null);
-        setUserNickname(null);
-        setProvider(null);
-        alert("로그아웃 완료");
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
   const handleLogout = () => {
-    if (provider === "NAVER") {
-      handleNaverLogout();
-    } else {
-      handleKakaoLogout();
+    try {
+      localStorage.setItem("idStorage", 0);
+      localStorage.setItem("tokenStorage", null);
+      localStorage.setItem("emailStorage", null);
+      localStorage.setItem("nicknameStorage", null);
+      localStorage.setItem("providerStorage", null);
+      window.location.replace("/");
+
+      alert("로그아웃 완료");
+    } catch (error) {
+      alert(error);
     }
   };
 

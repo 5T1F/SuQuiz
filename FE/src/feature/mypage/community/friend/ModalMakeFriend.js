@@ -1,13 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 
-import { useAuthStore, useTokenStore } from "../../../../app/store";
+import { useUserNicknameStore } from "../../../../app/store";
 import ModalNoMatchingUser from "./ModalNoMatchingUser";
 
 import styles from "./ModalMakeFriend.module.css";
 
 const Modal = ({ onClose }) => {
-  const { userId, setUserId } = useAuthStore();
-  const { accessToken, setAccessToken } = useTokenStore();
+  // const {userNickname,setUserNickname} = useUserNicknameStore();
+  const userNickname = "DummyUser"; // 친구 요청 목록을 위해
   const modalRef = useRef();
   const [searchValue, setSearchValue] = useState("");
   // 모달창 노출 여부 state
@@ -29,21 +29,18 @@ const Modal = ({ onClose }) => {
 
   const handleSearch = () => {
     // 여기에서 API 요청을 보내도록 작성
-    const requestBody = { search: searchValue };
 
     fetch(`${process.env.REACT_APP_API_ROOT}/users/friends?search=${searchValue}`, {
       method: "GET",
-      headers: {
-        Athorization: `Bearer ${accessToken}`,
-      },
-      body: requestBody,
+
       // 기타 필요한 설정들 추가
     })
       .then((response) => response.json())
       .then((data) => {
         // 요청에 대한 응답을 처리
-        console.log(data);
+
         handleSendFriendRequest(searchValue);
+        //만약 친구가 없으면 에러 발생시키기
         onClose();
       })
       .catch((error) => {
@@ -57,7 +54,7 @@ const Modal = ({ onClose }) => {
   const handleSendFriendRequest = async (searchValue) => {
     try {
       const requestBody = {
-        fromNickname: userId,
+        fromNickname: userNickname,
         toNickname: searchValue,
       };
 

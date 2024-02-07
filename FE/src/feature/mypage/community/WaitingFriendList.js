@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 
+import { useAuthStore, useUserNicknameStore } from "../../../app/store";
 import styles from "./WaitingFriendList.module.css";
 
-const WaitingFriendList = ({ userId }) => {
+const WaitingFriendList = () => {
+  const { userId, setUserId } = useAuthStore();
+  const { userNickname, setUserNickname } = useUserNicknameStore();
   const [requestList, setRequestList] = useState([]);
 
   useEffect(() => {
@@ -12,8 +15,8 @@ const WaitingFriendList = ({ userId }) => {
         const data = await response.json();
 
         // 데이터가 배열 형태인지 확인 후 업데이트
-        if (Array.isArray(data)) {
-          setRequestList(data);
+        if (Array.isArray(data.data)) {
+          setRequestList(data.data);
         }
       } catch (error) {
         console.error("Error fetching friend requests:", error);
@@ -26,7 +29,7 @@ const WaitingFriendList = ({ userId }) => {
   const handleAccept = async (waitingFriend) => {
     try {
       const requestBody = {
-        fromNickname: userId,
+        fromNickname: userNickname,
         toNickname: waitingFriend,
       };
 
@@ -41,14 +44,14 @@ const WaitingFriendList = ({ userId }) => {
       if (response.ok) {
         // 성공적으로 요청이 완료된 경우, requestList 상태를 갱신
         setRequestList((prevList) => prevList.filter((friend) => friend.nickname !== waitingFriend));
-        console.log("Friend request sent successfully!");
+        console.log("Acctepted friend request successfully!");
       } else {
         // 요청이 실패한 경우
-        console.error("Failed to send friend request.");
+        console.error("Failed to accept friend request.");
       }
     } catch (error) {
       // 오류 발생 시
-      console.error("Error sending friend request:", error);
+      console.error("Error accepting friend request:", error);
     }
   };
 
@@ -61,7 +64,7 @@ const WaitingFriendList = ({ userId }) => {
             <li key={index}>
               <p>Nickname: {friend.nickname}</p>
               <p>Level: {friend.level}</p>
-              <button onClick={handleAccept(friend.nickname)}>수락</button>
+              <button onClick={() => handleAccept(friend.nickname)}>수락</button>
             </li>
           ))}
         </ul>

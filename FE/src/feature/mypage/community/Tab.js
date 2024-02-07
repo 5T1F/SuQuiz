@@ -4,7 +4,6 @@ import WaitingFriendList from "./WaitingFriendList";
 import Chatting from "./Chatting";
 
 function CustomTab({ selectedMain }) {
-  const userId = null; // 로그인이 구현되면 채우기 *************************
   const [activeTab, setActiveTab] = useState("FriendList");
 
   useEffect(() => {
@@ -25,7 +24,7 @@ function CustomTab({ selectedMain }) {
         <button onClick={() => handleTabClick("Chatting")}>채팅</button>
       </div>
       {activeTab === "FriendList" && <FriendList />}
-      {activeTab === "WaitingFriendList" && <WaitingFriendList userId={userId} />}
+      {activeTab === "WaitingFriendList" && <WaitingFriendList />}
       {activeTab === "Chatting" && <Chatting />}
       {/* 채팅 탭으로 바꿀 때 최근 채팅했던 친구를 넘겨줘야 됨 */}
     </>

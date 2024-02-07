@@ -1,20 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-import { useAuthStore } from "../app/store";
+import { useAuthStore, useProviderStore, useTokenStore, useUserEmailStore, useUserNicknameStore } from "../app/store";
 import Logo from "../assets/logoShort.png";
 import Slidebar from "../feature/mypage/Slidebar";
 import ModalLogin from "../feature/auth/login/ModalLogin"; // 모달 컴포넌트를 import
-import ModalSignup from "../feature/auth/signup/ModalSignup";
 
 import styles from "./Nav.module.css";
 
 export default function Nav() {
   const { userId, setUserId } = useAuthStore();
+  const { provider, setProvider } = useProviderStore();
+  const { userNickname, setUserNickname } = useUserNicknameStore();
+  const { accessToken, setAccessToken } = useTokenStore();
+  const { userEmail, setUserEmail } = useUserEmailStore();
   const [isSlidebarOpen, setIsSlidebarOpen] = useState(false);
 
   useEffect(() => {
-    console.log("로그인 정보 변화");
+    const storedId = localStorage.getItem("idStorage");
+    const storedEmail = localStorage.getItem("emailStorage");
+    const storedToken = localStorage.getItem("tokenStorage");
+    const storedNickname = localStorage.getItem("nicknameStorage");
+    const storedProvider = localStorage.getItem("providerStorage");
+    try {
+      const parsedId = JSON.parse(storedId);
+      const parsedEmail = JSON.parse(storedEmail);
+      const parsedToken = JSON.parse(storedToken);
+      const parsedNickname = JSON.parse(storedNickname);
+      const parsedProvider = JSON.parse(storedProvider);
+      setUserId(parsedId.state.userId);
+      setProvider(parsedEmail.state.provider);
+      setUserNickname(parsedToken.state.userNickname);
+      setAccessToken(parsedNickname.state.accessToken);
+      setUserEmail(parsedProvider.state.userEmail);
+    } catch (error) {
+      console.error("Error parsing stored data:", error);
+    }
   }, [userId]);
 
   const toggleSlidebar = () => {
@@ -51,7 +72,6 @@ export default function Nav() {
             <div>
               <NavLink to="/learning/bookmark">단어장</NavLink>
             </div>
-            <div>{userId}</div>
             <div className={styles.userInfoContainer}>
               {userId === 0 ? (
                 <div>
