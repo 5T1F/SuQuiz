@@ -58,7 +58,7 @@ const SingleplayModal = ({ result, onClose }) => {
     const textChunks = chunkString(result.resultText, 5);
     correctString += textChunks.join("\n");
     if (result.correct === true) {
-      correctString += "22222";
+      correctString += "\n22222";
     }
 
     navigator.clipboard
