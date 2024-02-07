@@ -94,9 +94,9 @@ export async function wordsfromCategory(userId, category) {
 }
 
 // 단어장에 저장한 모든 단어 목록 조회
-export async function allWordsByUser(userEmail) {
+export async function allWordsByUser(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/bookmarks/words?user=${userEmail}`, {
+    const response = await fetch(`${BASE_URL}/bookmarks/words?user=${userId}`, {
       method: "GET",
     });
     if (!response.ok) {
@@ -117,9 +117,9 @@ export async function allWordsByUser(userEmail) {
 }
 
 // 단어장에 단어 추가
-export async function addWordsByUser(userEmail, wordName) {
+export async function addWordsByUser(userId, wordName) {
   const userWord = {
-    userEmail: userEmail,
+    userId: userId,
     wordName: wordName,
   };
   try {
@@ -141,9 +141,9 @@ export async function addWordsByUser(userEmail, wordName) {
 }
 
 // 단어장에서 단어 삭제
-export async function deleteWordsByUser(userEmail, wordName) {
+export async function deleteWordsByUser(userId, wordName) {
   const userWord = {
-    userEmail: userEmail,
+    userId: userId,
     wordName: wordName,
   };
   try {

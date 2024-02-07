@@ -21,7 +21,7 @@ const Wordle = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const solved = await isSolved("asd@naver.com"); // 사용자의 데일리 문제 풀이 여부 확인
+        const solved = await isSolved(1); // 사용자의 데일리 문제 풀이 여부 확인 ///////////유저아이디 수정
 
         if (solved.data) {
           const additionalData = await additionalQuest(); // 추가 문제 가져오기
@@ -134,7 +134,7 @@ const Wordle = () => {
   // 게임 결과에 따라 모달을 보여줌
   const handleGameEnd = async (res) => {
     const newResult = {
-      email: "asd@naver.com",
+      userId: 1, /////유저아이디 수정
       trialCount: res === "win" ? currentRow : 0,
       correct: res === "win",
       resultText: colorsToText(colors),
