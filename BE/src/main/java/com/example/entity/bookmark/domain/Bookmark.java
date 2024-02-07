@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Bookmark { // user - word
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookmark_id")
     private Long id;
 

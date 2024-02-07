@@ -40,7 +40,7 @@ public class EntityAndDtoConversionService {
     }
     public List<WordDTO.WordResponseDto> mapWordEntitiesToDto(List<Word> wordList) {
         return wordList.stream()
-                .map(word -> WordDTO.WordResponseDto.builder().wordName(word.getWordName()).build())
+                .map(word -> WordDTO.WordResponseDto.builder().wordName(word.getWordName()).subjectName(word.getSubject().getSubjectName()).category(word.getCategory().name()).videoUrl(word.getVideoUrl()).build())
                 .collect(Collectors.toList());
     }
 
@@ -67,7 +67,7 @@ public class EntityAndDtoConversionService {
     // dto -> entity
     public SingleHistory singleHistorySaveDtoToEntity(SingleHistoryDto.SaveRequest singleHistorySaveRequestDto) {
 
-        Optional<User> user = userRepository.findByEmail(singleHistorySaveRequestDto.getEmail());
+        Optional<User> user = userRepository.findById(singleHistorySaveRequestDto.getUserId());
 
         if (user.isPresent()) {
             return SingleHistory.builder()
@@ -85,7 +85,7 @@ public class EntityAndDtoConversionService {
     // entity -> dto
     public SingleHistoryDto.SaveResponse singleHistorySaveEntityToDto(SingleHistory singleHistory) {
         return SingleHistoryDto.SaveResponse.builder()
-                .email(singleHistory.getUser().getEmail())
+                .userId(singleHistory.getUser().getId())
                 .trialCount(singleHistory.getTrialCount())
                 .correct(singleHistory.isCorrect())
                 .resultText(singleHistory.getResultText())
@@ -106,19 +106,20 @@ public class EntityAndDtoConversionService {
 
     public BookmarkDTO.checkResponse checkBookmarkEntityToDto(List<Bookmark> bookmarks) {
 
-        List<WordDTO.WordResponseDto> wordDtoList = converWordListToDtoList(bookmarks);
+        List<WordDTO.WordResponseDto> wordDtoList = convertWordListToDtoList(bookmarks);
         return BookmarkDTO.checkResponse.builder()
                 .wordList(wordDtoList)
                 .build();
     }
 
-    public List<WordDTO.WordResponseDto> converWordListToDtoList(List<Bookmark> bookmarks) {
+    public List<WordDTO.WordResponseDto> convertWordListToDtoList(List<Bookmark> bookmarks) {
         return bookmarks.stream()
                 .map(bookmark -> WordDTO.WordResponseDto.builder()
                         .wordName(bookmark.getWord().getWordName())
                         .subjectName(bookmark.getWord().getSubject().getSubjectName())
                         .category(bookmark.getWord().getCategory().name())
                         .videoUrl(bookmark.getWord().getVideoUrl())
+                        .isBookmarked(true)
                         .build())
                 .collect(Collectors.toList());
     }

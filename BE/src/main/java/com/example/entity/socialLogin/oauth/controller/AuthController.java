@@ -5,10 +5,8 @@ import com.example.entity.socialLogin.oauth.oauthApi.client.RevokeTokenResponseD
 import com.example.entity.socialLogin.oauth.oauthApi.params.KakaoLoginParams;
 import com.example.entity.socialLogin.oauth.oauthApi.params.NaverLoginParams;
 import com.example.entity.socialLogin.oauth.oauthApi.params.NaverLogoutParams;
-import com.example.entity.socialLogin.oauth.oauthApi.response.OAuthInfoResponse;
 import com.example.entity.socialLogin.oauth.service.OAuthLoginService;
 import com.example.entity.socialLogin.oauth.service.OAuthLogoutService;
-import com.example.entity.socialLogin.oauth.tokens.AuthTokens;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -68,10 +66,11 @@ public class AuthController {
     public ResponseEntity<CommonResponse> checkNickname(@PathVariable String email) {
         Boolean validNick = oAuthLoginService.findNickname(email);
         if(validNick) {
+            OAuthLoginService.nicknameResponse nicknameResponse = oAuthLoginService.firstSelect(email);
             return new ResponseEntity<>(CommonResponse.builder()
                     .status(HttpStatus.OK.value())
                     .message("닉네임이 있습니다.")
-                    .data(validNick)
+                    .data(nicknameResponse)
                     .build(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(CommonResponse.builder()
@@ -107,7 +106,7 @@ public class AuthController {
             return new ResponseEntity<>(CommonResponse.builder()
                     .status(HttpStatus.OK.value())
                     .message("닉네임 생성이 가능합니다.")
-                    .data(findNickname)
+                    .data(!findNickname)
                     .build(), HttpStatus.OK);
         }
 

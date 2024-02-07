@@ -18,8 +18,8 @@ import java.time.LocalDate;
 @Getter
 public class SingleHistory {
 
-        @Id @GeneratedValue
-        @Column(name = "sigle_history_id")
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "single_history_id")
         private Long id;
 
         @ManyToOne(fetch = FetchType.LAZY)

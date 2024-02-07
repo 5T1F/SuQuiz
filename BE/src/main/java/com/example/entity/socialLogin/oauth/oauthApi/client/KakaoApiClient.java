@@ -1,11 +1,11 @@
 package com.example.entity.socialLogin.oauth.oauthApi.client;
 
-import com.example.entity.user.domain.OAuthProvider;
 import com.example.entity.socialLogin.oauth.oauthApi.params.OAuthLoginParams;
-import com.example.entity.socialLogin.oauth.oauthApi.response.KakaoInfoResponse;
 import com.example.entity.socialLogin.oauth.oauthApi.params.OAuthLogoutParams;
+import com.example.entity.socialLogin.oauth.oauthApi.response.KakaoInfoResponse;
 import com.example.entity.socialLogin.oauth.oauthApi.response.OAuthInfoResponse;
 import com.example.entity.socialLogin.oauth.tokens.KakaoTokens;
+import com.example.entity.user.domain.OAuthProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

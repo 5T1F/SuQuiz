@@ -6,10 +6,7 @@ import com.example.entity.global.dto.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +26,9 @@ public class SubjectController {
                 .build(), HttpStatus.OK);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<CommonResponse> AllWordWithSubject(@RequestParam String subjectName) throws Exception {
-        SubjectDTO.Response findSub = subjectService.findAllSubWith(subjectName);
+    @GetMapping("/all/{userId}")
+    public ResponseEntity<CommonResponse> AllWordWithSubject(@PathVariable long userId, @RequestParam(name = "subjectName") String subjectName) throws Exception {
+        SubjectDTO.Response findSub = subjectService.findAllSubWith(userId, subjectName);
         return new ResponseEntity<>(CommonResponse.builder()
                 .status(HttpStatus.OK.value())
                 .message("주제에 관련된 내용 전부 조회")
