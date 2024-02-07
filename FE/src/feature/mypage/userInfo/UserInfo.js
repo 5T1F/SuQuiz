@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
 
-import { useAuthStore } from "../../../app/store";
+import {
+  useAuthStore,
+  useTokenStore,
+  useProviderStore,
+  useUserEmailStore,
+  useUserNicknameStore,
+} from "../../../app/store";
 import ModalModify from "../../auth/modify/ModalModify";
 
 import styles from "./USerInfo.module.css";
 
 const UserInfo = () => {
-  const userId = useAuthStore((state) => state.user);
+  const { userId, setUserId } = useAuthStore();
+  const { provider, setProvider } = useProviderStore();
+  const { userEmail, setUserEmail } = useUserEmailStore();
+  const { userNickname, setUserNickname } = useUserNicknameStore();
+  const { accessToken, setAccessToken } = useTokenStore();
   const [userInfoData, setUserInfoData] = useState(null);
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
@@ -16,6 +26,9 @@ const UserInfo = () => {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_ROOT}/mypage/${userId}`, {
           method: "GET",
+          headers: {
+            Athorization: `Bearer ${accessToken}`,
+          },
         });
 
         if (!response.ok) {
@@ -43,6 +56,81 @@ const UserInfo = () => {
         };
   };
 
+  const params = {
+    client_id: process.env.REACT_APP_KAKAO_REST_API_KEY,
+    logout_redirect_uri: `${process.env.REACT_APP_API_ROOT}/logout/kakao`,
+  };
+
+  // 객체를 쿼리 문자열로 변환하는 함수
+  const stringParams = (params) => {
+    return Object.keys(params)
+      .map((key) => key + "=" + params[key])
+      .join("&");
+  };
+
+  const handleKakaoLogout = async () => {
+    try {
+      console.log(accessToken);
+      const queryString = stringParams(params);
+      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/logout/kakao?${queryString}`, {
+        method: "GET",
+        headers: {
+          Athorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      } else {
+        setUserId(0);
+        setAccessToken(null);
+        setUserEmail(null);
+        setUserNickname(null);
+        setProvider(null);
+        alert("로그아웃 완료");
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const handleNaverLogout = async () => {
+    try {
+      console.log(accessToken);
+      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/logout/naver`, {
+        method: "POST",
+        headers: {
+          Athorization: `Bearer ${accessToken}`,
+        },
+        body: {
+          accessToken: accessToken,
+          serviceProvider: "NAVER",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      } else {
+        setUserId(0);
+        setAccessToken(null);
+        setUserEmail(null);
+        setUserNickname(null);
+        setProvider(null);
+        alert("로그아웃 완료");
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const handleLogout = () => {
+    if (provider === "NAVER") {
+      handleNaverLogout();
+    } else {
+      handleKakaoLogout();
+    }
+  };
+
   const handleModify = () => {
     setModalOpen(true);
   };
@@ -57,13 +145,13 @@ const UserInfo = () => {
       {/* 단어사이 간격  space-y-1  */}
       <div className="p-1 space-y-1 border-4 border-orange-500 h-2/3">
         <div>
-          <p>{getUserInfo.nickname}</p>
-          <button>로그아웃</button>
+          <p>{getUserInfo().nickname}</p>
+          <button onClick={handleLogout}>로그아웃</button>
           <button onClick={handleModify}>수정</button>
         </div>
-        <img src="${getUserInfo.profileImage}" alt="프로필사진" />
-        <p>레벨 : {getUserInfo.level}</p>
-        <p>경험치 : {getUserInfo.exp}</p>
+        <img src="${getUserInfo().profileImage}" alt="프로필사진" />
+        <p>레벨 : {getUserInfo().level}</p>
+        <p>경험치 : {getUserInfo().exp}</p>
       </div>
 
       {/* modalOpen이 true일 때만 모달 렌더링 */}
