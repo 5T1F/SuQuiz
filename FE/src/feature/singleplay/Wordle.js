@@ -30,40 +30,39 @@ const Wordle = () => {
     setInputString((prevInputString) => prevInputString.slice(0, -1));
   };
 
-  const handleEnter = () => {
+  const handleEnter = async () => {
     if (inputString.length === MAX_LETTERS_PER_ROW) {
-      // 5개의 글자를 입력했을 때
       setNotification("입력완료");
       console.log("Entered value:", inputString);
 
-      const cellColors = calculateColors(inputString); // 각 셀의 색을 계산
+      // 새로운 색상 계산
+      const cellColors = calculateColors(inputString);
+      console.log("Calculated colors:", cellColors);
+
+      // 기존 색상 업데이트
+      setColors((prevColors) => {
+        const startIndex = (currentRow - 1) * MAX_LETTERS_PER_ROW;
+        const newColors = [
+          ...prevColors.slice(0, startIndex),
+          ...cellColors,
+          ...prevColors.slice(startIndex + MAX_LETTERS_PER_ROW),
+        ];
+        console.log("setColors함수 호출 직후:", newColors);
+        return newColors;
+      });
+
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
       if (inputString === rightGuess) {
-        // 정답과 일치하는 경우
         setNotification("정답입니다! 게임 종료");
-        setColors((prevColors) => {
-          const newColors = [...prevColors];
-          cellColors.forEach((color, index) => {
-            newColors[(currentRow - 1) * MAX_LETTERS_PER_ROW + index] = color;
-          });
-          handleGameEnd("win");
-          return newColors;
-        });
+        await handleGameEnd("win");
       } else if (currentRow === MAX_ATTEMPTS) {
-        // 최대 시도 횟수를 초과한 경우
         setNotification("최대 시도 횟수를 초과했습니다. 게임 종료");
-        handleGameEnd("lose");
+        await handleGameEnd("lose");
       } else {
-        setHistory((prevHistory) => [...prevHistory, inputString]); // history 배열에 inputString 값 추가
-        setColors((prevColors) => {
-          const newColors = [...prevColors];
-          cellColors.forEach((color, index) => {
-            newColors[(currentRow - 1) * MAX_LETTERS_PER_ROW + index] = color;
-          });
-          return newColors;
-        });
-        setInputString(""); // inputString 초기화
-        setCurrentRow(currentRow + 1); // 다음 줄로 이동
+        setHistory((prevHistory) => [...prevHistory, inputString]);
+        setInputString("");
+        setCurrentRow(currentRow + 1);
       }
     } else {
       setNotification("5개의 글자를 입력하세요.");
@@ -77,14 +76,11 @@ const Wordle = () => {
     // 정답과 사용자 입력값을 비교하여 색을 결정
     for (let i = 0; i < MAX_LETTERS_PER_ROW; i++) {
       if (guess[i] === rightGuess[i]) {
-        // 자리와 글자가 모두 일치하는 경우 (초록색)
-        colors.push("#00C853");
+        colors.push("#00C853"); // 자리와 글자가 모두 일치하는 경우 (초록색)
       } else if (rightGuess.includes(guess[i])) {
-        // 자리는 다르지만 글자가 포함된 경우 (노란색)
-        colors.push("#FFEA00");
+        colors.push("#FFEA00"); // 자리는 다르지만 글자가 포함된 경우 (노란색)
       } else {
-        // 아무 경우도 아닌 경우 (회색)
-        colors.push("#C0C0C0");
+        colors.push("#C0C0C0"); // 아무 경우도 아닌 경우 (회색)
       }
     }
 
@@ -92,18 +88,15 @@ const Wordle = () => {
   };
 
   const colorsToText = (colors) => {
-    let text = "";
-    colors.forEach((color) => {
-      if (color === "#C0C0C0") {
-        text += "0"; // 회색 -> 검정하트
-      } else if (color === "#FFEA00") {
-        text += "1"; // 노란색 -> 하트
-      } else if (color === "#00C853") {
-        text += "2"; // 초록색 -> 레몬
-      }
-    });
-
-    return text;
+    console.log("Received colors:", colors);
+    return colors
+      .map((color) => {
+        if (color === "#C0C0C0") return "0";
+        if (color === "#FFEA00") return "1";
+        if (color === "#00C853") return "2";
+        return "";
+      })
+      .join("");
   };
 
   // 게임 결과를 저장하는 함수
@@ -116,7 +109,7 @@ const Wordle = () => {
   };
 
   // 게임 결과에 따라 모달을 보여줌
-  const handleGameEnd = (res) => {
+  const handleGameEnd = async (res) => {
     const newResult = {
       email: "asd@naver.com",
       trialCount: res === "win" ? currentRow : 0,

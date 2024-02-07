@@ -13,9 +13,9 @@ export default function App() {
       <Nav className={styles.nav} />
       <div className={styles.bodyAndFooter}>
         <div>
-          <body className={styles.body}>
+          <div className={styles.body}>
             <Outlet />
-          </body>
+          </div>
         </div>
         <Footer className={styles.footer} />
       </div>
