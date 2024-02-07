@@ -4,18 +4,20 @@ import Flashcard from "../feature/Learning/Flashcard";
 import SideMenu from "../feature/Learning/SideMenu";
 import { useLocation } from "react-router-dom";
 import UserView from "../feature/Learning/UserView";
-import { wordsfromCategory } from "../apis/learningApi";
+import { wordsfromCategory, AllWordWithSubject } from "../apis/learningApi";
 
 export default function LearningStartPage() {
   const location = useLocation();
   const { selectedMain, selectedSub } = location.state || { selectedMain: null, selectedSub: null };
   const [currentWord, setCurrentWord] = useState(null);
   const [wordList, setWordList] = useState([]);
+
   console.log(selectedMain, selectedSub);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await wordsfromCategory(selectedMain);
+        const data = await wordsfromCategory(1, selectedMain); //userId 대신에  테스트용 1
         setWordList(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);

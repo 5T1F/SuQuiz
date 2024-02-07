@@ -3,6 +3,7 @@ import Keyboard from "./Keyboard";
 import Notification from "./Notification";
 import GameBoard from "./GameBoard";
 import SingleplayModal from "./SingleplayModal";
+import { save } from "../../apis/singleplayApi";
 
 const Wordle = () => {
   const MAX_LETTERS_PER_ROW = 5;
@@ -14,7 +15,7 @@ const Wordle = () => {
   const [history, setHistory] = useState([]); // 이전 입력 기록을 저장할 배열
   const [currentRow, setCurrentRow] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [gameResult, setGameResult] = useState(null); // "win" or "lose"
+  const [result, setResult] = useState({ correct: false, trialCount: 0, correctCount: 0, correctText: "" });
 
   // Keyboard 컴포넌트에서 문자를 전달받아 inputString 상태 업데이트
   const handleKeyPress = (letter) => {
@@ -35,24 +36,23 @@ const Wordle = () => {
       setNotification("입력완료");
       console.log("Entered value:", inputString);
 
-      const result = checkGuess(inputString); // 입력값을 채점하여 결과를 얻음
-      const cellColors = calculateColors(inputString); // 각 셀의 색을 계산함
+      const cellColors = calculateColors(inputString); // 각 셀의 색을 계산
 
-      if (result === "win") {
+      if (inputString === rightGuess) {
         // 정답과 일치하는 경우
         setNotification("정답입니다! 게임 종료");
-        handleGameEnd(result); // 게임 결과에 따라 모달을 표시
         setColors((prevColors) => {
           const newColors = [...prevColors];
           cellColors.forEach((color, index) => {
             newColors[(currentRow - 1) * MAX_LETTERS_PER_ROW + index] = color;
           });
+          handleGameEnd("win");
           return newColors;
         });
       } else if (currentRow === MAX_ATTEMPTS) {
         // 최대 시도 횟수를 초과한 경우
         setNotification("최대 시도 횟수를 초과했습니다. 게임 종료");
-        handleGameEnd(result); // 게임 결과에 따라 모달을 표시
+        handleGameEnd("lose");
       } else {
         setHistory((prevHistory) => [...prevHistory, inputString]); // history 배열에 inputString 값 추가
         setColors((prevColors) => {
@@ -68,15 +68,6 @@ const Wordle = () => {
     } else {
       setNotification("5개의 글자를 입력하세요.");
       console.log("5개의 글자를 입력하세요.");
-    }
-  };
-
-  // 입력한 값을 채점하여 결과를 반환하는 함수
-  const checkGuess = (guess) => {
-    if (guess === rightGuess) {
-      return "win";
-    } else {
-      return "lose";
     }
   };
 
@@ -100,16 +91,48 @@ const Wordle = () => {
     return colors;
   };
 
+  const colorsToText = (colors) => {
+    let text = "";
+    colors.forEach((color) => {
+      if (color === "#C0C0C0") {
+        text += "0"; // 회색 -> 검정하트
+      } else if (color === "#FFEA00") {
+        text += "1"; // 노란색 -> 하트
+      } else if (color === "#00C853") {
+        text += "2"; // 초록색 -> 레몬
+      }
+    });
+
+    return text;
+  };
+
+  // 게임 결과를 저장하는 함수
+  const saveGameResult = async (result) => {
+    try {
+      await save(result); // save 함수를 호출하여 게임 결과를 서버에 저장합니다.
+    } catch (error) {
+      console.error("Error saving game result:", error);
+    }
+  };
+
   // 게임 결과에 따라 모달을 보여줌
-  const handleGameEnd = (result) => {
-    setGameResult(result);
+  const handleGameEnd = (res) => {
+    const newResult = {
+      email: "asd@naver.com",
+      trialCount: res === "win" ? currentRow : 0,
+      correct: res === "win",
+      resultText: colorsToText(colors),
+    };
+
+    console.log("결과!!!", newResult);
+    setResult(newResult);
+    saveGameResult(newResult);
     setShowModal(true);
   };
 
   // 모달 닫기
   const closeModal = () => {
     setShowModal(false);
-    setGameResult(null);
   };
 
   return (
@@ -124,7 +147,7 @@ const Wordle = () => {
         inputString={inputString}
         rightGuess={rightGuess}
       />
-      {showModal && <SingleplayModal result={gameResult} onClose={closeModal} />}
+      {showModal && <SingleplayModal result={result} onClose={closeModal} />}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = process.env.REACT_APP_API_ROOT;
 
 export async function validateWord(word) {
   const REACT_APP_OPENDICT_REST_API_KEY = process.env.REACT_APP_OPENDICT_REST_API_KEY;

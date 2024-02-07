@@ -2,19 +2,22 @@ import React, { useEffect, useState } from "react";
 import RecordItem from "./RecordItem";
 import styles from "./SingleplayModal.module.css";
 import Streak from "./Streak";
-// import { dailyResult } from "../../apis/singleplayApi";
+// import { dailycorrect } from "../../apis/singleplayApi";
 import TrialSpread from "./TrialSpread";
+import { dailyResult } from "../../apis/singleplayApi";
 
 const SingleplayModal = ({ result, onClose }) => {
   const [streakData, setStreakData] = useState(null);
+  const [quizcorrect, setQuizCorrect] = useState({
+    allTrialCount: 0, // 전체 도전 횟수
+    streak: {}, // 스트릭
+    solveCount: 0, // 최근 연속 스트릭
+    correctCount: 0, // 최근 연속 정답
+    maxCorrectCount: 0, // 최장 연속 스트릭 (맞은 거 틀린 거 다 포함)
+    trialSpread: [0, 0, 0, 0, 0], // 도전 분포
+    correctRate: 0, // 정답율
+  });
 
-  //더미데이터~~ 나중에 api에서 받아온 값으로 고쳐야 함
-  const trialSpreadData = [0, 3, 49, 79, 40, 17];
-  // const dummyStreakData = [
-  //   ["2024.02.01", 0],
-  //   ["2024.02.02", 1],
-  //   ["2024.02.03", -1],
-  // ];
   const dummyStreakData = [
     [0, 1, 1, 1, 0, 1, 1, 1, 1, 0, -1],
     [1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1],
@@ -22,19 +25,30 @@ const SingleplayModal = ({ result, onClose }) => {
     [1, 1, 0, 1, 0, 1, 1, 1, -1, 1, -1],
     [-1, 1, 0, 1, -1, -1, -1, 1, 0, 0, 0],
     [0, 1, 1, 0, 1, 0, 1, 1, -1, 1, 1],
-    [0, 1, 1, 0, 1, , 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0],
   ];
-  const dummyCopyData = [false, 4, 188, "ㅇㅇㅇㅁㅁㅁㅁㅇㅇㅇㅇㅇㅇㅇㅇㅁㅁㅁㅁㅁ"];
+
+  console.log("true???????????", result);
 
   useEffect(() => {
     setStreakData(dummyStreakData);
+    const fetchData = async () => {
+      try {
+        const data = await dailyResult("asd@naver.com"); // 유저 이메일 수정 필요
+        setQuizCorrect(data); // API에서 가져온 데이터로 quizcorrect 상태 업데이트
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const copyDummyDataToClipboard = () => {
-    const [correct, trialCount, correctCount, resultText] = dummyCopyData;
+    const { correct, trialCount, correctCount, resultText } = result;
 
-    let resultString = correct ? "실패" : "성공";
-    resultString += ` ${trialCount}/6 ${correctCount}\n`;
+    let correctString = correct ? "성공" : "실패";
+    correctString += ` ${trialCount}/6 ${correctCount}\n`;
 
     // 5개씩 나누어서 줄바꿈을 하기 위한 함수
     const chunkString = (str, size) => {
@@ -46,12 +60,12 @@ const SingleplayModal = ({ result, onClose }) => {
     };
 
     const textChunks = chunkString(resultText, 5);
-    resultString += textChunks.join("\n");
+    correctString += textChunks.join("\n");
 
     navigator.clipboard
-      .writeText(resultString)
+      .writeText(correctString)
       .then(() => {
-        console.log("복사 성공: ", resultString);
+        console.log("복사 성공: ", correctString);
       })
       .catch((error) => {
         console.error("복사 실패: ", error);
@@ -68,20 +82,23 @@ const SingleplayModal = ({ result, onClose }) => {
           </div>
           <div className="modal-content">
             <div className="flex justify-center">
-              {result === "win" && <p>축하합니다! 정답을 맞추셨습니다!</p>}
-              {result === "lose" && <p>아쉽지만 게임 오버입니다. 정답을 맞추지 못했습니다.</p>}
+              {result.correct ? (
+                <p>축하합니다! 정답을 맞추셨습니다!</p>
+              ) : (
+                <p>아쉽지만 게임 오버입니다. 정답을 맞추지 못했습니다.</p>
+              )}
             </div>
             <div className="flex row">
-              <RecordItem label="전체도전" value={188} color="green" />
-              <RecordItem label="정답률" value={`100%`} color="blue" />
-              <RecordItem label={"최근 연속\n정답 기록"} value={188} color="yellow" />
-              <RecordItem label={"최다 연속\n정답 기록"} value={188} color="red" />
+              <RecordItem label="전체도전" value={quizcorrect.allTrialCount} color="green" />
+              <RecordItem label="정답률" value={`${quizcorrect.correctRate}%`} color="blue" />
+              <RecordItem label={"최근 연속 정답 기록"} value={quizcorrect.correctCount} color="yellow" />
+              <RecordItem label={"최장 연속 스트릭"} value={quizcorrect.maxCorrectCount} color="red" />
             </div>
             <div className="flex row">
               <div className={styles.trialContainer}>
                 <div>도전분포</div>
                 <div>
-                  <TrialSpread trialSpreadData={trialSpreadData} />
+                  <TrialSpread trialSpreadData={quizcorrect.trialSpread} />
                 </div>
               </div>
               <div className={styles.streakContainer}>
@@ -89,7 +106,7 @@ const SingleplayModal = ({ result, onClose }) => {
                 <div>
                   <Streak streakData={streakData} />
                 </div>
-                <div>연속 NN일 달성중이에요!</div>
+                <div>연속 {quizcorrect.solveCount}일 달성중이에요!</div>
               </div>
             </div>
             <div className="float-right mt-3">
