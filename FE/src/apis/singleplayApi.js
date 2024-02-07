@@ -10,7 +10,7 @@ export async function isSolved(userId) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.data.json();
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -28,7 +28,7 @@ export async function dailyQuest() {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.data.json();
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -46,7 +46,7 @@ export async function additionalQuest() {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.data.json();
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -69,7 +69,7 @@ export async function save(result) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.data.json();
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -87,7 +87,7 @@ export async function dailyResult(userId) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.data.json();
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);

@@ -28,14 +28,12 @@ const SingleplayModal = ({ result, onClose }) => {
     [0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0],
   ];
 
-  console.log("true???????????", result);
-
   useEffect(() => {
     setStreakData(dummyStreakData);
     const fetchData = async () => {
       try {
-        const data = await dailyResult("asd@naver.com"); // 유저 이메일 수정 필요
-        setQuizCorrect(data); // API에서 가져온 데이터로 quizcorrect 상태 업데이트
+        const data = await dailyResult("asd@naver.com"); // 유저 아이디 수정 필요
+        setQuizCorrect(data.data); // API에서 가져온 데이터로 quizcorrect 상태 업데이트
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -45,10 +43,8 @@ const SingleplayModal = ({ result, onClose }) => {
   }, []);
 
   const copyDummyDataToClipboard = () => {
-    const { correct, trialCount, correctCount, resultText } = result;
-
-    let correctString = correct ? "성공" : "실패";
-    correctString += ` ${trialCount}/6 ${correctCount}\n`;
+    let correctString = result.correct ? "성공" : "실패";
+    correctString += ` ${result.trialCount}/6 ${quizcorrect.correctCount}\n`;
 
     // 5개씩 나누어서 줄바꿈을 하기 위한 함수
     const chunkString = (str, size) => {
@@ -59,8 +55,11 @@ const SingleplayModal = ({ result, onClose }) => {
       return chunkedArr;
     };
 
-    const textChunks = chunkString(resultText, 5);
+    const textChunks = chunkString(result.resultText, 5);
     correctString += textChunks.join("\n");
+    if (result.correct === true) {
+      correctString += "22222";
+    }
 
     navigator.clipboard
       .writeText(correctString)
