@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,6 +51,24 @@ public class MessageService {
                 .build();
         return messageRepository.save(message);
     }
+
+    public Optional<MessageDTO> findMostRecentMessageByUserId(Long userId) {
+        return messageRepository.findMostRecentMessageByUserId(userId)
+                .map(this::convertToMessageDTO);
+    }
+
+    private MessageDTO convertToMessageDTO(Message message) {
+        // 실제 변환 로직 구현, 예시:
+        return new MessageDTO(
+                message.getId(),
+                message.getSender().getId(),
+                message.getReceiver().getId(),
+                message.getContent(),
+                message.getTimestamp(),
+                message.isRead()
+        );
+    }
+
 
 }
 

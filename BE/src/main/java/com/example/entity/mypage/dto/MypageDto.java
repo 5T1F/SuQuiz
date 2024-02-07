@@ -27,7 +27,7 @@ public class MypageDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class NicknameModifyRequest {
-        private String email;
+        private long userId;
         private String modifiedName;
     }
 

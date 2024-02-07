@@ -9,7 +9,7 @@ public interface SingleHistoryService {
     @Scheduled
     void createDaily();
   // 데일리 조회
-    boolean dailyIsSolved(String email);
+    boolean dailyIsSolved(Long userId);
     // 데일리 문제
     QuestDto.DailyResponse dailyQuest();
     // 데일리 추가 문제
@@ -17,7 +17,7 @@ public interface SingleHistoryService {
     // 입력
     SingleHistoryDto.SaveResponse end(SingleHistoryDto.SaveRequest singleHistoryRequestDto);
     // SNS 오늘의 결과
-    SingleHistoryDto.ShareResponse dailyShare(String email);
+    SingleHistoryDto.ShareResponse dailyShare(Long userId);
     // 싱글 플레이 전체 결과 조회
-    SingleHistoryDto.AllResultResponse singlePlayAllResult(String email);
+    SingleHistoryDto.AllResultResponse singlePlayAllResult(Long userId);
 }

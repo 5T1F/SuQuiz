@@ -16,7 +16,7 @@ import lombok.*;
 public class Word {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "word_id")
     private Long id;
 

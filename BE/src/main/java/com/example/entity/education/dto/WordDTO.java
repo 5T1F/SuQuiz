@@ -26,5 +26,8 @@ public class WordDTO {
         private String category;
         private String videoUrl;
         private String wordName;
+
+        @Builder.Default
+        private Boolean isBookmarked = false;
     }
 }

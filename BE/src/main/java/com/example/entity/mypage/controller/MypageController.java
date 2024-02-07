@@ -53,9 +53,9 @@ public class MypageController {
     }
 
     @GetMapping("/wordle/{userId}")
-    public ResponseEntity<CommonResponse<MypageDto.UserResponse>> wordle(@PathVariable(value = "userId") String email) {
+    public ResponseEntity<CommonResponse<MypageDto.UserResponse>> wordle(@PathVariable(value = "userId") long userId) {
 
-        MypageDto.UserWordleResponse response = mypageService.userWordleResponse(email);
+        MypageDto.UserWordleResponse response = mypageService.userWordleResponse(userId);
         return new ResponseEntity<>(CommonResponse.<MypageDto.UserResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("success : user wordle list")

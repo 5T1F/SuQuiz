@@ -41,7 +41,7 @@ public class MypageService {
 
     public MypageDto.NicknameModifyResoponse modify(MypageDto.NicknameModifyRequest request) {
 
-        Optional<User> optionalUser = userRepository.findByEmail(request.getEmail());
+        Optional<User> optionalUser = userRepository.findById(request.getUserId());
         if (optionalUser.isPresent()) {
             /**
              * toBuiler()를 통해 값을 변경하면 UserBuiler Class를 통해 변수값을 변경하는 것
@@ -53,7 +53,7 @@ public class MypageService {
 //                    .build();
             User user = optionalUser.get();
             user.changeNickname(request.getModifiedName());
-
+            System.out.println("닉네임 ; " + user.getNickname());
             return MypageDto.NicknameModifyResoponse.builder()
                     .modifiedName(request.getModifiedName())
                     .build();
@@ -62,9 +62,9 @@ public class MypageService {
         }
     }
 
-    public MypageDto.UserWordleResponse userWordleResponse(String email) {
+    public MypageDto.UserWordleResponse userWordleResponse(long userId) {
 
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
 
             // user

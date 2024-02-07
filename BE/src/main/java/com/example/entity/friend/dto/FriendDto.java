@@ -12,8 +12,8 @@ public class FriendDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request {
-        String fromUserNickname;
-        String ToUserNickname;
+        String fromNickname;
+        String toNickname;
 
 
     }
