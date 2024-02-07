@@ -19,7 +19,12 @@
     "react-router-dom": "^6.21.2",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "zustand": "^4.5.0"
+    "zustand": "^4.5.0",
+    "@mediapipe/camera_utils": "^0.3.1675466862",
+    "@mediapipe/control_utils": "^0.6.1675466023",
+    "@mediapipe/drawing_utils": "^0.3.1675466124",
+    "@mediapipe/hands": "^0.4.1675469240",
+    "@mediapipe/pose": "^0.5.1675469404"
   },
   "scripts": {
     "start": "react-scripts start",
