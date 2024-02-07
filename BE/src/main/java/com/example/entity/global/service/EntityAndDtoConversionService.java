@@ -125,7 +125,7 @@ public class EntityAndDtoConversionService {
     }
 
     public FriendDto.Response userEntityToFriendDtoResponse(User user) {
-        return FriendDto.Response.builder().nickname(user.getNickname()).level(user.getLevel()).build();
+        return FriendDto.Response.builder().friendId(user.getId()).nickname(user.getNickname()).level(user.getLevel()).build();
     }
 
     public RankingDto.RankDto userEntityToRankDto(User user) {

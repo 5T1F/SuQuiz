@@ -5,7 +5,7 @@ import com.example.entity.friend.dto.FriendDto;
 import java.util.List;
 
 public interface FriendRelationshipService {
-    List<FriendDto.Response> searchUsers(String nickname);
+    FriendDto.Response searchUser(String nickname);
 
     List<FriendDto.Response> getFriendList(long userId);
 

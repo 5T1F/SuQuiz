@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,14 +23,15 @@ public class FriendRelationshipServiceImpl implements FriendRelationshipService 
     private final EntityAndDtoConversionService entityAndDtoConversionService;
     private final UserRepository userRepository;
     @Override
-    public List<FriendDto.Response> searchUsers(String nickname) {
-        List<User> userList = userRepository.findAllByNickname(nickname);
-        List<FriendDto.Response> users = new ArrayList<>();
-        for(User user : userList) {
-            users.add(entityAndDtoConversionService.userEntityToFriendDtoResponse(user));
+    public FriendDto.Response searchUser(String nickname) {
+        Optional<User> optionalUser = userRepository.findByNickname(nickname);
+        if(optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return entityAndDtoConversionService.userEntityToFriendDtoResponse(user);
         }
+        return null;
 
-        return users;
+
     }
 
     @Override
