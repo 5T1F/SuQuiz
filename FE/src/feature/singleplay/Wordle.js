@@ -3,13 +3,13 @@ import Keyboard from "./Keyboard";
 import Notification from "./Notification";
 import GameBoard from "./GameBoard";
 import SingleplayModal from "./SingleplayModal";
-import { save, dailyQuest } from "../../apis/singleplayApi";
+import { isSolved, dailyQuest, additionalQuest, save } from "../../apis/singleplayApi";
 
 const Wordle = () => {
   const MAX_LETTERS_PER_ROW = 5;
   const MAX_ATTEMPTS = 6;
-  // const [rightGuess, setRightGuess] = useState("");
-  const [rightGuess] = useState("ㄱㅗㅇㅈㅜ");
+  const [rightGuess, setRightGuess] = useState("");
+  // const [rightGuess] = useState("ㄱㅗㅇㅈㅜ");
   const [colors, setColors] = useState(Array(MAX_LETTERS_PER_ROW * MAX_ATTEMPTS).fill("white"));
   const [notification, setNotification] = useState("");
   const [inputString, setInputString] = useState(""); // 사용자 입력값 상태
@@ -18,19 +18,27 @@ const Wordle = () => {
   const [showModal, setShowModal] = useState(false);
   const [result, setResult] = useState({ correct: false, trialCount: 0, correctCount: 0, correctText: "" });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await dailyQuest(); // 데일리 문제 가져오기
-  //       setRightGuess(data.data); // 데일리 문제를 rightGuess 상태로 설정
-  //       console.log("데일리문제 정답 ㅋㅋ:", rightGuess);
-  //     } catch (error) {
-  //       console.error("Error fetching daily quest:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const solved = await isSolved("asd@naver.com"); // 사용자의 데일리 문제 풀이 여부 확인
 
-  //   fetchData();
-  // }, []);
+        if (solved.data) {
+          const additionalData = await additionalQuest(); // 추가 문제 가져오기
+          setRightGuess(additionalData.data.wordName); // 추가 문제를 rightGuess 상태로 설정
+          console.log("추가문제 정답:", additionalData.data.wordName);
+        } else {
+          const dailyData = await dailyQuest(); // 데일리 문제 가져오기
+          setRightGuess(dailyData.data.wordName); // 데일리 문제를 rightGuess 상태로 설정
+          console.log("데일리문제 정답:", dailyData.data.wordName);
+        }
+      } catch (error) {
+        console.error("Error fetching daily or additional quest:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // Keyboard 컴포넌트에서 문자를 전달받아 inputString 상태 업데이트
   const handleKeyPress = (letter) => {
@@ -90,9 +98,9 @@ const Wordle = () => {
 
     // 정답과 사용자 입력값을 비교하여 색을 결정
     for (let i = 0; i < MAX_LETTERS_PER_ROW; i++) {
-      if (guess[i] === rightGuess[i]) {
+      if (guess.charAt(i) === rightGuess.charAt(i)) {
         colors.push("#00C853"); // 자리와 글자가 모두 일치하는 경우 (초록색)
-      } else if (rightGuess.includes(guess[i])) {
+      } else if (rightGuess.includes(guess.charAt(i))) {
         colors.push("#FFEA00"); // 자리는 다르지만 글자가 포함된 경우 (노란색)
       } else {
         colors.push("#C0C0C0"); // 아무 경우도 아닌 경우 (회색)
