@@ -29,5 +29,9 @@ public class WordDTO {
 
         @Builder.Default
         private Boolean isBookmarked = false;
+
+        public void updateBookmark() {
+            this.isBookmarked = !isBookmarked;
+        }
     }
 }

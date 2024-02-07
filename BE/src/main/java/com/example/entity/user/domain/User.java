@@ -49,6 +49,7 @@ public class User {
 
     private String nickname;
 
+    @Builder.Default
     private int level = 1;
     @Builder.Default
     private int xp = 0;

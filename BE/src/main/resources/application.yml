@@ -18,11 +18,15 @@ oauth:
 
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://i10b302.p.ssafy.io:3306/suquiz?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: b302suquiz
+    url: jdbc:h2:tcp://localhost/~/testdb
+    username: sa
+    password: 1
+    driver-class-name: org.h2.Driver
 
+  h2:
+    console:
+      path: /h2console
+      enabled: true
   jpa:
     hibernate:
       ddl-auto: create

@@ -3,6 +3,7 @@ package com.example.entity.mypage.controller;
 import com.example.entity.global.dto.CommonResponse;
 import com.example.entity.mypage.dto.MypageDto;
 import com.example.entity.mypage.service.MypageService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
+@Tag(name = "마이페이지", description = "조회, 수정, 워들")
 public class MypageController {
 
     private final MypageService mypageService;
@@ -30,7 +32,6 @@ public class MypageController {
          * nickname, profile image, level, exp
          */
         MypageDto.UserResponse response = mypageService.find(userId);
-
         return new ResponseEntity<>(CommonResponse.<MypageDto.UserResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("success : find user")

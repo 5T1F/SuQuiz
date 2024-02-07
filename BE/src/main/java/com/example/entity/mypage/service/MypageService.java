@@ -20,12 +20,11 @@ public class MypageService {
     private final UserRepository userRepository;
     private final SingleHistoryRepository singleHistoryRepository;
 
-    public MypageDto.UserResponse find(long userId) {
+    public MypageDto.UserResponse find(Long userId) {
         /**
          * nickname, profile image, level, exp
          */
         Optional<User> optionalUser = userRepository.findById(userId);
-        System.out.println("유저 : " + optionalUser.get().getId());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
@@ -53,7 +52,7 @@ public class MypageService {
 //                    .build();
             User user = optionalUser.get();
             user.changeNickname(request.getModifiedName());
-            System.out.println("닉네임 ; " + user.getNickname());
+
             return MypageDto.NicknameModifyResoponse.builder()
                     .modifiedName(request.getModifiedName())
                     .build();
@@ -62,7 +61,7 @@ public class MypageService {
         }
     }
 
-    public MypageDto.UserWordleResponse userWordleResponse(long userId) {
+    public MypageDto.UserWordleResponse userWordleResponse(Long userId) {
 
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
