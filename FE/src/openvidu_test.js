@@ -13,7 +13,7 @@ import CallEndIcon from "@mui/icons-material/CallEnd";
 import ChatIcon from "@mui/icons-material/Chat";
 import ChatBox from "../Chat/ChatBox";
 
-// 로컬 미디어 서버 주소
+// 로컬 미디어 서버 주소 //
 const OPENVIDU_SERVER_URL = "https://i10b302.p.ssafy.io:8989/";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
