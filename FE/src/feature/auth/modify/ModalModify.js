@@ -5,7 +5,8 @@ import { useAuthStore } from "../../../app/store";
 import styles from "./ModalModify.module.css";
 
 const Modal = ({ onClose }) => {
-  const userId = useAuthStore((state) => state.user);
+  // const userId = useAuthStore((state) => state.user);
+  const userId = "초코바나나";
   const [checkValue, setCheckValue] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(0);
   const modalRef = useRef();
@@ -14,11 +15,14 @@ const Modal = ({ onClose }) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/validate/${checkValue}`); // API 경로
       const data = await response.json();
+      console.log("중복 검사중");
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
       if (data.status === "success" && data.data) {
+        console.log("중복 아님");
         setIsConfirmed(2);
       } else {
         // 응답이 성공이 아니거나 data.data가 없을 경우에 대한 처리
+        console.log("중복");
         setIsConfirmed(1);
         console.error("Error fetching data:", data.message);
       }

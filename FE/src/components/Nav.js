@@ -10,6 +10,7 @@ import styles from "./Nav.module.css";
 
 export default function Nav() {
   const user = useAuthStore((state) => state.user);
+  // const user = "초코바나나";
   const [isSlidebarOpen, setIsSlidebarOpen] = useState(false);
 
   const toggleSlidebar = () => {
