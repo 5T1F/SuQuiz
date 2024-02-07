@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 export default function WordList({ wordsProp, setCurrentWord }) {
-  const [words, setWords] = useState([...wordsProp, { status: "before" }]);
+  const [words, setWords] = useState(wordsProp);
 
-  console.log(words);
   useEffect(() => {
-    setWords([...wordsProp, { status: "before" }]); // 자꾸 초기화 되는 문제
+    // wordsProp을 직접적으로 설정하도록 변경
+    setWords(wordsProp);
   }, [wordsProp]);
 
   const handleWordClick = (clickedWord) => {
@@ -35,21 +35,20 @@ export default function WordList({ wordsProp, setCurrentWord }) {
 
   return (
     <>
-      {/* 단어사이 간격  space-y-1  */}
       <div className="space-y-1">
         {words.map((word, index) => (
           <div
             key={index}
             onClick={() => handleWordClick(word)}
             className={`flex items-center justify-center h-8 rounded-lg outline-none ${
-              word.status === "before"
-                ? "bg-white shadow"
+              word.status === "after"
+                ? "bg-gray-200 shadow-inner"
                 : word.status === "now"
                 ? "bg-yellow-200 shadow"
-                : "bg-gray-200 shadow-inner"
+                : "bg-white shadow"
             }`}
           >
-            {word.wordName} - {word.status}
+            {word.wordName}
           </div>
         ))}
       </div>
