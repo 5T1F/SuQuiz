@@ -57,7 +57,6 @@ public class DummyDataService {
         Subject 일상 = insertSubject("일상");
         Subject 관계 = insertSubject("관계");
         Subject 감정 = insertSubject("감정");
-        Subject 테스트 = insertSubject("테스트");
 
         em.flush();
 
