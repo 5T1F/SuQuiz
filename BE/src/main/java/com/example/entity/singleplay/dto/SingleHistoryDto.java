@@ -19,7 +19,7 @@ public class SingleHistoryDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class SaveRequest {
-        protected String email;
+        protected long userId;
         protected int trialCount;
         protected boolean correct;
         protected String resultText;
@@ -30,7 +30,7 @@ public class SingleHistoryDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class SaveResponse {
-        protected String email;
+        protected long userId;
         protected int trialCount;
         protected boolean correct;
         protected String resultText;

@@ -1,5 +1,8 @@
 package com.example.entity.config.dummy;
 
+import com.example.entity.user.domain.OAuthProvider;
+import com.example.entity.user.domain.User;
+import com.example.entity.user.repository.UserRepository;
 import com.example.entity.word.domain.Category;
 import com.example.entity.word.domain.Subject;
 import com.example.entity.word.domain.Word;
@@ -17,9 +20,39 @@ public class DummyDataService {
     private final EntityManager em;
     private final WordRepository wordRepository;
     private final SubjectRepository subjectRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void insertDummyData() {
+
+        User user1 = User.builder()
+                .email("asd@naver.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(0)
+                .level(1)
+                .nickname("DummyUser")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        userRepository.save(user1);
+
+        User user2 = User.builder()
+                .email("asd@naver.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(0)
+                .level(1)
+                .nickname("DummyUser2")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        userRepository.save(user2);
+
         Subject none = insertSubject("none");
         Subject 일상 = insertSubject("일상");
         Subject 관계 = insertSubject("관계");

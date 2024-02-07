@@ -17,7 +17,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class Quizroom {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quizroom_id")
     private Long id;
 

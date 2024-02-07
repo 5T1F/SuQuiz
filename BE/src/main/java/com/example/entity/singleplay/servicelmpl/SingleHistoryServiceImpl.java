@@ -8,10 +8,8 @@ import com.example.entity.singleplay.service.SingleHistoryService;
 import com.example.entity.singleplay.repository.SingleHistoryRepository;
 import com.example.entity.user.repository.UserRepository;
 import com.example.entity.global.service.EntityAndDtoConversionService;
-import com.example.entity.word.domain.DailyWord;
 import com.example.entity.word.domain.Word;
 import com.example.entity.word.repository.WordRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -32,7 +30,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
     private static QuestDto.DailyResponse dailyResponse;
     @Override
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void createDaily() {
         System.out.println("create daily quest");
         List<Word> words = wordRepository.findAll();
@@ -54,8 +52,8 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
 
     @Override
-    public boolean dailyIsSolved(String email) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+    public boolean dailyIsSolved(Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             return singleHistoryRepository.findByUserAndCreateDate(user, LocalDate.now()) != null;
@@ -100,7 +98,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
          */
 
         // update user info(recentCorrectCount; maxCorrectCount;)
-        Optional<User> optionalUser = userRepository.findByEmail(singleHistorySaveRequestDto.getEmail());
+        Optional<User> optionalUser = userRepository.findById(singleHistorySaveRequestDto.getUserId());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
@@ -117,7 +115,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
                 userRepository.save(user.toBuilder()
                         .solveCount(solveCount + 1)
                         .correctCount(isCorrect ? correctCount + 1 : 0)
-                        .maxCorrectCount(Math.max(correctCount, maxCount))
+                        .maxCorrectCount(isCorrect ? Math.max(correctCount + 1, maxCount) : maxCount)
                         .build());
 
                 // save single history
@@ -147,9 +145,9 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
     }
 
     @Override
-    public SingleHistoryDto.ShareResponse dailyShare(String email) {
+    public SingleHistoryDto.ShareResponse dailyShare(Long userId) {
 
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             SingleHistory singleHistory = singleHistoryRepository.findByUserAndCreateDate(user, LocalDate.now());
@@ -170,7 +168,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
 
     @Override
-    public SingleHistoryDto.AllResultResponse singlePlayAllResult(String email) {
+    public SingleHistoryDto.AllResultResponse singlePlayAllResult(Long userId) {
         /**
          * 전체 도전 횟수
          * 문제 스트릭
@@ -188,7 +186,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
          *         private int[] trialSpread;                      // 도전 분포e
          */
 
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             List<SingleHistory> histories = singleHistoryRepository.findAllByUser(user);
@@ -196,7 +194,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
             int allTrialCount = histories.size();
             float okCount = 0;
             Map<LocalDate, Integer> streak = new TreeMap<>();
-            int[] trialSpread = new int[5];
+            int[] trialSpread = new int[6];
 
 
             // 현재 날짜
@@ -217,7 +215,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
                     streak.put(getDate, -1);
                 }
 
-                trialSpread[singleHistory.getTrialCount()] += 1;
+                trialSpread[singleHistory.getTrialCount() - 1] += 1;
             }
 
             return SingleHistoryDto.AllResultResponse.builder()
