@@ -55,14 +55,14 @@ export async function additionalQuest() {
 }
 
 // 싱글 플레이 종료
-export async function save(record) {
+export async function save(result) {
   try {
     const response = await fetch(BASE_URL + "/end", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(record),
+      body: JSON.stringify(result),
     });
 
     if (!response.ok) {
