@@ -37,9 +37,11 @@ public class OAuthLoginService {
         OAuthProvider oAuthProvider = oAuthInfoResponse.getOAuthProvider();
         String email = oAuthInfoResponse.getEmail();
         Long userId = findOrCreateMember(oAuthInfoResponse);
+        Optional<User> findUser = userRepository.findById(userId);
+        String nickname = findUser.get().getNickname();
         AuthTokens authTokens = authTokensGenerator.generate(userId);
 
-        return new LoginResult(oAuthProvider,email,authTokens);
+        return new LoginResult(userId, oAuthProvider, nickname, email, authTokens);
     }
 
     private Long findOrCreateMember(OAuthInfoResponse oAuthInfoResponse) {
@@ -74,29 +76,29 @@ public class OAuthLoginService {
 //    }
 
     public boolean findNicknameAndProvider(String email, String provider) {
-        Optional<User> findUser = userRepository.findByEmail(email);
-        if (findUser.isPresent()) {
-            User user = findUser.get();
-            if (OAuthProvider.KAKAO.name().equalsIgnoreCase(provider)) {
-                return checkNickname(user.getEmail(), OAuthProvider.KAKAO);
-            } else if (OAuthProvider.NAVER.name().equalsIgnoreCase(provider)) {
-                return checkNickname(user.getEmail(), OAuthProvider.NAVER);
-            }
+        if (OAuthProvider.KAKAO.name().equalsIgnoreCase(provider)) {
+            return checkNickname(email, OAuthProvider.KAKAO);
+        } else if (OAuthProvider.NAVER.name().equalsIgnoreCase(provider)) {
+            return checkNickname(email, OAuthProvider.NAVER);
         }
         return false;
     }
 
     private boolean checkNickname(String email, OAuthProvider provider) {
         User findUser = userRepository.findByEmailAndOAuthProvider(email, provider);
+        if(findUser == null) {
+            return false;
+        }
         String nickname = findUser.getNickname();
         return nickname != null;
     }
 
-    public nicknameResponse firstSelect(String email) {
-        Optional<User> findEmail = userRepository.findByEmail(email);
-        String nickname = findEmail.get().getNickname();
-        return new nicknameResponse(nickname);
-    }
+//    public NicknameResponse selectUser(String email) {
+//        Optional<User> findEmail = userRepository.findByEmail(email);
+//        String nickname = findEmail.get().getNickname();
+//        return new NicknameResponse(nickname);
+//    }
+
     public boolean findAllNickname(String nickname) {
         Optional<User> findNickname = userRepository.findByNickname(nickname);
         // 닉네임을 가진 유저가 있으면 false, 없으면 true
@@ -109,15 +111,21 @@ public class OAuthLoginService {
 
     @Transactional
     public Boolean registerNickname(nicknameRequest request) {
-        Optional<User> findUser = userRepository.findByEmail(request.getEmail());
+        OAuthProvider provider;
 
-        
-        if (findUser.isPresent()) {
-            User user = findUser.get();
-            System.out.println("user.getEmail() = " + user.getEmail());
-            user.changeNickname(request.getNickname());
+        try {
+            provider = OAuthProvider.valueOf(request.getProvider().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return false; // 잘못된 provider 값인 경우
         }
 
+        User user = userRepository.findByEmailAndOAuthProvider(request.getEmail(), provider);
+
+        if (user == null) {
+            return false; // 사용자를 찾을 수 없는 경우
+        }
+
+        user.changeNickname(request.getNickname());
         return true;
     }
 
@@ -130,7 +138,9 @@ public class OAuthLoginService {
     @Data
     @AllArgsConstructor
     public static class LoginResult {
+        private final Long userId;
         private final OAuthProvider oAuthProvider;
+        private final String nickname;
         private final String email;
         private final AuthTokens authTokens;
     }
@@ -139,12 +149,13 @@ public class OAuthLoginService {
     @AllArgsConstructor
     public static class nicknameRequest {
         private final String email;
+        private final String provider;
         private final String nickname;
     }
 
     @Data
     @AllArgsConstructor
-    public static class nicknameResponse {
+    public static class NicknameResponse {
         private final String nickname;
     }
 
