@@ -3,7 +3,6 @@ import { Outlet, Navigate } from "react-router-dom";
 
 import Nav from "./Nav";
 import Footer from "./Footer";
-import { useAuthStore } from "../app/store";
 
 import styles from "./App.module.css";
 import "./App.font.css";

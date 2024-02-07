@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
 
+import {
+  useAuthStore,
+  useTokenStore,
+  useProviderStore,
+  useUserEmailStore,
+  useUserNicknameStore,
+} from "../../../app/store";
 import ModalMakeFriend from "./friend/ModalMakeFriend";
 import ModalEndFriendship from "./friend/ModalEndFriendship";
 import SearchFriend from "./friend/SearchFriend";
@@ -8,8 +15,11 @@ import Chatting from "../community/Chatting";
 import styles from "./FriendList.module.css";
 
 const FriendList = () => {
-  // 로그인하면 수정!!*********************************************
-  const userId = null;
+  const { userId, setUserId } = useAuthStore();
+  const { provider, setProvider } = useProviderStore();
+  const { userEmail, setUserEmail } = useUserEmailStore();
+  const { userNickname, setUserNickname } = useUserNicknameStore();
+  const { accessToken, setAccessToken } = useTokenStore();
   const [friends, setFriends] = useState([]);
   const [filterFriend, setFilterFriend] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,7 +63,11 @@ const FriendList = () => {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/${userId}`); // API 경로
+        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/${userId}`, {
+          headers: {
+            Athorization: `Bearer ${accessToken}`,
+          },
+        }); // API 경로
         const data = await response.json();
         // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
         if (data.status === "success" && data.data) {
@@ -75,15 +89,13 @@ const FriendList = () => {
       {selectedFriend === null ? (
         <div className="p-1 space-y-1 border-4 border-orange-500 h-2/3">
           <button onClick={openMakeModal}>친구추가</button>
-          <form>
-            <input
-              type="text"
-              placeholder="친구 닉네임"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-            ></input>
-            <button onClick={handleSearchFriend}>검색</button>
-          </form>
+          <input
+            type="text"
+            placeholder="친구 닉네임"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          ></input>
+          <button onClick={handleSearchFriend}>검색</button>
           <h2>Friends List</h2>
           {!doSearch && (
             <ul>

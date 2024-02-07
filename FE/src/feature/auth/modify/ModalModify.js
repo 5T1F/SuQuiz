@@ -5,9 +5,9 @@ import { useAuthStore } from "../../../app/store";
 import styles from "./ModalModify.module.css";
 
 const Modal = ({ onClose }) => {
-  const userId = useAuthStore((state) => state.user);
+  const { userId, setUserId } = useAuthStore();
   const [checkValue, setCheckValue] = useState("");
-  const [isConfirmed, setIsConfirmed] = useState(0);
+  const [isConfirmed, setIsConfirmed] = useState(null);
   const modalRef = useRef();
 
   const handleCheck = async () => {
@@ -15,11 +15,12 @@ const Modal = ({ onClose }) => {
       const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/validate/${checkValue}`); // API 경로
       const data = await response.json();
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
-      if (data.status === "success" && data.data) {
-        setIsConfirmed(2);
-      } else {
-        // 응답이 성공이 아니거나 data.data가 없을 경우에 대한 처리
+      if (data.data == true) {
         setIsConfirmed(1);
+        console.log(data.message);
+      } else if (data.data == false) {
+        // 응답이 성공이 아니거나 data.data가 없을 경우에 대한 처리
+        setIsConfirmed(0);
         console.error("Error fetching data:", data.message);
       }
     } catch (error) {
@@ -78,25 +79,27 @@ const Modal = ({ onClose }) => {
 
         <div>
           <p>닉네임 수정</p>
-          <form>
-            <input
-              type="text"
-              placeholder="한글만으로 15자 이하"
-              value={checkValue}
-              onChange={(e) => setCheckValue(e.target.value)}
-            ></input>
-            <button onClick={handleCheck}>중복검사</button>
-          </form>
-          {isConfirmed === 2 && <p style="color: blue;">사용 가능한 닉네임입니다.</p>}
-          {isConfirmed === 1 && <p style="color: red;">이미 사용 중인 닉네임입니다.</p>}
+
+          <input
+            type="text"
+            placeholder="한글만으로 15자 이하"
+            value={checkValue}
+            onChange={(e) => setCheckValue(e.target.value)}
+          ></input>
+          <button onClick={handleCheck}>중복검사</button>
+
+          {isConfirmed === 1 && <p style={{ color: "blue" }}>사용 가능한 닉네임입니다.</p>}
+          {isConfirmed === 0 && <p style={{ color: "red" }}>이미 사용 중인 닉네임입니다.</p>}
           <button>탈퇴하기</button>
           <div>
             <button className={styles.close} onClick={onClose}>
               취소
             </button>
-            <button className={styles.close} onClick={handleSave}>
-              저장
-            </button>
+            <form>
+              <button className={styles.close} onClick={handleSave}>
+                저장
+              </button>
+            </form>
           </div>
         </div>
       </div>
