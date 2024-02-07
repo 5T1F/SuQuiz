@@ -15,9 +15,9 @@ public class BookmarkController {
 
     private final BookmarkService bookmarkService;
 
-    @GetMapping("/words")
-    public ResponseEntity<CommonResponse> allWordsByUser(@RequestParam("user") String userEmail) {
-        BookmarkDTO.checkResponse allByUser = bookmarkService.findAllByUser(userEmail);
+    @GetMapping("/words/{userId}")
+    public ResponseEntity<CommonResponse> allWordsByUser(@PathVariable("userId") Long userId) {
+        BookmarkDTO.checkResponse allByUser = bookmarkService.findAllByUser(userId);
 //        BookmarkDTO.checkResponse user2 = bookmarkService.findAllByUser(userEmail);
 //
 //        Object[] obj = new Object[2];
@@ -32,9 +32,9 @@ public class BookmarkController {
 
     @PostMapping("/words")
     public ResponseEntity<CommonResponse> addWordsByUser(@RequestBody BookmarkDTO.addRequest request) {
-        String userEmail = request.getUserEmail();
+        Long userId = request.getUserId();
         String wordName = request.getWordName();
-        bookmarkService.addWordsByUser(userEmail, wordName);
+        bookmarkService.addWordsByUser(userId, wordName);
         return new ResponseEntity<>(CommonResponse.builder()
                 .status(HttpStatus.OK.value())
                 .message("북마크에 단어 추가")
@@ -44,9 +44,9 @@ public class BookmarkController {
 
     @DeleteMapping("/words")
     public ResponseEntity<CommonResponse> deleteWordsByUser(@RequestBody BookmarkDTO.deleteRequest request) {
-        String userEmail = request.getUserEmail();
+        Long userId = request.getUserId();
         String wordName = request.getWordName();
-        bookmarkService.deleteWordsByUser(userEmail, wordName);
+        bookmarkService.deleteWordsByUser(userId, wordName);
         return new ResponseEntity<>(CommonResponse.builder()
                 .status(HttpStatus.OK.value())
                 .message("북마크에서 단어 삭제")

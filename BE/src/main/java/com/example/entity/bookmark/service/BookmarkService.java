@@ -4,8 +4,8 @@ import com.example.entity.bookmark.dto.BookmarkDTO;
 
 public interface BookmarkService {
 
-    BookmarkDTO.checkResponse findAllByUser(String userEmail);
+    BookmarkDTO.checkResponse findAllByUser(Long userId);
     BookmarkDTO.checkResponse findAllByUserId(long userid);
-    void addWordsByUser(String email, String wordName);
-    void deleteWordsByUser(String email, String wordName);
+    void addWordsByUser(Long userId, String wordName);
+    void deleteWordsByUser(Long email, String wordName);
 }

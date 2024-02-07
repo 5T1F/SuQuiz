@@ -95,7 +95,7 @@ public class EntityAndDtoConversionService {
     // Bookmark Conversion
     public Bookmark addBookmarkDtoToEntity(BookmarkDTO.addRequest addRequest) {
 
-        Optional<User> findUser = userRepository.findByEmail(addRequest.getUserEmail());
+        Optional<User> findUser = userRepository.findById(addRequest.getUserId());
         Word findWord = wordRepository.findByWordName(addRequest.getWordName());
 
         return findUser.map(user -> Bookmark.builder()

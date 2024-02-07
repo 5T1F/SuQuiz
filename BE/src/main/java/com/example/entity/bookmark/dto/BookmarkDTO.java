@@ -32,7 +32,7 @@ public class BookmarkDTO {
     @NoArgsConstructor
     @Data
     public static class addRequest {
-        private String userEmail;
+        private Long userId;
         private String wordName;
         private Boolean isBookmarked;
     }
@@ -42,7 +42,7 @@ public class BookmarkDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class deleteRequest {
-        private String userEmail;
+        private Long userId;
         private String wordName;
         private Boolean isBookmarked;
     }
