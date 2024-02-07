@@ -23,8 +23,8 @@ public class BookmarkServiceImpl implements BookmarkService {
     private final BookmarkRepository bookmarkRepository;
     private final EntityAndDtoConversionService conversionService;
     @Override
-    public BookmarkDTO.checkResponse findAllByUser(String userEmail) {
-        Optional<User> findUser = userRepository.findByEmail(userEmail);
+    public BookmarkDTO.checkResponse findAllByUser(Long userId) {
+        Optional<User> findUser = userRepository.findById(userId);
         if(findUser.isPresent()) {
             List<Bookmark> list = bookmarkRepository.findAllByUser(findUser.get());
             BookmarkDTO.checkResponse response = conversionService.checkBookmarkEntityToDto(list);
@@ -35,7 +35,6 @@ public class BookmarkServiceImpl implements BookmarkService {
                     .wordList(Collections.emptyList())  // 빈 리스트 또는 null로 설정
                     .build();
         }
-
     }
 
     @Override
@@ -54,8 +53,8 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public void addWordsByUser(String email, String wordName) {
-        Optional<User> findEmail = userRepository.findByEmail(email);
+    public void addWordsByUser(Long userId, String wordName) {
+        Optional<User> findEmail = userRepository.findById(userId);
         Word findWord = wordRepository.findByWordName(wordName);
         Bookmark bookmark = Bookmark.builder()
                 .word(findWord)
@@ -65,8 +64,8 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public void deleteWordsByUser(String email, String wordName) {
-        Optional<User> findEmail = userRepository.findByEmail(email);
+    public void deleteWordsByUser(Long userId, String wordName) {
+        Optional<User> findEmail = userRepository.findById(userId);
         Word findWord = wordRepository.findByWordName(wordName);
         Bookmark allByUserAndWord = bookmarkRepository.findAllByUserAndWord(findEmail.get(), findWord);
 
