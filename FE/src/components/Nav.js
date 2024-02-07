@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import { useAuthStore } from "../app/store";
 import Logo from "../assets/logoShort.png";
 import Slidebar from "../feature/mypage/Slidebar";
 import ModalLogin from "../feature/auth/login/ModalLogin"; // 모달 컴포넌트를 import
+import ModalSignup from "../feature/auth/signup/ModalSignup";
 
 import styles from "./Nav.module.css";
 
 export default function Nav() {
-  const user = useAuthStore((state) => state.user);
-  // const user = "초코바나나";
+  const { userId, setUserId } = useAuthStore();
   const [isSlidebarOpen, setIsSlidebarOpen] = useState(false);
+
+  useEffect(() => {
+    console.log("로그인 정보 변화");
+  }, [userId]);
 
   const toggleSlidebar = () => {
     setIsSlidebarOpen(!isSlidebarOpen);
@@ -47,8 +51,9 @@ export default function Nav() {
             <div>
               <NavLink to="/learning/bookmark">단어장</NavLink>
             </div>
+            <div>{userId}</div>
             <div className={styles.userInfoContainer}>
-              {user == null ? (
+              {userId === 0 ? (
                 <div>
                   <button onClick={handleLoginClick}>로그인</button>
                 </div>

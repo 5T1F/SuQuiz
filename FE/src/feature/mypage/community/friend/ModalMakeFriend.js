@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 
+import { useAuthStore, useTokenStore } from "../../../../app/store";
 import ModalNoMatchingUser from "./ModalNoMatchingUser";
 
 import styles from "./ModalMakeFriend.module.css";
 
 const Modal = ({ onClose }) => {
-  // 로그인 완성 되면 채우기 *************************
-  const userId = null; // 친구 요청 목록을 위해
+  const { userId, setUserId } = useAuthStore();
+  const { accessToken, setAccessToken } = useTokenStore();
   const modalRef = useRef();
   const [searchValue, setSearchValue] = useState("");
   // 모달창 노출 여부 state
@@ -32,6 +33,9 @@ const Modal = ({ onClose }) => {
 
     fetch(`${process.env.REACT_APP_API_ROOT}/users/friends?search=${searchValue}`, {
       method: "GET",
+      headers: {
+        Athorization: `Bearer ${accessToken}`,
+      },
       body: requestBody,
       // 기타 필요한 설정들 추가
     })

@@ -1,5 +1,5 @@
 import baseAxios from "axios";
-import { deleteUserInfo, getUserInfo } from "./authInfo";
+import { useTokenStore } from "../app/store";
 
 const axios = baseAxios.create({
   baseURL: process.env.REACT_APP_API_ROOT,
@@ -9,28 +9,8 @@ const axios = baseAxios.create({
 });
 
 axios.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${getUserInfo().accessToken}`;
+  config.headers.Authorization = `Bearer ${accessToken}`;
   return config;
 });
-
-axios.interceptors.response.use(
-  function (response) {
-    return response;
-  },
-  function (error) {
-    if (error.response && error.response.status) {
-      switch (error.response.status) {
-        case 401:
-          alert("로그인이 필요합니다.");
-          window.location.replace("/login");
-          deleteUserInfo();
-          return new Promise(() => {});
-        default:
-          return Promise.reject(error);
-      }
-    }
-    return Promise.reject(error);
-  }
-);
 
 export default axios;
