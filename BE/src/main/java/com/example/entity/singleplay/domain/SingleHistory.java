@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Getter
 public class SingleHistory {
 
-        @Id @GeneratedValue
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "single_history_id")
         private Long id;
 

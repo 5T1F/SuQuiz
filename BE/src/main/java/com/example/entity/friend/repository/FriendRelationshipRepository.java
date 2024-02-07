@@ -26,6 +26,6 @@ public interface FriendRelationshipRepository extends JpaRepository<FriendRelati
 
 
     @Modifying
-    @Query("DELETE FROM FriendRelationship f WHERE f.fromUser.nickname like :fromUserNickname AND f.toUser.nickname LIKE :toUserNickname")
-    void deleteByNicknames(@Param("fromUserNickname") String fromUserNickname, @Param("toUserNickname") String toUserNickname);
+    @Query("DELETE FROM FriendRelationship f WHERE f.fromUser.nickname = :fromNickname AND f.toUser.nickname = :toNickname")
+    void deleteByNicknames(@Param("fromNickname") String fromNickname, @Param("toNickname") String toNickname);
 }

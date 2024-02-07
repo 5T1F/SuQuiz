@@ -53,7 +53,7 @@ public class BookmarkDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class addResponse {
-        private boolean isBookmarked;
+        private Boolean isBookmarked;
     }
 
     // 단어 삭제 확인
@@ -62,7 +62,7 @@ public class BookmarkDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class deleteResponse {
-        private boolean isBookmarked;
+        private Boolean isBookmarked;
     }
 
 }

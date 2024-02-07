@@ -1,10 +1,9 @@
-package com.example.entity.friend.Controller;
+package com.example.entity.friend.controller;
 
 
 import com.example.entity.friend.dto.FriendDto;
 import com.example.entity.friend.service.FriendRelationshipService;
 import com.example.entity.global.dto.CommonResponse;
-import com.example.entity.user.repository.UserRepository;
 import com.example.entity.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

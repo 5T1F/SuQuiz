@@ -7,6 +7,7 @@ import com.example.entity.friend.service.FriendRelationshipService;
 import com.example.entity.global.service.EntityAndDtoConversionService;
 import com.example.entity.user.domain.User;
 import com.example.entity.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +45,8 @@ public class FriendRelationshipServiceImpl implements FriendRelationshipService 
 
     @Override
     public void requestFriend(FriendDto.Request req) {
-        User fromUser = userRepository.findByNickname(req.getFromUserNickname()).get();
-        User toUser = userRepository.findByNickname(req.getToUserNickname()).get();
+        User fromUser = userRepository.findByNickname(req.getFromNickname()).get();
+        User toUser = userRepository.findByNickname(req.getToNickname()).get();
         FriendRelationship friendRequest = FriendRelationship.builder().fromUser(fromUser).toUser(toUser).build();
         if(!friendRequest.isFriend())
             friendRequest.updateIsFriend();
@@ -68,16 +69,20 @@ public class FriendRelationshipServiceImpl implements FriendRelationshipService 
     }
 
     @Override
+    @Transactional
     public void acceptFriend(FriendDto.Request req) {
-        FriendRelationship friendRelationship = friendRelationshipRepository.findByFromUserAndToUser(req.getFromUserNickname(), req.getToUserNickname());
+        FriendRelationship friendRelationship = friendRelationshipRepository.findByFromUserAndToUser(req.getFromNickname(), req.getToNickname());
+        System.out.println("변경 전 " + friendRelationship.isFriend());
         if(!friendRelationship.isFriend())
-            friendRelationship.updateIsFriend();
+        friendRelationship.updateIsFriend();
+        System.out.println("변경 후 : " + friendRelationship.isFriend());
     }
 
     @Override
+    @Transactional
     public void removeFriend(FriendDto.Request req) {
-        friendRelationshipRepository.deleteByNicknames(req.getFromUserNickname(), req.getToUserNickname());
-        friendRelationshipRepository.deleteByNicknames(req.getToUserNickname(), req.getFromUserNickname());
+        friendRelationshipRepository.deleteByNicknames(req.getFromNickname(), req.getToNickname());
+        friendRelationshipRepository.deleteByNicknames(req.getToNickname(), req.getFromNickname());
 
     }
 

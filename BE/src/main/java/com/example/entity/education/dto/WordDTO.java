@@ -26,10 +26,12 @@ public class WordDTO {
         private String category;
         private String videoUrl;
         private String wordName;
-        private boolean isBookmarked;
+
+        @Builder.Default
+        private Boolean isBookmarked = false;
 
         public void updateBookmark() {
-            this.isBookmarked = true;
+            this.isBookmarked = !isBookmarked;
         }
     }
 }

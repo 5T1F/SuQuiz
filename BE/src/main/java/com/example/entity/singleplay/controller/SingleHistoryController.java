@@ -18,12 +18,12 @@ public class SingleHistoryController {
 
     // 오늘의 문제풀이 여부
     @GetMapping("/solved/{userId}")
-    public ResponseEntity<CommonResponse<Boolean>> isSolved(@PathVariable(value = "userId") String email) {
+    public ResponseEntity<CommonResponse<Boolean>> isSolved(@PathVariable(value = "userId") Long userId) {
 
         return new ResponseEntity<>(CommonResponse.<Boolean>builder()
                 .status(HttpStatus.OK.value())
                 .message("success")
-                .data(singleHistoryService.dailyIsSolved(email))
+                .data(singleHistoryService.dailyIsSolved(userId))
                 .build(), HttpStatus.OK);
     }
 
@@ -62,24 +62,24 @@ public class SingleHistoryController {
         return new ResponseEntity<>(CommonResponse.<SingleHistoryDto.SaveResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("save daily single history")
-                .data(save)
+                .data(save != null ? save: "already saved")
                 .build(), HttpStatus.OK);
     }
 
     // SNS 공유할 오늘의 결과 요청 ... 싱글플레이 종료 시 리턴해주는 DTO랑 다른게 뭐지...?
     @GetMapping("/share/{userId}")
-    public ResponseEntity<CommonResponse<SingleHistoryDto.ShareResponse>> dailyShare(@PathVariable(value = "userId") String email) {
+    public ResponseEntity<CommonResponse<SingleHistoryDto.ShareResponse>> dailyShare(@PathVariable(value = "userId") Long userId) {
 
         return new ResponseEntity<>(CommonResponse.<SingleHistoryDto.ShareResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("share daily single history")
-                .data(singleHistoryService.dailyShare(email))
+                .data(singleHistoryService.dailyShare(userId))
                 .build(), HttpStatus.OK);
     }
 
     // 싱글 플레이 결과 조회
     @GetMapping("/result/{userId}")
-    public ResponseEntity<CommonResponse<SingleHistoryDto.AllResultResponse>> dailyResult(@PathVariable(value = "userId") String email) {
+    public ResponseEntity<CommonResponse<SingleHistoryDto.AllResultResponse>> dailyResult(@PathVariable(value = "userId") Long userId) {
         /**
          * 전체 도전 횟수
          * 문제 스트릭
@@ -92,7 +92,7 @@ public class SingleHistoryController {
         return new ResponseEntity<>(CommonResponse.<SingleHistoryDto.AllResultResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("share daily single history")
-                .data(singleHistoryService.singlePlayAllResult(email))
+                .data(singleHistoryService.singlePlayAllResult(userId))
                 .build(), HttpStatus.OK);
     }
 }

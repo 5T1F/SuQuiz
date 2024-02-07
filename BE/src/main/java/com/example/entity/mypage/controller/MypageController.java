@@ -27,14 +27,14 @@ public class MypageController {
      * POST, PUT, DELETE : request body
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<CommonResponse<MypageDto.UserResponse>> find(@PathVariable(value = "userId") Long userId) {
+    public ResponseEntity<CommonResponse<MypageDto.UserResponse>> find(@PathVariable(value = "userId") long userId) {
         /**
          * nickname, profile image, level, exp
          */
         MypageDto.UserResponse response = mypageService.find(userId);
         return new ResponseEntity<>(CommonResponse.<MypageDto.UserResponse>builder()
                 .status(HttpStatus.OK.value())
-                .message("success : find user nickname")
+                .message("success : find user")
                 .data(response)
                 .build(), HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class MypageController {
     }
 
     @GetMapping("/wordle/{userId}")
-    public ResponseEntity<CommonResponse<MypageDto.UserResponse>> wordle(@PathVariable(value = "userId") Long userId) {
+    public ResponseEntity<CommonResponse<MypageDto.UserResponse>> wordle(@PathVariable(value = "userId") long userId) {
 
         MypageDto.UserWordleResponse response = mypageService.userWordleResponse(userId);
         return new ResponseEntity<>(CommonResponse.<MypageDto.UserResponse>builder()

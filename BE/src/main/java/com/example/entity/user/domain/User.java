@@ -9,6 +9,7 @@ import com.example.entity.bookmark.domain.Bookmark;
 import com.example.entity.singleplay.domain.SingleHistory;
 import com.example.entity.multiplay.domain.Quizroom;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +28,7 @@ import java.util.List;
 @Getter
 public class User {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
@@ -47,8 +48,11 @@ public class User {
     private Quizroom quizroom;
 
     private String nickname;
-    private int level;
-    private int xp;
+
+    @Builder.Default
+    private int level = 1;
+    @Builder.Default
+    private int xp = 0;
 
     @Enumerated(EnumType.STRING)
     private OAuthProvider oAuthProvider;
@@ -58,9 +62,12 @@ public class User {
 
     @Builder.Default
     private boolean isPlaying = false;
-    private int correctCount;   // 최근 연속 정답
-    private int solveCount;     // 최근 연속 풀이
-    private int maxCorrectCount;// 최다 연속 정답
+    @Builder.Default
+    private int correctCount = 0;   // 최근 연속 정답
+    @Builder.Default
+    private int solveCount = 0;     // 최근 연속 풀이
+    @Builder.Default
+    private int maxCorrectCount = 0;// 최다 연속 정답
 
     private String imageUrl;
 
@@ -69,8 +76,6 @@ public class User {
 //        this.email = email;
 //        this.oAuthProvider = oAuthProvider;
 //    }
-
-
 
     public void changeNickname(String modifiedName) {
         this.nickname = modifiedName;
