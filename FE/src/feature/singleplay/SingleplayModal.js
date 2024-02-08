@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import RecordItem from "./RecordItem";
 import styles from "./SingleplayModal.module.css";
 import Streak from "./Streak";
-// import { dailycorrect } from "../../apis/singleplayApi";
 import TrialSpread from "./TrialSpread";
 import { dailyResult } from "../../apis/singleplayApi";
 
 const SingleplayModal = ({ result, onClose }) => {
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
+
   const [streakData, setStreakData] = useState(null);
   const navigate = useNavigate();
   const [quizcorrect, setQuizCorrect] = useState({
@@ -34,7 +37,7 @@ const SingleplayModal = ({ result, onClose }) => {
     setStreakData(dummyStreakData);
     const fetchData = async () => {
       try {
-        const data = await dailyResult(1); // 유저 아이디 수정 필요
+        const data = await dailyResult(userId);
         setQuizCorrect(data.data); // API에서 가져온 데이터로 quizcorrect 상태 업데이트
       } catch (error) {
         console.error("Error fetching data:", error);

@@ -9,7 +9,6 @@ const Wordle = ({ finger }) => {
   const MAX_LETTERS_PER_ROW = 5;
   const MAX_ATTEMPTS = 6;
   const [rightGuess, setRightGuess] = useState("");
-  // const [rightGuess] = useState("ㄱㅗㅇㅈㅜ");
   const [colors, setColors] = useState(Array(MAX_LETTERS_PER_ROW * MAX_ATTEMPTS).fill("white"));
   const [notification, setNotification] = useState("");
   const [inputString, setInputString] = useState(""); // 사용자 입력값 상태
@@ -17,11 +16,14 @@ const Wordle = ({ finger }) => {
   const [currentRow, setCurrentRow] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [result, setResult] = useState({ correct: false, trialCount: 0, correctCount: 0, correctText: "" });
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const solved = await isSolved(1); // 사용자의 데일리 문제 풀이 여부 확인 ///////////유저아이디 수정
+        const solved = await isSolved(userId);
 
         if (solved.data) {
           const additionalData = await additionalQuest(); // 추가 문제 가져오기
@@ -147,7 +149,7 @@ const Wordle = ({ finger }) => {
   // 게임 결과에 따라 모달을 보여줌
   const handleGameEnd = async (res) => {
     const newResult = {
-      userId: 1, /////유저아이디 수정
+      userId: userId,
       trialCount: res === "win" ? currentRow : 0,
       correct: res === "win",
       resultText: colorsToText(colors),

@@ -17,7 +17,7 @@ export default function SingleplayPage() {
       <Container>
         <div className={styles.container}>
           <div className={styles.mycam}>
-            <MyCam categoryNumber={1} changeFinger={changeFinger}></MyCam>
+            <MyCam categoryNumber={4} changeFinger={changeFinger}></MyCam>
           </div>
           <div className={styles.wordle}>
             <Wordle finger={finger}></Wordle>
