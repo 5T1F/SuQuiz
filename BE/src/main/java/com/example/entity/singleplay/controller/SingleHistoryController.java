@@ -45,9 +45,9 @@ public class SingleHistoryController {
 
     // 데일리 추가 문제
     @GetMapping("/additional")
-    public ResponseEntity<CommonResponse<QuestDto.AdditionalResponse>> additionalQuest() {
+    public ResponseEntity<CommonResponse<QuestDto.DailyResponse>> additionalQuest() {
 
-        return new ResponseEntity<>(CommonResponse.<QuestDto.AdditionalResponse>builder()
+        return new ResponseEntity<>(CommonResponse.<QuestDto.DailyResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("share daily single history")
                 .data(singleHistoryService.additionalQuest())

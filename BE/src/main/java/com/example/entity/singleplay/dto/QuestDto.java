@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public class QuestDto {
 
     @Getter
@@ -21,6 +23,7 @@ public class QuestDto {
         private String subject;
         private String wordName;
         private String videoUrl;
+        private List<Character> syllables;
     }
 
     @Getter
@@ -36,5 +39,6 @@ public class QuestDto {
         private String subject;
         private String wordName;
         private String videoUrl;
+        private List<Character> syllables;
     }
 }

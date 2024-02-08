@@ -13,7 +13,7 @@ public interface SingleHistoryService {
     // 데일리 문제
     QuestDto.DailyResponse dailyQuest();
     // 데일리 추가 문제
-    QuestDto.AdditionalResponse additionalQuest();
+    QuestDto.DailyResponse additionalQuest();
     // 입력
     SingleHistoryDto.SaveResponse end(SingleHistoryDto.SaveRequest singleHistoryRequestDto);
     // SNS 오늘의 결과
