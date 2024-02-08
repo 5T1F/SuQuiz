@@ -9,7 +9,7 @@ import styles from "./FriendList.module.css";
 
 const FriendList = () => {
   // const {userId,setUserId} = useAuthStore();
-  const userId = 2;
+  const { userId }= useAuthStore();
   const [friends, setFriends] = useState([]);
   const [filterFriend, setFilterFriend] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -120,7 +120,7 @@ const FriendList = () => {
           )}
         </div>
       ) : (
-        <Chatting friend={selectedFriend} />
+        <Chatting friendId={selectedFriend.friendId} userId={userId}  />
       )}
       {isModalOpen && <ModalMakeFriend onClose={closeMakeModal} />} {/* 모달이 열려 있을 때만 렌더링 */}
       {endModalOpen && <ModalEndFriendship onClose={closeEndModal} friendNickname={toNickname} />}{" "}
