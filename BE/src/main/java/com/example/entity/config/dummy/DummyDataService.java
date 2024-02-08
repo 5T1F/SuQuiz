@@ -40,7 +40,7 @@ public class DummyDataService {
         userRepository.save(user1);
 
         User user2 = User.builder()
-                .email("asd@naver.com")
+                .email("asd@kakao.com")
                 .correctCount(0)
                 .maxCorrectCount(0)
                 .solveCount(0)
