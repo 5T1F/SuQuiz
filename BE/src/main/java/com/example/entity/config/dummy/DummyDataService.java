@@ -156,6 +156,8 @@ public class DummyDataService {
         insertWord(Category.낱말, 감정, "농담", "https://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191011/626645/MOV000252448_700X466.mp4");
         insertWord(Category.낱말, 감정, "가능", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200821/732879/MOV000249484_700X466.mp4");
 
+
+
     }
 
 
