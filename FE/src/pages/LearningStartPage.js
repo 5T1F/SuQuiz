@@ -16,6 +16,9 @@ export default function LearningStartPage() {
   const [currentWord, setCurrentWord] = useState(null);
   const [wordList, setWordList] = useState([]);
   const navigate = useNavigate();
+  const handleSetCurrentWord = (updatedWord) => {
+    setCurrentWord(updatedWord);
+  };
 
   // motion detect value
   const [finger, setFinger] = useState("#");
@@ -68,7 +71,7 @@ export default function LearningStartPage() {
           {/* 플래시 카드 */}
           <div className="border-4 border-yellow-500 w-full">
             플래시카드
-            {currentWord && <Flashcard currentWord={currentWord} />}
+            {currentWord && <Flashcard currentWord={currentWord} setCurrentWord={handleSetCurrentWord} />}
           </div>
           {/* 유저 실시간 화면 */}
           <div>

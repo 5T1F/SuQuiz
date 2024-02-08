@@ -43,7 +43,7 @@ const CardBox = ({ currentWord, toggleBookmark }) => {
   );
 };
 
-const Flashcard = ({ currentWord }) => {
+const Flashcard = ({ currentWord, setCurrentWord }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const toggleCard = () => {
@@ -51,13 +51,15 @@ const Flashcard = ({ currentWord }) => {
   };
   const toggleBookmark = async () => {
     try {
+      let updatedIsBookmarked = !currentWord.isBookmarked;
       if (currentWord.isBookmarked) {
-        await deleteWordsByUser(1, currentWord.wordName); ///////유저아이디 수정
+        await deleteWordsByUser(1, currentWord.wordName);
         console.log("북마크에서 해제: ", currentWord);
       } else {
-        await addWordsByUser(1, currentWord.wordName); ///////////유저아이디 수정
+        await addWordsByUser(1, currentWord.wordName);
         console.log("북마크에 추가: ", currentWord);
       }
+      setCurrentWord((prevWord) => ({ ...prevWord, isBookmarked: updatedIsBookmarked }));
     } catch (error) {
       console.error("Error toggling bookmark:", error);
     }
