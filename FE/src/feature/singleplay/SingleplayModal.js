@@ -32,7 +32,7 @@ const SingleplayModal = ({ result, onClose }) => {
     setStreakData(dummyStreakData);
     const fetchData = async () => {
       try {
-        const data = await dailyResult("asd@naver.com"); // 유저 아이디 수정 필요
+        const data = await dailyResult(1); // 유저 아이디 수정 필요
         setQuizCorrect(data.data); // API에서 가져온 데이터로 quizcorrect 상태 업데이트
       } catch (error) {
         console.error("Error fetching data:", error);
