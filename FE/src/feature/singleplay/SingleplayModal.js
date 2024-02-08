@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import RecordItem from "./RecordItem";
 import styles from "./SingleplayModal.module.css";
 import Streak from "./Streak";
@@ -8,6 +9,8 @@ import { dailyResult } from "../../apis/singleplayApi";
 
 const SingleplayModal = ({ result, onClose }) => {
   const [streakData, setStreakData] = useState(null);
+  const navigate = useNavigate();
+
   const [quizcorrect, setQuizCorrect] = useState({
     allTrialCount: 0, // 전체 도전 횟수
     streak: {}, // 스트릭
@@ -32,7 +35,7 @@ const SingleplayModal = ({ result, onClose }) => {
     setStreakData(dummyStreakData);
     const fetchData = async () => {
       try {
-        const data = await dailyResult("asd@naver.com"); // 유저 아이디 수정 필요
+        const data = await dailyResult(1); // 유저 아이디 수정 필요
         setQuizCorrect(data.data); // API에서 가져온 데이터로 quizcorrect 상태 업데이트
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -41,6 +44,11 @@ const SingleplayModal = ({ result, onClose }) => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    // result가 변경될 때마다 현재 결과를 업데이트합니다.
+    setQuizCorrect(result);
+  }, [result]);
 
   const copyDummyDataToClipboard = () => {
     let correctString = result.correct ? "성공" : "실패";
@@ -57,9 +65,9 @@ const SingleplayModal = ({ result, onClose }) => {
 
     const textChunks = chunkString(result.resultText, 5);
     correctString += textChunks.join("\n");
-    if (result.correct === true) {
-      correctString += "\n22222";
-    }
+    // if (result.correct === true) {
+    //   correctString += "\n22222";
+    // }
 
     navigator.clipboard
       .writeText(correctString)
@@ -69,6 +77,11 @@ const SingleplayModal = ({ result, onClose }) => {
       .catch((error) => {
         console.error("복사 실패: ", error);
       });
+  };
+
+  const handleMoreQuestion = () => {
+    navigate("/singleplay");
+    window.location.reload();
   };
 
   return (
@@ -109,7 +122,9 @@ const SingleplayModal = ({ result, onClose }) => {
               </div>
             </div>
             <div className="float-right mt-3">
-              <button className="mr-2">더 풀어보기</button>
+              <button onClick={handleMoreQuestion} className="mr-2">
+                더 풀어보기
+              </button>
               <button onClick={copyDummyDataToClipboard}>복사하기</button>
             </div>
           </div>
