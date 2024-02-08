@@ -1,6 +1,9 @@
 
 package com.example.entity.user.domain;
 
+import com.example.entity.chat.domain.Message;
+import com.example.entity.chat.dto.MessageDTO;
+import com.example.entity.chat.service.MessageService;
 import com.example.entity.multiplay.domain.Quizroom;
 import com.example.entity.singleplay.domain.SingleHistory;
 
@@ -11,10 +14,11 @@ import com.example.entity.multiplay.domain.Quizroom;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -43,6 +43,10 @@ dependencies {
 	//ModelMapper
 	implementation 'org.modelmapper:modelmapper:2.4.4'
 
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+
+
+
 }
 
 tasks.named('test') {
