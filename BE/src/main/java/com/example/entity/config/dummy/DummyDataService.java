@@ -26,7 +26,7 @@ public class DummyDataService {
     public void insertDummyData() {
 
         User user1 = User.builder()
-                .email("asd@naver.com")
+                .email("asdfg@naver.com")
                 .correctCount(0)
                 .maxCorrectCount(0)
                 .solveCount(0)
