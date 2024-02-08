@@ -13,30 +13,26 @@ export default function Nav() {
   const { provider, setProvider } = useProviderStore();
   const { userNickname, setUserNickname } = useUserNicknameStore();
   const { accessToken, setAccessToken } = useTokenStore();
-  const { userEmail, setUserEmail } = useUserEmailStore();
   const [isSlidebarOpen, setIsSlidebarOpen] = useState(false);
 
   useEffect(() => {
     const storedId = localStorage.getItem("idStorage");
-    const storedEmail = localStorage.getItem("emailStorage");
     const storedToken = localStorage.getItem("tokenStorage");
     const storedNickname = localStorage.getItem("nicknameStorage");
     const storedProvider = localStorage.getItem("providerStorage");
     try {
       const parsedId = JSON.parse(storedId);
-      const parsedEmail = JSON.parse(storedEmail);
       const parsedToken = JSON.parse(storedToken);
       const parsedNickname = JSON.parse(storedNickname);
       const parsedProvider = JSON.parse(storedProvider);
       setUserId(parsedId.state.userId);
-      setProvider(parsedEmail.state.provider);
-      setUserNickname(parsedToken.state.userNickname);
-      setAccessToken(parsedNickname.state.accessToken);
-      setUserEmail(parsedProvider.state.userEmail);
+      setProvider(parsedProvider.state.provider);
+      setUserNickname(parsedNickname.state.userNickname);
+      setAccessToken(parsedToken.state.accessToken);
     } catch (error) {
       console.error("Error parsing stored data:", error);
     }
-  }, [userId]);
+  }, []);
 
   const toggleSlidebar = () => {
     setIsSlidebarOpen(!isSlidebarOpen);

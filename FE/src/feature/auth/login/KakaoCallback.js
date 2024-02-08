@@ -38,7 +38,9 @@ const KakaoCallback = () => {
       console.log(data);
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
       if (data.data) {
+        console.log(data.data);
         setUserNickname(data.data.nickname);
+        setUserEmail(null);
         navigate("/");
       } else {
         // 회원가입 모달 띄우자

@@ -1,7 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { useAuthStore, useUserEmailStore, useProviderStore } from "../../../app/store";
+import {
+  useAuthStore,
+  useUserNicknameStore,
+  useTokenStore,
+  useUserEmailStore,
+  useProviderStore,
+} from "../../../app/store";
 
 import styles from "./ModalSignup.module.css";
 
@@ -9,24 +15,50 @@ const Modal = ({ onClose, email }) => {
   const modalRef = useRef();
   const [checkValue, setCheckValue] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(0);
+  const [userData, setUserData] = useState(false);
   const { userId, setUserId } = useAuthStore();
   const { userEmail, setUserEmail } = useUserEmailStore();
   const { provider, setProvider } = useProviderStore();
+  const { userNickname, setUserNickname } = useUserNicknameStore();
+  const { accessToken, setAccessToken } = useTokenStore();
 
   const handleCheck = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/validate/${checkValue}`); // API 경로
       const data = await response.json();
-      // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
+      // data.data가 true면 이미 사용중인 닉네임
       if (data.data) {
         setIsConfirmed(1);
       } else {
+        setUserData(true);
         setIsConfirmed(2);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+
+  useEffect(() => {
+    const storedId = localStorage.getItem("idStorage");
+    const storedEmail = localStorage.getItem("emailStorage");
+    const storedToken = localStorage.getItem("tokenStorage");
+    const storedNickname = localStorage.getItem("nicknameStorage");
+    const storedProvider = localStorage.getItem("providerStorage");
+    try {
+      const parsedId = JSON.parse(storedId);
+      const parsedEmail = JSON.parse(storedEmail);
+      const parsedToken = JSON.parse(storedToken);
+      const parsedNickname = JSON.parse(storedNickname);
+      const parsedProvider = JSON.parse(storedProvider);
+      setUserId(parsedId.state.userId);
+      setProvider(parsedEmail.state.provider);
+      setUserNickname(parsedToken.state.userNickname);
+      setAccessToken(parsedNickname.state.accessToken);
+      setUserEmail(parsedProvider.state.userEmail);
+    } catch (error) {
+      console.error("Error parsing stored data:", error);
+    }
+  }, [isConfirmed]);
 
   const handleSignup = async () => {
     try {
@@ -50,6 +82,7 @@ const Modal = ({ onClose, email }) => {
       console.log(data);
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
       if (data.data) {
+        localStorage.setItem("emailStorage", null);
         onClose();
         alert("회원가입 완료");
       } else {

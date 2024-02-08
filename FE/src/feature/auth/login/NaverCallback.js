@@ -17,12 +17,11 @@ const NaverCallback = () => {
   const { userEmail, setUserEmail } = useUserEmailStore();
   const { provider, setProvider } = useProviderStore();
   const { accessToken, setAccessToken } = useTokenStore();
-  const [openModal, setOpenModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
-    console.log("여기");
     setOpenModal(true);
   };
 
@@ -39,6 +38,7 @@ const NaverCallback = () => {
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
       if (data.data) {
         setUserNickname(data.data.nickname);
+        setUserEmail(null);
         navigate("/");
       } else {
         // 회원가입 모달 띄우자
