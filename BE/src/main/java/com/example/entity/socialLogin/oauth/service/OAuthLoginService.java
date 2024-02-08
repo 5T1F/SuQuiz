@@ -75,6 +75,18 @@ public class OAuthLoginService {
 //            return true;
 //    }
 
+    public NicknameResponse findEmailAndProvider(String email, String provider) {
+        String nickname = null;
+        if(OAuthProvider.KAKAO.name().equalsIgnoreCase(provider)) {
+            User findUser = userRepository.findByEmailAndOAuthProvider(email, OAuthProvider.KAKAO);
+            nickname = findUser.getNickname();
+        } else if(OAuthProvider.NAVER.name().equalsIgnoreCase(provider)) {
+            User findUser = userRepository.findByEmailAndOAuthProvider(email, OAuthProvider.NAVER);
+            nickname = findUser.getNickname();
+        }
+        return new NicknameResponse(nickname);
+    }
+
     public boolean findNicknameAndProvider(String email, String provider) {
         if (OAuthProvider.KAKAO.name().equalsIgnoreCase(provider)) {
             return checkNickname(email, OAuthProvider.KAKAO);
