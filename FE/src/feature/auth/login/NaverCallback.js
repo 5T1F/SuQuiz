@@ -58,7 +58,9 @@ const NaverCallback = () => {
         authorizationCode: code,
         state: state,
       });
-      console.log(response.data);
+      console.log(response.data.data);
+      console.log(response.data.data.email);
+      console.log("여기");
       setUserId(response.data.data.userId);
       setUserEmail(response.data.data.email);
       setProvider(response.data.data.oauthProvider);

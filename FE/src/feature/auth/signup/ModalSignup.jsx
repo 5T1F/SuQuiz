@@ -15,7 +15,6 @@ const Modal = ({ onClose, email }) => {
   const modalRef = useRef();
   const [checkValue, setCheckValue] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(0);
-  const [userData, setUserData] = useState(false);
   const { userId, setUserId } = useAuthStore();
   const { userEmail, setUserEmail } = useUserEmailStore();
   const { provider, setProvider } = useProviderStore();
@@ -30,7 +29,6 @@ const Modal = ({ onClose, email }) => {
       if (data.data) {
         setIsConfirmed(1);
       } else {
-        setUserData(true);
         setIsConfirmed(2);
       }
     } catch (error) {
@@ -38,35 +36,8 @@ const Modal = ({ onClose, email }) => {
     }
   };
 
-  useEffect(() => {
-    const storedId = localStorage.getItem("idStorage");
-    const storedEmail = localStorage.getItem("emailStorage");
-    const storedToken = localStorage.getItem("tokenStorage");
-    const storedNickname = localStorage.getItem("nicknameStorage");
-    const storedProvider = localStorage.getItem("providerStorage");
-    try {
-      const parsedId = JSON.parse(storedId);
-      const parsedEmail = JSON.parse(storedEmail);
-      const parsedToken = JSON.parse(storedToken);
-      const parsedNickname = JSON.parse(storedNickname);
-      const parsedProvider = JSON.parse(storedProvider);
-      setUserId(parsedId.state.userId);
-      setProvider(parsedEmail.state.provider);
-      setUserNickname(parsedToken.state.userNickname);
-      setAccessToken(parsedNickname.state.accessToken);
-      setUserEmail(parsedProvider.state.userEmail);
-    } catch (error) {
-      console.error("Error parsing stored data:", error);
-    }
-  }, [isConfirmed]);
-
   const handleSignup = async () => {
     try {
-      console.log(userId);
-      console.log(userEmail);
-      console.log(checkValue);
-      console.log(provider);
-
       const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/register`, {
         method: "POST",
         headers: {
@@ -82,6 +53,7 @@ const Modal = ({ onClose, email }) => {
       console.log(data);
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
       if (data.data) {
+        setUserNickname(checkValue);
         localStorage.setItem("emailStorage", null);
         onClose();
         alert("회원가입 완료");
