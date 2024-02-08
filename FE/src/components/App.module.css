@@ -38,11 +38,11 @@ a:visited {
 .body {
   position: relative;
   flex-grow: 1;
-  margin-top: 63px;
+  margin-top: 10vh;
 }
 
 .bodyAndFooter {
-  margin-top: 10vh;
-  height: 90vh;
+  /* margin-top: 10vh; */
+  height: 100vh;
   overflow: auto;
 }
