@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Container from "../components/Container";
 import Flashcard from "../feature/Learning/Flashcard";
 import SideMenu from "../feature/Learning/SideMenu";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import UserView from "../feature/Learning/UserView";
 import { wordsfromCategory, AllWordWithSubject } from "../apis/learningApi";
 import MyCam from "../feature/Learning/MyCam";
@@ -29,29 +29,6 @@ export default function LearningStartPage() {
   // const []
 
   console.log(selectedMain, selectedSub);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await wordsfromCategory(1, selectedMain); //userId 대신에  테스트용 1
-        setWordList(data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [selectedMain, selectedSub]);
-
-  const handleEnd = () => {
-    const userConfirmed = window.confirm("학습을 종료하고 메인 페이지로 이동하시겠습니까?");
-    if (userConfirmed) {
-      alert("확인되었습니다. 메인 페이지로 이동합니다.");
-      navigate("/"); // 메인 페이지 경로로 이동
-    } else {
-      alert("취소되었습니다. 계속 학습을 진행합니다.");
-    }
-  };
 
   return (
     <Container>
