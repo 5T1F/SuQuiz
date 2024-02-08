@@ -4,8 +4,8 @@
 
 .startbuttons {
   position: absolute;
-  left: 10vw; /* 오른쪽 면에서 100px 떨어진 위치 */
-  bottom: 15vh; /* 아래쪽 면에서 50px 떨어진 위치 */
+  left: 10vw;
+  bottom: 15vh;
   display: flex;
   width: 350px;
   flex-direction: column;
