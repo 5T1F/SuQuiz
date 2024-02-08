@@ -8,7 +8,9 @@ import com.example.entity.singleplay.service.SingleHistoryService;
 import com.example.entity.singleplay.repository.SingleHistoryRepository;
 import com.example.entity.user.repository.UserRepository;
 import com.example.entity.global.service.EntityAndDtoConversionService;
+import com.example.entity.word.domain.Category;
 import com.example.entity.word.domain.Word;
+import com.example.entity.word.function.WordToSyllables;
 import com.example.entity.word.repository.WordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -30,24 +32,25 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
     private static QuestDto.DailyResponse dailyResponse;
     @Override
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0/5 * * * * *")
     public void createDaily() {
         System.out.println("create daily quest");
-        List<Word> words = wordRepository.findAll();
-
-        // 랜덤으로 하나 선택
-        if (!words.isEmpty()) {
-            Random random = new Random();
-            int index = random.nextInt(words.size());
-            Word word = words.get(index);
-
-            dailyResponse = QuestDto.DailyResponse.builder()
-                    .category(word.getCategory())
-                    .subject(word.getSubject().getSubjectName())
-                    .wordName(word.getWordName())
-                    .videoUrl(word.getVideoUrl())
-                    .build();
-        }
+        findFivePhoneme();
+//        List<Word> words = wordRepository.findAll();
+//
+//        // 랜덤으로 하나 선택
+//        if (!words.isEmpty()) {
+//            Random random = new Random();
+//            int index = random.nextInt(words.size());
+//            Word word = words.get(index);
+//
+//            dailyResponse = QuestDto.DailyResponse.builder()
+//                    .category(word.getCategory())
+//                    .subject(word.getSubject().getSubjectName())
+//                    .wordName(word.getWordName())
+//                    .videoUrl(word.getVideoUrl())
+//                    .build();
+//        }
     }
 
 
@@ -67,21 +70,9 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
     }
 
     @Override
-    public QuestDto.AdditionalResponse additionalQuest() {
+    public QuestDto.DailyResponse additionalQuest() {
 
-        List<Word> words = wordRepository.findAll();
-
-        // 랜덤 인덱스 생성
-        Random random = new Random();
-        int randomIndex = random.nextInt(words.size());
-        Word word = words.get(randomIndex);
-
-        return QuestDto.AdditionalResponse.builder()
-                .subject(word.getSubject().getSubjectName())
-                .category(word.getCategory())
-                .wordName(word.getWordName())
-                .videoUrl(word.getVideoUrl())
-                .build();
+        return findFivePhoneme();
     }
 
     @Transactional
@@ -229,5 +220,43 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
                     .build();
         }
         return null;
+    }
+
+
+    private QuestDto.DailyResponse findFivePhoneme() {
+
+        System.out.println("create daily quest");
+        List<Word> words = wordRepository.findByCategory(Category.낱말);
+
+        // 랜덤으로 하나 선택
+        if (!words.isEmpty()) {
+
+            while(true) {
+                Random random = new Random();
+                int index = random.nextInt(words.size());
+                Word word = words.get(index);
+
+                System.out.println(word.getWordName());
+
+                char[] syllables = WordToSyllables.wordToSyllables(word.getWordName());
+                if (syllables.length != 5) continue;
+
+                List<Character> list = new ArrayList<>();
+                for (char c: syllables) {
+                    list.add(c);
+                }
+
+                dailyResponse = QuestDto.DailyResponse.builder()
+                        .category(word.getCategory())
+                        .subject(word.getSubject().getSubjectName())
+                        .wordName(word.getWordName())
+                        .videoUrl(word.getVideoUrl())
+                        .syllables(list)
+                        .build();
+                break;
+            }
+        }
+
+        return dailyResponse;
     }
 }
