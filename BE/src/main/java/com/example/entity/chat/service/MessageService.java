@@ -24,7 +24,6 @@ public class MessageService {
     public List<MessageDTO> getMessageHistory(Long userId, Long friendId) {
         List<Message> messages = messageRepository.findMessagesBetweenUsers(userId, friendId);
         return messages.stream().map(message -> MessageDTO.builder()
-                .id(message.getId())
                 .senderId(message.getSender().getId())
                 .receiverId(message.getReceiver().getId())
                 .content(message.getContent())
@@ -60,7 +59,6 @@ public class MessageService {
     private MessageDTO convertToMessageDTO(Message message) {
         // 실제 변환 로직 구현, 예시:
         return new MessageDTO(
-                message.getId(),
                 message.getSender().getId(),
                 message.getReceiver().getId(),
                 message.getContent(),
