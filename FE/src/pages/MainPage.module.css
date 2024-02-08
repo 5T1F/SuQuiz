@@ -1,4 +1,18 @@
-/* 전체 */
+.container {
+  height: 90vh;
+}
+
+.startbuttons {
+  position: absolute;
+  left: 10vw; /* 오른쪽 면에서 100px 떨어진 위치 */
+  bottom: 15vh; /* 아래쪽 면에서 50px 떨어진 위치 */
+  display: flex;
+  width: 350px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .FlexColumn {
   margin: 50px 0px;
   display: flex;
@@ -7,11 +21,39 @@
 }
 
 .quizStart {
-  border: 5px solid red;
-  width: 100%;
+  height: 150px;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 61px;
+  border-radius: 15px 15px 0px 0px;
+  background: #ffffff;
+  color: #f4b28e;
 }
 
 .learningStart {
-  border: 5px solid violet;
+  /* border: 5px solid violet; */
+  height: 75px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  border-radius: 0px 0px 15px 15px;
+  background: #f17b3c;
+  color: #ffffff;
+}
+
+.quizStart,
+.learningStart {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
