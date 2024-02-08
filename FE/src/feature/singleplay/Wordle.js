@@ -27,11 +27,13 @@ const Wordle = ({ finger }) => {
 
         if (solved.data) {
           const additionalData = await additionalQuest(); // 추가 문제 가져오기
-          setRightGuess(additionalData.data.wordName); // 추가 문제를 rightGuess 상태로 설정
+          console.log(additionalData.data);
+          setRightGuess(additionalData.data.syllables); // 추가 문제를 rightGuess 상태로 설정
           console.log("추가문제 정답:", additionalData.data.wordName);
         } else {
           const dailyData = await dailyQuest(); // 데일리 문제 가져오기
-          setRightGuess(dailyData.data.wordName); // 데일리 문제를 rightGuess 상태로 설정
+          console.log(dailyData.data);
+          setRightGuess(dailyData.data.syllables); // 데일리 문제를 rightGuess 상태로 설정
           console.log("데일리문제 정답:", dailyData.data.wordName);
         }
       } catch (error) {

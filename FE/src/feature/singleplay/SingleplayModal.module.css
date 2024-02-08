@@ -36,3 +36,100 @@
   align-items: center;
   width: 100%;
 }
+
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: #f87171;
+  border-radius: 50%;
+  display: flex;
+  margin-left: 1px;
+}
+
+.reactCalendar {
+  width: 100px;
+  max-width: 100%;
+  background-color: #fff;
+  color: #222;
+  border-radius: 8px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  line-height: 1.125em;
+}
+/* .myReactCalendarNavigation button {
+  color: #6f48eb;
+  min-width: 44px;
+  background: none;
+  font-size: 16px;
+  margin-top: 8px;
+}
+.myReactCalendarNavigation button:enabled:hover,
+.myReactCalendarNavigation button:enabled:focus {
+  background-color: #f8f8fa;
+}
+.myReactCalendarNavigation button[disabled] {
+  background-color: #f0f0f0;
+}
+abbr[title] {
+  text-decoration: none;
+} */
+/* .myReactCalendarMonthViewDaysDayWeekend {
+  color: #d10000;
+ } */
+/* .myReactCalendarTile:enabled:hover,
+.myReactCalendarTile:enabled:focus {
+  background: #f8f8fa;
+  color: #6f48eb;
+  border-radius: 6px;
+}
+.myReactCalendarTileNow {
+  background: #6f48eb33;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #6f48eb;
+}
+.myReactCalendarTileNow:enabled:hover,
+.myReactCalendarTileNow:enabled:focus {
+  background: #6f48eb33;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #6f48eb;
+}
+.myReactCalendarTileHasActive:enabled:hover,
+.myReactCalendarTileHasActive:enabled:focus {
+  background: #f8f8fa;
+}
+.myReactCalendarTileActive {
+  background: #6f48eb;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+}
+.myReactCalendarTileActive:enabled:hover,
+.myReactCalendarTileActive:enabled:focus {
+  background: #6f48eb;
+  color: white;
+}
+.myReactCalendarSelectRange .myReactCalendarTileHover {
+  background-color: #f8f8fa;
+}
+.myReactCalendarTileRange {
+  background: #f8f8fa;
+  color: #6f48eb;
+  border-radius: 0;
+}
+.myReactCalendarTileRangeStart {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  background: #6f48eb;
+  color: white;
+}
+.myReactCalendarTileRangeEnd {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background: #6f48eb;
+  color: white;
+} */

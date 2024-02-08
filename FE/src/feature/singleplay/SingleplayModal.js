@@ -1,26 +1,34 @@
+// SingleplayModal.js 파일
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RecordItem from "./RecordItem";
 import styles from "./SingleplayModal.module.css";
 import Streak from "./Streak";
 import TrialSpread from "./TrialSpread";
-import { dailyResult } from "../../apis/singleplayApi";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import moment from "moment";
+import { isSolved, dailyResult } from "../../apis/singleplayApi";
 
 const SingleplayModal = ({ result, onClose }) => {
+  // 상태 및 변수 선언
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-
+  const [solved, setSolved] = useState(true);
   const [streakData, setStreakData] = useState(null);
+  const [completedDates, setCompletedDates] = useState([]);
+  const [incorrectDates, setIncorrectDates] = useState([]);
   const navigate = useNavigate();
   const [quizcorrect, setQuizCorrect] = useState({
-    allTrialCount: 0, // 전체 도전 횟수
-    streak: {}, // 스트릭
-    solveCount: 0, // 최근 연속 스트릭
-    correctCount: 0, // 최근 연속 정답
-    maxCorrectCount: 0, // 최장 연속 스트릭 (맞은 거 틀린 거 다 포함)
-    trialSpread: [0, 0, 0, 0, 0], // 도전 분포
-    correctRate: 0, // 정답율
+    allTrialCount: 0,
+    streak: {},
+    solveCount: 0,
+    correctCount: 0,
+    maxCorrectCount: 0,
+    trialSpread: [0, 0, 0, 0, 0],
+    correctRate: 0,
   });
 
   const dummyStreakData = [
@@ -37,8 +45,28 @@ const SingleplayModal = ({ result, onClose }) => {
     setStreakData(dummyStreakData);
     const fetchData = async () => {
       try {
+        const solved = await isSolved(userId);
+        setSolved(solved.data);
         const data = await dailyResult(userId);
-        setQuizCorrect(data.data); // API에서 가져온 데이터로 quizcorrect 상태 업데이트
+        setQuizCorrect(data.data);
+        console.log(data.data);
+        const completed = [];
+        const incorrect = [];
+        for (const date in data.data.streak) {
+          if (Object.hasOwnProperty.call(data.data.streak, date)) {
+            const value = data.data.streak[date];
+            if (value === 1) {
+              completedDates.push(date);
+            } else if (value === -1) {
+              incorrectDates.push(date);
+            }
+          }
+        }
+
+        setCompletedDates(completed);
+        setIncorrectDates(incorrect);
+
+        console.log("completedDates", completedDates, ", incorrectDates", incorrectDates);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -48,7 +76,6 @@ const SingleplayModal = ({ result, onClose }) => {
   }, []);
 
   useEffect(() => {
-    // result가 변경될 때마다 현재 결과를 업데이트합니다.
     setQuizCorrect(result);
   }, [result]);
 
@@ -56,7 +83,6 @@ const SingleplayModal = ({ result, onClose }) => {
     let correctString = result.correct ? "성공" : "실패";
     correctString += ` ${result.trialCount}/6 ${quizcorrect.correctCount}\n`;
 
-    // 5개씩 나누어서 줄바꿈을 하기 위한 함수
     const chunkString = (str, size) => {
       const chunkedArr = [];
       for (let i = 0; i < str.length; i += size) {
@@ -67,9 +93,6 @@ const SingleplayModal = ({ result, onClose }) => {
 
     const textChunks = chunkString(result.resultText, 5);
     correctString += textChunks.join("\n");
-    // if (result.correct === true) {
-    //   correctString += "\n22222";
-    // }
 
     navigator.clipboard
       .writeText(correctString)
@@ -84,6 +107,29 @@ const SingleplayModal = ({ result, onClose }) => {
   const handleMoreQuestion = () => {
     navigate("/singleplay");
     window.location.reload();
+  };
+
+  const handleTileContent = ({ date, view }) => {
+    let html = [];
+    console.log("Date:", moment(date).format("YYYY-MM-DD"));
+    console.log("Completed Dates:", completedDates);
+    console.log("Incorrect Dates:", incorrectDates);
+
+    if (completedDates.find((d) => d === moment(date).format("YYYY-MM-DD"))) {
+      console.log("Completed Date Found:", moment(date).format("YYYY-MM-DD"));
+      html.push(<div className={styles.dot}>&#10004;</div>);
+    }
+
+    if (incorrectDates.find((d) => d === moment(date).format("YYYY-MM-DD"))) {
+      console.log("Incorrect Date Found:", moment(date).format("YYYY-MM-DD"));
+      html.push(<div className={styles.dot}>&#10060;</div>);
+    }
+    console.log("HTML Elements:", html);
+    return (
+      <>
+        <div>{html}</div>
+      </>
+    );
   };
 
   return (
@@ -118,7 +164,16 @@ const SingleplayModal = ({ result, onClose }) => {
               <div className={styles.streakContainer}>
                 <div>오늘의 단어 스트릭</div>
                 <div>
-                  <Streak streakData={streakData} />
+                  <Calendar
+                    className={styles.reactCalendar}
+                    formatDay={(locale, date) => moment(date).format("D")}
+                    minDetail="month"
+                    maxDetail="month"
+                    navigationLabel={null}
+                    showNeighboringMonth={false}
+                    maxDate={new Date()}
+                    tileContent={handleTileContent}
+                  />
                 </div>
                 <div>연속 {quizcorrect.solveCount}일 달성중이에요!</div>
               </div>
@@ -127,7 +182,17 @@ const SingleplayModal = ({ result, onClose }) => {
               <button onClick={handleMoreQuestion} className="mr-2">
                 더 풀어보기
               </button>
-              <button onClick={copyDummyDataToClipboard}>복사하기</button>
+              {solved ? (
+                <button
+                  onClick={copyDummyDataToClipboard}
+                  disabled={solved}
+                  style={{ backgroundColor: solved ? "#ccc" : "#007bff", color: "#ffffff" }}
+                >
+                  복사하기
+                </button>
+              ) : (
+                <button onClick={copyDummyDataToClipboard}>복사하기</button>
+              )}
             </div>
           </div>
         </div>
