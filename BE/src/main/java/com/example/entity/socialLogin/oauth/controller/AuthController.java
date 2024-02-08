@@ -89,11 +89,11 @@ public class AuthController {
         boolean validNick = oAuthLoginService.findNicknameAndProvider(email, provider);
         // true면 닉네임이 있음, false면 없음
         if (validNick) {
-
+            OAuthLoginService.NicknameResponse userNickname = oAuthLoginService.findEmailAndProvider(email, provider);
             return new ResponseEntity<>(CommonResponse.builder()
                     .status(HttpStatus.OK.value())
                     .message("닉네임이 있습니다.(가입 회원)")
-                    .data(validNick)
+                    .data(userNickname)
                     .build(), HttpStatus.OK);
         } else {
             // nicknameResponse가 null인 경우에 대한 처리
