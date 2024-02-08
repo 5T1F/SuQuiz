@@ -52,10 +52,10 @@ const Flashcard = ({ currentWord }) => {
   const toggleBookmark = async () => {
     try {
       if (currentWord.isBookmarked) {
-        await deleteWordsByUser(1, currentWord.wordName); ///////유저아이디 수정
+        await deleteWordsByUser("asd@naver.com", currentWord.wordName);
         console.log("북마크에서 해제: ", currentWord);
       } else {
-        await addWordsByUser(1, currentWord.wordName); ///////////유저아이디 수정
+        await addWordsByUser("asd@naver.com", currentWord.wordName);
         console.log("북마크에 추가: ", currentWord);
       }
     } catch (error) {
