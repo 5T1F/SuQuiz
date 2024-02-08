@@ -23,6 +23,7 @@ public class FriendDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
+        Long friendId;
         String nickname;
         int level;
 

@@ -33,12 +33,12 @@ public class FriendController {
 
     // 친구 추가를 위한 유저 검색
     @GetMapping
-    ResponseEntity<CommonResponse> searchUsers(@RequestParam(name="search") String nickname) {
-        List<FriendDto.Response> userList = friendRelationshipService.searchUsers(nickname);
+    ResponseEntity<CommonResponse> searchUser(@RequestParam(name="search") String nickname) {
+        FriendDto.Response user = friendRelationshipService.searchUser(nickname);
         return new ResponseEntity<>(CommonResponse.builder()
                 .status(HttpStatus.OK.value())
                 .message("닉네임으로 유저 검색")
-                .data(userList)
+                .data(user)
                 .build(),HttpStatus.OK);
     }
 
