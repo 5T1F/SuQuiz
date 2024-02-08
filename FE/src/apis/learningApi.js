@@ -96,7 +96,7 @@ export async function wordsfromCategory(userId, category) {
 // 단어장에 저장한 모든 단어 목록 조회
 export async function allWordsByUser(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/bookmarks/words?user=${userId}`, {
+    const response = await fetch(`${BASE_URL}/bookmarks/words/${userId}`, {
       method: "GET",
     });
     if (!response.ok) {
@@ -108,7 +108,6 @@ export async function allWordsByUser(userId) {
       data = [];
     } else {
       data = await response.json();
-      s;
     }
     return data;
   } catch (error) {

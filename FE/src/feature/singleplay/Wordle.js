@@ -5,7 +5,7 @@ import GameBoard from "./GameBoard";
 import SingleplayModal from "./SingleplayModal";
 import { isSolved, dailyQuest, additionalQuest, save } from "../../apis/singleplayApi";
 
-const Wordle = () => {
+const Wordle = ({ finger }) => {
   const MAX_LETTERS_PER_ROW = 5;
   const MAX_ATTEMPTS = 6;
   const [rightGuess, setRightGuess] = useState("");
@@ -40,6 +40,21 @@ const Wordle = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (finger) {
+      setInputString((prevInputString) => {
+        // Ensure inputString has MAX_LETTERS_PER_ROW characters
+        const newInputString =
+          prevInputString.length < MAX_LETTERS_PER_ROW ? prevInputString + finger : prevInputString;
+        // If inputString has reached MAX_LETTERS_PER_ROW, handleEnter to process the input
+        if (newInputString.length === MAX_LETTERS_PER_ROW) {
+          handleEnter();
+        }
+        return newInputString;
+      });
+    }
+  }, [finger]);
+
   // Keyboard 컴포넌트에서 문자를 전달받아 inputString 상태 업데이트
   const handleKeyPress = (letter) => {
     if (inputString.length < MAX_LETTERS_PER_ROW) {
@@ -53,7 +68,7 @@ const Wordle = () => {
     setInputString((prevInputString) => prevInputString.slice(0, -1));
   };
 
-  const handleEnter = async () => {
+  const handleEnter = () => {
     if (inputString.length === MAX_LETTERS_PER_ROW) {
       setNotification("입력완료");
       console.log("Entered value:", inputString);
@@ -74,14 +89,12 @@ const Wordle = () => {
         return newColors;
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 0));
-
       if (inputString === rightGuess) {
         setNotification("정답입니다! 게임 종료");
-        await handleGameEnd("win");
+        handleGameEnd("win");
       } else if (currentRow === MAX_ATTEMPTS) {
         setNotification("최대 시도 횟수를 초과했습니다. 게임 종료");
-        await handleGameEnd("lose");
+        handleGameEnd("lose");
       } else {
         setHistory((prevHistory) => [...prevHistory, inputString]);
         setInputString("");
@@ -151,8 +164,16 @@ const Wordle = () => {
     setShowModal(false);
   };
 
+  useEffect(() => {
+    if (result.correct !== false && result.correct !== undefined) {
+      setTimeout(() => {
+        setShowModal(true);
+      }, 500); // 0.5초의 지연 시간 설정
+    }
+  }, [result.correct]);
+
   return (
-    <div className="flex flex-col items-center h-screen">
+    <div className="flex flex-col items-center">
       <div>테스트</div>
       <GameBoard inputString={inputString} history={history} colors={colors} />
       <Notification message={notification} />
@@ -163,7 +184,7 @@ const Wordle = () => {
         inputString={inputString}
         rightGuess={rightGuess}
       />
-      {showModal && <SingleplayModal result={result} onClose={closeModal} />}
+      {showModal && <SingleplayModal result={result} onClose={closeModal} key={result.correct ? "win" : "lose"} />}
     </div>
   );
 };
