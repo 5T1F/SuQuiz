@@ -3,7 +3,7 @@ import Keyboard from "./Keyboard";
 import Notification from "./Notification";
 import GameBoard from "./GameBoard";
 import SingleplayModal from "./SingleplayModal";
-import { isSolved, dailyQuest, additionalQuest, save } from "../../apis/singleplayApi";
+import { isSolved, dailyQuest, additionalQuest, save, dailyResult } from "../../apis/singleplayApi";
 import { useWordleStore } from "../../app/store";
 
 const Wordle = ({ finger }) => {
@@ -16,11 +16,11 @@ const Wordle = ({ finger }) => {
   const [history, setHistory] = useState([]); // 이전 입력 기록을 저장할 배열
   const [currentRow, setCurrentRow] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  // const [result, setResult] = useState({ correct: false, trialCount: 0, correctCount: 0, correctText: "" });
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const { setResult } = useWordleStore();
+  const { setModalResult } = useWordleStore();
+  const [answer, setAnswer] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,13 +29,13 @@ const Wordle = ({ finger }) => {
 
         if (solved.data) {
           const additionalData = await additionalQuest(); // 추가 문제 가져오기
-          console.log(additionalData.data);
           setRightGuess(additionalData.data.syllables); // 추가 문제를 rightGuess 상태로 설정
+          setAnswer(additionalData.data.wordName);
           console.log("추가문제 정답:", additionalData.data.wordName);
         } else {
           const dailyData = await dailyQuest(); // 데일리 문제 가져오기
-          console.log(dailyData.data);
           setRightGuess(dailyData.data.syllables); // 데일리 문제를 rightGuess 상태로 설정
+          setAnswer(dailyData.data.wordName);
           console.log("데일리문제 정답:", dailyData.data.wordName);
         }
       } catch (error) {
@@ -49,10 +49,8 @@ const Wordle = ({ finger }) => {
   useEffect(() => {
     if (finger) {
       setInputString((prevInputString) => {
-        // Ensure inputString has MAX_LETTERS_PER_ROW characters
         const newInputString =
           prevInputString.length < MAX_LETTERS_PER_ROW ? prevInputString + finger : prevInputString;
-        // If inputString has reached MAX_LETTERS_PER_ROW, handleEnter to process the input
         if (newInputString.length === MAX_LETTERS_PER_ROW) {
           handleEnter();
         }
@@ -140,17 +138,8 @@ const Wordle = ({ finger }) => {
       .join("");
   };
 
-  // 게임 결과를 저장하는 함수
-  const saveGameResult = async (result) => {
-    try {
-      await save(result); // save 함수를 호출하여 게임 결과를 서버에 저장합니다.
-    } catch (error) {
-      console.error("Error saving game result:", error);
-    }
-  };
-
   // 게임 결과에 따라 모달을 보여줌
-  const handleGameEnd = (res) => {
+  const handleGameEnd = async (res) => {
     // 결과 계산 로직
     const result = {
       userId: userId,
@@ -158,12 +147,37 @@ const Wordle = ({ finger }) => {
       correct: res === "win",
       resultText: colorsToText(colors),
     };
-    console.log(result);
-    // Zustand 스토어에 결과 저장
-    setResult(result);
-    saveGameResult(result);
-    // 모달 표시 로직
-    setShowModal(true);
+
+    try {
+      await save(result); // 서버에 게임 결과 저장
+      console.log("Game result saved successfully");
+      // 성공적으로 저장된 경우, 결과 조회를 위한 API 호출을 여기에 추가
+      fetchResultAndShowModal(res);
+    } catch (error) {
+      console.error("Error saving game result:", error);
+    }
+  };
+
+  const fetchResultAndShowModal = async (res) => {
+    try {
+      const result = await dailyResult(userId); // userId를 기반으로 최신 게임 결과 조회
+      console.log("Fetched game result:", result);
+      // Zustand 스토어에 결과 저장
+      setModalResult({
+        answer: answer,
+        correct: res === "win",
+        allTrialCount: result.data.allTrialCount,
+        streak: result.data.streak,
+        solveCount: result.data.solveCount,
+        correctCount: result.data.correctCount,
+        maxCorrectCount: result.data.maxCorrectCount,
+        trialSpread: result.data.trialSpread,
+        correctRate: result.data.correctRate,
+      });
+      setShowModal(true); // 모달 표시
+    } catch (error) {
+      console.error("Error fetching game result:", error);
+    }
   };
 
   // 모달 닫기
