@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
   useAuthStore,
@@ -20,6 +20,7 @@ const Modal = ({ onClose, email }) => {
   const { provider, setProvider } = useProviderStore();
   const { userNickname, setUserNickname } = useUserNicknameStore();
   const { accessToken, setAccessToken } = useTokenStore();
+  const navigate = useNavigate();
 
   const handleCheck = async () => {
     try {
@@ -56,6 +57,7 @@ const Modal = ({ onClose, email }) => {
         setUserNickname(checkValue);
         localStorage.setItem("emailStorage", null);
         onClose();
+        navigate("/");
         alert("회원가입 완료");
       } else {
         // 응답이 성공이 아니거나 data.data가 없을 경우에 대한 처리

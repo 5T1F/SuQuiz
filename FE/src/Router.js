@@ -28,7 +28,7 @@ function Router() {
             <Route index element={<SingleplayPage />} />
           </Route>
           <Route path="multiplay">
-            <Route index element={<WaitingPage />} />
+            <Route path="waiting-room/:sessionId" element={<WaitingPage />} />
             <Route path="start" element={<MultiplayPage />} />
           </Route>
           <Route path="learning">

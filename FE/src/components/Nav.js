@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-import { useAuthStore, useProviderStore, useTokenStore, useUserEmailStore, useUserNicknameStore } from "../app/store";
+import { useAuthStore, useUserNicknameStore, useProviderStore, useTokenStore } from "../app/store";
 import Logo from "../assets/logoShort.png";
 import Slidebar from "../feature/mypage/Slidebar";
 import ModalLogin from "../feature/auth/login/ModalLogin"; // 모달 컴포넌트를 import
@@ -10,24 +10,24 @@ import styles from "./Nav.module.css";
 
 export default function Nav() {
   const { userId, setUserId } = useAuthStore();
-  const { provider, setProvider } = useProviderStore();
   const { userNickname, setUserNickname } = useUserNicknameStore();
+  const { provider, setProvider } = useProviderStore();
   const { accessToken, setAccessToken } = useTokenStore();
   const [isSlidebarOpen, setIsSlidebarOpen] = useState(false);
 
   useEffect(() => {
     const storedId = localStorage.getItem("idStorage");
-    const storedToken = localStorage.getItem("tokenStorage");
     const storedNickname = localStorage.getItem("nicknameStorage");
     const storedProvider = localStorage.getItem("providerStorage");
+    const storedToken = localStorage.getItem("tokenStorage");
     try {
       const parsedId = JSON.parse(storedId);
-      const parsedToken = JSON.parse(storedToken);
       const parsedNickname = JSON.parse(storedNickname);
       const parsedProvider = JSON.parse(storedProvider);
+      const parsedToken = JSON.parse(storedToken);
       setUserId(parsedId.state.userId);
-      setProvider(parsedProvider.state.provider);
       setUserNickname(parsedNickname.state.userNickname);
+      setProvider(parsedProvider.state.provider);
       setAccessToken(parsedToken.state.accessToken);
     } catch (error) {
       console.error("Error parsing stored data:", error);

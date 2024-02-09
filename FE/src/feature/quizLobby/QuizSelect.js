@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import ModalNoMatchingRoom from "./ModalNoMatchingRoom";
-import ModalFullRoom from "./ModalFullRoom";
 
 import styles from "./QuizSelect.module.css";
 
 const QuizSelect = () => {
-  // 로그인 구현하면 수정!!**************************
-  const userId = null;
   const [codeValue, setCodeValue] = useState("");
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   // 모달창 노출 여부 state
   const [noMatchingModalOpen, setNoMatchingModalOpen] = useState(false);
-  const [fullRoomModalOpen, setFullRoomModalOpen] = useState(false);
 
   // 함수를 전달하여 클릭 시 모달 열기
   const handleNoMatchingRoom = () => {
@@ -27,69 +24,28 @@ const QuizSelect = () => {
     setNoMatchingModalOpen(false);
   };
 
-  // 함수를 전달하여 클릭 시 모달 열기
-  const handleFullRoom = () => {
-    setFullRoomModalOpen(true);
-  };
-
-  // 함수를 전달하여 모달 닫기
-  const handleCloseModalFullRoom = () => {
-    setFullRoomModalOpen(false);
-  };
-
-  const navigateWaitingRoom = (isManager) => {
-    if (isManager) {
-      fetch(`${process.env.REACT_APP_API_ROOT}/quizrooms/${userId}`, {
-        method: "POST",
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setCodeValue(data);
-        })
-        .catch((error) => {
-          // 오류 발생 시
-          console.error("Error making quiz room request:", error);
-        });
-    } else {
-      fetch(`${process.env.REACT_APP_API_ROOT}/quizrooms/isFull/${codeValue}`, {
-        method: "POST",
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data === "true") {
-            // 퀴즈룸 입장
-            fetch(`${process.env.REACT_APP_API_ROOT}/quizrooms/enter/${codeValue}`, {
-              method: "POST",
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data === "true") {
-                  // 퀴즈룸 입장
-                } else {
-                  // 해당 방이 존재하지 않습니다 모달
-                  handleNoMatchingRoom();
-                }
-              })
-              .catch((error) => {
-                // 오류 발생 시
-                console.error("Error making quiz room request:", error);
-              });
-          } else {
-            // 만석으로 입장 불가 모달
-            handleFullRoom();
-          }
-        })
-        .catch((error) => {
-          // 오류 발생 시
-          console.error("Error making quiz room request:", error);
-        });
+  const createSession = async () => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/sessions`);
+      const { sessionId, token } = response.data;
+      // 방장으로서 세션에 참가
+      navigate(`/multiplay/waiting-room/${sessionId}`, { token, isModerator: true });
+    } catch (error) {
+      console.error(error);
     }
-    navigate("/multiplay", {
-      state: {
-        manager: isManager,
-        enterCode: codeValue,
-      },
-    });
+  };
+
+  const joinSession = async () => {
+    // 초대 코드를 사용하여 세션에 참가하는 로직 (API 요청 후 token 받아오기)
+    // 이 예시에서는 초대 코드가 세션 ID라고 가정
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/sessions/${codeValue}/token`);
+      const { token } = response.data;
+      navigate(`/multiplay/waiting-room/${codeValue}`, { token, isModerator: false });
+    } catch (error) {
+      console.error(error);
+      handleNoMatchingRoom();
+    }
   };
 
   return (
@@ -106,11 +62,11 @@ const QuizSelect = () => {
           <div>멀티플레이</div>
           {isHovered ? (
             <>
-              <div className={`h-15 p-1 border-4 border-blue-500`} onClick={() => navigateWaitingRoom(true)}>
+              <div className={`h-15 p-1 border-4 border-blue-500`} onClick={createSession}>
                 방 만들기
               </div>
               <div className={`h-15 p-1 border-4 border-green-500`}>
-                <div onClick={() => navigateWaitingRoom(false)}>코드로 입장하기</div>
+                <div onClick={joinSession}>코드로 입장하기</div>
                 <input
                   type="text"
                   placeholder="입장 코드를 입력하세요"
@@ -133,7 +89,6 @@ const QuizSelect = () => {
 
       {/* modalOpen이 true일 때만 모달 렌더링 */}
       {noMatchingModalOpen && <ModalNoMatchingRoom onClose={handleCloseModalNoMatchingRoom} />}
-      {fullRoomModalOpen && <ModalFullRoom onClose={handleCloseModalFullRoom} />}
     </>
   );
 };

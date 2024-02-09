@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useAuthStore } from "../../../app/store";
+import { useTokenStore } from "../../../app/store";
 import ModalMakeFriend from "./friend/ModalMakeFriend";
 import ModalEndFriendship from "./friend/ModalEndFriendship";
 import Chatting from "../community/Chatting";
@@ -18,6 +18,7 @@ const FriendList = () => {
   const [searchValue, setSearchValue] = useState("");
   const [toNickname, setToNickname] = useState("");
   const [selectedFriend, setSelectedFriend] = useState(null);
+  const { accessToken, setAccessToken } = useTokenStore();
 
   // 함수를 전달하여 클릭 시 모달 열기
   const openMakeModal = () => {
@@ -53,7 +54,12 @@ const FriendList = () => {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/${userId}`); // API 경로
+        const response = await fetch(`/users/friends/${userId}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }); // API 경로
         const data = await response.json();
         console.log(data);
         // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
