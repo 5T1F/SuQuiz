@@ -43,8 +43,11 @@ dependencies {
 	//ModelMapper
 	implementation 'org.modelmapper:modelmapper:2.4.4'
 
+	//jackson 라이브러리
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
 
+	//openvidu 라이브러리
+	implementation 'io.openvidu:openvidu-java-client:2.29.0'
 
 
 }

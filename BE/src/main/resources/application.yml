@@ -38,3 +38,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+# openVidu Environmental Variables
+OPENVIDU_URL: https://suquiz.shop:8443/
+OPENVIDU_SECRET : MY_SECRET
