@@ -1,10 +1,16 @@
-const BASE_URL = process.env.REACT_APP_API_ROOT;
+const BASE_URL = "";
+const storedToken = localStorage.getItem("tokenStorage");
+const parsedToken = JSON.parse(storedToken);
+const accessToken = parsedToken.state.accessToken;
 
 // 전체 주제명 조회 (1 일상 2 관계 3 감정 ...등)
 export async function AllSubject() {
   try {
     const response = await fetch(`${BASE_URL}/subject/allSub`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -28,6 +34,9 @@ export async function AllWordWithSubject(userId, subjectName) {
   try {
     const response = await fetch(`${BASE_URL}/subject/all/${userId}/`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       body: JSON.stringify({ subjectName: subjectName }),
     });
     if (!response.ok) {
@@ -52,6 +61,9 @@ export async function allWords() {
   try {
     const response = await fetch(`${BASE_URL}/word/all`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -75,6 +87,9 @@ export async function wordsfromCategory(userId, category) {
   try {
     const response = await fetch(`${BASE_URL}/word/categoryWords/${userId}?category=${category}`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -94,10 +109,13 @@ export async function wordsfromCategory(userId, category) {
 }
 
 // 단어장에 저장한 모든 단어 목록 조회
-export async function allWordsByUser(userEmail) {
+export async function allWordsByUser(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/bookmarks/words?user=${userEmail}`, {
+    const response = await fetch(`${BASE_URL}/bookmarks/words/${userId}`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -117,9 +135,9 @@ export async function allWordsByUser(userEmail) {
 }
 
 // 단어장에 단어 추가
-export async function addWordsByUser(userEmail, wordName) {
+export async function addWordsByUser(userId, wordName) {
   const userWord = {
-    userEmail: userEmail,
+    userId: userId,
     wordName: wordName,
   };
   try {
@@ -127,6 +145,7 @@ export async function addWordsByUser(userEmail, wordName) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(userWord),
     });
@@ -141,9 +160,9 @@ export async function addWordsByUser(userEmail, wordName) {
 }
 
 // 단어장에서 단어 삭제
-export async function deleteWordsByUser(userEmail, wordName) {
+export async function deleteWordsByUser(userId, wordName) {
   const userWord = {
-    userEmail: userEmail,
+    userId: userId,
     wordName: wordName,
   };
   try {
@@ -151,6 +170,7 @@ export async function deleteWordsByUser(userEmail, wordName) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(userWord),
     });

@@ -3,7 +3,6 @@ import Container from "../components/Container";
 import Flashcard from "../feature/Learning/Flashcard";
 import SideMenu from "../feature/Learning/SideMenu";
 import { useLocation, useNavigate } from "react-router-dom";
-import UserView from "../feature/Learning/UserView";
 import { wordsfromCategory, AllWordWithSubject } from "../apis/learningApi";
 import MyCam from "../feature/Learning/MyCam";
 
@@ -16,12 +15,15 @@ export default function LearningStartPage() {
   const [currentWord, setCurrentWord] = useState(null);
   const [wordList, setWordList] = useState([]);
   const navigate = useNavigate();
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
   const handleSetCurrentWord = (updatedWord) => {
     setCurrentWord(updatedWord);
   };
 
   // motion detect value
-  const [finger, setFinger] = useState("#");
+  const [finger, setFinger] = useState("");
   const changeFinger = (value) => {
     setFinger(value);
   };
@@ -33,7 +35,7 @@ export default function LearningStartPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await wordsfromCategory(1, selectedMain); //userId 대신에  테스트용 1
+        const data = await wordsfromCategory(userId, selectedMain);
         setWordList(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);

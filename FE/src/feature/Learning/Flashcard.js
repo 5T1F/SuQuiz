@@ -33,7 +33,7 @@ const CardBox = ({ currentWord, toggleBookmark }) => {
             해당 영상의 수어 뜻 : {currentWord.wordName}
           </div>
         ) : (
-          <video controls>
+          <video loop autoPlay muted key={currentWord.videoUrl}>
             <source src={currentWord.videoUrl} type="video/mp4" />
             영상이 존재하지 않습니다.
           </video>
@@ -44,6 +44,9 @@ const CardBox = ({ currentWord, toggleBookmark }) => {
 };
 
 const Flashcard = ({ currentWord, setCurrentWord }) => {
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
   const [isFlipped, setIsFlipped] = useState(false);
 
   const toggleCard = () => {
@@ -53,10 +56,10 @@ const Flashcard = ({ currentWord, setCurrentWord }) => {
     try {
       let updatedIsBookmarked = !currentWord.isBookmarked;
       if (currentWord.isBookmarked) {
-        await deleteWordsByUser(1, currentWord.wordName);
+        await deleteWordsByUser(userId, currentWord.wordName);
         console.log("북마크에서 해제: ", currentWord);
       } else {
-        await addWordsByUser(1, currentWord.wordName);
+        await addWordsByUser(userId, currentWord.wordName);
         console.log("북마크에 추가: ", currentWord);
       }
       setCurrentWord((prevWord) => ({ ...prevWord, isBookmarked: updatedIsBookmarked }));

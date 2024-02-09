@@ -3,33 +3,39 @@ import Keyboard from "./Keyboard";
 import Notification from "./Notification";
 import GameBoard from "./GameBoard";
 import SingleplayModal from "./SingleplayModal";
-import { isSolved, dailyQuest, additionalQuest, save } from "../../apis/singleplayApi";
+import { isSolved, dailyQuest, additionalQuest, save, dailyResult } from "../../apis/singleplayApi";
+import { useWordleStore } from "../../app/store";
 
-const Wordle = () => {
+const Wordle = ({ finger }) => {
   const MAX_LETTERS_PER_ROW = 5;
   const MAX_ATTEMPTS = 6;
   const [rightGuess, setRightGuess] = useState("");
-  // const [rightGuess] = useState("ㄱㅗㅇㅈㅜ");
   const [colors, setColors] = useState(Array(MAX_LETTERS_PER_ROW * MAX_ATTEMPTS).fill("white"));
   const [notification, setNotification] = useState("");
   const [inputString, setInputString] = useState(""); // 사용자 입력값 상태
   const [history, setHistory] = useState([]); // 이전 입력 기록을 저장할 배열
   const [currentRow, setCurrentRow] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [result, setResult] = useState({ correct: false, trialCount: 0, correctCount: 0, correctText: "" });
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
+  const { setModalResult } = useWordleStore();
+  const [answer, setAnswer] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const solved = await isSolved("asd@naver.com"); // 사용자의 데일리 문제 풀이 여부 확인
+        const solved = await isSolved(userId);
 
         if (solved.data) {
           const additionalData = await additionalQuest(); // 추가 문제 가져오기
-          setRightGuess(additionalData.data.wordName); // 추가 문제를 rightGuess 상태로 설정
+          setRightGuess(additionalData.data.syllables); // 추가 문제를 rightGuess 상태로 설정
+          setAnswer(additionalData.data.wordName);
           console.log("추가문제 정답:", additionalData.data.wordName);
         } else {
           const dailyData = await dailyQuest(); // 데일리 문제 가져오기
-          setRightGuess(dailyData.data.wordName); // 데일리 문제를 rightGuess 상태로 설정
+          setRightGuess(dailyData.data.syllables); // 데일리 문제를 rightGuess 상태로 설정
+          setAnswer(dailyData.data.wordName);
           console.log("데일리문제 정답:", dailyData.data.wordName);
         }
       } catch (error) {
@@ -39,6 +45,19 @@ const Wordle = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (finger) {
+      setInputString((prevInputString) => {
+        const newInputString =
+          prevInputString.length < MAX_LETTERS_PER_ROW ? prevInputString + finger : prevInputString;
+        if (newInputString.length === MAX_LETTERS_PER_ROW) {
+          handleEnter();
+        }
+        return newInputString;
+      });
+    }
+  }, [finger]);
 
   // Keyboard 컴포넌트에서 문자를 전달받아 inputString 상태 업데이트
   const handleKeyPress = (letter) => {
@@ -53,7 +72,7 @@ const Wordle = () => {
     setInputString((prevInputString) => prevInputString.slice(0, -1));
   };
 
-  const handleEnter = async () => {
+  const handleEnter = () => {
     if (inputString.length === MAX_LETTERS_PER_ROW) {
       setNotification("입력완료");
       console.log("Entered value:", inputString);
@@ -74,14 +93,12 @@ const Wordle = () => {
         return newColors;
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 0));
-
       if (inputString === rightGuess) {
         setNotification("정답입니다! 게임 종료");
-        await handleGameEnd("win");
+        handleGameEnd("win");
       } else if (currentRow === MAX_ATTEMPTS) {
         setNotification("최대 시도 횟수를 초과했습니다. 게임 종료");
-        await handleGameEnd("lose");
+        handleGameEnd("lose");
       } else {
         setHistory((prevHistory) => [...prevHistory, inputString]);
         setInputString("");
@@ -111,7 +128,6 @@ const Wordle = () => {
   };
 
   const colorsToText = (colors) => {
-    console.log("Received colors:", colors);
     return colors
       .map((color) => {
         if (color === "#C0C0C0") return "0";
@@ -122,28 +138,46 @@ const Wordle = () => {
       .join("");
   };
 
-  // 게임 결과를 저장하는 함수
-  const saveGameResult = async (result) => {
-    try {
-      await save(result); // save 함수를 호출하여 게임 결과를 서버에 저장합니다.
-    } catch (error) {
-      console.error("Error saving game result:", error);
-    }
-  };
-
   // 게임 결과에 따라 모달을 보여줌
   const handleGameEnd = async (res) => {
-    const newResult = {
-      email: "asd@naver.com",
+    // 결과 계산 로직
+    const result = {
+      userId: userId,
       trialCount: res === "win" ? currentRow : 0,
       correct: res === "win",
       resultText: colorsToText(colors),
     };
 
-    console.log("결과!!!", newResult);
-    setResult(newResult);
-    saveGameResult(newResult);
-    setShowModal(true);
+    try {
+      await save(result); // 서버에 게임 결과 저장
+      console.log("Game result saved successfully");
+      // 성공적으로 저장된 경우, 결과 조회를 위한 API 호출을 여기에 추가
+      fetchResultAndShowModal(res);
+    } catch (error) {
+      console.error("Error saving game result:", error);
+    }
+  };
+
+  const fetchResultAndShowModal = async (res) => {
+    try {
+      const result = await dailyResult(userId); // userId를 기반으로 최신 게임 결과 조회
+      console.log("Fetched game result:", result);
+      // Zustand 스토어에 결과 저장
+      setModalResult({
+        answer: answer,
+        correct: res === "win",
+        allTrialCount: result.data.allTrialCount,
+        streak: result.data.streak,
+        solveCount: result.data.solveCount,
+        correctCount: result.data.correctCount,
+        maxCorrectCount: result.data.maxCorrectCount,
+        trialSpread: result.data.trialSpread,
+        correctRate: result.data.correctRate,
+      });
+      setShowModal(true); // 모달 표시
+    } catch (error) {
+      console.error("Error fetching game result:", error);
+    }
   };
 
   // 모달 닫기
@@ -152,7 +186,7 @@ const Wordle = () => {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen">
+    <div className="flex flex-col items-center">
       <div>테스트</div>
       <GameBoard inputString={inputString} history={history} colors={colors} />
       <Notification message={notification} />
@@ -163,7 +197,7 @@ const Wordle = () => {
         inputString={inputString}
         rightGuess={rightGuess}
       />
-      {showModal && <SingleplayModal result={result} onClose={closeModal} />}
+      {showModal && <SingleplayModal onClose={closeModal} />}
     </div>
   );
 };

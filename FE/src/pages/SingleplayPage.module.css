@@ -1,0 +1,16 @@
+.container {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid red;
+}
+.container > div {
+  margin: 20px;
+}
+.mycam {
+  border: 3px solid blueviolet;
+}
+.wordle {
+  border: 3px solid orchid;
+}
