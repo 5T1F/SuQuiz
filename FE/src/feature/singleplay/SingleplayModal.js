@@ -10,8 +10,9 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import { isSolved, dailyResult } from "../../apis/singleplayApi";
+import { useWordleStore } from "../../app/store";
 
-const SingleplayModal = ({ result, onClose }) => {
+const SingleplayModal = ({ onClose }) => {
   // 상태 및 변수 선언
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
@@ -30,6 +31,7 @@ const SingleplayModal = ({ result, onClose }) => {
     trialSpread: [0, 0, 0, 0, 0],
     correctRate: 0,
   });
+  const { result } = useWordleStore();
 
   const dummyStreakData = [
     [0, 1, 1, 1, 0, 1, 1, 1, 1, 0, -1],
@@ -53,12 +55,12 @@ const SingleplayModal = ({ result, onClose }) => {
         const completed = [];
         const incorrect = [];
         for (const date in data.data.streak) {
-          if (Object.hasOwnProperty.call(data.data.streak, date)) {
+          if (data.data.streak.hasOwnProperty(date)) {
             const value = data.data.streak[date];
             if (value === 1) {
-              completedDates.push(date);
+              completed.push(date);
             } else if (value === -1) {
-              incorrectDates.push(date);
+              incorrect.push(date);
             }
           }
         }
@@ -110,25 +112,15 @@ const SingleplayModal = ({ result, onClose }) => {
   };
 
   const handleTileContent = ({ date, view }) => {
-    let html = [];
-    console.log("Date:", moment(date).format("YYYY-MM-DD"));
-    console.log("Completed Dates:", completedDates);
-    console.log("Incorrect Dates:", incorrectDates);
+    const formattedDate = moment(date).format("YYYY-MM-DD");
+    const completedDateFound = completedDates.includes(formattedDate);
+    const incorrectDateFound = incorrectDates.includes(formattedDate);
 
-    if (completedDates.find((d) => d === moment(date).format("YYYY-MM-DD"))) {
-      console.log("Completed Date Found:", moment(date).format("YYYY-MM-DD"));
-      html.push(<div className={styles.dot}>&#10004;</div>);
-    }
-
-    if (incorrectDates.find((d) => d === moment(date).format("YYYY-MM-DD"))) {
-      console.log("Incorrect Date Found:", moment(date).format("YYYY-MM-DD"));
-      html.push(<div className={styles.dot}>&#10060;</div>);
-    }
-    console.log("HTML Elements:", html);
     return (
-      <>
-        <div>{html}</div>
-      </>
+      <div>
+        {completedDateFound && <div className={styles.dot}>&#10004;</div>}
+        {incorrectDateFound && <div className={styles.dot}>&#10060;</div>}
+      </div>
     );
   };
 

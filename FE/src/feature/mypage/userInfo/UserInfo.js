@@ -13,10 +13,10 @@ const UserInfo = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/mypage/${userId}`, {
+        const response = await fetch(`/mypage/${userId}`, {
           method: "GET",
           headers: {
-            Athorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
 

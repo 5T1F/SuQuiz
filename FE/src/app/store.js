@@ -70,3 +70,8 @@ export const useProviderStore = create(
     }
   )
 );
+
+export const useWordleStore = create((set) => ({
+  result: { correct: false, trialCount: 0, correctCount: 0, correctText: "" },
+  setResult: (result) => set({ result }),
+}));

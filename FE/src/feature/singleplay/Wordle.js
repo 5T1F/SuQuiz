@@ -4,6 +4,7 @@ import Notification from "./Notification";
 import GameBoard from "./GameBoard";
 import SingleplayModal from "./SingleplayModal";
 import { isSolved, dailyQuest, additionalQuest, save } from "../../apis/singleplayApi";
+import { useWordleStore } from "../../app/store";
 
 const Wordle = ({ finger }) => {
   const MAX_LETTERS_PER_ROW = 5;
@@ -15,10 +16,11 @@ const Wordle = ({ finger }) => {
   const [history, setHistory] = useState([]); // 이전 입력 기록을 저장할 배열
   const [currentRow, setCurrentRow] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [result, setResult] = useState({ correct: false, trialCount: 0, correctCount: 0, correctText: "" });
+  // const [result, setResult] = useState({ correct: false, trialCount: 0, correctCount: 0, correctText: "" });
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
+  const { setResult } = useWordleStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -128,7 +130,6 @@ const Wordle = ({ finger }) => {
   };
 
   const colorsToText = (colors) => {
-    console.log("Received colors:", colors);
     return colors
       .map((color) => {
         if (color === "#C0C0C0") return "0";
@@ -149,17 +150,19 @@ const Wordle = ({ finger }) => {
   };
 
   // 게임 결과에 따라 모달을 보여줌
-  const handleGameEnd = async (res) => {
-    const newResult = {
+  const handleGameEnd = (res) => {
+    // 결과 계산 로직
+    const result = {
       userId: userId,
       trialCount: res === "win" ? currentRow : 0,
       correct: res === "win",
       resultText: colorsToText(colors),
     };
-
-    console.log("결과!!!", newResult);
-    setResult(newResult);
-    saveGameResult(newResult);
+    console.log(result);
+    // Zustand 스토어에 결과 저장
+    setResult(result);
+    saveGameResult(result);
+    // 모달 표시 로직
     setShowModal(true);
   };
 
@@ -167,14 +170,6 @@ const Wordle = ({ finger }) => {
   const closeModal = () => {
     setShowModal(false);
   };
-
-  useEffect(() => {
-    if (result.correct !== false && result.correct !== undefined) {
-      setTimeout(() => {
-        setShowModal(true);
-      }, 500); // 0.5초의 지연 시간 설정
-    }
-  }, [result.correct]);
 
   return (
     <div className="flex flex-col items-center">
@@ -188,7 +183,7 @@ const Wordle = ({ finger }) => {
         inputString={inputString}
         rightGuess={rightGuess}
       />
-      {showModal && <SingleplayModal result={result} onClose={closeModal} key={result.correct ? "win" : "lose"} />}
+      {showModal && <SingleplayModal onClose={closeModal} />}
     </div>
   );
 };
