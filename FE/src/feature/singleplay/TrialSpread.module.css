@@ -12,21 +12,28 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+  font-size: 12px;
+  line-height: 15px;
 }
 
 /* 프로그래스 바 스타일 수정 */
 progress {
-  height: 16px;
-  background-color: #ddd; /* 기본 색상 */
-  margin: 0 10px;
+  height: 32px;
+  box-shadow: inset 0px 2px 4px #efefef;
+  border-radius: 15px;
+  margin: 5px 4px;
+  width: 160px;
+  font-size: 24px;
 }
 
 progress::-webkit-progress-bar {
-  background-color: #ddd; /* 기본 색상 */
-  border-radius: 0 10px 10px 0;
+  background: #efefef;
+  box-shadow: inset 0px 2px 4px #efefef;
+  border-radius: 15px;
 }
 
 progress::-webkit-progress-value {
-  background-color: #bc76e0; /* 프로그래스 바 색상 */
-  border-radius: 0 10px 10px 0;
+  background-color: #f4b28e; /* 프로그래스 바 색상 */
+  box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
 }

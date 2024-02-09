@@ -120,27 +120,21 @@ const SingleplayModal = ({ onClose }) => {
     <>
       <div className={styles.modalOverlay}>
         <div className={styles.modalContent}>
-          <div className="flex row justify-between">
-            <div className="modal-title">싱글 플레이 결과</div>
-            <button onClick={onClose}>닫기</button>
-          </div>
-
-          <div className="flex justify-center">
-            {modalResult.correct ? (
-              <p>축하합니다! 정답을 맞추셨습니다!</p>
-            ) : (
-              <p>아쉽지만 게임 오버입니다. 정답을 맞추지 못했습니다.</p>
-            )}
+          <div className={styles.modalTitle}>
+            싱글 플레이 결과<button onClick={onClose}>닫기</button>
           </div>
           <div className="flex row">
             <div className={styles.wordContent}>
+              {modalResult.correct ? (
+                <p>축하합니다! 정답을 맞추셨습니다!</p>
+              ) : (
+                <p>아쉽지만 정답을 맞추지 못했습니다.</p>
+              )}
               {wordInfo ? (
                 <>
-                  <div>단어 정보</div>
-                  <div>카테고리: {wordInfo.category}</div>
-                  {wordInfo?.subjectName && <div>주제명: {wordInfo.subjectName}</div>}
-                  <div>단어명: {wordInfo.wordName}</div>
-                  <div>북마크 여부: {wordInfo.bookmarked}</div>
+                  <p>정답 단어는 "{wordInfo.wordName}" 입니다.</p>
+                  <p>수어로는 어떤 동작인지 알아볼까요?</p>
+                  {/* <div>북마크 여부: {wordInfo.bookmarked}</div> */}
                   <div className={styles.video}>
                     <video loop autoPlay muted>
                       <source src={wordInfo.videoUrl} type="video/mp4" />
@@ -153,24 +147,29 @@ const SingleplayModal = ({ onClose }) => {
               )}
             </div>
             <div className={styles.resultContent}>
-              <div className="flex row">
-                <RecordItem label="전체도전" value={modalResult.allTrialCount} color="green" />
-                <RecordItem label="정답률" value={`${modalResult.correctRate}%`} color="blue" />
-                <RecordItem label={"최근 연속 정답 기록"} value={modalResult.correctCount} color="yellow" />
-                <RecordItem label={"최장 연속 스트릭"} value={modalResult.maxCorrectCount} color="red" />
+              <div className="flex">
+                <RecordItem label="전체도전" value={modalResult.allTrialCount} color="white" />
+                <RecordItem label="정답률" value={`${modalResult.correctRate}%`} color="green" />
+                <RecordItem label={"최근 연속 정답 기록"} value={modalResult.correctCount} color="brown" />
+                <RecordItem label={"최장 연속 스트릭"} value={modalResult.maxCorrectCount} color="yellow" />
               </div>
-              <div className="flex row">
+              <div className="flex mt-2">
                 <div className={styles.trialContainer}>
-                  <div>도전분포</div>
+                  <div className="mb-3 font-bold">도전분포</div>
+                  {/* <div className={styles.memo}>*몇 번째 시도에</div>
+                  <div className={styles.memo}>맞추셨는지 알아봅시다!</div> */}
                   <div>
                     <TrialSpread trialSpreadData={modalResult.trialSpread} />
                   </div>
                 </div>
                 <div className={styles.streakContainer}>
-                  <div>오늘의 단어 스트릭</div>
+                  {/* <div className="flex"> */}
+                  <div className="font-bold">스트릭 </div>
+                  <div className={styles.memo}>*{modalResult.solveCount}일 연속 문제를 푸셨어요!</div>
+                  {/* </div> */}
                   <div>
                     <Calendar
-                      className={styles.reactCalendar}
+                      className={styles[`react-calendar`]}
                       formatDay={(locale, date) => moment(date).format("D")}
                       minDetail="month"
                       maxDetail="month"
@@ -180,26 +179,25 @@ const SingleplayModal = ({ onClose }) => {
                       tileContent={handleTileContent}
                     />
                   </div>
-                  <div>연속 {modalResult.solveCount}일 문제를 푸셨어요!</div>
                 </div>
               </div>
-              <div className="float-right mt-3">
-                <button onClick={handleMoreQuestion} className="mr-2">
-                  더 풀어보기
-                </button>
-                {solved ? (
-                  <button
-                    onClick={copyDummyDataToClipboard}
-                    disabled={solved}
-                    style={{ backgroundColor: solved ? "#ccc" : "#007bff", color: "#ffffff" }}
-                  >
-                    복사하기
-                  </button>
-                ) : (
-                  <button onClick={copyDummyDataToClipboard}>복사하기</button>
-                )}
-              </div>
             </div>
+          </div>
+          <div className="float-right mt-3">
+            <button onClick={handleMoreQuestion} className="mr-2">
+              더 풀어보기
+            </button>
+            {solved ? (
+              <button
+                onClick={copyDummyDataToClipboard}
+                disabled={solved}
+                style={{ backgroundColor: solved ? "#ccc" : "#007bff", color: "#ffffff" }}
+              >
+                복사하기
+              </button>
+            ) : (
+              <button onClick={copyDummyDataToClipboard}>복사하기</button>
+            )}
           </div>
         </div>
       </div>

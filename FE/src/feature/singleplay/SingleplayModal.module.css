@@ -12,6 +12,9 @@
 }
 
 .modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: fixed;
   left: 50%;
   top: 50%;
@@ -19,61 +22,93 @@
   /* max-width: 1000px; */
   width: 1080px;
   border-radius: 10px;
-  padding: 20px;
-  background: white;
+  padding: 20px 0;
   z-index: 1050;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+}
+
+.modalTitle {
+  /* position: absolute; */
+  width: 1040px;
+  margin: 0 20px 10px 20px;
+  padding: 0 10px;
+
+  height: 26px;
+  background: #f4b28e;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #3e3300;
 }
 
 .wordContent {
-  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px;
+  margin-right: 15px;
 }
 
-.wordContent div {
-  /* position: relative; */
-  /* top:1%; */
-  /* color: #fff; */
+.wordContent p {
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+  /* padding-bottom: 5px; */
+  font: var(--pretendard);
 }
 
 .video {
-  /* display: flex;
+  background: #ffffff;
+  border: 3px solid #efefef;
+  border-radius: 15px;
+  display: flex;
   justify-content: center;
-  align-items: center; */
-  /* z-index: 1000; */
+  align-items: center;
+  padding: 10px 10px;
+  margin-top: 10px;
 }
 
 .video video {
-  /* width: 45%;
-  height: auto;
-  top: 25%;
-  left: 4%; */
-  border-radius: 5%;
+  border-radius: 3%;
   position: relative;
-  width: 480px;
+  width: 440px;
   height: auto;
+  z-index: 1000;
 }
 
 .resultContent {
-  /* margin: auto; */
-  width: 480px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .trialContainer {
-  border: 3px solid rgb(133, 205, 0);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   width: 100%;
   height: auto;
+  margin-top: 10px;
 }
 
 .streakContainer {
-  border: 3px solid rgb(133, 205, 0);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-top: 10px;
+}
+
+.memo {
+  font-size: 10px;
+  margin-left: auto;
+  margin-right: 10px;
 }
 
 .dotContainer {
@@ -106,89 +141,17 @@
   font-size: 10px;
 }
 
-.reactCalendar {
-  width: 100%;
-  background-color: #fff;
+.react-calendar {
+  /* width: 42rem; */
+  background-color: #ffffff;
   color: #222;
   border-radius: 8px;
   /* box-shadow: 0 12px 24px rgba(83, 83, 83, 0.2); */
-  line-height: 1.125em;
+  /* line-height: 1.125em; */
 }
-/* .myReactCalendarNavigation button {
-  color: #6f48eb;
-  min-width: 44px;
-  background: none;
-  font-size: 16px;
-  margin-top: 8px;
+
+.react-calendar__tile {
+  color: #222;
+  background: ;
+  text-align: ;
 }
-.myReactCalendarNavigation button:enabled:hover,
-.myReactCalendarNavigation button:enabled:focus {
-  background-color: #f8f8fa;
-}
-.myReactCalendarNavigation button[disabled] {
-  background-color: #f0f0f0;
-}
-abbr[title] {
-  text-decoration: none;
-} */
-/* .myReactCalendarMonthViewDaysDayWeekend {
-  color: #d10000;
- } */
-/* .myReactCalendarTile:enabled:hover,
-.myReactCalendarTile:enabled:focus {
-  background: #f8f8fa;
-  color: #6f48eb;
-  border-radius: 6px;
-}
-.myReactCalendarTileNow {
-  background: #6f48eb33;
-  border-radius: 6px;
-  font-weight: bold;
-  color: #6f48eb;
-}
-.myReactCalendarTileNow:enabled:hover,
-.myReactCalendarTileNow:enabled:focus {
-  background: #6f48eb33;
-  border-radius: 6px;
-  font-weight: bold;
-  color: #6f48eb;
-}
-.myReactCalendarTileHasActive:enabled:hover,
-.myReactCalendarTileHasActive:enabled:focus {
-  background: #f8f8fa;
-}
-.myReactCalendarTileActive {
-  background: #6f48eb;
-  border-radius: 6px;
-  font-weight: bold;
-  color: white;
-}
-.myReactCalendarTileActive:enabled:hover,
-.myReactCalendarTileActive:enabled:focus {
-  background: #6f48eb;
-  color: white;
-}
-.myReactCalendarSelectRange .myReactCalendarTileHover {
-  background-color: #f8f8fa;
-}
-.myReactCalendarTileRange {
-  background: #f8f8fa;
-  color: #6f48eb;
-  border-radius: 0;
-}
-.myReactCalendarTileRangeStart {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  background: #6f48eb;
-  color: white;
-}
-.myReactCalendarTileRangeEnd {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  background: #6f48eb;
-  color: white;
-} */
