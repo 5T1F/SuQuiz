@@ -9,6 +9,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import { isSolved } from "../../apis/singleplayApi";
+import { allWords } from "../../apis/learningApi";
 import { useWordleStore } from "../../app/store";
 
 const SingleplayModal = ({ onClose }) => {
@@ -20,6 +21,7 @@ const SingleplayModal = ({ onClose }) => {
   const [incorrectDates, setIncorrectDates] = useState([]);
   const navigate = useNavigate();
   const { modalResult } = useWordleStore();
+  const [wordInfo, setWordInfo] = useState(null); // 원하는 단어 정보를 저장할 상태
 
   console.log(modalResult);
 
@@ -28,6 +30,15 @@ const SingleplayModal = ({ onClose }) => {
       try {
         const solved = await isSolved(userId);
         setSolved(solved.data);
+        const words = await allWords();
+        const targetWord = words.data.find((word) => word.wordName === modalResult.answer);
+        console.log("수어 영상을 보여줄 정답 단어정보 ", targetWord);
+
+        if (targetWord) {
+          setWordInfo(targetWord);
+        } else {
+          console.log("원하는 단어 정보가 없습니다.");
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -91,7 +102,15 @@ const SingleplayModal = ({ onClose }) => {
 
     return (
       <div>
-        {completedDateFound && <div className={styles.dot}>&#10004;</div>}
+        {completedDateFound && (
+          <>
+            <div className={styles.dotContainer}>
+              <div className={styles.dot1}>
+                <span className={styles.unicode}>&#10004;</span>
+              </div>
+            </div>
+          </>
+        )}
         {incorrectDateFound && <div className={styles.dot}>&#10060;</div>}
       </div>
     );
@@ -105,19 +124,35 @@ const SingleplayModal = ({ onClose }) => {
             <div className="modal-title">싱글 플레이 결과</div>
             <button onClick={onClose}>닫기</button>
           </div>
-          <div>
-            <div className={styles.videoContent}>
-              {modalResult.answer}!!!!!!!!!!!!!! 여기에 수어 단어에 해당하는 영상 넣을 거야 아까 정답 단어 기억나?
-            </div>
 
-            <div className="modal-content">
-              <div className="flex justify-center">
-                {modalResult.correct ? (
-                  <p>축하합니다! 정답을 맞추셨습니다!</p>
-                ) : (
-                  <p>아쉽지만 게임 오버입니다. 정답을 맞추지 못했습니다.</p>
-                )}
-              </div>
+          <div className="flex justify-center">
+            {modalResult.correct ? (
+              <p>축하합니다! 정답을 맞추셨습니다!</p>
+            ) : (
+              <p>아쉽지만 게임 오버입니다. 정답을 맞추지 못했습니다.</p>
+            )}
+          </div>
+          <div className="flex row">
+            <div className={styles.wordContent}>
+              {wordInfo ? (
+                <>
+                  <div>단어 정보</div>
+                  <div>카테고리: {wordInfo.category}</div>
+                  {wordInfo?.subjectName && <div>주제명: {wordInfo.subjectName}</div>}
+                  <div>단어명: {wordInfo.wordName}</div>
+                  <div>북마크 여부: {wordInfo.bookmarked}</div>
+                  <div className={styles.video}>
+                    <video loop autoPlay muted>
+                      <source src={wordInfo.videoUrl} type="video/mp4" />
+                      영상이 존재하지 않습니다.
+                    </video>
+                  </div>
+                </>
+              ) : (
+                <p>로딩 중...</p>
+              )}
+            </div>
+            <div className={styles.resultContent}>
               <div className="flex row">
                 <RecordItem label="전체도전" value={modalResult.allTrialCount} color="green" />
                 <RecordItem label="정답률" value={`${modalResult.correctRate}%`} color="blue" />
@@ -145,7 +180,7 @@ const SingleplayModal = ({ onClose }) => {
                       tileContent={handleTileContent}
                     />
                   </div>
-                  <div>연속 {modalResult.solveCount}일 달성중이에요!</div>
+                  <div>연속 {modalResult.solveCount}일 문제를 푸셨어요!</div>
                 </div>
               </div>
               <div className="float-right mt-3">

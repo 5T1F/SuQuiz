@@ -12,10 +12,49 @@
 }
 
 .modalContent {
-  width: 480px;
-  background-color: white;
-  padding: 20px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* max-width: 1000px; */
+  width: 1080px;
   border-radius: 10px;
+  padding: 20px;
+  background: white;
+  z-index: 1050;
+}
+
+.wordContent {
+  margin: auto;
+}
+
+.wordContent div {
+  /* position: relative; */
+  /* top:1%; */
+  /* color: #fff; */
+}
+
+.video {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  /* z-index: 1000; */
+}
+
+.video video {
+  /* width: 45%;
+  height: auto;
+  top: 25%;
+  left: 4%; */
+  border-radius: 5%;
+  position: relative;
+  width: 480px;
+  height: auto;
+}
+
+.resultContent {
+  /* margin: auto; */
+  width: 480px;
 }
 
 .trialContainer {
@@ -37,22 +76,42 @@
   width: 100%;
 }
 
-.dot {
-  height: 8px;
-  width: 8px;
-  background-color: #f87171;
-  border-radius: 50%;
+.dotContainer {
+  position: relative;
   display: flex;
-  margin-left: 1px;
+  justify-content: center;
+  bottom: 17px;
+}
+
+.dot1 {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: rgba(106, 230, 168, 0.3);
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.dot2 {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: rgba(229, 123, 123, 0.3);
+  border-radius: 50%;
+}
+
+.unicode {
+  position: relative;
+  bottom: 8px;
+  font-size: 10px;
 }
 
 .reactCalendar {
-  width: 80px;
-  max-width: 100%;
+  width: 100%;
   background-color: #fff;
   color: #222;
   border-radius: 8px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 12px 24px rgba(83, 83, 83, 0.2); */
   line-height: 1.125em;
 }
 /* .myReactCalendarNavigation button {

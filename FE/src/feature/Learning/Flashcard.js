@@ -33,7 +33,7 @@ const CardBox = ({ currentWord, toggleBookmark }) => {
             해당 영상의 수어 뜻 : {currentWord.wordName}
           </div>
         ) : (
-          <video controls>
+          <video loop autoPlay muted key={currentWord.videoUrl}>
             <source src={currentWord.videoUrl} type="video/mp4" />
             영상이 존재하지 않습니다.
           </video>
