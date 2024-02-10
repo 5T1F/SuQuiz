@@ -22,7 +22,6 @@ const Wordle = ({ finger }) => {
   const { setModalResult } = useWordleStore();
   const [answer, setAnswer] = useState("");
   const [isSolvedState, setIsSolvedState] = useState(false);
-  const [colorText, setColorText] = useState("");
   const [resultText, setResultText] = useState("");
 
   useEffect(() => {
@@ -148,17 +147,6 @@ const Wordle = ({ finger }) => {
     }
 
     return colorText;
-  };
-
-  const colorsToText = (colors) => {
-    return colors
-      .map((color) => {
-        if (color === "#C0C0C0") return "0";
-        if (color === "#FFEA00") return "1";
-        if (color === "#00C853") return "2";
-        return "";
-      })
-      .join("");
   };
 
   // 게임 결과에 따라 모달을 보여줌

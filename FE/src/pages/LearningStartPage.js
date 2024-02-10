@@ -7,6 +7,7 @@ import { wordsfromCategory, AllWordWithSubject } from "../apis/learningApi";
 import MyCam from "../feature/Learning/MyCam";
 
 export default function LearningStartPage() {
+  const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
   const { selectedMain, selectedSub } = location.state || {
     selectedMain: null,
@@ -57,7 +58,6 @@ export default function LearningStartPage() {
 
   return (
     <Container>
-      <h1 className="text-3xl font-bold underline">학습 시작 페이지</h1>
       <div className="flex">
         {/* 사이드메뉴 */}
         <div className="w-[270px] h-[90vh] p-1 border-4 border-red-500">
@@ -69,14 +69,14 @@ export default function LearningStartPage() {
           />
         </div>
         {/* 학습 화면 */}
-        <div className="px-40 border-4 border-violet-500 w-full">
+        <div className="px-40 ml-2 w-full">
           {/* 플래시 카드 */}
-          <div className="border-4 border-yellow-500 w-full">
+          <div className="border-4 w-100 bg-yellow-200 shadow-md rounded-lg p-10">
             플래시카드
             {currentWord && <Flashcard currentWord={currentWord} setCurrentWord={handleSetCurrentWord} />}
           </div>
           {/* 유저 실시간 화면 */}
-          <div>
+          <div className="border-4 w-full bg-gray-200 shadow-md rounded-lg p-10">
             유저 실시간 화면
             {/* <UserView /> */}
             <MyCam categoryNumber={3} changeFinger={changeFinger} />

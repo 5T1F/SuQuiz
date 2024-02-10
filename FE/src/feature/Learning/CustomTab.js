@@ -1,47 +1,61 @@
 import React, { useState, useEffect, useMemo } from "react";
 import WordList from "./WordList";
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
-import { allWordsByUser, wordsfromCategory } from "../../apis/learningApi";
+import { allWordsByUser, wordsfromCategory, AllSubject, AllWordWithSubject } from "../../apis/learningApi";
 
 function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
   const mainCategories = ["자음", "모음", "숫자", "낱말", "단어장"];
+  const [subCategories, setSubCategories] = useState([]);
   const [activeTab, setActiveTab] = useState(selectedMain || "자음");
+  const [activeSubCategory, setActiveSubCategory] = useState(selectedSub || "");
   const [wordsProp, setWordsProp] = useState([]);
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
 
-  const activeTabWords = useMemo(() => {
-    if (activeTab === "단어장") {
-      return wordsProp;
-    } else {
-      return wordsProp.filter((word) => word.category === activeTab);
-    }
-  }, [wordsProp, activeTab]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = [];
         if (activeTab === "단어장") {
-          const response = await allWordsByUser(userId);
-          data = response.data.wordList;
+          // "단어장" 메인 카테고리에 해당하는 API 호출
+          const data = await allWordsByUser(userId);
+          setWordsProp(data.data.wordList);
+        } else if (activeTab === "낱말" && activeSubCategory) {
+          // "낱말" 메인 카테고리 및 선택된 서브 카테고리에 해당하는 API 호출
+          const wordData = await AllWordWithSubject(userId, activeSubCategory);
+          setWordsProp(wordData.data.wordList);
         } else {
-          const response = await wordsfromCategory(userId, activeTab);
-          data = response.data;
+          // 다른 메인 카테고리에 해당하는 API 호출
+          const data = await wordsfromCategory(userId, activeTab);
+          setWordsProp(data.data);
         }
-        setWordsProp(Array.isArray(data) ? data : []);
+
+        if (activeTab === "낱말") {
+          const subjectData = await AllSubject();
+          console.log(subjectData.data);
+          // "테스트"와 "none"을 제외한 주제들만 필터링
+          const filteredSubjects = subjectData.data.filter(
+            (subject) => subject.subjectName !== "테스트" && subject.subjectName !== "none"
+          );
+          setSubCategories(filteredSubjects);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [activeTab]);
+  }, [userId, activeTab, activeSubCategory]);
 
   useEffect(() => {
     setActiveTab(selectedMain);
-  }, [selectedMain]);
+    setActiveSubCategory(selectedSub);
+  }, [selectedMain, selectedSub]);
+
+  const handleSubCategoryChange = (subCategoryName) => {
+    setActiveSubCategory(subCategoryName);
+    console.log("활성화된 서브카테고리 변경:", activeSubCategory);
+  };
 
   return (
     <>
@@ -67,7 +81,14 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
             (category) =>
               activeTab === category && (
                 <TabPanel key={category} value={category}>
-                  <WordList wordsProp={activeTabWords} setCurrentWord={setCurrentWord} />
+                  {category === "낱말" &&
+                    subCategories.map((item, index) => (
+                      <button key={index} onClick={() => handleSubCategoryChange(item.subjectName)}>
+                        {item.subjectName}
+                      </button>
+                    ))}
+
+                  <WordList wordsProp={wordsProp} setCurrentWord={setCurrentWord} />
                 </TabPanel>
               )
           )}
