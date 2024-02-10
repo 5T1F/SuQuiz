@@ -13,8 +13,12 @@ export default function SelectCategory() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await AllSubject();
-        setSubCategories(data.data);
+        const subjectData = await AllSubject();
+        // "테스트"와 "none"을 제외한 주제들만 필터링
+        const filteredSubjects = subjectData.data.filter(
+          (subject) => subject.subjectName !== "테스트" && subject.subjectName !== "none"
+        );
+        setSubCategories(filteredSubjects);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -60,10 +64,7 @@ export default function SelectCategory() {
           <div className="text-yellow-950 text-base font-black">낱말 주제를 고르세요</div>
           <div className="flex justify-center items-center gap-6">
             {subCategories.map((item, index) => {
-              if (index >= 1) {
-                return <CategoryButton key={index} category={item.subjectName} onClick={handleSubCategoryChange} />;
-              }
-              return null; // index가 2보다 작은 경우에는 아무것도 렌더링하지 않음
+              return <CategoryButton key={index} category={item.subjectName} onClick={handleSubCategoryChange} />;
             })}
           </div>
         </div>

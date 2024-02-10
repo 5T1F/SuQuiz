@@ -5,6 +5,7 @@ import SideMenu from "../feature/Learning/SideMenu";
 import { useLocation, useNavigate } from "react-router-dom";
 import { wordsfromCategory, AllWordWithSubject } from "../apis/learningApi";
 import MyCam from "../feature/Learning/MyCam";
+import styles from "./LearningStartPage.module.css";
 
 export default function LearningStartPage() {
   const location = useLocation();
@@ -56,11 +57,10 @@ export default function LearningStartPage() {
   };
 
   return (
-    <Container>
-      <h1 className="text-3xl font-bold underline">학습 시작 페이지</h1>
-      <div className="flex">
+    <>
+      <div className="flex h-[90vh]">
         {/* 사이드메뉴 */}
-        <div className="w-[270px] h-[90vh] p-1 border-4 border-red-500">
+        <div className="px-16 py-6 bg-gray-100 ">
           <SideMenu
             selectedMain={selectedMain}
             selectedSub={selectedSub}
@@ -69,29 +69,31 @@ export default function LearningStartPage() {
           />
         </div>
         {/* 학습 화면 */}
-        <div className="px-40 border-4 border-violet-500 w-full">
-          {/* 플래시 카드 */}
-          <div className="border-4 border-yellow-500 w-full">
-            플래시카드
-            {currentWord && <Flashcard currentWord={currentWord} setCurrentWord={handleSetCurrentWord} />}
+        <Container>
+          <div className="flex flex-col justify-center">
+            {/* 플래시 카드 */}
+            <div className="pt-6">
+              {currentWord && <Flashcard currentWord={currentWord} setCurrentWord={handleSetCurrentWord} />}
+            </div>
+            {/* 유저 실시간 화면 */}
+            <div className={styles.myCamContainer}>
+              <MyCam className={styles.video} categoryNumber={3} changeFinger={changeFinger} />
+              <div>
+                '{JSON.parse(localStorage.getItem("nicknameStorage")).state.userNickname}' 님이 동작한 수어는 '{finger}'
+                입니다
+              </div>
+            </div>
+            <div className={styles.buttonContainer}>
+              <button
+                onClick={handleEnd}
+                className="ml-auto h-8 px-5 font-medium rounded-lg outline-none ring-2 ring-custom-orange ring-inset text-gray-700 hover:text-custom-orange"
+              >
+                학습 종료
+              </button>
+            </div>
           </div>
-          {/* 유저 실시간 화면 */}
-          <div>
-            유저 실시간 화면
-            {/* <UserView /> */}
-            <MyCam categoryNumber={3} changeFinger={changeFinger} />
-          </div>
-          <div className="flex justify-between">
-            <button
-              onClick={handleEnd}
-              className="ml-auto h-8 px-5 font-medium rounded-lg outline-none ring-2 ring-yellow-600 ring-inset text-gray-800 hover:text-yellow-600"
-            >
-              학습 종료
-            </button>
-          </div>
-          <div>${finger}</div>
-        </div>
+        </Container>
       </div>
-    </Container>
+    </>
   );
 }

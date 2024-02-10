@@ -61,7 +61,7 @@ export default function Nav() {
         <div>
           <div className={styles.navLogo}>
             <NavLink to="/">
-              <img src={Logo} alt="logo" width={130} />
+              <img src={Logo} alt="logo" width={108} />
             </NavLink>
           </div>
           <div className={styles.navItem}>
