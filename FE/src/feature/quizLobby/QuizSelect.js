@@ -31,6 +31,17 @@ const QuizSelect = () => {
   const createSession = async () => {
     try {
       const response = await axios.post(
+<<<<<<< PATCH SET (59b373 Fix : openvidu)
+        `/sessions`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const { sessionId, token } = response.data;
+=======
         `${process.env.REACT_APP_API_ROOT}/sessions`,
         {},
         {
@@ -40,6 +51,7 @@ const QuizSelect = () => {
         }
       );
       const { sessionId, inviteCode, token } = response.data;
+>>>>>>> BASE      (65dac1 Feat: feature-be/openvidu api와 연결 테스트 완료)
       // 방장으로서 세션에 참가
       navigate(`../multiplay/waiting-room/${sessionId}`, {state:{ sessionId, token, inviteCode, isModerator: true }});
       console.log(response.data)
@@ -53,6 +65,18 @@ const QuizSelect = () => {
     // 이 예시에서는 초대 코드가 세션 ID라고 가정
     try {
       const response = await axios.post(
+<<<<<<< PATCH SET (59b373 Fix : openvidu)
+        `/sessions/${codeValue}/token`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const { token } = response.data;
+      navigate(`/multiplay/waiting-room/${codeValue}`, { token, isModerator: false });
+=======
         `${process.env.REACT_APP_API_ROOT}/sessions/${codeValue}/token`,
         {},
         {
@@ -64,6 +88,7 @@ const QuizSelect = () => {
       const { sessionId, token } = response.data;
       console.log(response.data);
       navigate(`../multiplay/waiting-room/${sessionId}`,{state:{ sessionId, token, inviteCode: codeValue, isModerator: false }});
+>>>>>>> BASE      (65dac1 Feat: feature-be/openvidu api와 연결 테스트 완료)
     } catch (error) {
       console.error(error);
       handleNoMatchingRoom();
