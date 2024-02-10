@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-import { useAuthStore, useTokenStore } from "../../../app/store";
 import ModalModify from "../../auth/modify/ModalModify";
 
 const UserInfo = () => {
-  const { userId, setUserId } = useAuthStore();
-  const { accessToken, setAccessToken } = useTokenStore();
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
+  const storedAccessToken = localStorage.getItem("tokenStorage");
+  const parsedAccessToken = JSON.parse(storedAccessToken);
+  const accessToken = parsedAccessToken.state.accessToken;
   const [userInfoData, setUserInfoData] = useState(null);
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);

@@ -7,6 +7,8 @@ import Container from "../components/Container";
 import UserVideoComponent from "../feature/multiplay/openvidu/UserVideoComponent";
 import Sidebar from "../feature/multiplay/Sidebar";
 
+import styles from "./WaitingPage.module.css";
+
 const WaitingPage = () => {
   const userId = useAuthStore((state) => state.user);
 
@@ -59,7 +61,21 @@ const WaitingPage = () => {
     };
   }, [sessionId, token]);
 
-  const copyToken = () => {};
+  const copyCode = () => {
+    // 텍스트를 복사하기 위한 임시 요소를 생성합니다.
+    var tempInput = document.createElement("input");
+    tempInput.value = inviteCode;
+
+    // 요소를 페이지에 추가합니다.
+    document.body.appendChild(tempInput);
+
+    // 입력 요소를 선택하고 복사 명령을 실행합니다.
+    tempInput.select();
+    document.execCommand("copy");
+
+    // 임시 요소를 제거합니다.
+    document.body.removeChild(tempInput);
+  };
   const startQuiz = () => {};
 
   return (
@@ -70,7 +86,6 @@ const WaitingPage = () => {
           {publisher && (
             <>
               {isModerator && <h3>방장</h3>}
-              <h3>inviteCode : {isModerator ? inviteCode : "Only visible to the moderator"}</h3>
               구독자 : {subscribers.length}
               <UserVideoComponent streamManager={publisher} />
             </>
@@ -79,7 +94,9 @@ const WaitingPage = () => {
             <UserVideoComponent key={index} streamManager={subscriber} />
           ))}
           <div>
-            <div onClick={copyToken}>{token}</div>
+            <div className={styles.code} onClick={copyCode}>
+              {inviteCode}
+            </div>
             {isModerator && <button onClick={startQuiz}>시작하기</button>}
           </div>
         </div>

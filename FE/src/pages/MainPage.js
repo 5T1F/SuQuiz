@@ -31,7 +31,7 @@ export default function MainPage() {
           </div>
         </div>
       </Container>
-      <video autoPlay loop muted>
+      <video className={styles.video} autoPlay loop muted>
         <source src={backgroundVideo} type="video/mp4" />
       </video>
     </>

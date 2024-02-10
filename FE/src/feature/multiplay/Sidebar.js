@@ -2,22 +2,32 @@ import React, { useState, useEffect } from "react";
 import styles from "./Sidebar.module.css";
 
 const WaitingRoomSidebar = () => {
-  // 로그인 구현하면 고치기!!!!!*********************************************
-  const userId = null;
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
+  const storedAccessToken = localStorage.getItem("tokenStorage");
+  const parsedAccessToken = JSON.parse(storedAccessToken);
+  const accessToken = parsedAccessToken.state.accessToken;
 
   const [userInfoData, setUserInfoData] = useState([]);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/mypage/${userId}`, {
+        const response = await fetch(`/mypage/${userId}`, {
           method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         });
+
+        if (!response.ok) {
+          throw new Error("서버 응답이 실패했습니다.");
+        }
+
         const data = await response.json();
-        setUserInfoData(data);
-        console.log(data);
+        setUserInfoData(data.data);
       } catch (error) {
-        // 친구 없을 때
         console.error("Error fetching data:", error);
       }
     };
@@ -30,7 +40,7 @@ const WaitingRoomSidebar = () => {
       {/* 단어사이 간격  space-y-1  */}
       <div className="space-y-1">
         <div>
-          <p>{userInfoData.level}</p>
+          <p>Lv. {userInfoData.level}</p>
           <p>{userInfoData.nickname}</p>
         </div>
         {/* 오픈비두로 대기실 내 실시간 채팅 */}
