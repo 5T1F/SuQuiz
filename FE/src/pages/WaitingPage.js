@@ -12,7 +12,7 @@ import Sidebar from "../feature/multiplay/Sidebar";
 const WaitingPage = () => {
   //djdj
   const userId = useAuthStore((state) => state.user);
-
+  //ㅇㄹ
   const location = useLocation();
   const { sessionId, inviteCode, token, isModerator } = location.state;
   console.log(location.state);
