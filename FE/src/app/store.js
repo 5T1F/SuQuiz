@@ -70,3 +70,21 @@ export const useProviderStore = create(
     }
   )
 );
+
+export const useWordleStore = create((set) => ({
+  modalResult: {
+    answer: "",
+    isSoved: "",
+    resultText: "",
+    correct: false,
+    allTrialCount: 0,
+    streak: {},
+    solveCount: 0,
+    correctCount: 0,
+    trialCount: 0,
+    maxCorrectCount: 0,
+    trialSpread: [0, 0, 0, 0, 0],
+    correctRate: 0,
+  },
+  setModalResult: (modalResult) => set({ modalResult }),
+}));

@@ -1,21 +1,57 @@
 .container {
-  border: 3px solid rgb(185, 34, 255);
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+
+  width: 130px;
+  height: 80px;
+  margin-right: 5px;
+  /* border: 3px solid #ffffff; */
+  border-radius: 15px;
 }
 
 .label {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  width: 52px; /* 컨트롤 ;;*/
+  text-align: center;
+
+  width: 60px;
+
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
 }
 
 .value {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-size: 20px;
+  line-height: 29px;
+}
+
+.white {
+  color: #3e3300;
+  border: 3px solid #f4b28e;
+}
+
+.green {
+  color: #3e3300;
+  background: #ffb79a;
+}
+
+.brown {
+  color: #3e3300;
+  background: #ffbaab;
+}
+
+.yellow {
+  color: #3e3300;
+  background: #ffbec1;
 }

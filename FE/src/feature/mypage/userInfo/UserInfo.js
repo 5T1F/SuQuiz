@@ -13,8 +13,6 @@ const UserInfo = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        console.log(userId);
-        console.log(accessToken);
         const response = await fetch(`/mypage/${userId}`, {
           method: "GET",
           headers: {

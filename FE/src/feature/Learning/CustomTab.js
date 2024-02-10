@@ -7,6 +7,9 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
   const mainCategories = ["자음", "모음", "숫자", "낱말", "단어장"];
   const [activeTab, setActiveTab] = useState(selectedMain || "자음");
   const [wordsProp, setWordsProp] = useState([]);
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
 
   const activeTabWords = useMemo(() => {
     if (activeTab === "단어장") {
@@ -21,10 +24,10 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
       try {
         let data = [];
         if (activeTab === "단어장") {
-          const response = await allWordsByUser("asd@naver.com"); //////////////유저이메일 수정할 것
+          const response = await allWordsByUser(userId);
           data = response.data.wordList;
         } else {
-          const response = await wordsfromCategory(1, activeTab); ///////////////유저아이디 수정할 것
+          const response = await wordsfromCategory(userId, activeTab);
           data = response.data;
         }
         setWordsProp(Array.isArray(data) ? data : []);
