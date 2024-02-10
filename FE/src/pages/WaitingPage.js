@@ -1,5 +1,7 @@
+// WaitingPage.js
+
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 
 import { useAuthStore } from "../app/store";
@@ -10,9 +12,9 @@ import Sidebar from "../feature/multiplay/Sidebar";
 const WaitingPage = () => {
   const userId = useAuthStore((state) => state.user);
 
-  const { sessionId } = useParams();
   const location = useLocation();
-  const { token, isModerator } = location.state;
+  const { sessionId, inviteCode, token, isModerator } = location.state;
+  console.log(location.state);
   const [OV, setOV] = useState(null);
   const [session, setSession] = useState(null);
   const [publisher, setPublisher] = useState(null);
@@ -35,31 +37,29 @@ const WaitingPage = () => {
     sessionInstance
       .connect(token)
       .then(() => {
-        if (isModerator) {
-          const publisher = OVInstance.initPublisher(undefined, {
-            audioSource: undefined,
-            videoSource: undefined,
-            publishAudio: true,
-            publishVideo: true,
-            resolution: "640x480",
-            frameRate: 30,
-            insertMode: "APPEND",
-            mirror: false,
-          });
-          sessionInstance.publish(publisher);
-          setPublisher(publisher);
-        }
+        const publisher = OVInstance.initPublisher(undefined, {
+          audioSource: undefined,
+          videoSource: undefined,
+          publishAudio: true,
+          publishVideo: true,
+          resolution: "640x480",
+          frameRate: 30,
+          insertMode: "APPEND",
+          mirror: false,
+        });
+        sessionInstance.publish(publisher);
+        setPublisher(publisher);
       })
       .catch((error) => console.log("There was an error connecting to the session:", error));
 
     setSession(sessionInstance);
 
     return () => {
-      if (session) {
-        session.disconnect();
+      if (sessionInstance) {
+        sessionInstance.disconnect();
       }
     };
-  }, [sessionId, token, isModerator]);
+  }, [sessionId, token]);
 
   const copyToken = () => {};
   const startQuiz = () => {};
@@ -71,7 +71,9 @@ const WaitingPage = () => {
         <div className="w-4/6 h-[90vh] p-1 border-4 border-violet-500">
           {publisher && (
             <>
-              <h3>방장</h3>
+              {isModerator && <h3>방장</h3>}
+              <h3>inviteCode : {isModerator ? inviteCode : "Only visible to the moderator"}</h3>
+              구독자 : {subscribers.length}
               <UserVideoComponent streamManager={publisher} />
             </>
           )}
