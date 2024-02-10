@@ -1,5 +1,3 @@
-// WaitingPage.js
-
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
@@ -10,9 +8,8 @@ import UserVideoComponent from "../feature/multiplay/openvidu/UserVideoComponent
 import Sidebar from "../feature/multiplay/Sidebar";
 
 const WaitingPage = () => {
-  //djdj
   const userId = useAuthStore((state) => state.user);
-  //ㅇㄹ
+
   const location = useLocation();
   const { sessionId, inviteCode, token, isModerator } = location.state;
   console.log(location.state);
