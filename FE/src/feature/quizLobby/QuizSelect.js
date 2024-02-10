@@ -31,7 +31,7 @@ const QuizSelect = () => {
   const createSession = async () => {
     try {
       const response = await axios.post(
-        `/sessions`,
+        `${process.env.REACT_APP_API_ROOT}/sessions`,
         {},
         {
           headers: {
@@ -39,9 +39,12 @@ const QuizSelect = () => {
           },
         }
       );
-      const { sessionId, token } = response.data;
+      const { sessionId, inviteCode, token } = response.data;
       // 방장으로서 세션에 참가
-      navigate(`/multiplay/waiting-room/${sessionId}`, { token, isModerator: true });
+      navigate(`../multiplay/waiting-room/${sessionId}`, {
+        state: { sessionId, token, inviteCode, isModerator: true },
+      });
+      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +55,7 @@ const QuizSelect = () => {
     // 이 예시에서는 초대 코드가 세션 ID라고 가정
     try {
       const response = await axios.post(
-        `/sessions/${codeValue}/token`,
+        `${process.env.REACT_APP_API_ROOT}/sessions/${codeValue}/token`,
         {},
         {
           headers: {
@@ -60,8 +63,11 @@ const QuizSelect = () => {
           },
         }
       );
-      const { token } = response.data;
-      navigate(`/multiplay/waiting-room/${codeValue}`, { token, isModerator: false });
+      const { sessionId, token } = response.data;
+      console.log(response.data);
+      navigate(`../multiplay/waiting-room/${sessionId}`, {
+        state: { sessionId, token, inviteCode: codeValue, isModerator: false },
+      });
     } catch (error) {
       console.error(error);
       handleNoMatchingRoom();
