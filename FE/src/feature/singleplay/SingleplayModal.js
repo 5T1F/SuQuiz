@@ -23,7 +23,7 @@ const SingleplayModal = ({ onClose }) => {
   const { modalResult } = useWordleStore();
   const [wordInfo, setWordInfo] = useState(null); // 원하는 단어 정보를 저장할 상태
 
-  console.log(modalResult);
+  console.log("모달에서 받는 게임 결과:", modalResult);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,7 +77,7 @@ const SingleplayModal = ({ onClose }) => {
       return chunkedArr;
     };
 
-    const textChunks = chunkString(modalResult.modalResultText, 5);
+    const textChunks = chunkString(modalResult.resultText, 5);
     correctString += textChunks.join("\n");
 
     navigator.clipboard
@@ -187,10 +187,10 @@ const SingleplayModal = ({ onClose }) => {
             <button onClick={handleMoreQuestion} className="mr-2">
               더 풀어보기
             </button>
-            {solved ? (
+            {modalResult.IsSolved ? (
               <button
                 onClick={copyDummyDataToClipboard}
-                disabled={solved}
+                disabled={!modalResult.IsSolved}
                 style={{ backgroundColor: solved ? "#ccc" : "#007bff", color: "#ffffff" }}
               >
                 복사하기

@@ -21,12 +21,15 @@ const Wordle = ({ finger }) => {
   const userId = parsedId.state.userId;
   const { setModalResult } = useWordleStore();
   const [answer, setAnswer] = useState("");
+  const [isSolvedState, setIsSolvedState] = useState(false);
+  const [colorText, setColorText] = useState("");
+  const [resultText, setResultText] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const solved = await isSolved(userId);
-
+        setIsSolvedState(solved.data);
         if (solved.data) {
           const additionalData = await additionalQuest(); // 추가 문제 가져오기
           setRightGuess(additionalData.data.syllables); // 추가 문제를 rightGuess 상태로 설정
@@ -80,6 +83,7 @@ const Wordle = ({ finger }) => {
       // 새로운 색상 계산
       const cellColors = calculateColors(inputString);
       console.log("Calculated colors:", cellColors);
+      const nowColorText = calculateColorText(inputString);
 
       // 기존 색상 업데이트
       setColors((prevColors) => {
@@ -89,16 +93,18 @@ const Wordle = ({ finger }) => {
           ...cellColors,
           ...prevColors.slice(startIndex + MAX_LETTERS_PER_ROW),
         ];
-        console.log("setColors함수 호출 직후:", newColors);
         return newColors;
       });
 
+      // resultText 상태 업데이트
+      setResultText((prevColorText) => prevColorText + nowColorText);
+
       if (inputString === rightGuess) {
         setNotification("정답입니다! 게임 종료");
-        handleGameEnd("win");
+        handleGameEnd("win", nowColorText);
       } else if (currentRow === MAX_ATTEMPTS) {
         setNotification("최대 시도 횟수를 초과했습니다. 게임 종료");
-        handleGameEnd("lose");
+        handleGameEnd("lose", nowColorText);
       } else {
         setHistory((prevHistory) => [...prevHistory, inputString]);
         setInputString("");
@@ -127,6 +133,23 @@ const Wordle = ({ finger }) => {
     return colors;
   };
 
+  const calculateColorText = (guess) => {
+    let colorText = "";
+
+    // 정답과 사용자 입력값을 비교하여 색을 결정
+    for (let i = 0; i < MAX_LETTERS_PER_ROW; i++) {
+      if (guess.charAt(i) === rightGuess.charAt(i)) {
+        colorText += "2";
+      } else if (rightGuess.includes(guess.charAt(i))) {
+        colorText += "1";
+      } else {
+        colorText += "0";
+      }
+    }
+
+    return colorText;
+  };
+
   const colorsToText = (colors) => {
     return colors
       .map((color) => {
@@ -139,37 +162,39 @@ const Wordle = ({ finger }) => {
   };
 
   // 게임 결과에 따라 모달을 보여줌
-  const handleGameEnd = async (res) => {
+  const handleGameEnd = async (res, nowColorText) => {
     // 결과 계산 로직
     const result = {
       userId: userId,
       trialCount: res === "win" ? currentRow : 0,
       correct: res === "win",
-      resultText: colorsToText(colors),
+      resultText: resultText + nowColorText,
     };
 
     try {
       await save(result); // 서버에 게임 결과 저장
-      console.log("Game result saved successfully");
-      // 성공적으로 저장된 경우, 결과 조회를 위한 API 호출을 여기에 추가
-      fetchResultAndShowModal(res);
+      console.log("서버에 저장하는 게임 결과:", result);
+      fetchResultAndShowModal(res, nowColorText);
     } catch (error) {
       console.error("Error saving game result:", error);
     }
   };
 
-  const fetchResultAndShowModal = async (res) => {
+  const fetchResultAndShowModal = async (res, nowColorText) => {
     try {
       const result = await dailyResult(userId); // userId를 기반으로 최신 게임 결과 조회
-      console.log("Fetched game result:", result);
+      console.log("서버에서 가져온 게임 결과:", result);
       // Zustand 스토어에 결과 저장
       setModalResult({
         answer: answer,
+        isSolved: isSolvedState,
+        resultText: resultText + nowColorText,
         correct: res === "win",
         allTrialCount: result.data.allTrialCount,
         streak: result.data.streak,
         solveCount: result.data.solveCount,
         correctCount: result.data.correctCount,
+        trialCount: currentRow,
         maxCorrectCount: result.data.maxCorrectCount,
         trialSpread: result.data.trialSpread,
         correctRate: result.data.correctRate,
