@@ -60,34 +60,39 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
   return (
     <>
       <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
-        <TabsHeader className="p-1 text-sm text-gray-600 bg-gray-500/5 rounded-xl">
+        <TabsHeader className="p-2 text-sm text-gray-600 bg-gray-200 rounded-xl justify-center">
           {mainCategories.map((category) => (
             <Tab
               key={category}
               value={category}
               onClick={() => setActiveTab(category)} // 탭 클릭 시 activeTab 업데이트
-              className={`flex items-center h-6 font-medium rounded-lg outline-none ${
+              className={`flex items-center h-9 mx-1 w-auto px-2 text-lg font-medium rounded-lg outline-none ${
                 activeTab === category
-                  ? "border-blue-500 text-yellow-500 shadow bg-white"
-                  : "text-gray-500 cursor-pointer  hover:text-yellow-500 hover:ring-2 hover:ring-yellow-500 hover:ring-inset"
+                  ? " text-custom-orange shadow bg-white"
+                  : "text-gray-500 cursor-pointer  hover:text-custom-orange hover:ring-2 hover:ring-custom-orange hover:ring-inset"
               }`}
             >
               {category}
             </Tab>
           ))}
         </TabsHeader>
-        <TabsBody className="py-1">
+        <TabsBody>
           {mainCategories.map(
             (category) =>
               activeTab === category && (
                 <TabPanel key={category} value={category}>
-                  {category === "낱말" &&
-                    subCategories.map((item, index) => (
-                      <button key={index} onClick={() => handleSubCategoryChange(item.subjectName)}>
-                        {item.subjectName}
-                      </button>
-                    ))}
-
+                  <div className="flex justify-around items-center px-3 rounded-xl">
+                    {category === "낱말" &&
+                      subCategories.map((item, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleSubCategoryChange(item.subjectName)}
+                          className="mx-1 my-2 px-4 py-1.5 bg-custom-orange text-white font-medium rounded-lg shadow-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-custom-orange focus:ring-opacity-75 transition-colors duration-200"
+                        >
+                          {item.subjectName}
+                        </button>
+                      ))}
+                  </div>
                   <WordList wordsProp={wordsProp} setCurrentWord={setCurrentWord} />
                 </TabPanel>
               )

@@ -35,16 +35,16 @@ export default function WordList({ wordsProp, setCurrentWord }) {
 
   return (
     <>
-      <div className="space-y-1">
+      <div className="space-y-1 overflow-y-scroll max-h-full h-[70vh] mt-5">
         {words.map((word, index) => (
           <div
             key={index}
             onClick={() => handleWordClick(word)}
-            className={`flex items-center justify-center h-8 rounded-lg outline-none ${
+            className={`flex items-center justify-center h-16 rounded-lg ${
               word.status === "after"
                 ? "bg-gray-200 shadow-inner"
                 : word.status === "now"
-                ? "bg-yellow-200 shadow"
+                ? "bg-custom-orange shadow"
                 : "bg-white shadow"
             }`}
           >

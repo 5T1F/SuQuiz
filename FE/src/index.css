@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/* @layer base {
   button {
     @apply border border-gray-300 py-1 px-1 rounded;
   }
-}
+} */

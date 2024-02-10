@@ -11,6 +11,8 @@ import moment from "moment";
 import { isSolved } from "../../apis/singleplayApi";
 import { allWords } from "../../apis/learningApi";
 import { useWordleStore } from "../../app/store";
+import Lottie from "react-lottie";
+import congratulation from "../../assets/lottie/congratulation.json";
 
 const SingleplayModal = ({ onClose }) => {
   const storedId = localStorage.getItem("idStorage");
@@ -119,6 +121,16 @@ const SingleplayModal = ({ onClose }) => {
   return (
     <>
       <div className={styles.modalOverlay}>
+        <Lottie
+          options={{
+            loop: false,
+            autoplay: true,
+            animationData: congratulation,
+            rendererSettings: {
+              preserveAspectRatio: "xMidslice", // 종횡비 유지 설정
+            },
+          }}
+        />
         <div className={styles.modalContent}>
           <div className={styles.modalTitle}>
             싱글 플레이 결과<button onClick={onClose}>닫기</button>
@@ -126,7 +138,9 @@ const SingleplayModal = ({ onClose }) => {
           <div className="flex row">
             <div className={styles.wordContent}>
               {modalResult.correct ? (
-                <p>축하합니다! 정답을 맞추셨습니다!</p>
+                <>
+                  <p>축하합니다! 정답을 맞추셨습니다!</p>
+                </>
               ) : (
                 <p>아쉽지만 정답을 맞추지 못했습니다.</p>
               )}
