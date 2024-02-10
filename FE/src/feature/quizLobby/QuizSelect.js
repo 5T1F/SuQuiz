@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import { useTokenStore } from "../../app/store";
 import ModalNoMatchingRoom from "./ModalNoMatchingRoom";
 
 import styles from "./QuizSelect.module.css";
 
 const QuizSelect = () => {
+  const storedToken = localStorage.getItem("tokenStorage");
+  const parsedToken = JSON.parse(storedToken);
+  const accessToken = parsedToken.state.accessToken;
   const [codeValue, setCodeValue] = useState("");
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +30,15 @@ const QuizSelect = () => {
 
   const createSession = async () => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/sessions`);
+      const response = await axios.post(
+        `/sessions`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       const { sessionId, token } = response.data;
       // 방장으로서 세션에 참가
       navigate(`/multiplay/waiting-room/${sessionId}`, { token, isModerator: true });
@@ -39,7 +51,15 @@ const QuizSelect = () => {
     // 초대 코드를 사용하여 세션에 참가하는 로직 (API 요청 후 token 받아오기)
     // 이 예시에서는 초대 코드가 세션 ID라고 가정
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_ROOT}/api/sessions/${codeValue}/token`);
+      const response = await axios.post(
+        `/sessions/${codeValue}/token`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       const { token } = response.data;
       navigate(`/multiplay/waiting-room/${codeValue}`, { token, isModerator: false });
     } catch (error) {
