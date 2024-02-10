@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useTokenStore } from "../../../app/store";
+import { useAuthStore, useTokenStore } from "../../../app/store";
 import ModalMakeFriend from "./friend/ModalMakeFriend";
 import ModalEndFriendship from "./friend/ModalEndFriendship";
 import Chatting from "../community/Chatting";
@@ -8,8 +8,7 @@ import Chatting from "../community/Chatting";
 import styles from "./FriendList.module.css";
 
 const FriendList = () => {
-  // const {userId,setUserId} = useAuthStore();
-  const { userId }= useAuthStore();
+  const { userId } = useAuthStore();
   const [friends, setFriends] = useState([]);
   const [filterFriend, setFilterFriend] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -126,7 +125,7 @@ const FriendList = () => {
           )}
         </div>
       ) : (
-        <Chatting friendId={selectedFriend.friendId} userId={userId}  />
+        <Chatting friendId={selectedFriend.friendId} userId={userId} />
       )}
       {isModalOpen && <ModalMakeFriend onClose={closeMakeModal} />} {/* 모달이 열려 있을 때만 렌더링 */}
       {endModalOpen && <ModalEndFriendship onClose={closeEndModal} friendNickname={toNickname} />}{" "}
