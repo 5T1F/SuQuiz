@@ -56,9 +56,6 @@
 .wordContent p {
   display: flex;
   justify-content: center;
-  font-weight: 700;
-  /* padding-bottom: 5px; */
-  font: var(--pretendard);
 }
 
 .video {
@@ -152,6 +149,6 @@
 
 .react-calendar__tile {
   color: #222;
-  background: ;
-  text-align: ;
+  background: 222;
+  text-align: 222;
 }

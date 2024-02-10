@@ -1,4 +1,6 @@
 .video {
-    transform: scaleX(-1);
-    display: none;
+  transform: scaleX(-1);
+  display: none;
+  width: 100%;
+  height: auto;
 }
