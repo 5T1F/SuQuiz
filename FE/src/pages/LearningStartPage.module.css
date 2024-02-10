@@ -4,6 +4,8 @@
 
 .sideMenu {
   border: 5px solid red;
+  font-family: "violet";
+  color: green;
   width: 100%;
 }
 
