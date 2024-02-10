@@ -10,6 +10,7 @@ import UserVideoComponent from "../feature/multiplay/openvidu/UserVideoComponent
 import Sidebar from "../feature/multiplay/Sidebar";
 
 const WaitingPage = () => {
+  //djdj
   const userId = useAuthStore((state) => state.user);
 
   const location = useLocation();
