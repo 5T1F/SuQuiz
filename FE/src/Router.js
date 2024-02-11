@@ -4,7 +4,6 @@ import App from "./components/App";
 import MainPage from "./pages/MainPage";
 import QuizLobbyPage from "./pages/QuizLobbyPage";
 import SingleplayPage from "./pages/SingleplayPage";
-import WaitingPage from "./pages/WaitingPage";
 import MultiplayPage from "./pages/MultiplayPage";
 import SelectPage from "./pages/SelectPage";
 import BookmarkPage from "./pages/BookmarkPage";
@@ -28,8 +27,7 @@ function Router() {
             <Route index element={<SingleplayPage />} />
           </Route>
           <Route path="multiplay">
-            <Route path="waiting-room/:sessionId" element={<WaitingPage />} />
-            <Route path="start" element={<MultiplayPage />} />
+            <Route path=":sessionId" element={<MultiplayPage />} />
           </Route>
           <Route path="learning">
             <Route index element={<SelectPage />} />

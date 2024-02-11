@@ -42,7 +42,7 @@ const QuizSelect = () => {
       console.log("방만들었을 때 리스폰스");
       console.log(response.data);
       // 방장으로서 세션에 참가
-      navigate(`../multiplay/waiting-room/${sessionId}`, {
+      navigate(`../multiplay/${sessionId}`, {
         state: { sessionId, token, inviteCode, isModerator: true },
       });
     } catch (error) {
@@ -66,7 +66,7 @@ const QuizSelect = () => {
       const { sessionId, token } = response.data;
 
       console.log(response.data);
-      navigate(`../multiplay/waiting-room/${sessionId}`, {
+      navigate(`../multiplay/${sessionId}`, {
         state: { sessionId, token, inviteCode: codeValue, isModerator: false },
       });
     } catch (error) {
