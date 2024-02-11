@@ -1,8 +1,11 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Container from "../components/Container";
 
 const MultiplayPage = () => {
+  const location = useLocation();
+  const { publisher, subscribers } = location.state;
   return (
     <Container>
       <div>

@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 
 import { useAuthStore } from "../app/store";
 import Container from "../components/Container";
-import UserVideoComponent from "../feature/multiplay/openvidu/UserVideoComponent";
+import Players from "../feature/multiplay/Players";
 import Sidebar from "../feature/multiplay/Sidebar";
 
 import styles from "./WaitingPage.module.css";
 
 const WaitingPage = () => {
   const userId = useAuthStore((state) => state.user);
-
+  const navigate = useNavigate();
   const location = useLocation();
-  const { sessionId, inviteCode, token, isModerator } = location.state;
+  const { sessionId, inviteCode, token, isModerator, userNickname } = location.state;
   console.log(location.state);
   const [OV, setOV] = useState(null);
   const [session, setSession] = useState(null);
@@ -76,28 +76,30 @@ const WaitingPage = () => {
     // 임시 요소를 제거합니다.
     document.body.removeChild(tempInput);
   };
-  const startQuiz = () => {};
+
+  const startQuiz = () => {
+    // subscribers 리스트 보내는 부분 구현중
+    // navigate(`../multiplay/start`, {
+    //   state: { publisher: publisher, subscribers: subscribers },
+    // });
+  };
 
   return (
     <Container>
       <h1>WaitingPage : {sessionId}</h1>
       <div className="flex">
-        <div className="w-4/6 h-[90vh] p-1 border-4 border-violet-500">
-          {publisher && (
-            <>
-              {isModerator && <h3>방장</h3>}
-              구독자 : {subscribers.length}
-              <UserVideoComponent streamManager={publisher} />
-            </>
-          )}
-          {subscribers.map((subscriber, index) => (
-            <UserVideoComponent key={index} streamManager={subscriber} />
-          ))}
-          <div>
+        <div className="w-4/6 p-1 border-4 border-violet-500">
+          <p>구독자 : {subscribers.length}</p>
+          <Players publisher={publisher} subscribers={subscribers} />
+          <div className="flex justify-center">
             <div className={styles.code} onClick={copyCode}>
               {inviteCode}
             </div>
-            {isModerator && <button onClick={startQuiz}>시작하기</button>}
+            {isModerator && (
+              <div onClick={startQuiz} className={styles.start}>
+                시작하기
+              </div>
+            )}
           </div>
         </div>
         <div className="w-2/6 h-[90vh] p-1 border-4 border-red-500">

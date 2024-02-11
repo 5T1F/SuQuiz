@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import { useAuthStore, useTokenStore } from "../../../app/store";
 import ModalMakeFriend from "./friend/ModalMakeFriend";
 import ModalEndFriendship from "./friend/ModalEndFriendship";
 import Chatting from "../community/Chatting";
@@ -8,7 +7,12 @@ import Chatting from "../community/Chatting";
 import styles from "./FriendList.module.css";
 
 const FriendList = () => {
-  const { userId } = useAuthStore();
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
+  const storedToken = localStorage.getItem("tokenStorage");
+  const parsedToken = JSON.parse(storedToken);
+  const accessToken = parsedToken.state.accessToken;
   const [friends, setFriends] = useState([]);
   const [filterFriend, setFilterFriend] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +21,6 @@ const FriendList = () => {
   const [searchValue, setSearchValue] = useState("");
   const [toNickname, setToNickname] = useState("");
   const [selectedFriend, setSelectedFriend] = useState(null);
-  const { accessToken, setAccessToken } = useTokenStore();
 
   // 함수를 전달하여 클릭 시 모달 열기
   const openMakeModal = () => {
