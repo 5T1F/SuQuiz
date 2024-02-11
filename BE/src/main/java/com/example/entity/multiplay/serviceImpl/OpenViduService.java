@@ -23,7 +23,7 @@ public class OpenViduService {
         Session session = this.openVidu.createSession();
         String sessionId = session.getSessionId();
         // 고유 초대 코드 생성
-        String inviteCode = UUID.randomUUID().toString();
+        String inviteCode = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
         // 초대 코드와 세션 ID 매핑 저장
         id = sessionId;
         // 세션에 대한 토큰 생성
