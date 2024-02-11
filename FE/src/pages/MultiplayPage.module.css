@@ -1,0 +1,32 @@
+.code {
+  display: inline-block;
+  border: 1px solid orange;
+  margin-right: 3%;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 클릭시 음각이 되는 효과 */
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.start {
+  display: inline-block;
+  border: 1px solid red;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 클릭시 음각이 되는 효과 */
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+}
