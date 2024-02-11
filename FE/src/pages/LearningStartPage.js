@@ -70,19 +70,19 @@ export default function LearningStartPage() {
         </div>
         {/* 학습 화면 */}
         <Container>
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-row justify-center items-end my-36">
             {/* 플래시 카드 */}
-            <div className="pt-6">
-              {currentWord && <Flashcard currentWord={currentWord} setCurrentWord={handleSetCurrentWord} />}
-            </div>
+            {currentWord && <Flashcard currentWord={currentWord} setCurrentWord={handleSetCurrentWord} />}
             {/* 유저 실시간 화면 */}
             <div className={styles.myCamContainer}>
+              <div className={styles.description}>왼쪽에서 학습하고 싶은 단어를 골라 따라해보세요</div>
               <MyCam className={styles.video} categoryNumber={3} changeFinger={changeFinger} />
-              <div>
+              <div className={styles.description2}>
                 '{JSON.parse(localStorage.getItem("nicknameStorage")).state.userNickname}' 님이 동작한 수어는 '{finger}'
                 입니다
               </div>
             </div>
+            {/* 학습종료 버튼 */}
             <div className={styles.buttonContainer}>
               <button
                 onClick={handleEnd}

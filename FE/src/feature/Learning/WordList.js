@@ -35,7 +35,7 @@ export default function WordList({ wordsProp, setCurrentWord }) {
 
   return (
     <>
-      <div className="space-y-1 overflow-y-scroll max-h-full h-[70vh] mt-5">
+      <div className={`space-y-1 overflow-y-scroll h-[68vh] mt-4`}>
         {words.map((word, index) => (
           <div
             key={index}

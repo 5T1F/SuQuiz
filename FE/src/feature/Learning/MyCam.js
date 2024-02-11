@@ -5,7 +5,7 @@ import { Hands, HAND_CONNECTIONS, Results } from "@mediapipe/hands"; // 여기�
 import { Camera } from "@mediapipe/camera_utils";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 
-import "./MyCam.css";
+import styles from "./MyCam.module.css";
 
 function customCompare(prev, next) {
   const pr = JSON.stringify(prev);
@@ -165,8 +165,8 @@ const MyCam = ({ categoryNumber, changeFinger }) => {
 
   return (
     <div>
-      <video ref={videoRef} className="video"></video>
-      <canvas ref={canvasRef} className="w-50"></canvas>
+      <video ref={videoRef} className={styles.video}></video>
+      <canvas ref={canvasRef} className={styles.canvas}></canvas>
 
       {/* draw landmarks to hand
             <canvas
