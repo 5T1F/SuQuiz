@@ -1,0 +1,5 @@
+.players {
+  /* align-items: flex-end; */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}

@@ -12,8 +12,8 @@ const UserVideoComponent = ({ streamManager }) => {
   }, [streamManager]);
 
   return (
-    <div>
-      <video className={styles.userVideo} autoPlay={true} ref={videoRef} />
+    <div className={styles.video}>
+      <video autoPlay={true} ref={videoRef} />
     </div>
   );
 };

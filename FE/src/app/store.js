@@ -71,24 +71,6 @@ export const useProviderStore = create(
   )
 );
 
-export const useMultiplayStore = create(
-  persist(
-    (set) => ({
-      inviteCode: null,
-      sessionId: null,
-      setInviteCode: (arg) => {
-        set({ inviteCode: arg });
-      },
-      setSessionId: (arg) => {
-        set({ sessionId: arg });
-      },
-    }),
-    {
-      name: "multiplayStorage",
-    }
-  )
-);
-
 export const useWordleStore = create((set) => ({
   modalResult: {
     answer: "",

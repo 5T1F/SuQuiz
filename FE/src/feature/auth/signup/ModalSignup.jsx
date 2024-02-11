@@ -24,13 +24,14 @@ const Modal = ({ onClose, email }) => {
 
   const handleCheck = async () => {
     try {
+      console.log("중복검사");
       const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/validate/${checkValue}`); // API 경로
       const data = await response.json();
-      // data.data가 true면 이미 사용중인 닉네임
+      // data.data가 true면 사용가능한 닉네임
       if (data.data) {
-        setIsConfirmed(1);
-      } else {
         setIsConfirmed(2);
+      } else {
+        setIsConfirmed(1);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
