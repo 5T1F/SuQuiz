@@ -34,67 +34,66 @@ public class QuizroomServiceImpl implements QuizroomService {
     private final EntityAndDtoConversionService entityAndDtoConversionService;
 
     @Override
-    public int makeQuizroom(Long userId) {
+    public void makeQuizroom(Long userId, String sessionId, String inviteCode) {
 
         Optional<User> optionalUser = userRepository.findById(userId);
-        if(optionalUser.isPresent()) {
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            String inviteCode = generateRandomCode();
 
-
-            if(user.getQuizroom() == null) {
-
-                Quizroom quizroom = Quizroom.builder().inviteCode(inviteCode).build();
+            if (user.getQuizroom() == null) {
+                Quizroom quizroom = Quizroom.builder().sessionId(sessionId).inviteCode(inviteCode).build();
                 quizroomRepository.save(quizroom);
                 user.changeQuizroom(quizroom);
                 quizroom.addUser(user);
-                return 1;
             }
-
         }
 
-        return 0;
 
     }
-
+    
+    // 4명 이하로 입장 가능한지 조회
     @Override
     public boolean checkIsRoomJoinable(String inviteCode) {
         Optional<Quizroom> optionalQuizroom = quizroomRepository.findByInviteCode(inviteCode);
-        if(optionalQuizroom.isPresent()){
+        if (optionalQuizroom.isPresent()) {
             Quizroom quizroom = optionalQuizroom.get();
-            if(quizroom.getUserList().size()<4)
+            if (quizroom.getUserList().size() < 4)
                 return true;
-        };
+        }
+        ;
         return false;
     }
-
+    
+    // 게임이 플레이중인지 조회
     @Override
-    public boolean checkIsRoomPlaying(Long quizroomId) {
-        Optional<Quizroom> optionalQuizroom = quizroomRepository.findById(quizroomId);
-        if(optionalQuizroom.isPresent()){
+    public boolean checkIsRoomPlaying(String inviteCode) {
+        Optional<Quizroom> optionalQuizroom = quizroomRepository.findByInviteCode(inviteCode);
+        if (optionalQuizroom.isPresent()) {
             Quizroom quizroom = optionalQuizroom.get();
-                return quizroom.isPlaying();
-        };
+            return quizroom.isPlaying();
+        }
+        ;
         return false;
     }
-
+    
+    //게임 시작
     @Override
     public List<WordDTO.WordResponseDto> startQuizroom(Long quizroomId) {
         Optional<Quizroom> optionalQuizroom = quizroomRepository.findById(quizroomId);
 
-        if(optionalQuizroom.isPresent()){
+        if (optionalQuizroom.isPresent()) {
             Quizroom quizroom = optionalQuizroom.get();
             quizroom.updateIsPlaying();
             List<User> userList = quizroom.getUserList();
 
-            for(User user : userList) {
+            for (User user : userList) {
                 user.updateIsPlaying();
             }
 
             List<Word> allWord = wordRepository.findByCategory(Category.낱말);
             List<Word> selectedWords = new ArrayList<>();
             Random random = new Random();
-            for(int i=0; i<3; i++) {
+            for (int i = 0; i < 3; i++) {
                 int randomIndex = random.nextInt(allWord.size());
                 Word randomWord = allWord.get(randomIndex);
                 selectedWords.add(randomWord);
@@ -107,22 +106,23 @@ public class QuizroomServiceImpl implements QuizroomService {
 
         return null;
     }
-
+    
+    // 게임 종료
     @Override
     public List<EndQuizDto.Response> endQuizgame(Long quizroomId, List<EndQuizDto.Request> requests) {
         Optional<Quizroom> optionalQuizroom = quizroomRepository.findById(quizroomId);
         List<EndQuizDto.Response> resultList = new ArrayList<>();
 
-        if(optionalQuizroom.isPresent()) {
+        if (optionalQuizroom.isPresent()) {
             // 퀴즈룸 종료로 변환
             Quizroom quizroom = optionalQuizroom.get();
-            if(quizroom.isPlaying())
+            if (quizroom.isPlaying())
                 quizroom.updateIsPlaying();
 
             // 스코어에 따라 각 유저의 경험치 및 레벨 변화
-            for(EndQuizDto.Request rq : requests) {
+            for (EndQuizDto.Request rq : requests) {
                 Optional<User> optionalUser = userRepository.findById(rq.getUserId());
-                if(optionalUser.isPresent()) {
+                if (optionalUser.isPresent()) {
                     // 경험치 업데이트
                     User user = optionalUser.get();
                     int score = rq.getScore();
@@ -131,12 +131,12 @@ public class QuizroomServiceImpl implements QuizroomService {
 
                     // 레벨 업데이트
                     int userLevel = user.getLevel();
-                    Optional<Level> optionalLevel = levelRepository.findByLevel(userLevel+1);
-                    if(optionalLevel.isPresent()) {
+                    Optional<Level> optionalLevel = levelRepository.findByLevel(userLevel + 1);
+                    if (optionalLevel.isPresent()) {
                         Level nextLevel = optionalLevel.get();
-                        if(user.getXp()>=nextLevel.getXp()) {
+                        if (user.getXp() >= nextLevel.getXp()) {
                             user.levelUp();
-                            user.updateExp(user.getXp()- nextLevel.getXp());
+                            user.updateExp(user.getXp() - nextLevel.getXp());
                         }
                     }
 
@@ -151,25 +151,11 @@ public class QuizroomServiceImpl implements QuizroomService {
 
 
         }
-//        for(EndQuizDto.Response res : resultList) {
-//            System.out.println("유저의 아이디" + res.getUserId());
-//
-//            System.out.println("유저의 경험치" + res.getExp());
-//            System.out.println("유저의 레벨" + res.getLevel());
-//        }
+
         return resultList;
     }
+    
+    //게임방 퇴장하기
 
-    private static String generateRandomCode() {
-        SecureRandom random = new SecureRandom();
-        StringBuilder codeBuilder = new StringBuilder();
 
-        for (int i = 0; i < CODE_LENGTH; i++) {
-            int randomIndex = random.nextInt(CHARACTERS.length());
-            char randomChar = CHARACTERS.charAt(randomIndex);
-            codeBuilder.append(randomChar);
-        }
-
-        return codeBuilder.toString();
-    }
 }

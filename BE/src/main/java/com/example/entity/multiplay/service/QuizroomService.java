@@ -8,11 +8,11 @@ import java.util.List;
 
 
 public interface QuizroomService {
-    int makeQuizroom(Long userId);
+    void makeQuizroom(Long userId, String sessionId, String inviteCode);
 
     boolean checkIsRoomJoinable(String inviteCode);
 
-    boolean checkIsRoomPlaying(Long quizroomId);
+    boolean checkIsRoomPlaying(String inviteCode);
 
 
     List<WordDTO.WordResponseDto> startQuizroom(Long quizroomId);
