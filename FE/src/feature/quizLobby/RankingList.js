@@ -5,7 +5,9 @@ const RankingList = () => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-
+  const storedNickname = localStorage.getItem("nicknameStorage");
+  const parsedNickname = JSON.parse(storedNickname);
+  const userNickname = parsedNickname.state.userNickname;
   const storedToken = localStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken);
   const accessToken = parsedToken.state.accessToken;
@@ -45,7 +47,7 @@ const RankingList = () => {
         {rankingData ? (
           <>
             <div className="flex">
-              <h1>{userId}</h1>
+              <h1>{userNickname}</h1>
               <h2>My Rank: {rankingData.myRank}</h2>
             </div>
             {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}

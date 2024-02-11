@@ -86,7 +86,7 @@ export default function LearningStartPage() {
             <div className={styles.buttonContainer}>
               <button
                 onClick={handleEnd}
-                className="ml-auto h-8 px-5 font-medium rounded-lg outline-none ring-2 ring-custom-orange ring-inset text-gray-700 hover:text-custom-orange"
+                className="px-6 py-1 border-custom-yellow rounded-lg shadow-md border-2  hover:bg-amber-400 transition duration-300"
               >
                 학습 종료
               </button>

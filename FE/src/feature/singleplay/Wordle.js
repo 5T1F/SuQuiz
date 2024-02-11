@@ -199,8 +199,7 @@ const Wordle = ({ finger }) => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div>테스트</div>
+    <div className="w-full h-full flex flex-col items-center">
       <GameBoard inputString={inputString} history={history} colors={colors} />
       <Notification message={notification} />
       <Keyboard

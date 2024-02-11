@@ -181,7 +181,7 @@ const QuizSelect = () => {
                     placeholder=" 입장 코드를 입력하세요 "
                     value={codeValue}
                     onChange={(e) => setCodeValue(e.target.value)}
-                    className="border-2 border-custom-green rounded-md mx-1 h-9 cursor-text placeholder-gray-400 placeholder-opacity-80 text-center"
+                    className="z-50 mx-1 text-center placeholder-gray-400 border-2 rounded-md border-custom-green h-9 cursor-text placeholder-opacity-80"
                   />
                 </div>
               </div>
