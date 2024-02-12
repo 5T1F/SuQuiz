@@ -4,6 +4,7 @@ import { OpenVidu } from "openvidu-browser";
 import Container from "../components/Container";
 import Players from "../feature/multiplay/Players";
 import Sidebar from "../feature/multiplay/Sidebar";
+import MyCam from "../feature/Learning/MyCam";
 
 import styles from "./MultiplayPage.module.css";
 
@@ -26,6 +27,11 @@ const MultiplayPage = () => {
   const [subscribers, setSubscribers] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isModerator, setIsModerator] = useState(initialIsModerator);
+  const [finger, setFinger] = useState("#");
+  const changeFinger = (value) => {
+    setFinger(value);
+    console.log(value);
+  };
 
   useEffect(() => {
     const OVInstance = new OpenVidu();
@@ -225,6 +231,9 @@ const MultiplayPage = () => {
       ) : (
         <>
           {/* 게임 시작 후 */}
+          <div className={styles.mycam}>
+            <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={false}></MyCam>
+          </div>
           <h1>QuizPage : {sessionId}</h1>
           <div className="p-1 border-4 border-violet-500">
             <div onClick={leaveSession} className={styles.leave}>

@@ -13,7 +13,7 @@ function customCompare(prev, next) {
   return pr === ne;
 }
 
-const MyCam = ({ categoryNumber, changeFinger }) => {
+const MyCam = ({ categoryNumber, changeFinger, isVideoVisible }) => {
   /**
    *  access DOM element
    *  why? document.getElement => useRef
@@ -165,7 +165,11 @@ const MyCam = ({ categoryNumber, changeFinger }) => {
 
   return (
     <div>
-      <video ref={videoRef} className={styles.video}></video>
+      <video
+        ref={videoRef}
+        className={styles.video}
+        style={{ display: isVideoVisible ? "block" : "none" }}
+      ></video>
       <canvas ref={canvasRef} className={styles.canvas}></canvas>
 
       {/* draw landmarks to hand
