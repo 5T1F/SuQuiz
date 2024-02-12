@@ -13,10 +13,14 @@ import orange_juice_animation from "../../assets/lottie/orange_juice_animation.j
 import lime_juice_animation from "../../assets/lottie/lime_juice_animation.json";
 
 const QuizSelect = () => {
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
   const storedToken = localStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken);
   const accessToken = parsedToken.state.accessToken;
   const [codeValue, setCodeValue] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   // 모달창 노출 여부 state
@@ -71,8 +75,9 @@ const QuizSelect = () => {
     // 초대 코드를 사용하여 세션에 참가하는 로직 (API 요청 후 token 받아오기)
     // 이 예시에서는 초대 코드가 세션 ID라고 가정
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_ROOT}/sessions/${codeValue}/token`,
+      // 입장 가능 여부 조회
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_ROOT}/quizrooms/isJoinable/${codeValue}`,
         {},
         {
           headers: {
@@ -80,17 +85,54 @@ const QuizSelect = () => {
           },
         }
       );
-      const { sessionId, token } = response.data;
 
-      console.log(response.data);
-      navigate(`../multiplay/${sessionId}`, {
-        state: { sessionId, token, inviteCode: codeValue, isModerator: false },
-      });
+      const isJoinable = response.data;
+
+      if (isJoinable.data ==="false") {
+        console.log(isJoinable.message)
+        handleNoMatchingRoom();
+      } else {
+        // 게임 진행 여부 조회
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_ROOT}/quizrooms/isPlaying/${codeValue}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        const isPlaying = response.data;
+
+        if(isPlaying.data === "true") {
+          console.log(isPlaying.message);
+          handleNoMatchingRoom();
+        } else {
+          const response = await axios.post(
+            `${process.env.REACT_APP_API_ROOT}/sessions/${codeValue}/token/${userId}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          const { sessionId, token } = response.data;
+    
+          console.log(response.data);
+          navigate(`../multiplay/${sessionId}`, {
+            state: { sessionId, token, inviteCode: codeValue, isModerator: false },
+          });
+        }
+      }
+      
     } catch (error) {
       console.error(error);
       handleNoMatchingRoom();
     }
   };
+
 
   // 싱글플레이 섹션에 대한 Lottie 옵션
   const orangeJuiceOptions = {
@@ -204,7 +246,7 @@ const QuizSelect = () => {
         </div>*/}
       </div>
 
-      {/* modalOpen이 true일 때만 모달 렌더링 */}
+      {/* modalOpen이 true일 때만 모달 렌더링! */}
       {noMatchingModalOpen && <ModalNoMatchingRoom onClose={handleCloseModalNoMatchingRoom} />}
     </>
   );

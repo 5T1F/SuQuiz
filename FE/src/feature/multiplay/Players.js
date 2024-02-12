@@ -1,38 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import UserVideoComponent from "./openvidu/UserVideoComponent";
-import LemonSuquiz from "./LemonSuquiz";
-
 import styles from "./Players.module.css";
 
-const Players = ({ publisher, subscribers, isPlaying }) => {
+const Players = ({ publisher, subscribers }) => {
+  const storedNickname = localStorage.getItem("nicknameStorage");
+  const parsedNickname = JSON.parse(storedNickname);
+  const userNickname = parsedNickname.state.userNickname;
+  const [playerSubscribers, setPlayerSubscribers] = useState(subscribers);
+
+  useEffect(() => {
+    setPlayerSubscribers(subscribers);
+  }, [subscribers]);
+
   return (
-    <>
-      {!isPlaying ? (
-        <div className={styles.waiters}>
-          <UserVideoComponent streamManager={publisher} />
-          {subscribers.map((subscriber, index) => (
-            <>
-              <UserVideoComponent key={index} streamManager={subscriber} />
-            </>
-          ))}
+    <div className={styles.players}>
+      <div>
+        <UserVideoComponent nickname={userNickname} streamManager={publisher} />
+      </div>
+      {playerSubscribers.map((subscriber, index) => (
+        <div key={index}>
+          <UserVideoComponent nickname={subscriber.nickname} streamManager={subscriber.streamManager} />
         </div>
-      ) : (
-        <>
-          <div className={styles.multiplay}>
-            {/* css 테스트하려고 */}
-            <UserVideoComponent streamManager={publisher} />
-            <UserVideoComponent streamManager={publisher} />
-            <UserVideoComponent streamManager={publisher} />
-            {subscribers.map((subscriber, index) => (
-              <>
-                <UserVideoComponent key={index} streamManager={subscriber} />
-              </>
-            ))}
-            <LemonSuquiz className={styles.lemonSuquiz} />
-          </div>
-        </>
-      )}
-    </>
+      ))}
+    </div>
   );
 };
 
