@@ -16,11 +16,10 @@ const Slidebar = ({ onClose }) => {
         <button className={styles.close} onClick={handleCloseSlidebar}>
           〈
         </button>
-        <div>
-          <p>유저 정보</p>
+        <div className="h-[45vh]">
           <UserInfo />
         </div>
-        <div>
+        <div className="h-[45vh]">
           <Community />
         </div>
       </div>
