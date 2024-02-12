@@ -201,10 +201,10 @@ const SingleplayModal = ({ onClose }) => {
             <button onClick={handleMoreQuestion} className="mr-2">
               더 풀어보기
             </button>
-            {modalResult.IsSolved ? (
+            {modalResult.isSolved ? (
               <button
                 onClick={copyDummyDataToClipboard}
-                disabled={!modalResult.IsSolved}
+                disabled={!modalResult.isSolved}
                 style={{ backgroundColor: solved ? "#ccc" : "#007bff", color: "#ffffff" }}
               >
                 복사하기

@@ -74,7 +74,7 @@ export const useProviderStore = create(
 export const useWordleStore = create((set) => ({
   modalResult: {
     answer: "",
-    isSoved: "",
+    isSolved: "",
     resultText: "",
     correct: false,
     allTrialCount: 0,
