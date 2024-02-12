@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import ModalModify from "../../auth/modify/ModalModify";
 
+import { dailyShare, dailyResult } from "../../../apis/singleplayApi";
+
 const UserInfo = () => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
@@ -10,8 +12,14 @@ const UserInfo = () => {
   const parsedAccessToken = JSON.parse(storedAccessToken);
   const accessToken = parsedAccessToken.state.accessToken;
   const [userInfoData, setUserInfoData] = useState(null);
+  const [dailyResultData, setDailyResultData] = useState(null);
+  const [dailyShareData, setDailyShareData] = useState(null);
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
+
+  // 유저 정보 조회 -> 되어있음
+  // 유저 워들 정보 조회 fetchUserWordleInfo 이것도 싱글플레이 api에서 그대로 가져와도 됨ㅇㅇ
+  // sNS 공유할 오늘의 결과 요청 이거는 싱글플레이api에서 그대로 가져와도 됨ㅇㅇ
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -45,6 +53,31 @@ const UserInfo = () => {
           profileImage: "",
           level: 0,
           exp: 0,
+        };
+  };
+
+  const getDailyResultData = () => {
+    return dailyResultData != null
+      ? dailyResultData
+      : {
+          allTrialCount: "", // 전체 도전 횟수
+          streak: { LocalData: 0 }, // 스트릭
+          solveCount: 0, // 최근 연속 스트릭
+          correctCount: 0, // 최근 연속 정답
+          maxCorrectCount: 0, // 최장 연속 스트릭
+          trialSpread: [0, 0, 0, 0, 0], // 도전 분포
+          correctRate: 0, // 정답률
+        };
+  };
+
+  const getDailyShareData = () => {
+    return dailyShareData != null
+      ? dailyShareData
+      : {
+          correct: false,
+          trialCount: 0,
+          correctCount: 0,
+          resultText: "",
         };
   };
 
