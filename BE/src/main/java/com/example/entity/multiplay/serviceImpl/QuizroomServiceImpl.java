@@ -41,13 +41,13 @@ public class QuizroomServiceImpl implements QuizroomService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
-            if (user.getQuizroom() == null) {
+
                 Quizroom quizroom = Quizroom.builder().sessionId(sessionId).inviteCode(inviteCode).build();
                 quizroomRepository.save(quizroom);
                 user.changeQuizroom(quizroom);
                 quizroom.addUser(user);
                 System.out.println("남은 유저 : " + quizroom.getUserList().size() );
-            }
+            
 
         }
 
