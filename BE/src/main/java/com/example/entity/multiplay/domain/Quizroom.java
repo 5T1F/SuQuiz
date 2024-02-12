@@ -25,10 +25,7 @@ public class Quizroom {
     @Builder.Default
     private List<User> userList = new ArrayList<>();
 
-
-//    @OneToMany(mappedBy = "quizroom", cascade = CascadeType.ALL)
-//    @Builder.Default
-//    List<QuizroomWord> quizroomWordList = new ArrayList<>();
+    private String sessionId;
 
     @Builder.Default
     private boolean isPlaying = false;  // 게임 진행중 여부
