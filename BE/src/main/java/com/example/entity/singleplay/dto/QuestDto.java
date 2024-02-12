@@ -23,7 +23,7 @@ public class QuestDto {
         private String subject;
         private String wordName;
         private String videoUrl;
-        private List<Character> syllables;
+        private String syllables;
     }
 
     @Getter

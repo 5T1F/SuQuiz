@@ -10,22 +10,54 @@ public class WordToSyllables {
         return ((syllable - 0xAC00)/28)/21;
     }
     private static int getJOONG(char syllable) {
-        return (char) ((syllable - 0xAC00)/28%21);
+        return ((syllable - 0xAC00)/28%21);
     }
     private static int getJONG(char syllable) {
-        return (char) ((syllable - 0xAC00)%28);
+        return ((syllable - 0xAC00)%28);
     }
+
+    // 쌍자음 : 1, 4, 8, 10, 13
+    private static char[] CHO = {'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'};
+    // ["ㅏ", "ㅑ", "ㅓ", "ㅕ", "ㅗ", "ㅛ", "ㅜ", "ㅠ", "ㅡ", "ㅣ", "ㅐ", "ㅒ", "ㅔ", "ㅖ", "ㅢ", "ㅚ", "ㅟ"];
+    // 9 ㅘ 10 ㅙ 14 ㅝ 15 ㅞ
+    private static char[] JOONG = {'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'};
+
+    private static char[] JONG = {' ', 'ㄱ', 'ㄲ', 'ᆪ', 'ᆫ', 'ᆬ', 'ᆭ', 'ㄷ', 'ㄹ', 'ᆰ', 'ᆱ', 'ᆲ', 'ᆳ', 'ᆴ', 'ᆵ', 'ᆶ', 'ㅁ', 'ㅂ', 'ᆹ', 'ᆺ', 'ᆻ', 'ᆼ', 'ᆽ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'};
+
+    private static int[] jongToChoMap = {
+            -1, // 종성 없음
+            0,  // ㄱ
+            1,  // ㄲ
+            -1, // ㄳ
+            2,  // ㄴ
+            -1, // ㄵ
+            -1, // ㄶ
+            3,  // ㄷ
+            5,  // ㄹ
+            -1, // ㄺ
+            -1, // ㄻ
+            -1, // ㄼ
+            -1, // ㄽ
+            -1, // ㄾ
+            -1, // ㄿ
+            -1, // ㅀ
+            6,  // ㅁ
+            7,  // ㅂ
+            -1, // ㅄ
+            9,  // ㅅ
+            -1, // ㅆ
+            11,  // ㅇ
+            12, // ㅈ
+            14, // ㅊ
+            15, // ㅋ
+            16, // ㅌ
+            17, // ㅍ
+            18  // ㅎ
+    };
 
     public static char[] wordToSyllables(String word) {
         int count = 0;
 
-        // 쌍자음 : 1, 4, 8, 10, 13
-        char[] CHO = {'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'};
-        // ["ㅏ", "ㅑ", "ㅓ", "ㅕ", "ㅗ", "ㅛ", "ㅜ", "ㅠ", "ㅡ", "ㅣ", "ㅐ", "ㅒ", "ㅔ", "ㅖ", "ㅢ", "ㅚ", "ㅟ"];
-        // 9 ㅘ 10 ㅙ 14 ㅝ 15 ㅞ
-        char[] JOONG = {'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'};
-
-        char[] JONG = {' ', 'ㄱ', 'ㄲ', 'ᆪ', 'ᆫ', 'ᆬ', 'ᆭ', 'ㄷ', 'ㄹ', 'ᆰ', 'ᆱ', 'ᆲ', 'ᆳ', 'ᆴ', 'ᆵ', 'ᆶ', 'ㅁ', 'ㅂ', 'ᆹ', 'ᆺ', 'ᆻ', 'ᆼ', 'ᆽ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'};
 
         List<Character> syllables = new ArrayList<>();
         for (int i = 0; i < word.length(); i++) {
@@ -48,7 +80,6 @@ public class WordToSyllables {
                 count += 1;
             }
 
-            // 공백일때
             switch (getJOONG(syllable)) {
                 case 9:
                     syllables.add(JOONG[8]);
@@ -76,72 +107,70 @@ public class WordToSyllables {
                     break;
             }
             // ㅁ 16 ㅂ 17 ㅅ 19 ㅈ 22 ㅌ 25 ㅍ 26 ㅎ 27
-            // {' ', 'ㄱ', 'ㄲ', 'ᆪ', 'ᆫ', 'ᆬ', 'ᆭ', 'ㄷ', 'ㄹ', 'ᆰ', 'ᆱ', 'ᆲ', 'ᆳ', 'ᆴ', 'ᆵ', 'ᆶ', 'ㅁ', 'ㅂ', 'ᆹ', 'ᆺ', 'ᆻ', 'ᆼ', 'ᆽ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'};
+            // {'', 'ㄱ', 'ㄲ', 'ᆪ', 'ᆫ', 'ᆬ', 'ᆭ', 'ㄷ', 'ㄹ', 'ᆰ', 'ᆱ', 'ᆲ', 'ᆳ', 'ᆴ', 'ᆵ', 'ᆶ', 'ㅁ', 'ㅂ', 'ᆹ', 'ᆺ', 'ᆻ', 'ᆼ', 'ᆽ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'};
             System.out.println(getJONG(syllable));
+//            syllables.add(CHO[getJOONG()])
             switch (getJONG(syllable)) {
                 case 0:
                     break;
                 case 2: // ㄲ
-                    syllables.add(JONG[1]);
-                    syllables.add(JONG[1]);
+                    syllables.add(CHO[0]);
+                    syllables.add(CHO[0]);
                     break;
                 case 3: // ㄳ
-                    syllables.add(JONG[1]);
-                    syllables.add(JONG[19]);
+                    syllables.add(CHO[0]);
+                    syllables.add(CHO[9]);
                     break;
                 case 5: // ㄵ
-                    syllables.add(JONG[4]);
-                    syllables.add(JONG[22]);
+                    syllables.add(CHO[2]);
+                    syllables.add(CHO[12]);
                     break;
                 case 6: // ㄶ
-                    syllables.add(JONG[4]);
-                    syllables.add(JONG[27]);
+                    syllables.add(CHO[2]);
+                    syllables.add(CHO[18]);
                     break;
                 case 9: // ㄺ
-                    syllables.add(JONG[8]);
-                    syllables.add(JONG[1]);
+                    syllables.add(CHO[5]);
+                    syllables.add(CHO[0]);
                     break;
                 case 10: // ㄻ
-                    syllables.add(JONG[8]);
-                    syllables.add(JONG[16]);
+                    syllables.add(CHO[5]);
+                    syllables.add(CHO[6]);
                     break;
                 case 11: // ㄼ
-                    syllables.add(JONG[8]);
-                    syllables.add(JONG[17]);
+                    syllables.add(CHO[5]);
+                    syllables.add(CHO[7]);
                     break;
                 case 12: // ㄽ
-                    syllables.add(JONG[8]);
-                    syllables.add(JONG[19]);
+                    syllables.add(CHO[5]);
+                    syllables.add(CHO[9]);
                     break;
                 case 13: // ㄾ
-                    syllables.add(JONG[8]);
-                    syllables.add(JONG[25]);
+                    syllables.add(CHO[5]);
+                    syllables.add(CHO[16]);
                     break;
                 case 14: // ㄿ
-                    syllables.add(JONG[8]);
-                    syllables.add(JONG[26]);
+                    syllables.add(CHO[5]);
+                    syllables.add(CHO[17]);
                     break;
                 case 15: // ㅀ
-                    syllables.add(JONG[8]);
-                    syllables.add(JONG[27]);
+                    syllables.add(CHO[5]);
+                    syllables.add(CHO[18]);
                     break;
                 case 18: // ㅄ
-                    syllables.add(JONG[17]);
-                    syllables.add(JONG[19]);
+                    syllables.add(CHO[7]);
+                    syllables.add(CHO[9]);
                     break;
                 case 20: // ㅆ
-                    syllables.add(JONG[19]);
-                    syllables.add(JONG[19]);
+                    syllables.add(CHO[9]);
+                    syllables.add(CHO[9]);
                     break;
                 default:
-                    syllables.add(JONG[getJONG(syllable)]);
+                    syllables.add(CHO[jongToChoMap[getJONG(syllable)]]);
                     count -= 1;
                     break;
             }
             count += 2;
-
-//            syllables.add(joong);
-//            syllables.add(jong);
         }
 
         Character[] listToCharaters = new Character[syllables.size()];

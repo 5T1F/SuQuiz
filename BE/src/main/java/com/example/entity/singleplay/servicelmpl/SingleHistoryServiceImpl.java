@@ -246,12 +246,15 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
                     list.add(c);
                 }
 
+                String s = "";
+                for (Character c: list) s += c.charValue();
+
                 dailyResponse = QuestDto.DailyResponse.builder()
                         .category(word.getCategory())
                         .subject(word.getSubject().getSubjectName())
                         .wordName(word.getWordName())
                         .videoUrl(word.getVideoUrl())
-                        .syllables(list)
+                        .syllables(s)
                         .build();
                 break;
             }
