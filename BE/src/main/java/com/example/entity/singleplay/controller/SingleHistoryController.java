@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/wordle")
 @RequiredArgsConstructor
@@ -29,14 +31,14 @@ public class SingleHistoryController {
 
     // 데일리 문제
     @GetMapping("/daily")
-    public ResponseEntity<CommonResponse<QuestDto.DailyResponse>> dailyQuest() {
+    public ResponseEntity<CommonResponse<QuestDto.DailyStringResponse>> dailyQuest() {
         /**
          * input : null
          * output : WordDailyResponseDto
          *
          * word table에 접근해서 랜덤으로 하나 뽑아오기. 해시값으로 오늘 날짜 주기.
          */
-        return new ResponseEntity<>(CommonResponse.<QuestDto.DailyResponse>builder()
+        return new ResponseEntity<>(CommonResponse.<QuestDto.DailyStringResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("daily wordle")
                 .data(singleHistoryService.dailyQuest())
@@ -45,12 +47,22 @@ public class SingleHistoryController {
 
     // 데일리 추가 문제
     @GetMapping("/additional")
-    public ResponseEntity<CommonResponse<QuestDto.DailyResponse>> additionalQuest() {
+    public ResponseEntity<CommonResponse<QuestDto.DailyStringResponse>> additionalQuest() {
 
-        return new ResponseEntity<>(CommonResponse.<QuestDto.DailyResponse>builder()
+        return new ResponseEntity<>(CommonResponse.<QuestDto.DailyStringResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("share daily single history")
                 .data(singleHistoryService.additionalQuest())
+                .build(), HttpStatus.OK);
+    }
+
+    @GetMapping("/multi/quest")
+    public ResponseEntity<CommonResponse<List<QuestDto.DailyListResponse>>> multiQuest() {
+
+        return new ResponseEntity<>(CommonResponse.<List<QuestDto.DailyListResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .message("multi quest")
+                .data(singleHistoryService.multiQuest())
                 .build(), HttpStatus.OK);
     }
 
@@ -95,4 +107,6 @@ public class SingleHistoryController {
                 .data(singleHistoryService.singlePlayAllResult(userId))
                 .build(), HttpStatus.OK);
     }
+
+
 }

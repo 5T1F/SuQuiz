@@ -30,7 +30,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
     private final WordRepository wordRepository;
     private final EntityAndDtoConversionService entityAndDtoConversionService;
 
-    private static QuestDto.DailyResponse dailyResponse;
+    private static QuestDto.DailyStringResponse dailyStringResponse;
     @Override
     @Scheduled(cron = "0/5 * * * * *")
     public void createDaily() {
@@ -65,14 +65,19 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
     }
 
     @Override
-    public QuestDto.DailyResponse dailyQuest() {
-        return dailyResponse;
+    public QuestDto.DailyStringResponse dailyQuest() {
+        return dailyStringResponse;
     }
 
     @Override
-    public QuestDto.DailyResponse additionalQuest() {
+    public QuestDto.DailyStringResponse additionalQuest() {
 
         return findFivePhoneme();
+    }
+
+    @Override
+    public List<QuestDto.DailyListResponse> multiQuest() {
+        return findFivePhonemeList();
     }
 
     @Transactional
@@ -223,7 +228,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
     }
 
 
-    private QuestDto.DailyResponse findFivePhoneme() {
+    private QuestDto.DailyStringResponse findFivePhoneme() {
 
         System.out.println("create daily quest");
         List<Word> words = wordRepository.findByCategory(Category.낱말);
@@ -249,7 +254,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
                 String s = "";
                 for (Character c: list) s += c.charValue();
 
-                dailyResponse = QuestDto.DailyResponse.builder()
+                dailyStringResponse = QuestDto.DailyStringResponse.builder()
                         .category(word.getCategory())
                         .subject(word.getSubject().getSubjectName())
                         .wordName(word.getWordName())
@@ -260,6 +265,55 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
             }
         }
 
-        return dailyResponse;
+        return dailyStringResponse;
+    }
+
+
+    private List<QuestDto.DailyListResponse> findFivePhonemeList() {
+
+        List<QuestDto.DailyListResponse> threeQuest = new ArrayList<>();
+
+        System.out.println("create daily quest");
+        List<Word> words = wordRepository.findByCategory(Category.낱말);
+
+        // 랜덤으로 하나 선택
+        if (!words.isEmpty()) {
+
+            while(true) {
+                Random random = new Random();
+                int index = random.nextInt(words.size());
+                Word word = words.get(index);
+
+                System.out.println(word.getWordName());
+
+                char[] syllables = WordToSyllables.wordToSyllables(word.getWordName());
+                if (syllables.length != 5) continue;
+
+                List<Character> list = new ArrayList<>();
+                for (char c: syllables) {
+                    list.add(c);
+                }
+
+                boolean flag = true;
+                for (QuestDto.DailyListResponse entity: threeQuest) {
+                    if (entity.getWordName().equals(word.getWordName())) {
+                        flag = false;
+                    }
+                }
+
+                if (flag) {
+                    threeQuest.add(QuestDto.DailyListResponse.builder()
+                            .category(word.getCategory())
+                            .subject(word.getSubject().getSubjectName())
+                            .wordName(word.getWordName())
+                            .videoUrl(word.getVideoUrl())
+                            .syllables(list)
+                            .build());
+                }
+                if (threeQuest.size() == 3) break;
+            }
+        }
+
+        return threeQuest;
     }
 }

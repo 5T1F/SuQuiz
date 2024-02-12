@@ -14,7 +14,23 @@ public class QuestDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class DailyResponse {
+    public static class DailyListResponse {
+
+        /**
+         * word name, video url, category, subject
+         */
+        private Category category;  // 자음, 모음, 숫자, 단어
+        private String subject;
+        private String wordName;
+        private String videoUrl;
+        private List<Character> syllables;
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DailyStringResponse {
 
         /**
          * word name, video url, category, subject
