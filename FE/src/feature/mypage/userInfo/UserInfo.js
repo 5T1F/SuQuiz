@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import ModalModify from "../../auth/modify/ModalModify";
 
+import { dailyShare, dailyResult } from "../../../apis/singleplayApi";
+
 const UserInfo = () => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
@@ -10,8 +12,14 @@ const UserInfo = () => {
   const parsedAccessToken = JSON.parse(storedAccessToken);
   const accessToken = parsedAccessToken.state.accessToken;
   const [userInfoData, setUserInfoData] = useState(null);
+  const [dailyResultData, setDailyResultData] = useState(null);
+  const [dailyShareData, setDailyShareData] = useState(null);
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
+
+  // 유저 정보 조회 -> 되어있음
+  // 유저 워들 정보 조회 fetchUserWordleInfo 이것도 싱글플레이 api에서 그대로 가져와도 됨ㅇㅇ
+  // sNS 공유할 오늘의 결과 요청 이거는 싱글플레이api에서 그대로 가져와도 됨ㅇㅇ
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -48,6 +56,31 @@ const UserInfo = () => {
         };
   };
 
+  const getDailyResultData = () => {
+    return dailyResultData != null
+      ? dailyResultData
+      : {
+          allTrialCount: "", // 전체 도전 횟수
+          streak: { LocalData: 0 }, // 스트릭
+          solveCount: 0, // 최근 연속 스트릭
+          correctCount: 0, // 최근 연속 정답
+          maxCorrectCount: 0, // 최장 연속 스트릭
+          trialSpread: [0, 0, 0, 0, 0], // 도전 분포
+          correctRate: 0, // 정답률
+        };
+  };
+
+  const getDailyShareData = () => {
+    return dailyShareData != null
+      ? dailyShareData
+      : {
+          correct: false,
+          trialCount: 0,
+          correctCount: 0,
+          resultText: "",
+        };
+  };
+
   const handleLogout = () => {
     try {
       localStorage.setItem("idStorage", 0);
@@ -71,6 +104,33 @@ const UserInfo = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
   };
+
+  // const UserInfoProgress = ({ level, exp }) => {
+  //   // 경험치를 0에서 100 사이의 값으로 변환하는 로직을 추가해야 합니다.
+  //   // 예를 들어, 만약 exp가 0에서 1000 사이의 값이고, 현재 exp가 500이라면,
+  //   // percentage는 50이 되어야 합니다.
+  //   const percentage = exp; // 이 부분은 실제 exp 값을 퍼센테이지로 변환하는 로직으로 대체해야 합니다.
+
+  //   return (
+  //     <CircularProgressbarWithChildren
+  //       value={percentage}
+  //       styles={buildStyles({
+  //         // 원형 프로그레스 바의 스타일 커스터마이징
+  //         textColor: "black",
+  //         pathColor: "#F4B28E",
+  //         trailColor: "grey",
+  //       })}
+  //     >
+  //       {/* 중앙에 표시될 텍스트*/}
+  //       <div style={{ fontSize: "20px", marginTop: "-5px" }}>
+  //         <div>{`Lv.${level}`}</div>
+  //       </div>
+  //       <div style={{ fontSize: "16px" }}>{`Exp ${exp}%`}</div>
+  //     </CircularProgressbarWithChildren>
+  //   );
+  // };
+  // 이런식으로 사용
+  // <UserInfoProgress level={getUserInfo().level} exp={getUserInfo().exp} />
 
   return (
     <>
