@@ -4,7 +4,9 @@ import com.example.entity.education.dto.WordDTO;
 import com.example.entity.global.dto.CommonResponse;
 import com.example.entity.multiplay.dto.EndQuizDto;
 import com.example.entity.multiplay.dto.ExitQuizDto;
+import com.example.entity.multiplay.dto.PlayerDto;
 import com.example.entity.multiplay.service.QuizroomService;
+import com.example.entity.ranking.dto.RankingDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/quizrooms")
+@CrossOrigin(origins = "*")
 public class QuizroomController {
     private final QuizroomService quizroomService;
 
@@ -73,22 +76,33 @@ public class QuizroomController {
     }
 
     // 퀴즈 룸 시작, 단어 리스트 요청
-    @PostMapping("/start/{quizroomId}")
-    public ResponseEntity<CommonResponse> startQuizroom(@PathVariable Long quizroomId) {
-        List<WordDTO.WordResponseDto> wordList = quizroomService.startQuizroom(quizroomId);
+//    @PostMapping("/start/{sessionId}")
+//    public ResponseEntity<CommonResponse> startQuizroom(@PathVariable String sessionId) {
+//        List<WordDTO.WordResponseDto> wordList = quizroomService.startQuizroom(sessionId);
+//        return new ResponseEntity<>(CommonResponse.builder()
+//                .status(HttpStatus.OK.value())
+//                .message("퀴즈룸 단어리스트 응답 성공")
+//                .data(wordList)
+//                .build(), HttpStatus.OK);
+//    }
+
+    // 퀴즈룸 참가자 정보 요청
+    @GetMapping("/players/{sessionId}")
+    public ResponseEntity<CommonResponse> getPlayers(@PathVariable String sessionId) {
+        List<PlayerDto.Response> playerList = quizroomService.getPlayers(sessionId);
         return new ResponseEntity<>(CommonResponse.builder()
                 .status(HttpStatus.OK.value())
-                .message("퀴즈룸 단어리스트 응답 성공")
-                .data(wordList)
+                .message("퀴즈룸 참가자 응답 성공")
+                .data(playerList)
                 .build(), HttpStatus.OK);
     }
 
 
     // 퀴즈 룸 멀티게임 종료
 
-    @PutMapping("/end/{quizroomId}")
-    public ResponseEntity<CommonResponse> endQuizgame(@PathVariable Long quizroomId, @RequestBody List<EndQuizDto.Request> requests) {
-        List<EndQuizDto.Response> resultList = quizroomService.endQuizgame(quizroomId, requests);
+    @PutMapping("/end/{session}")
+    public ResponseEntity<CommonResponse> endQuizgame(@PathVariable String sessionId, @RequestBody List<EndQuizDto.Request> requests) {
+        List<EndQuizDto.Response> resultList = quizroomService.endQuizgame(sessionId, requests);
         return new ResponseEntity<>(CommonResponse.builder()
                 .status(HttpStatus.OK.value())
                 .message("퀴즈게임 종료")

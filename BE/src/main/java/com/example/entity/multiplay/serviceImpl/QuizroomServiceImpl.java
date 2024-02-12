@@ -5,6 +5,7 @@ import com.example.entity.global.service.EntityAndDtoConversionService;
 import com.example.entity.multiplay.domain.Quizroom;
 import com.example.entity.multiplay.dto.EndQuizDto;
 import com.example.entity.multiplay.dto.ExitQuizDto;
+import com.example.entity.multiplay.dto.PlayerDto;
 import com.example.entity.multiplay.repository.QuizroomRepository;
 import com.example.entity.multiplay.service.QuizroomService;
 import com.example.entity.user.domain.Level;
@@ -81,8 +82,8 @@ public class QuizroomServiceImpl implements QuizroomService {
     
     //게임 시작
     @Override
-    public List<WordDTO.WordResponseDto> startQuizroom(Long quizroomId) {
-        Optional<Quizroom> optionalQuizroom = quizroomRepository.findById(quizroomId);
+    public List<WordDTO.WordResponseDto> startQuizroom(String sessionId) {
+        Optional<Quizroom> optionalQuizroom = quizroomRepository.findBySessionId(sessionId);
 
         if (optionalQuizroom.isPresent()) {
             Quizroom quizroom = optionalQuizroom.get();
@@ -112,8 +113,8 @@ public class QuizroomServiceImpl implements QuizroomService {
     
     // 게임 종료
     @Override
-    public List<EndQuizDto.Response> endQuizgame(Long quizroomId, List<EndQuizDto.Request> requests) {
-        Optional<Quizroom> optionalQuizroom = quizroomRepository.findById(quizroomId);
+    public List<EndQuizDto.Response> endQuizgame(String sessionId, List<EndQuizDto.Request> requests) {
+        Optional<Quizroom> optionalQuizroom = quizroomRepository.findBySessionId(sessionId);
         List<EndQuizDto.Response> resultList = new ArrayList<>();
 
         if (optionalQuizroom.isPresent()) {
@@ -195,6 +196,22 @@ public class QuizroomServiceImpl implements QuizroomService {
             user.changeQuizroom(quizroom);
             System.out.println("남은 유저 : " + quizroom.getUserList().size() );
         }
+    }
+
+    @Override
+    public List<PlayerDto.Response> getPlayers(String sessionId) {
+        Quizroom quizroom = quizroomRepository.findBySessionId(sessionId).get();
+        List<User> userList = quizroom.getUserList();
+
+        List<PlayerDto.Response> playerList = new ArrayList<>();
+        for(User u : userList) {
+            PlayerDto.Response res = PlayerDto.Response.builder()
+                    .playerId(u.getId())
+                    .playerNickname(u.getNickname())
+                    .build();
+        }
+
+        return null;
     }
 
 
