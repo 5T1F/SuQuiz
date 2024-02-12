@@ -6,7 +6,7 @@ import Chatting from "../community/Chatting";
 
 import styles from "./FriendList.module.css";
 
-const FriendList = () => {
+const FriendList = ({ isMultiplay }) => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
@@ -39,6 +39,10 @@ const FriendList = () => {
 
   const closeEndModal = () => {
     setEndModalOpen(false);
+  };
+
+  const closeChatting = () => {
+    setSelectedFriend(null);
   };
 
   const handleChatButtonClick = (friend) => {
@@ -82,53 +86,65 @@ const FriendList = () => {
   return (
     <>
       {selectedFriend === null ? (
-        <div className="p-1 space-y-1 border-4 border-orange-500 h-2/3">
-          <button onClick={openMakeModal}>친구추가</button>
+        <>
+          {isMultiplay ? (
+            <></>
+          ) : (
+            <>
+              <button onClick={openMakeModal}>친구추가</button>
 
-          <input
-            type="text"
-            placeholder="친구 닉네임"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          ></input>
-          <button onClick={handleSearchFriend}>검색</button>
-
-          <h2>Friends List</h2>
-          {!doSearch && (
-            <ul>
-              {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
-              {friends.map((friend, index) => (
-                <li
-                  className={`flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow`}
-                  key={index}
-                >
-                  <p>Nickname: {friend.nickname}</p>
-                  <p>Level: {friend.level}</p>
-                  <button onClick={() => handleChatButtonClick(friend)}>채팅</button>
-                  <button onClick={() => openEndModal(friend.nickname)}>&times;</button>
-                </li>
-              ))}
-            </ul>
+              <input
+                type="text"
+                placeholder="친구 닉네임"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              ></input>
+              <button onClick={handleSearchFriend}>검색</button>
+            </>
           )}
-          {doSearch && (
-            <ul>
-              {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
-              {filterFriend.map((friend, index) => (
-                <li
-                  className={`flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow`}
-                  key={index}
-                >
-                  <p>Nickname: {friend.nickname}</p>
-                  <p>Level: {friend.level}</p>
-                  <button onClick={() => handleChatButtonClick(friend)}>채팅</button>
-                  <button onClick={() => openEndModal(friend.nickname)}>&times;</button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+          <div className="p-1 space-y-1 border-4 border-orange-500 h-2/3">
+            <h2>Friends List</h2>
+            {!doSearch && (
+              <ul>
+                {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
+                {friends.map((friend, index) => (
+                  <li
+                    className={`flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow`}
+                    key={index}
+                  >
+                    <p>Nickname: {friend.nickname}</p>
+                    <p>Level: {friend.level}</p>
+                    <button onClick={() => handleChatButtonClick(friend)}>채팅</button>
+                    <button onClick={() => openEndModal(friend.nickname)}>&times;</button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {doSearch && (
+              <ul>
+                {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
+                {filterFriend.map((friend, index) => (
+                  <li
+                    className={`flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow`}
+                    key={index}
+                  >
+                    <p>Nickname: {friend.nickname}</p>
+                    <p>Level: {friend.level}</p>
+                    <button onClick={() => handleChatButtonClick(friend)}>채팅</button>
+                    <button onClick={() => openEndModal(friend.nickname)}>&times;</button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </>
       ) : (
-        <Chatting friendId={selectedFriend.friendId} userId={userId} />
+        <Chatting
+          friendId={selectedFriend.friendId}
+          userId={userId}
+          friendNickname={selectedFriend.nickname}
+          onClose={closeChatting}
+        />
       )}
       {isModalOpen && <ModalMakeFriend onClose={closeMakeModal} />} {/* 모달이 열려 있을 때만 렌더링 */}
       {endModalOpen && <ModalEndFriendship onClose={closeEndModal} friendNickname={toNickname} />}{" "}

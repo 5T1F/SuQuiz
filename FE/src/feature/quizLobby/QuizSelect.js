@@ -20,7 +20,6 @@ const QuizSelect = () => {
   const parsedToken = JSON.parse(storedToken);
   const accessToken = parsedToken.state.accessToken;
   const [codeValue, setCodeValue] = useState("");
-  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   // 모달창 노출 여부 state

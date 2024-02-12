@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Sidebar.module.css";
 
+import FriendList from "../mypage/community/FriendList";
+
 const WaitingRoomSidebar = ({ session }) => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
@@ -83,38 +85,38 @@ const WaitingRoomSidebar = ({ session }) => {
           <p>Lv. {userInfoData.level}</p>
           <p>{userInfoData.nickname}</p>
         </div>
+        {/* 친구한테 초대코드 보내기 위한 컴포넌트 */}
+        <FriendList isMultiplay={true} />
+        {/* 오픈비두로 대기실 내 실시간 채팅 */}
+        {/* 채팅 메시지 UI */}
         <div>
-          {/* 오픈비두로 대기실 내 실시간 채팅 */}
-          {/* 채팅 메시지 UI */}
-          <div>
-            <div style={{ height: "200px", overflowY: "scroll" }}>
-              {chatHistory.map((message, index) => (
-                <div key={index}>
-                  {message.senderNickname !== userInfoData.nickname && <div>{message.senderNickname}</div>}
-                  <div
-                    className={
-                      message.senderNickname === userInfoData.nickname ? styles.sentMessage : styles.receivedMessage
-                    }
-                  >
-                    {message.message}
-                  </div>
+          <div style={{ height: "200px", overflowY: "scroll" }}>
+            {chatHistory.map((message, index) => (
+              <div key={index}>
+                {message.senderNickname !== userInfoData.nickname && <div>{message.senderNickname}</div>}
+                <div
+                  className={
+                    message.senderNickname === userInfoData.nickname ? styles.sentMessage : styles.receivedMessage
+                  }
+                >
+                  {message.message}
                 </div>
-              ))}
-            </div>
-            <input
-              type="text"
-              value={chatMessage}
-              onChange={(e) => setChatMessage(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  sendMessage();
-                  e.preventDefault(); // Enter 키 입력으로 인한 기본 이벤트 방지
-                }
-              }}
-              placeholder="Type a message..."
-            />
-            <button onClick={sendMessage}>Send</button>
+              </div>
+            ))}
           </div>
+          <input
+            type="text"
+            value={chatMessage}
+            onChange={(e) => setChatMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                sendMessage();
+                e.preventDefault(); // Enter 키 입력으로 인한 기본 이벤트 방지
+              }
+            }}
+            placeholder="Type a message..."
+          />
+          <button onClick={sendMessage}>Send</button>
         </div>
       </div>
     </>
