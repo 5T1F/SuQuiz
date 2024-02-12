@@ -4,10 +4,7 @@ import Stomp from "stompjs";
 import Modal from "react-modal";
 
 // Chatting 컴포넌트 정의
-const Chatting = ({ userId, friendId }) => {
-  const storedNickname = localStorage.getItem("nicknameStorage");
-  const parsedNickname = JSON.parse(storedNickname);
-  const userNickname = parsedNickname.state.userNickname;
+const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
   const [messages, setMessages] = useState([]); // 메시지 목록 상태
   const [newMessage, setNewMessage] = useState(""); // 새 메시지 입력 상태
   const [stompClient, setStompClient] = useState(null); // Stomp 클라이언트 상태
@@ -60,7 +57,7 @@ const Chatting = ({ userId, friendId }) => {
   const sendMessage = () => {
     if (stompClient && newMessage.trim() !== "") {
       const message = {
-        senderId: userNickname,
+        senderId: userId,
         receiverId: friendId,
         content: newMessage,
         timestamp: new Date(),
@@ -72,13 +69,27 @@ const Chatting = ({ userId, friendId }) => {
     }
   };
 
+  const handleClose = () => {
+    onClose();
+  };
+
   return (
     <div>
-      <h2>Chat with {friendId}</h2>
+      <button onClick={handleClose}>나가기</button>
+      <h2>Chat with {friendNickname}</h2>
       <div>
         {messages.map((msg, index) => (
           <div key={index}>
-            <strong>{msg.senderId}:</strong> {msg.content}
+            {msg.senderId === userId ? (
+              <>
+                <strong>나:</strong>
+              </>
+            ) : (
+              <>
+                <strong>{friendNickname}:</strong>
+              </>
+            )}
+            {msg.content}
           </div>
         ))}
       </div>

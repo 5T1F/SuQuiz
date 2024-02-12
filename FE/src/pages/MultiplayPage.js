@@ -36,7 +36,7 @@ const MultiplayPage = () => {
       const subscriber = sessionInstance.subscribe(event.stream, undefined);
       // 구독자의 connectionData에서 닉네임 파싱
       console.log(event.stream.connection.data);
-      const connectionData = JSON.parse(event.stream.connection.data);
+      const connectionData = event.stream.connection.data;
       const nickname = connectionData || "Anonymous";
       setSubscribers((prevSubscribers) => [
         ...prevSubscribers,
@@ -109,9 +109,7 @@ const MultiplayPage = () => {
     if (session) {
       await session
         .signal({
-          data: JSON.stringify({
-            isPlaying: isPlaying, // 퀴즈 시작 정보를 담아서
-          }),
+          data: JSON.stringify({ isPlaying: true }), // 퀴즈 시작 정보를 담아서,
           type: "quiz-start",
         })
         .then(() => {
@@ -126,10 +124,11 @@ const MultiplayPage = () => {
   // 게임이 시작되면 실행될 콜백 함수
   useEffect(() => {
     const handleStartQuiz = (event) => {
-      console.log("Quiz start :", event.data);
-      setIsPlaying(event.data.isPlaying); // 참가자들의 퀴즈 시작 정보 세팅
+      const data = JSON.parse(event.data);
+      console.log("Quiz start :", data.isPlaying);
+      setIsPlaying(data.isPlaying); // 참가자들의 퀴즈 시작 정보 세팅
       // 게임 시작
-      console.log(session.streamManager);
+      console.log(session);
       // 1. 순서대로 정답 차례(streamManager 활용)
       const solver = null;
       // 2. 차례가 되면 수어 인식

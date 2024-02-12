@@ -6,8 +6,12 @@ import ModalNoMatchingUser from "./ModalNoMatchingUser";
 import styles from "./ModalMakeFriend.module.css";
 
 const ModalEndFriendship = ({ onClose, friendNickname }) => {
-  // const {userNickname,setUserNickname} = useUserNicknameStore(); // 친구 요청 목록을 위해
-  const userNickname = "DummyUser2";
+  const storedNickname = localStorage.getItem("nicknameStorage");
+  const parsedNickname = JSON.parse(storedNickname);
+  const userNickname = parsedNickname.state.userNickname;
+  const storedToken = localStorage.getItem("tokenStorage");
+  const parsedToken = JSON.parse(storedToken);
+  const accessToken = parsedToken.state.accessToken;
   const modalRef = useRef();
 
   const handleClickInside = (event) => {
@@ -25,6 +29,7 @@ const ModalEndFriendship = ({ onClose, friendNickname }) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(requestBody),
       });
