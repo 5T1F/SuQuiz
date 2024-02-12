@@ -7,8 +7,6 @@ import Lottie from "react-lottie";
 import ModalNoMatchingRoom from "./ModalNoMatchingRoom";
 
 import styles from "./QuizSelect.module.css";
-import singleplayImg from "../../assets/images/puzzle_single.png";
-import multiplayImg from "../../assets/images/puzzle_multi.png";
 import orange_juice_animation from "../../assets/lottie/orange_juice_animation.json";
 import lime_juice_animation from "../../assets/lottie/lime_juice_animation.json";
 
