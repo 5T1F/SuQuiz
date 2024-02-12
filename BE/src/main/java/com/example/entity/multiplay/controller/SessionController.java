@@ -1,5 +1,6 @@
 package com.example.entity.multiplay.controller;
 
+import com.example.entity.multiplay.service.QuizroomService;
 import com.example.entity.multiplay.serviceImpl.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ public class SessionController {
     @Autowired
     private SessionService sessionService;
 
+    @Autowired
+    private QuizroomService quizroomService;
+
 
     //세션 생성하기
     @PostMapping("/sessions/{userId}")
@@ -27,12 +31,12 @@ public class SessionController {
         }
     }
 
-    @PostMapping("/sessions/{codeValue}/token")
-    public ResponseEntity<?> generateToken(@PathVariable(name="codeValue") String inviteCode) {
-        System.out.println("입장 요청");
+    @PostMapping("/sessions/{codeValue}/token/{userId}")
+    public ResponseEntity<?> generateToken(@PathVariable(name="codeValue") String inviteCode, @PathVariable(name="userId") long userId) {
         try {
             String sessionId = sessionService.getSessionIdByInviteCode(inviteCode);
-            String token = sessionService.generateToken(sessionId);
+            String token = sessionService.generateToken(sessionId, userId);
+            quizroomService.joinQuizroom(sessionId, userId);
             return ResponseEntity.ok(Map.of("sessionId", sessionId, "token", token));
         } catch (Exception e) {
             System.out.println(e.getMessage());

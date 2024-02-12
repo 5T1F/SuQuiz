@@ -3,6 +3,7 @@ package com.example.entity.multiplay.controller;
 import com.example.entity.education.dto.WordDTO;
 import com.example.entity.global.dto.CommonResponse;
 import com.example.entity.multiplay.dto.EndQuizDto;
+import com.example.entity.multiplay.dto.ExitQuizDto;
 import com.example.entity.multiplay.service.QuizroomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,16 +42,16 @@ public class QuizroomController {
     }
 
 
-//    // 퀴즈 룸 퇴장
-//    @DeleteMapping("/exit/{userId}")
-//    public ResponseEntity<CommonResponse> exitQuizroom(@PathVariable Long userId) {
-//
-//        return new ResponseEntity<>(CommonResponse.builder()
-//                .status(HttpStatus.OK.value())
-//                .message("퀴즈룸 퇴장 완료")
-//                .data("")
-//                .build(), HttpStatus.OK);
-//    }
+    // 퀴즈 룸 퇴장
+    @PutMapping("/exit")
+    public ResponseEntity<CommonResponse> exitQuizroom(@RequestBody ExitQuizDto.Request req) {
+        quizroomService.exitQuizroom(req);
+        return new ResponseEntity<>(CommonResponse.builder()
+                .status(HttpStatus.OK.value())
+                .message("퀴즈룸 퇴장 완료")
+                .data("")
+                .build(), HttpStatus.OK);
+    }
 
     // 퀴즈 룸 게임 진행 여부 조회
     @GetMapping("/isPlaying/{inviteCode}")

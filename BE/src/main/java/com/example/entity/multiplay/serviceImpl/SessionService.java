@@ -3,6 +3,8 @@ package com.example.entity.multiplay.serviceImpl;
 import com.example.entity.multiplay.domain.Quizroom;
 import com.example.entity.multiplay.repository.QuizroomRepository;
 import com.example.entity.multiplay.service.QuizroomService;
+import com.example.entity.user.domain.User;
+import com.example.entity.user.repository.UserRepository;
 import io.openvidu.java.client.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,13 @@ public class SessionService {
 
     private final QuizroomRepository quizroomRepository;
 
+    private final UserRepository userRepository;
+
 
     public SessionService(@Value("${OPENVIDU_URL}") String openViduUrl,
-                          @Value("${OPENVIDU_SECRET}") String openViduSecret, QuizroomService quizroomService, QuizroomRepository quizroomRepository) {
+                          @Value("${OPENVIDU_SECRET}") String openViduSecret, QuizroomService quizroomService, QuizroomRepository quizroomRepository, UserRepository userRepository) {
         this.quizroomRepository = quizroomRepository;
+        this.userRepository = userRepository;
         this.openVidu = new OpenVidu(openViduUrl, openViduSecret);
         this.quizroomService = quizroomService;
     }
@@ -37,10 +42,11 @@ public class SessionService {
         // 초대 코드와 세션 ID 매핑 저장
         quizroomService.makeQuizroom(userId, sessionId, inviteCode);
         // 세션에 대한 토큰 생성
+        User user = userRepository.findById(userId).get();
         ConnectionProperties connectionProperties = new ConnectionProperties.Builder()
                 .type(ConnectionType.WEBRTC)
                 .role(OpenViduRole.PUBLISHER)
-                .data("user_data") // 사용자 정의 데이터
+                .data(user.getNickname()) // 사용자 정의 데이터
                 .build();
         String token = session.createConnection(connectionProperties).getToken();
 
@@ -66,12 +72,13 @@ public class SessionService {
 
     }
 
-    public String generateToken(String sessionId) throws Exception {
+    public String generateToken(String sessionId, long userId) throws Exception {
+        User user = userRepository.findById(userId).get();
         // 세션에 대한 토큰 생성
         ConnectionProperties connectionProperties = new ConnectionProperties.Builder()
                 .type(ConnectionType.WEBRTC)
                 .role(OpenViduRole.PUBLISHER)
-                .data("user_data") // 사용자 정의 데이터
+                .data(user.getNickname()) // 사용자 정의 데이터
                 .build();
         return this.openVidu.getActiveSession(sessionId).createConnection(connectionProperties).getToken();
     }

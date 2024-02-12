@@ -4,6 +4,7 @@ import com.example.entity.education.dto.WordDTO;
 import com.example.entity.global.service.EntityAndDtoConversionService;
 import com.example.entity.multiplay.domain.Quizroom;
 import com.example.entity.multiplay.dto.EndQuizDto;
+import com.example.entity.multiplay.dto.ExitQuizDto;
 import com.example.entity.multiplay.repository.QuizroomRepository;
 import com.example.entity.multiplay.service.QuizroomService;
 import com.example.entity.user.domain.Level;
@@ -13,6 +14,7 @@ import com.example.entity.user.repository.UserRepository;
 import com.example.entity.word.domain.Category;
 import com.example.entity.word.domain.Word;
 import com.example.entity.word.repository.WordRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,6 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class QuizroomServiceImpl implements QuizroomService {
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private static final int CODE_LENGTH = 8;
     private final QuizroomRepository quizroomRepository;
     private final UserRepository userRepository;
     private final WordRepository wordRepository;
@@ -34,6 +34,7 @@ public class QuizroomServiceImpl implements QuizroomService {
     private final EntityAndDtoConversionService entityAndDtoConversionService;
 
     @Override
+    @Transactional
     public void makeQuizroom(Long userId, String sessionId, String inviteCode) {
 
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -45,7 +46,9 @@ public class QuizroomServiceImpl implements QuizroomService {
                 quizroomRepository.save(quizroom);
                 user.changeQuizroom(quizroom);
                 quizroom.addUser(user);
+                System.out.println("남은 유저 : " + quizroom.getUserList().size() );
             }
+
         }
 
 
@@ -60,7 +63,7 @@ public class QuizroomServiceImpl implements QuizroomService {
             if (quizroom.getUserList().size() < 4)
                 return true;
         }
-        ;
+
         return false;
     }
     
@@ -72,7 +75,7 @@ public class QuizroomServiceImpl implements QuizroomService {
             Quizroom quizroom = optionalQuizroom.get();
             return quizroom.isPlaying();
         }
-        ;
+
         return false;
     }
     
@@ -154,8 +157,45 @@ public class QuizroomServiceImpl implements QuizroomService {
 
         return resultList;
     }
-    
+
     //게임방 퇴장하기
+    @Override
+    @Transactional
+    public void exitQuizroom(ExitQuizDto.Request req) {
+        Optional<Quizroom> optionalQuizroom = quizroomRepository.findBySessionId(req.getSessionId());
+
+        if(optionalQuizroom.isPresent()) {
+            Quizroom quizroom = optionalQuizroom.get();
+            List<User> userList = quizroom.getUserList();
+            for(User u : userList) {
+                if(u.getId()==req.getUserId()) {
+                    u.changeQuizroom(null);
+                    userList.remove(u);
+                    break;
+                }
+            }
+            System.out.println("남은 유저 : " + userList.size() );
+            if(userList.isEmpty()) {
+              quizroomRepository.delete(quizroom);
+            }
+        }
+
+    }
+
+    @Override
+    @Transactional
+    public void joinQuizroom(String sessionId, long userId) {
+        Optional<Quizroom> optionalQuizroom = quizroomRepository.findBySessionId(sessionId);
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if(optionalQuizroom.isPresent()&&optionalUser.isPresent()) {
+            Quizroom quizroom = optionalQuizroom.get();
+            System.out.println("기존 유저 : " + quizroom.getUserList().size() );
+            User user = optionalUser.get();
+            quizroom.addUser(user);
+            user.changeQuizroom(quizroom);
+            System.out.println("남은 유저 : " + quizroom.getUserList().size() );
+        }
+    }
 
 
 }
