@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import UserVideoComponent from "./openvidu/UserVideoComponent";
-
 import styles from "./Players.module.css";
 
 const Players = ({ publisher, subscribers }) => {
+  const storedNickname = localStorage.getItem("nicknameStorage");
+  const parsedNickname = JSON.parse(storedNickname);
+  const userNickname = parsedNickname.state.userNickname;
+  const [playerSubscribers, setPlayerSubscribers] = useState(subscribers);
+
+  useEffect(() => {
+    setPlayerSubscribers(subscribers);
+  }, [subscribers]);
+
   return (
     <div className={styles.players}>
-      {/* css 테스트하려고 */}
-      <UserVideoComponent streamManager={publisher} />
-      <UserVideoComponent streamManager={publisher} />
-      <UserVideoComponent streamManager={publisher} />
-      <UserVideoComponent streamManager={publisher} />
-      {/* {subscribers.map((subscriber, index) => (
-        <>
-          <UserVideoComponent key={index} streamManager={subscriber} />
-        </>
-      ))} */}
+      <div>
+        <UserVideoComponent nickname={userNickname} streamManager={publisher} />
+      </div>
+      {playerSubscribers.map((subscriber, index) => (
+        <div key={index}>
+          <UserVideoComponent nickname={subscriber.nickname} streamManager={subscriber.streamManager} />
+        </div>
+      ))}
     </div>
   );
 };
