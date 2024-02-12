@@ -59,8 +59,9 @@ export default function LearningStartPage() {
   return (
     <>
       <div className="flex h-[90vh]">
+        {/* 학습 화면 */}
         {/* 사이드메뉴 */}
-        <div className="px-16 py-6 bg-gray-100 ">
+        <div className="px-10 py-6 bg-gray-100 ">
           <SideMenu
             selectedMain={selectedMain}
             selectedSub={selectedSub}
@@ -68,7 +69,6 @@ export default function LearningStartPage() {
             setCurrentWord={setCurrentWord}
           />
         </div>
-        {/* 학습 화면 */}
         <Container>
           <div className="flex flex-row justify-center items-end my-36">
             {/* 플래시 카드 */}

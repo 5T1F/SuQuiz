@@ -72,6 +72,33 @@ const UserInfo = () => {
     setModalOpen(false);
   };
 
+  // const UserInfoProgress = ({ level, exp }) => {
+  //   // 경험치를 0에서 100 사이의 값으로 변환하는 로직을 추가해야 합니다.
+  //   // 예를 들어, 만약 exp가 0에서 1000 사이의 값이고, 현재 exp가 500이라면,
+  //   // percentage는 50이 되어야 합니다.
+  //   const percentage = exp; // 이 부분은 실제 exp 값을 퍼센테이지로 변환하는 로직으로 대체해야 합니다.
+
+  //   return (
+  //     <CircularProgressbarWithChildren
+  //       value={percentage}
+  //       styles={buildStyles({
+  //         // 원형 프로그레스 바의 스타일 커스터마이징
+  //         textColor: "black",
+  //         pathColor: "#F4B28E",
+  //         trailColor: "grey",
+  //       })}
+  //     >
+  //       {/* 중앙에 표시될 텍스트*/}
+  //       <div style={{ fontSize: "20px", marginTop: "-5px" }}>
+  //         <div>{`Lv.${level}`}</div>
+  //       </div>
+  //       <div style={{ fontSize: "16px" }}>{`Exp ${exp}%`}</div>
+  //     </CircularProgressbarWithChildren>
+  //   );
+  // };
+  // 이런식으로 사용
+  // <UserInfoProgress level={getUserInfo().level} exp={getUserInfo().exp} />
+
   return (
     <>
       {/* 단어사이 간격  space-y-1  */}
