@@ -6,8 +6,9 @@ import ModalNoMatchingUser from "./ModalNoMatchingUser";
 import styles from "./ModalMakeFriend.module.css";
 
 const Modal = ({ onClose }) => {
-  // const {userNickname,setUserNickname} = useUserNicknameStore();
-  const userNickname = "DummyUser"; // 친구 요청 목록을 위해
+  const storedNickname = localStorage.getItem("nicknameStorage");
+  const parsedNickname = JSON.parse(storedNickname);
+  const userNickname = parsedNickname.state.userNickname;
   const modalRef = useRef();
   const [searchValue, setSearchValue] = useState("");
   // 모달창 노출 여부 state

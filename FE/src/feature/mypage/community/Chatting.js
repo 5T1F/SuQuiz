@@ -5,6 +5,9 @@ import Modal from "react-modal";
 
 // Chatting 컴포넌트 정의
 const Chatting = ({ userId, friendId }) => {
+  const storedNickname = localStorage.getItem("nicknameStorage");
+  const parsedNickname = JSON.parse(storedNickname);
+  const userNickname = parsedNickname.state.userNickname;
   const [messages, setMessages] = useState([]); // 메시지 목록 상태
   const [newMessage, setNewMessage] = useState(""); // 새 메시지 입력 상태
   const [stompClient, setStompClient] = useState(null); // Stomp 클라이언트 상태
@@ -57,7 +60,7 @@ const Chatting = ({ userId, friendId }) => {
   const sendMessage = () => {
     if (stompClient && newMessage.trim() !== "") {
       const message = {
-        senderId: userId,
+        senderId: userNickname,
         receiverId: friendId,
         content: newMessage,
         timestamp: new Date(),

@@ -103,21 +103,53 @@ const MultiplayPage = () => {
     document.body.removeChild(tempInput);
   };
 
-  const startQuiz = () => {
-    setIsPlaying(true);
-    // 참가자들에게 게임시작 정보 소리치기
+  const startQuiz = async () => {
+    setIsPlaying(true); // 퀴즈 시작으로 변경
+
+    if (session) {
+      await session
+        .signal({
+          data: JSON.stringify({
+            isPlaying: isPlaying, // 퀴즈 시작 정보를 담아서
+          }),
+          type: "quiz-start",
+        })
+        .then(() => {
+          console.log("Quiz successfully start");
+        })
+        .catch((error) => {
+          console.error("Error starting quiz:", error);
+        });
+    }
   };
 
+  // 게임이 시작되면 실행될 콜백 함수
   useEffect(() => {
-    // 게임 시작
-    // 1. 순서대로 정답 차례(streamManager 활용)
-    const solver = null;
-    // 2. 차례가 되면 수어 인식
-    // 3. 주어진 단어에 포함되면 자리 채우고,(2번 이상 들어가는 경우도 놓치지 말기)
-    // 4. 포함된 자모일 경우 차례 유지, 미포함일 경우 다음 차례 진행
-    // 5. 모든 자모를 맞추면 다음 문제
-    // 6. 3문제가 끝나면 게임 종료
-  }, [isPlaying]);
+    const handleStartQuiz = (event) => {
+      console.log("Quiz start :", event.data);
+      setIsPlaying(event.data.isPlaying); // 참가자들의 퀴즈 시작 정보 세팅
+      // 게임 시작
+      console.log(session.streamManager);
+      // 1. 순서대로 정답 차례(streamManager 활용)
+      const solver = null;
+      // 2. 차례가 되면 수어 인식
+      // 3. 주어진 단어에 포함되면 자리 채우고,(2번 이상 들어가는 경우도 놓치지 말기)
+      // 4. 포함된 자모일 경우 차례 유지, 미포함일 경우 다음 차례 진행
+      // 5. 모든 자모를 맞추면 다음 문제
+      // 6. 3문제가 끝나면 게임 종료
+    };
+
+    if (session) {
+      session.on("signal:quiz-start", handleStartQuiz); // 받아온 정보 전달
+    }
+
+    return () => {
+      if (session) {
+        session.off("signal:quiz-start", handleStartQuiz);
+      }
+    };
+  }, [session]);
+
   const leaveSession = async () => {
     const requestBody = {
       sessionId: sessionId,
@@ -133,7 +165,6 @@ const MultiplayPage = () => {
         },
         body: JSON.stringify(requestBody),
       });
-      console.log("나가!!!!!!!!!!!!!!");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -196,6 +227,9 @@ const MultiplayPage = () => {
           {/* 게임 시작 후 */}
           <h1>QuizPage : {sessionId}</h1>
           <div className="p-1 border-4 border-violet-500">
+            <div onClick={leaveSession} className={styles.leave}>
+              퇴장하기
+            </div>
             <Players publisher={publisher} subscribers={subscribers} isPlaying={isPlaying} />
           </div>
           <div className="p-1 border-4 border-red-500">
