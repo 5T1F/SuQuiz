@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
-<<<<<<< HEAD
-
-=======
-import { useAuthStore } from "../app/store";
->>>>>>> 9999adf358980de403de67c3427a598ef0242270
 import Container from "../components/Container";
 import Players from "../feature/multiplay/Players";
 import Sidebar from "../feature/multiplay/Sidebar";
@@ -16,10 +11,6 @@ const MultiplayPage = () => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-<<<<<<< HEAD
-  const location = useLocation();
-  const { sessionId, inviteCode, token, isModerator } = location.state;
-=======
   const storedToken = localStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken);
   const accessToken = parsedToken.state.accessToken;
@@ -29,17 +20,12 @@ const MultiplayPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { sessionId, inviteCode, token, isModerator: initialIsModerator } = location.state;
-  console.log(location.state);
->>>>>>> 9999adf358980de403de67c3427a598ef0242270
   const [OV, setOV] = useState(null);
   const [session, setSession] = useState(null);
   const [publisher, setPublisher] = useState(null);
   const [subscribers, setSubscribers] = useState([]);
-<<<<<<< HEAD
   const [isPlaying, setIsPlaying] = useState(false);
-=======
   const [isModerator, setIsModerator] = useState(initialIsModerator);
->>>>>>> 9999adf358980de403de67c3427a598ef0242270
 
   useEffect(() => {
     const OVInstance = new OpenVidu();
@@ -50,16 +36,17 @@ const MultiplayPage = () => {
       const subscriber = sessionInstance.subscribe(event.stream, undefined);
       // 구독자의 connectionData에서 닉네임 파싱
       const connectionData = JSON.parse(event.stream.connection.data);
-      const nickname = connectionData || 'Anonymous'; 
+      const nickname = connectionData || "Anonymous";
       setSubscribers((prevSubscribers) => [
         ...prevSubscribers,
-        { streamManager: subscriber, nickname: nickname } // 구독자 객체에 닉네임 추가
+        { streamManager: subscriber, nickname: nickname }, // 구독자 객체에 닉네임 추가
       ]);
-  
     });
 
-    sessionInstance.on("streamDestroyed", (event) =>  {
-      setSubscribers((prevSubscribers) => prevSubscribers.filter((sub) => sub.streamManager.stream.streamId !== event.stream.streamId));
+    sessionInstance.on("streamDestroyed", (event) => {
+      setSubscribers((prevSubscribers) =>
+        prevSubscribers.filter((sub) => sub.streamManager.stream.streamId !== event.stream.streamId)
+      );
     });
 
     sessionInstance
@@ -83,15 +70,14 @@ const MultiplayPage = () => {
     setSession(sessionInstance);
 
     // 새로운 방장 정보를 처리하는 이벤트 리스너 추가
-    sessionInstance.on('signal:newModerator', (event) => {
+    sessionInstance.on("signal:newModerator", (event) => {
       const newModeratorNickname = event.data;
       // 현재 사용자가 새로운 방장인지 확인하고 상태 업데이트
       if (userNickname === newModeratorNickname) {
         setIsModerator(true);
-        console.log("방장이 되었습니다.")
+        console.log("방장이 되었습니다.");
       }
     });
-
 
     return () => {
       if (sessionInstance) {
@@ -134,7 +120,7 @@ const MultiplayPage = () => {
   const leaveSession = async () => {
     const requestBody = {
       sessionId: sessionId,
-      userId : userId,
+      userId: userId,
     };
 
     try {
@@ -155,14 +141,17 @@ const MultiplayPage = () => {
       // 새로운 방장 ID를 결정하는 로직 (예시로 첫 번째 구독자를 새 방장으로 설정)
       const newModeratorNickname = subscribers[0].nickname;
       // 새 방장 정보를 세션의 모든 참가자에게 신호로 전송
-      session.signal({
-        type: 'newModerator',
-        data: newModeratorNickname,
-      }).then(() => {
-        console.log('New moderator signal sent');
-      }).catch(error => {
-        console.error('Error sending new moderator signal:', error);
-      });
+      session
+        .signal({
+          type: "newModerator",
+          data: newModeratorNickname,
+        })
+        .then(() => {
+          console.log("New moderator signal sent");
+        })
+        .catch((error) => {
+          console.error("Error sending new moderator signal:", error);
+        });
     }
 
     if (session) {
@@ -191,10 +180,12 @@ const MultiplayPage = () => {
                   </div>
                 )}
               </div>
-<<<<<<< HEAD
+              <div onClick={leaveSession} className={styles.leave}>
+                퇴장하기
+              </div>
             </div>
             <div className="w-2/6 h-[90vh] p-1 border-4 border-red-500">
-              <Sidebar isManager={isModerator} />
+              <Sidebar isManager={isModerator} session={session} />
             </div>
           </div>
         </>
@@ -210,18 +201,6 @@ const MultiplayPage = () => {
           </div>
         </>
       )}
-=======
-            )}
-            <div onClick={leaveSession} className={styles.leave}>
-              퇴장하기
-            </div>
-          </div>
-        </div>
-        <div className="w-2/6 h-[90vh] p-1 border-4 border-red-500">
-          <Sidebar isManager={isModerator} session={session}  />
-        </div>
-      </div>
->>>>>>> 9999adf358980de403de67c3427a598ef0242270
     </Container>
   );
 };
