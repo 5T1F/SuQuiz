@@ -17,11 +17,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/quizrooms")
-@CrossOrigin(origins = "*")
 public class QuizroomController {
     private final QuizroomService quizroomService;
-
-
 
     // 퀴즈 룸 입장 가능 여부 조회
     @GetMapping("/isJoinable/{inviteCode}")
@@ -75,7 +72,7 @@ public class QuizroomController {
         }
     }
 
-    // 퀴즈 룸 시작, 단어 리스트 요청
+//    // 퀴즈 룸 시작, 단어 리스트 요청
 //    @PostMapping("/start/{sessionId}")
 //    public ResponseEntity<CommonResponse> startQuizroom(@PathVariable String sessionId) {
 //        List<WordDTO.WordResponseDto> wordList = quizroomService.startQuizroom(sessionId);
@@ -100,7 +97,7 @@ public class QuizroomController {
 
     // 퀴즈 룸 멀티게임 종료
 
-    @PutMapping("/end/{session}")
+    @PutMapping("/end/{sessionId}")
     public ResponseEntity<CommonResponse> endQuizgame(@PathVariable String sessionId, @RequestBody List<EndQuizDto.Request> requests) {
         List<EndQuizDto.Response> resultList = quizroomService.endQuizgame(sessionId, requests);
         return new ResponseEntity<>(CommonResponse.builder()

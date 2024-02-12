@@ -209,9 +209,10 @@ public class QuizroomServiceImpl implements QuizroomService {
                     .playerId(u.getId())
                     .playerNickname(u.getNickname())
                     .build();
+            playerList.add(res);
         }
 
-        return null;
+        return playerList;
     }
 
 
