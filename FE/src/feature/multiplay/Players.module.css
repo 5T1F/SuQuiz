@@ -1,5 +1,18 @@
-.players {
-  /* align-items: flex-end; */
+.waiters {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+
+.multiplay {
+  display: grid;
+  grid-template-areas:
+    "a b c"
+    "d e f";
+}
+
+.lemonSuquiz {
+  /* 1번 라인에서 2칸 */
+  grid-column: 1 / span 2;
+  /* 1번 라인에서 3칸 */
+  grid-row: 2 / span 1;
 }

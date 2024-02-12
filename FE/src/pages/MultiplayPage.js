@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 
-import { useAuthStore } from "../app/store";
 import Container from "../components/Container";
 import Players from "../feature/multiplay/Players";
 import Sidebar from "../feature/multiplay/Sidebar";
@@ -10,15 +9,16 @@ import Sidebar from "../feature/multiplay/Sidebar";
 import styles from "./MultiplayPage.module.css";
 
 const MultiplayPage = () => {
-  const userId = useAuthStore((state) => state.user);
-  const navigate = useNavigate();
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
   const location = useLocation();
   const { sessionId, inviteCode, token, isModerator } = location.state;
-  console.log(location.state);
   const [OV, setOV] = useState(null);
   const [session, setSession] = useState(null);
   const [publisher, setPublisher] = useState(null);
   const [subscribers, setSubscribers] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const OVInstance = new OpenVidu();
@@ -78,34 +78,59 @@ const MultiplayPage = () => {
   };
 
   const startQuiz = () => {
-    // subscribers 리스트 보내는 부분 구현중
-    // navigate(`../multiplay/start`, {
-    //   // state: { publisher: publisher, subscribers: subscribers },
-    // });
+    setIsPlaying(true);
+    // 참가자들에게 게임시작 정보 소리치기
   };
+
+  useEffect(() => {
+    // 게임 시작
+    // 1. 순서대로 정답 차례(streamManager 활용)
+    const solver = null;
+    // 2. 차례가 되면 수어 인식
+    // 3. 주어진 단어에 포함되면 자리 채우고,(2번 이상 들어가는 경우도 놓치지 말기)
+    // 4. 포함된 자모일 경우 차례 유지, 미포함일 경우 다음 차례 진행
+    // 5. 모든 자모를 맞추면 다음 문제
+    // 6. 3문제가 끝나면 게임 종료
+  }, [isPlaying]);
 
   return (
     <Container>
-      <h1>WaitingPage : {sessionId}</h1>
-      <div className="flex">
-        <div className="w-4/6 p-1 border-4 border-violet-500">
-          <p>구독자 : {subscribers.length}</p>
-          <Players publisher={publisher} subscribers={subscribers} />
-          <div className="flex justify-center">
-            <div className={styles.code} onClick={copyCode}>
-              {inviteCode}
-            </div>
-            {isModerator && (
-              <div onClick={startQuiz} className={styles.start}>
-                시작하기
+      {!isPlaying ? (
+        <>
+          {/* 게임 시작 전 */}
+          <h1>WaitingPage : {sessionId}</h1>
+          <div className="flex">
+            <div className="w-4/6 p-1 border-4 border-violet-500">
+              <p>구독자 : {subscribers.length}</p>
+              <Players publisher={publisher} subscribers={subscribers} />
+              <div className="flex justify-center">
+                <div className={styles.code} onClick={copyCode}>
+                  {inviteCode}
+                </div>
+                {isModerator && (
+                  <div onClick={startQuiz} className={styles.start}>
+                    시작하기
+                  </div>
+                )}
               </div>
-            )}
+            </div>
+            <div className="w-2/6 h-[90vh] p-1 border-4 border-red-500">
+              <Sidebar isManager={isModerator} />
+            </div>
           </div>
-        </div>
-        <div className="w-2/6 h-[90vh] p-1 border-4 border-red-500">
-          <Sidebar isManager={isModerator} />
-        </div>
-      </div>
+        </>
+      ) : (
+        <>
+          {/* 게임 시작 후 */}
+          <h1>QuizPage : {sessionId}</h1>
+          <div className="p-1 border-4 border-violet-500">
+            <Players publisher={publisher} subscribers={subscribers} isPlaying={isPlaying} />
+          </div>
+          <div className="p-1 border-4 border-red-500">
+            <p>채팅창</p>
+          </div>
+        </>
+      )}
     </Container>
   );
 };

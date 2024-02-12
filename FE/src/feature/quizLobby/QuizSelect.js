@@ -132,7 +132,7 @@ const QuizSelect = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center w-full h-full">
+      <div className="flex items-center justify-center w-full h-full">
         {/* 싱글플레이 */}
         <motion.div
           onClick={handleSingleplayClick}
@@ -140,11 +140,11 @@ const QuizSelect = () => {
           transition={{ duration: 0.1 }}
           onMouseEnter={() => setIsHoveredSingle(true)}
           onMouseLeave={() => setIsHoveredSingle(false)}
-          className="w-60 h-auto m-5 p-5 rounded-2xl shadow transition bg-white cursor-pointer flex flex-col items-center"
+          className="flex flex-col items-center h-auto p-5 m-5 transition bg-white shadow cursor-pointer w-60 rounded-2xl"
         >
           <div className="font-semibold text-[36px] leading-[61px] rounded-t-lg text-custom-orange">싱글플레이</div>
-          <div className="flex justify-center items-start overflow:hidden">
-            <div className="h-60 flex justify-center items-center">
+          <div className="flex items-start justify-center overflow:hidden">
+            <div className="flex items-center justify-center h-60">
               <Lottie options={orangeJuiceOptions} height={300} isStopped={!isHoveredSingle} />
             </div>
           </div>
@@ -157,7 +157,7 @@ const QuizSelect = () => {
           transition={{ duration: 0.1 }}
           onMouseEnter={() => setIsHoveredMulti(true)}
           onMouseLeave={() => setIsHoveredMulti(false)}
-          className="w-96 h-auto m-5 p-5 rounded-2xl shadow transition bg-white cursor-pointer flex flex-col items-center"
+          className="flex flex-col items-center h-auto p-5 m-5 transition bg-white shadow cursor-pointer w-96 rounded-2xl"
         >
           <div className="font-semibold text-[36px] leading-[61px] rounded-t-lg text-custom-green">멀티플레이</div>
 
@@ -173,7 +173,7 @@ const QuizSelect = () => {
                 <div
                   className={`w-full h-24 p-1 rounded-xl shadow transition bg-white flex flex-col items-center justify-center`}
                 >
-                  <div onClick={joinSession} className="mb-2 flex items-center justify-center">
+                  <div onClick={joinSession} className="flex items-center justify-center mb-2">
                     코드로 입장하기
                   </div>
                   <input
@@ -181,17 +181,17 @@ const QuizSelect = () => {
                     placeholder=" 입장 코드를 입력하세요 "
                     value={codeValue}
                     onChange={(e) => setCodeValue(e.target.value)}
-                    className="border-2 border-custom-green rounded-md mx-1 h-9 cursor-text placeholder-gray-400 placeholder-opacity-80 text-center"
+                    className="z-50 mx-1 text-center placeholder-gray-400 border-2 rounded-md border-custom-green h-9 cursor-text placeholder-opacity-80"
                   />
                 </div>
               </div>
             </>
           ) : null}
-          <div className="flex justify-center items-start overflow:hidden">
-            <div className="h-60 flex justify-center items-center">
+          <div className="flex items-start justify-center overflow:hidden">
+            <div className="flex items-center justify-center h-60">
               <Lottie options={limeJuiceOptions} height={300} isStopped={!isHoveredMulti} />
             </div>
-            <div className="h-60 flex justify-center items-center">
+            <div className="flex items-center justify-center h-60">
               <Lottie options={limeJuiceOptions} height={300} isStopped={!isHoveredMulti || !isDelayedPlay} />
             </div>
           </div>

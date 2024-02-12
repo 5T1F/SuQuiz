@@ -43,7 +43,10 @@ const WaitingRoomSidebar = () => {
           <p>Lv. {userInfoData.level}</p>
           <p>{userInfoData.nickname}</p>
         </div>
-        {/* 오픈비두로 대기실 내 실시간 채팅 */}
+        <div>
+          {/* 오픈비두로 대기실 내 실시간 채팅 */}
+          <p>채팅창</p>
+        </div>
       </div>
     </>
   );
