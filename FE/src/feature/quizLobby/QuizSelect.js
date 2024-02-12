@@ -246,7 +246,7 @@ const QuizSelect = () => {
         </div>*/}
       </div>
 
-      {/* modalOpen이 true일 때만 모달 렌더링 */}
+      {/* modalOpen이 true일 때만 모달 렌더링! */}
       {noMatchingModalOpen && <ModalNoMatchingRoom onClose={handleCloseModalNoMatchingRoom} />}
     </>
   );
