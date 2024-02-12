@@ -1,39 +1,17 @@
-jwt:
-  secret-key: Z29nby10bS1zZXJ2ZXItZGxyamVvYW9yb3JodG9kZ290c3Atam9vbmdhbmduaW0teWVvbHNpbWhpaGFsZ2VveW8K
-
-oauth:
-  kakao:
-    client-id: 218218ad0178d4a0b76a55ffeb155957
-    url:
-      auth: https://kauth.kakao.com
-      api: https://kapi.kakao.com
-      redirect: http://localhost:8080/users/logout/kakao
-      logout: https://kapi.kakao.com/v1/user/logout
-  naver:
-    secret: KEbntDhS1I
-    client-id: P_LIzqGM9aUsN8YUcWoY
-    url:
-      auth: https://nid.naver.com
-      api: https://openapi.naver.com
-
 server:
   servlet:
     context-path: /api
+  port: 5000
 
+
+# DB와 secret key 세팅 값
 spring:
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/testdb
-    username: sa
-    password: 1
-    driver-class-name: org.h2.Driver
+  profiles:
+    include: DB
 
-  h2:
-    console:
-      path: /h2console
-      enabled: true
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
