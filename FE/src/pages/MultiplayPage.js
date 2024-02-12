@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 import Container from "../components/Container";
 import Players from "../feature/multiplay/Players";
@@ -35,6 +35,7 @@ const MultiplayPage = () => {
     sessionInstance.on("streamCreated", (event) => {
       const subscriber = sessionInstance.subscribe(event.stream, undefined);
       // 구독자의 connectionData에서 닉네임 파싱
+      console.log(event.stream.connection.data);
       const connectionData = JSON.parse(event.stream.connection.data);
       const nickname = connectionData || "Anonymous";
       setSubscribers((prevSubscribers) => [
@@ -132,6 +133,7 @@ const MultiplayPage = () => {
         },
         body: JSON.stringify(requestBody),
       });
+      console.log("나가!!!!!!!!!!!!!!");
     } catch (error) {
       console.error("Error fetching data:", error);
     }

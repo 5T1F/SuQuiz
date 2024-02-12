@@ -51,7 +51,7 @@ const QuizSelect = () => {
   const createSession = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_ROOT}/sessions`,
+        `${process.env.REACT_APP_API_ROOT}/sessions/${userId}`,
         {},
         {
           headers: {
@@ -88,8 +88,8 @@ const QuizSelect = () => {
 
       const isJoinable = response.data;
 
-      if (isJoinable.data ==="false") {
-        console.log(isJoinable.message)
+      if (isJoinable.data === "false") {
+        console.log(isJoinable.message);
         handleNoMatchingRoom();
       } else {
         // 게임 진행 여부 조회
@@ -105,7 +105,7 @@ const QuizSelect = () => {
 
         const isPlaying = response.data;
 
-        if(isPlaying.data === "true") {
+        if (isPlaying.data === "true") {
           console.log(isPlaying.message);
           handleNoMatchingRoom();
         } else {
@@ -119,20 +119,18 @@ const QuizSelect = () => {
             }
           );
           const { sessionId, token } = response.data;
-    
+
           console.log(response.data);
           navigate(`../multiplay/${sessionId}`, {
             state: { sessionId, token, inviteCode: codeValue, isModerator: false },
           });
         }
       }
-      
     } catch (error) {
       console.error(error);
       handleNoMatchingRoom();
     }
   };
-
 
   // 싱글플레이 섹션에 대한 Lottie 옵션
   const orangeJuiceOptions = {

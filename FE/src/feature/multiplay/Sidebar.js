@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Sidebar.module.css";
 
-const WaitingRoomSidebar = () => {
+const WaitingRoomSidebar = ({ session }) => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
@@ -79,13 +79,12 @@ const WaitingRoomSidebar = () => {
     <>
       {/* 단어사이 간격  space-y-1  */}
       <div className="space-y-1">
-        <div>
+        <div className="flex">
           <p>Lv. {userInfoData.level}</p>
           <p>{userInfoData.nickname}</p>
         </div>
         <div>
           {/* 오픈비두로 대기실 내 실시간 채팅 */}
-          <p>채팅창</p>
           {/* 채팅 메시지 UI */}
           <div>
             <div style={{ height: "200px", overflowY: "scroll" }}>
