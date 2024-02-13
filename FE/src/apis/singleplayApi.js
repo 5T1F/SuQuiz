@@ -89,6 +89,27 @@ export async function save(result) {
   }
 }
 
+// SNS 공유할 오늘의 결과 요청
+export async function dailyShare(userId) {
+  try {
+    const response = await fetch(`/wordle/result/${userId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
 // 싱글 플레이 결과 조회
 export async function dailyResult(userId) {
   try {

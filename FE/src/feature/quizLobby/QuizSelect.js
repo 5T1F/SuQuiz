@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Lottie from "react-lottie";
 
 import ModalNoMatchingRoom from "./ModalNoMatchingRoom";
 
 import styles from "./QuizSelect.module.css";
-import singleplayImg from "../../assets/images/puzzle_single.png";
-import multiplayImg from "../../assets/images/puzzle_multi.png";
 import orange_juice_animation from "../../assets/lottie/orange_juice_animation.json";
 import lime_juice_animation from "../../assets/lottie/lime_juice_animation.json";
 
@@ -169,14 +167,50 @@ const QuizSelect = () => {
     }
   }, [isHoveredMulti]);
 
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+      scale: 0.8,
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 0.2,
+        staggerChildren: 0.1,
+        ease: "easeOut",
+        duration: 0.5,
+      },
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.5,
+      transition: {
+        ease: "easeIn",
+        duration: 0.3,
+      },
+    },
+  };
+
+  const hoverTransition = {
+    scale: {
+      duration: 0.3,
+      ease: "easeInOut",
+    },
+    default: {
+      ease: "linear",
+      duration: 0.3,
+    },
+  };
+
   return (
     <>
       <div className="flex items-center justify-center w-full h-full">
         {/* 싱글플레이 */}
         <motion.div
           onClick={handleSingleplayClick}
-          whileHover={{ scale: 1.35 }}
-          transition={{ duration: 0.1 }}
+          whileHover={{ scale: 1.25 }}
+          transition={hoverTransition}
           onMouseEnter={() => setIsHoveredSingle(true)}
           onMouseLeave={() => setIsHoveredSingle(false)}
           className="flex flex-col items-center h-auto p-5 m-5 transition bg-white shadow cursor-pointer w-60 rounded-2xl"
@@ -192,42 +226,44 @@ const QuizSelect = () => {
         {/* 멀티플레이 */}
         <motion.div
           onClick={handleMultiplayClick}
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.1 }}
+          whileHover={{ scale: 1.05 }}
+          transition={hoverTransition}
           onMouseEnter={() => setIsHoveredMulti(true)}
           onMouseLeave={() => setIsHoveredMulti(false)}
           className="flex flex-col items-center h-auto p-5 m-5 transition bg-white shadow cursor-pointer w-96 rounded-2xl"
         >
           <div className="font-semibold text-[36px] leading-[61px] rounded-t-lg text-custom-green">멀티플레이</div>
-
-          {isHoveredMulti ? (
-            <>
-              <div>
-                <div
-                  className={`w-full h-12 p-1 mt-5 mb-2 rounded-xl shadow transition bg-custom-green flex flex-col items-center justify-center`}
-                  onClick={createSession}
-                >
-                  방 만들기
-                </div>
-                <div
-                  className={`w-full h-24 p-1 rounded-xl shadow transition bg-white flex flex-col items-center justify-center`}
-                >
-                  <div onClick={joinSession} className="flex items-center justify-center mb-2">
-                    코드로 입장하기
+          {/* 멀티플레이 세부 요소들 */}
+          <AnimatePresence>
+            {isHoveredMulti && (
+              <>
+                <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+                  <div
+                    className={`w-full h-12 p-1 mt-5 mb-2 rounded-xl shadow transition bg-custom-green flex flex-col items-center justify-center`}
+                    onClick={createSession}
+                  >
+                    방 만들기
                   </div>
-                  <input
-                    type="text"
-                    placeholder=" 입장 코드를 입력하세요 "
-                    value={codeValue}
-                    onChange={(e) => setCodeValue(e.target.value)}
-                    className="z-50 mx-1 text-center placeholder-gray-400 border-2 rounded-md border-custom-green h-9 cursor-text placeholder-opacity-80"
-                  />
-                </div>
-              </div>
-            </>
-          ) : null}
-          <div className="flex items-start justify-center overflow:hidden">
-            <div className="flex items-center justify-center h-60">
+                  <div
+                    className={`w-full h-24 p-1 rounded-xl shadow transition bg-white flex flex-col items-center justify-center`}
+                  >
+                    <div onClick={joinSession} className="mb-2 flex items-center justify-center">
+                      코드로 입장하기
+                    </div>
+                    <input
+                      type="text"
+                      placeholder=" 입장 코드를 입력하세요 "
+                      value={codeValue}
+                      onChange={(e) => setCodeValue(e.target.value)}
+                      className="z-50 mx-1 text-center placeholder-gray-400 border-2 rounded-md border-custom-green h-9 cursor-text placeholder-opacity-80"
+                    />
+                  </div>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
+          <div className="flex justify-center items-start overflow:hidden">
+            <div className="h-60 flex justify-center items-center">
               <Lottie options={limeJuiceOptions} height={300} isStopped={!isHoveredMulti} />
             </div>
             <div className="flex items-center justify-center h-60">

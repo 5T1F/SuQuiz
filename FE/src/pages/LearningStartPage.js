@@ -59,8 +59,9 @@ export default function LearningStartPage() {
   return (
     <>
       <div className="flex h-[90vh]">
+        {/* 학습 화면 */}
         {/* 사이드메뉴 */}
-        <div className="px-16 py-6 bg-gray-100 ">
+        <div className="px-10 py-6 bg-gray-100 ">
           <SideMenu
             selectedMain={selectedMain}
             selectedSub={selectedSub}
@@ -68,7 +69,6 @@ export default function LearningStartPage() {
             setCurrentWord={setCurrentWord}
           />
         </div>
-        {/* 학습 화면 */}
         <Container>
           <div className="flex flex-row justify-center items-end my-36">
             {/* 플래시 카드 */}
@@ -86,7 +86,7 @@ export default function LearningStartPage() {
             <div className={styles.buttonContainer}>
               <button
                 onClick={handleEnd}
-                className="ml-auto h-8 px-5 font-medium rounded-lg outline-none ring-2 ring-custom-orange ring-inset text-gray-700 hover:text-custom-orange"
+                className="px-6 py-1 border-custom-yellow rounded-lg shadow-md border-2  hover:bg-amber-400 transition duration-300"
               >
                 학습 종료
               </button>
