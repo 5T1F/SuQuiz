@@ -5,7 +5,7 @@ import styles from "./UserVideoComponent.module.css";
 const UserVideoComponent = ({ nickname, streamManager }) => {
   const videoRef = useRef();
   const [userNickname, setUserNickname] = useState("");
-  
+
   useEffect(() => {
     if (streamManager && videoRef.current) {
       streamManager.addVideoElement(videoRef.current);
@@ -14,9 +14,9 @@ const UserVideoComponent = ({ nickname, streamManager }) => {
   }, [streamManager]);
 
   return (
-    <div className={styles.video}>
-      {userNickname}
+    <div className={styles.set}>
       <video autoPlay={true} ref={videoRef} />
+      <div className={styles.nickname}>{userNickname}</div>
     </div>
   );
 };

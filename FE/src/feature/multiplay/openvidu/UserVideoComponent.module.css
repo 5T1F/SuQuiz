@@ -1,4 +1,12 @@
-.video {
-  /* width: 33.33%; */
+.set {
   margin: 10%;
+}
+
+.nickname {
+  display: flex;
+  justify-content: center;
+  color: #f4b28e;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }

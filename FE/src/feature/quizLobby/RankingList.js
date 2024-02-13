@@ -105,8 +105,8 @@ const RankingList = () => {
     const percentage = Math.min(100, (exp / maxExp) * 100); // 현재 경험치를 퍼센트로 변환, 최대 100%
 
     return (
-      <div className="w-full bg-gray-200 rounded-full h-4">
-        <div className="bg-coutom-yellow h-4 rounded-full" style={{ width: `${percentage}%` }}></div>
+      <div className="w-full h-4 bg-gray-200 rounded-full">
+        <div className="h-4 rounded-full bg-coutom-yellow" style={{ width: `${percentage}%` }}></div>
       </div>
     );
   };
@@ -116,14 +116,14 @@ const RankingList = () => {
       {/* 사용자 정보 표시 부분 */}
       <div className={styles.userInfo}>
         <div className="relative w-20 h-24">
-          <img src={flag} alt="Flag" className="absolute inset-0 w-full h-full object-cover z-10" />
-          <div className="absolute inset-0 flex items-center justify-center pb-3 z-20">
+          <img src={flag} alt="Flag" className="absolute inset-0 z-10 object-cover w-full h-full" />
+          <div className="absolute inset-0 z-20 flex items-center justify-center pb-3">
             <div className="font-bold text-2xl text-[#f4b28e]">Lv.{getUserInfo().level}</div>
           </div>
         </div>
         {/* <img src={getUserInfo().profileImage} alt="프로필 이미지" className={styles.profileImage} /> */}
         <div className="w-72">
-          <div className="mb-1 font-bold text-2xl w-full">{userNickname}</div>
+          <div className="w-full mb-1 text-2xl font-bold">{userNickname}</div>
           <div className="text-gray-500">EXP.{getUserInfo().exp}</div>
           <div className={styles.progressBar}>
             <LinearProgressbar level={getUserInfo().level} exp={getUserInfo().exp} />
@@ -152,7 +152,7 @@ const RankingList = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <td className="flex justify-center items-center">
+                  <td className="flex items-center justify-center">
                     {rankingData.myRank === 1 ? (
                       <img src={goldMedal} alt="Gold Medal" />
                     ) : rankingData.myRank === 2 ? (
@@ -204,7 +204,7 @@ const RankingList = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <td className="flex justify-center items-center">
+                <td className="flex items-center justify-center">
                   {index === 0 ? (
                     <img src={goldMedal} alt="Gold Medal" />
                   ) : index === 1 ? (
