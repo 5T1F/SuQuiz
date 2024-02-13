@@ -8,6 +8,9 @@ import MyCam from "../feature/Learning/MyCam";
 import LemonSuquiz from "../feature/multiplay/LemonSuquiz";
 import { exitQuiz, playsers, quiz } from "../apis/multiplayApi";
 
+import GroupIcon from "@mui/icons-material/Group";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+
 import styles from "./MultiplayPage.module.css";
 
 const MultiplayPage = () => {
@@ -367,14 +370,17 @@ const MultiplayPage = () => {
       {!isPlaying ? (
         <>
           {/* 게임 시작 전 */}
-          <h1>WaitingPage : {sessionId}</h1>
           <div className="flex">
             <div className="w-4/6 p-1 border-4 border-violet-500">
-              <p>구독자 : {subscribers.length}</p>
+              <p>
+                <GroupIcon />
+                {subscribers.length + 1} / 4
+              </p>
               <Players publisher={publisher} subscribers={subscribers} />
               <div className="flex justify-center">
                 <div className={styles.code} onClick={copyCode}>
-                  {inviteCode}
+                  입장 코드 : {inviteCode} &nbsp;
+                  <ContentCopyIcon fontSize="small" />
                 </div>
                 {isModerator ? (
                   <>

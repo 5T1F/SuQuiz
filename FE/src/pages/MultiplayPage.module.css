@@ -1,7 +1,7 @@
 .code {
-  display: inline-block;
+  display: flex inline-block;
+  border-radius: 5px;
   border: 1px solid orange;
-  margin-right: 3%;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 
   &:hover {
@@ -18,6 +18,7 @@
 .start {
   display: inline-block;
   border: 1px solid red;
+  margin-left: 3%;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 
   &:hover {
