@@ -134,7 +134,7 @@ const RankingList = () => {
       <table className={styles.table}>
         <thead className={styles.tableHeader}>
           <tr>
-            <th className="w-[70px]">내 순위</th>
+            <th className="w-[70px]">나의 순위</th>
             <th>닉네임</th>
             <th>레벨</th>
             <th className="w-[70px]">경험치</th>

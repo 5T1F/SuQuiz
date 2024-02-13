@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import Modal from "react-modal";
+
+import styles from "./Chatting.module.css";
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 
 // Chatting 컴포넌트 정의
 const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
   const [messages, setMessages] = useState([]); // 메시지 목록 상태
   const [newMessage, setNewMessage] = useState(""); // 새 메시지 입력 상태
   const [stompClient, setStompClient] = useState(null); // Stomp 클라이언트 상태
+  const messageContainerRef = useRef(null); // 메시지 컨테이너에 대한 참조 생성
 
   // 웹소켓 연결 및 메시지 구독
   useEffect(() => {
@@ -53,6 +57,13 @@ const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
       .catch((error) => console.error("Failed to fetch messages:", error));
   }, [userId, friendId]);
 
+  // 메시지 목록이 변경될 때마다 스크롤을 최하단으로 이동
+  useEffect(() => {
+    if (messageContainerRef.current) {
+      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   // 메시지 전송 핸들러
   const sendMessage = () => {
     if (stompClient && newMessage.trim() !== "") {
@@ -74,38 +85,48 @@ const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
   };
 
   return (
-    <div>
-      <button onClick={handleClose}>나가기</button>
-      <h2>Chat with {friendNickname}</h2>
+    <div className="flex flex-col justify-center items-center mt-2">
       <div>
-        {messages.map((msg, index) => (
-          <div key={index}>
-            {msg.senderId === userId ? (
-              <>
-                <strong>나:</strong>
-              </>
-            ) : (
-              <>
-                <strong>{friendNickname}:</strong>
-              </>
-            )}
-            {msg.content}
-          </div>
-        ))}
+        <div className="flex flex-row justify-center items-center">
+          <div className={styles.chatTitle}>{friendNickname} 님과의 채팅</div>
+          <button className={styles.exitButton} onClick={handleClose}>
+            <ClearRoundedIcon sx={{ fontSize: 25 }} />
+          </button>
+        </div>
+        <div className={styles.messageContainer} ref={messageContainerRef}>
+          {messages.map((msg, index) => (
+            <div key={index} className={styles.message}>
+              {msg.senderId === userId ? (
+                <div className={styles.myMessage}>
+                  <strong>나:</strong> {msg.content}
+                </div>
+              ) : (
+                <div className={styles.otherMessage}>
+                  <strong>{friendNickname}:</strong> {msg.content}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-center">
+          <input
+            className={styles.sendInput}
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                sendMessage();
+                e.preventDefault(); // Enter 키 입력으로 인한 기본 이벤트 방지
+              }
+            }}
+            placeholder="메시지를 입력하세요"
+          />
+          <button className={styles.sendButton} onClick={sendMessage}>
+            <SendRoundedIcon />
+          </button>
+        </div>
       </div>
-      <input
-        type="text"
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            sendMessage();
-            e.preventDefault(); // Enter 키 입력으로 인한 기본 이벤트 방지
-          }
-        }}
-        placeholder="Type a message..."
-      />
-      <button onClick={sendMessage}>Send</button>
     </div>
   );
 };

@@ -187,19 +187,15 @@ const QuizSelect = () => {
       scale: 0.5,
       transition: {
         ease: "easeIn",
-        duration: 0.3,
+        duration: 0.05,
       },
     },
   };
 
   const hoverTransition = {
     scale: {
-      duration: 0.3,
-      ease: "easeInOut",
-    },
-    default: {
+      duration: 0.05,
       ease: "linear",
-      duration: 0.3,
     },
   };
 
@@ -226,7 +222,7 @@ const QuizSelect = () => {
         {/* 멀티플레이 */}
         <motion.div
           onClick={handleMultiplayClick}
-          whileHover={{ scale: 1.05 }}
+          // whileHover={{ scale: 1.05 }}
           transition={hoverTransition}
           onMouseEnter={() => setIsHoveredMulti(true)}
           onMouseLeave={() => setIsHoveredMulti(false)}

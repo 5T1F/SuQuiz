@@ -64,12 +64,14 @@ export default function MainPage() {
           </motion.div> */}
         </div>
       </Container>
-      <video className={styles.video} autoPlay loop muted>
-        <source src={backgroundVideo} type="video/mp4" />
-      </video>
 
       {/* modalOpen이 true일 때만 모달 렌더링 */}
       {modalOpen && <ModalLogin onClose={handleCloseModal} />}
+      <div className={styles.videoContainer}>
+        <video className={styles.video} autoPlay loop muted>
+          <source src={backgroundVideo} type="video/mp4" />
+        </video>
+      </div>
     </>
   );
 }

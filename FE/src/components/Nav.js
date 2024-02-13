@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 import { useAuthStore, useUserNicknameStore, useProviderStore, useTokenStore } from "../app/store";
 import Logo from "../assets/logoShort.png";
@@ -7,6 +8,7 @@ import Slidebar from "../feature/mypage/Slidebar";
 import ModalLogin from "../feature/auth/login/ModalLogin"; // 모달 컴포넌트를 import
 
 import styles from "./Nav.module.css";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function Nav() {
   const { userId, setUserId } = useAuthStore();
@@ -86,9 +88,13 @@ export default function Nav() {
                 </div>
               ) : (
                 <>
-                  <button onClick={toggleSlidebar}>마이페이지</button>
+                  <div className={styles.accountCircleIcon}>
+                    <AccountCircleIcon onClick={toggleSlidebar} />
+                  </div>
                   {isSlidebarOpen && <div className={styles.overlay} onClick={toggleSlidebar} />}
-                  {isSlidebarOpen && <Slidebar onClose={closeSlidebar} />} {/* 사이드바가 열려 있을 때만 렌더링 */}
+                  <AnimatePresence>
+                    {isSlidebarOpen && <Slidebar onClose={closeSlidebar} isSlidebarOpen={isSlidebarOpen} />}
+                  </AnimatePresence>
                 </>
               )}
             </div>

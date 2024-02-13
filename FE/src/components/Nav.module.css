@@ -30,9 +30,44 @@
   float: right;
   display: flex;
   align-items: center;
+  /* font-size: 16px; */
 }
 
 .navItem > div {
   float: left;
   padding-left: 30px;
+}
+
+.accountCircleIcon {
+  position: relative;
+}
+
+.accountCircleIcon:hover {
+  /* background-color: #ccc;
+  border: none; 
+  border-radius: 5px;  */
+  cursor: pointer;
+}
+
+.accountCircleIcon::after {
+  content: "마이페이지"; /* 툴팁 텍스트 */
+  position: absolute;
+  top: -30%;
+  left: 200%;
+  transform: translateX(-50%); /* 정확한 중앙 정렬을 위해 */
+  background-color: rgba(253, 213, 156, 0.7); /* 툴팁 배경색 */
+  color: rgb(31, 29, 29); /* 텍스트 색상 */
+  padding: 0 2px; /* 패딩 */
+  border-radius: 3px; /* 모서리 둥글게 */
+  font-size: 10px; /* 툴팁 텍스트 크기 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  opacity: 0; /* 기본적으로 툴팁을 숨김 */
+  visibility: hidden; /* 접근성을 위해 visibility 속성도 조절 */
+  transition: opacity 0.3s, visibility 0.3s; /* 부드러운 효과 */
+  z-index: 1000;
+}
+
+.accountCircleIcon:hover::after {
+  opacity: 1; /* 호버 시 툴팁 표시 */
+  visibility: visible; /* 호버 시 보이게 함 */
 }
