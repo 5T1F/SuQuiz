@@ -31,14 +31,16 @@ const MultiplayPage = () => {
   const [playersList, setPlayersList] = useState([]);
   const [isFour, setIsFour] = useState(false);
   const [solver, setSolver] = useState(null);
-  const stage = 0;
+  const [stage, setStage] = useState(0);
   const order = 0;
   const [quizList, setQuizList] = useState([]);
   const [quizWordList, setQuizWordList] = useState([]);
   const [quizViedoList, setQuizVideoList] = useState([]);
   const [resCnt, setResCnt] = useState(0);
-  const [resList, setResList] = useState([" ", " ", " ", " ", " "]);
-  const [visitedList, setVisitedList] = useState([]);
+  const resList = [" ", " ", " ", " ", " "];
+  const visitedList = [false, false, false, false, false];
+  const [isAnswer, setIsAnswer] = useState(false);
+  const [isStartStage, setIsStartStage] = useState(true);
   const [isModerator, setIsModerator] = useState(initialIsModerator);
   const [finger, setFinger] = useState("#");
   const changeFinger = (value) => {
@@ -172,6 +174,7 @@ const MultiplayPage = () => {
 
         // 데이터에서 syllables만 추출하여 quizList에 저장
         const extractedSyllables = wordle.data.map((item) => item.syllables);
+        console.log(extractedSyllables);
         setQuizList(extractedSyllables);
       } catch (error) {
         console.error("Error fetching playersList:", error);
@@ -188,7 +191,7 @@ const MultiplayPage = () => {
       await session
         .signal({
           data: JSON.stringify({ solver: solver }), // 퀴즈 시작 정보를 담아서,
-          type: "chane-solver",
+          type: "change-solver",
         })
         .then(() => {
           console.log("Solver successfully change");
@@ -199,34 +202,69 @@ const MultiplayPage = () => {
     }
   };
 
+  const changeResList = async (i) => {
+    resList[i] = finger;
+    visitedList[i] = true;
+
+    if (session) {
+      await session
+        .signal({
+          data: JSON.stringify({
+            resList: resList,
+          }), // 퀴즈 시작 정보를 담아서,
+          type: "change-resList",
+        })
+        .then(() => {
+          console.log("ResList successfully change");
+        })
+        .catch((error) => {
+          console.error("Error changing resList:", error);
+        });
+    }
+  };
+
+  const changeStage = async () => {
+    setStage((prevResCnt) => prevResCnt + 1);
+    setIsAnswer(true);
+
+    if (session) {
+      await session
+        .signal({
+          data: JSON.stringify({
+            isAnswer: isAnswer,
+            stage: stage,
+            res: " ",
+            visited: false,
+          }), // 퀴즈 시작 정보를 담아서,
+          type: "change-stage",
+        })
+        .then(() => {
+          console.log("Stage successfully change");
+        })
+        .catch((error) => {
+          console.error("Error changing stage:", error);
+        });
+    }
+  };
+
   // 문풀자의 finger가 인식되면 채점을 위해 실행되는 부분
   useEffect(() => {
     if (finger) {
       for (let i = stage; i < stage + 5; i++) {
         if (!visitedList[i] && quizList[i] === finger) {
-          setVisitedList((prevVisitedList) => {
-            const updatedList = [...prevVisitedList]; // 이전 상태를 복사하여 새로운 배열 생성
-            updatedList[j] = true; // i번째 인덱스를 true로 변경
-            return updatedList; // 새로운 배열을 반환하여 상태를 업데이트
-          });
           setResCnt((prevResCnt) => prevResCnt + 1);
-        } // 4. 포함된 자모일 경우 차례 유지
-        // 5. 미포함일 경우 다음 차례 진행
-        else {
-          setSolver(playersList[i++ % 4]);
+          changeResList(i);
         }
-        // 6. 모든 자모를 맞추면 다음 문제
-        if (true) {
-          i += 5;
+        // 모든 자모를 맞추면 다음 문제
+        if (resCnt === 5) {
+          changeStage();
         }
       }
     }
   }, [finger]);
 
-  // 문풀자의
-
-  // 게임이 시작되면 실행될 콜백 함수
   useEffect(() => {
+    // 게임이 시작되면 실행될 콜백 함수
     const handleStartQuiz = (event) => {
       const data = JSON.parse(event.data);
       console.log("Quiz start :", data.isPlaying);
@@ -241,9 +279,6 @@ const MultiplayPage = () => {
         // 5. 해당 자리에 자모 채우고
         // 6. resCnt += 정답 자모 수
         // 7. resCnt가 5가 되면 stage++
-        // 6. 문풀자는 그대로
-        // 7. 4번 조건을 만족하지 않으면
-        // 8. 문풀자 변경
       }
       // 3문제가 끝나면 게임 종료
     };
@@ -263,10 +298,25 @@ const MultiplayPage = () => {
       }
     };
 
+    const handleSetResList = (event) => {
+      const newData = JSON.parse(event.data);
+      resList = [newData.resList[0], newData.resList[1], newData.resList[2], newData.resList[3], newData.resList[4]];
+    };
+
+    const handleSetStage = (event) => {
+      const newData = JSON.parse(event.data);
+      setStage(newData.stage);
+      setIsAnswer(newData.isAnswer);
+      resList = [newData.res, newData.res, newData.res, newData.res, newData.res];
+      visitedList = [newData.visited, newData.visited, newData.visited, newData.visited, newData.visited];
+    };
+
     if (session) {
       session.on("signal:quiz-start", handleStartQuiz); // 게임 시작 정보 전달
-      session.on("signal:chane-solver", handleChangeSolver); // 문풀자 변경 정보 전달
-      session.on("signal:newModerator", handleNewModerator);
+      session.on("signal:change-solver", handleChangeSolver); // 문풀자 변경 정보 전달
+      session.on("signal:newModerator", handleNewModerator); // 방장이 방 나가면 방장 변경 정보 전달
+      session.on("signal:change-resList", handleSetResList); // 답안지 리스트 변경 정보 전달
+      session.on("signal:change-stage", handleSetStage); // 스테이지 변경 정보 전달
     }
 
     return () => {
@@ -363,18 +413,28 @@ const MultiplayPage = () => {
           ) : (
             <></>
           )}
-
-          <h1>QuizPage : {sessionId}</h1>
-          <div className="p-1 border-4 border-violet-500">
-            <div onClick={leaveSession} className={styles.leave}>
-              퇴장하기
-            </div>
-            <Players publisher={publisher} subscribers={subscribers} isPlaying={isPlaying} />
-            <LemonSuquiz finger={finger} stage={stage} />
-          </div>
-          <div className="p-1 border-4 border-red-500">
-            <p>채팅창</p>
-          </div>
+          {resList.length === 5 && (
+            <>
+              <h1>QuizPage : {sessionId}</h1>
+              <div className="p-1 border-4 border-violet-500">
+                <div onClick={leaveSession} className={styles.leave}>
+                  퇴장하기
+                </div>
+                <Players publisher={publisher} subscribers={subscribers} isPlaying={isPlaying} />
+                <div className={styles.video}>
+                  <video loop autoPlay muted>
+                    <source src={quizViedoList[stage - 1]} type="video/mp4" />
+                    영상이 존재하지 않습니다.
+                  </video>
+                </div>
+                <LemonSuquiz resList={resList} stage={stage} />
+                {isAnswer && <></>}
+              </div>
+              <div className="p-1 border-4 border-red-500">
+                <p>채팅창</p>
+              </div>
+            </>
+          )}
         </>
       )}
     </Container>

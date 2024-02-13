@@ -11,7 +11,7 @@ const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
 
   // 웹소켓 연결 및 메시지 구독
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/api/ws");
+    const socket = new SockJS(`${process.env.REACT_APP_API_ROOT}/ws`);
     const client = Stomp.over(socket);
 
     client.connect(
