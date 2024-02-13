@@ -5,6 +5,8 @@ import Container from "../components/Container";
 import Players from "../feature/multiplay/Players";
 import Sidebar from "../feature/multiplay/Sidebar";
 import MyCam from "../feature/Learning/MyCam";
+import LemonSuquiz from "../feature/multiplay/LemonSuquiz";
+import { exitQuiz, playsers, quiz } from "../apis/multiplayApi";
 
 import styles from "./MultiplayPage.module.css";
 
@@ -26,6 +28,17 @@ const MultiplayPage = () => {
   const [publisher, setPublisher] = useState(null);
   const [subscribers, setSubscribers] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [playersList, setPlayersList] = useState([]);
+  const [isFour, setIsFour] = useState(false);
+  const [solver, setSolver] = useState(null);
+  const stage = 0;
+  const order = 0;
+  const [quizList, setQuizList] = useState([]);
+  const [quizWordList, setQuizWordList] = useState([]);
+  const [quizViedoList, setQuizVideoList] = useState([]);
+  const [resCnt, setResCnt] = useState(0);
+  const [resList, setResList] = useState([" ", " ", " ", " ", " "]);
+  const [visitedList, setVisitedList] = useState([]);
   const [isModerator, setIsModerator] = useState(initialIsModerator);
   const [finger, setFinger] = useState("#");
   const changeFinger = (value) => {
@@ -127,6 +140,91 @@ const MultiplayPage = () => {
     }
   };
 
+  // 새로운 참가자가 들어오면 4명인지 검사하기 위해 실행
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const players = await playsers(sessionId);
+        setPlayersList(players.data);
+        // 배포 전에 4로 수정하기 ***************************************
+        if (players.data.length === 2) {
+          setIsFour(true);
+        }
+      } catch (error) {
+        console.error("Error fetching playersList:", error);
+      }
+    };
+
+    fetchData();
+  }, [subscribers]);
+
+  // 게임이 시작되면 문제를 가져오기 위해 실행
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      try {
+        const wordle = await quiz();
+        // 정답 단어를 리스트에 저장
+        const extractedWordNames = wordle.data.map((item) => item.wordName);
+        setQuizWordList(extractedWordNames);
+        // 정답 수어 영상을 리스트에 저장
+        const extractedViedeoUrls = wordle.data.map((item) => item.videoUrl);
+        setQuizVideoList(extractedViedeoUrls);
+
+        // 데이터에서 syllables만 추출하여 quizList에 저장
+        const extractedSyllables = wordle.data.map((item) => item.syllables);
+        setQuizList(extractedSyllables);
+      } catch (error) {
+        console.error("Error fetching playersList:", error);
+      }
+    };
+
+    fetchQuiz();
+  }, [isPlaying]);
+
+  const changeSolver = async () => {
+    setSolver(playersList[order++ % 4]);
+
+    if (session) {
+      await session
+        .signal({
+          data: JSON.stringify({ solver: solver }), // 퀴즈 시작 정보를 담아서,
+          type: "chane-solver",
+        })
+        .then(() => {
+          console.log("Solver successfully change");
+        })
+        .catch((error) => {
+          console.error("Error changing solver:", error);
+        });
+    }
+  };
+
+  // 문풀자의 finger가 인식되면 채점을 위해 실행되는 부분
+  useEffect(() => {
+    if (finger) {
+      for (let i = stage; i < stage + 5; i++) {
+        if (!visitedList[i] && quizList[i] === finger) {
+          setVisitedList((prevVisitedList) => {
+            const updatedList = [...prevVisitedList]; // 이전 상태를 복사하여 새로운 배열 생성
+            updatedList[j] = true; // i번째 인덱스를 true로 변경
+            return updatedList; // 새로운 배열을 반환하여 상태를 업데이트
+          });
+          setResCnt((prevResCnt) => prevResCnt + 1);
+        } // 4. 포함된 자모일 경우 차례 유지
+        // 5. 미포함일 경우 다음 차례 진행
+        else {
+          setSolver(playersList[i++ % 4]);
+        }
+        // 6. 모든 자모를 맞추면 다음 문제
+        if (true) {
+          i += 5;
+        }
+      }
+    }
+  }, [finger]);
+
+  // 문풀자의
+
   // 게임이 시작되면 실행될 콜백 함수
   useEffect(() => {
     const handleStartQuiz = (event) => {
@@ -134,18 +232,41 @@ const MultiplayPage = () => {
       console.log("Quiz start :", data.isPlaying);
       setIsPlaying(data.isPlaying); // 참가자들의 퀴즈 시작 정보 세팅
       // 게임 시작
-      console.log(session);
-      // 1. 순서대로 정답 차례(streamManager 활용)
-      const solver = null;
-      // 2. 차례가 되면 수어 인식
-      // 3. 주어진 단어에 포함되면 자리 채우고,(2번 이상 들어가는 경우도 놓치지 말기)
-      // 4. 포함된 자모일 경우 차례 유지, 미포함일 경우 다음 차례 진행
-      // 5. 모든 자모를 맞추면 다음 문제
-      // 6. 3문제가 끝나면 게임 종료
+      for (; stage < 3; ) {
+        // 1. 문풀자의 차례가 순서대로 진행, 참가자들에게 알림
+        changeSolver();
+        // 2. 문풀자가 바뀌면, MyCam이 인식 -> 문풀자의 finger 채점
+        // 여기서부터 useEffect[finger]에서 처리
+        // 4. 나온 적 없는 자모 && 정답이라면
+        // 5. 해당 자리에 자모 채우고
+        // 6. resCnt += 정답 자모 수
+        // 7. resCnt가 5가 되면 stage++
+        // 6. 문풀자는 그대로
+        // 7. 4번 조건을 만족하지 않으면
+        // 8. 문풀자 변경
+      }
+      // 3문제가 끝나면 게임 종료
+    };
+
+    const handleChangeSolver = (event) => {
+      const data = JSON.parse(event.data);
+      console.log("now solver :", data.solver);
+      setSolver(data.solver); // 현재 문풀자 정보 세팅
+    };
+
+    const handleNewModerator = (event) => {
+      const newModeratorNickname = event.data;
+      // 현재 사용자가 새로운 방장인지 확인하고 상태 업데이트
+      if (userNickname === newModeratorNickname) {
+        setIsModerator(true);
+        console.log("방장이 되었습니다.");
+      }
     };
 
     if (session) {
-      session.on("signal:quiz-start", handleStartQuiz); // 받아온 정보 전달
+      session.on("signal:quiz-start", handleStartQuiz); // 게임 시작 정보 전달
+      session.on("signal:chane-solver", handleChangeSolver); // 문풀자 변경 정보 전달
+      session.on("signal:newModerator", handleNewModerator);
     }
 
     return () => {
@@ -162,14 +283,7 @@ const MultiplayPage = () => {
     };
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/quizrooms/exit`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      await exitQuiz();
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -212,14 +326,24 @@ const MultiplayPage = () => {
                 <div className={styles.code} onClick={copyCode}>
                   {inviteCode}
                 </div>
-                {isModerator && (
-                  <div onClick={startQuiz} className={styles.start}>
-                    시작하기
-                  </div>
+                {isModerator ? (
+                  <>
+                    {/* 방장 */}
+                    {/* 4명이 모이기 전/후 */}
+                    {isFour ? (
+                      <div onClick={startQuiz} className={styles.start}>
+                        시작하기
+                      </div>
+                    ) : (
+                      <div className={styles.unactive}>시작하기</div>
+                    )}
+                  </>
+                ) : (
+                  <>{/* 참가자라서 시작하기 버튼 X */}</>
                 )}
               </div>
               <div onClick={leaveSession} className={styles.leave}>
-                퇴장하기
+                나가기
               </div>
             </div>
             <div className="w-2/6 h-[90vh] p-1 border-4 border-red-500">
@@ -230,15 +354,23 @@ const MultiplayPage = () => {
       ) : (
         <>
           {/* 게임 시작 후 */}
-          <div className={styles.mycam}>
-            <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={false}></MyCam>
-          </div>
+          {solver === userNickname ? (
+            <>
+              <div className={styles.mycam}>
+                <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={false}></MyCam>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+
           <h1>QuizPage : {sessionId}</h1>
           <div className="p-1 border-4 border-violet-500">
             <div onClick={leaveSession} className={styles.leave}>
               퇴장하기
             </div>
             <Players publisher={publisher} subscribers={subscribers} isPlaying={isPlaying} />
+            <LemonSuquiz finger={finger} stage={stage} />
           </div>
           <div className="p-1 border-4 border-red-500">
             <p>채팅창</p>

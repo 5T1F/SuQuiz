@@ -71,6 +71,20 @@ export const useProviderStore = create(
   )
 );
 
+export const useMultiplayStore = create(
+  persist(
+    (set) => ({
+      resCnt: null,
+      setResCnt: (arg) => {
+        set({ resCnt: arg });
+      },
+    }),
+    {
+      name: "multiplayStorage",
+    }
+  )
+);
+
 export const useWordleStore = create((set) => ({
   modalResult: {
     answer: "",
