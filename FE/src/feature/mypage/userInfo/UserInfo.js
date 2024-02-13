@@ -135,7 +135,7 @@ const UserInfo = () => {
   return (
     <>
       {/* 단어사이 간격  space-y-1  */}
-      <div className="p-1 space-y-1 border-4 border-orange-500 h-2/3">
+      <div className="p-1 space-y-1 border-4 border-orange-500 h-full">
         <div>
           <p>{getUserInfo().nickname}</p>
           <button onClick={handleLogout}>로그아웃</button>
