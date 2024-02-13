@@ -56,7 +56,7 @@ const WaitingFriendList = () => {
   };
 
   return (
-    <div>
+    <div className="m-2">
       {requestList.length > 0 ? (
         <ul>
           {requestList.map((friend) => (
