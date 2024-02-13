@@ -24,7 +24,7 @@ const WaitingFriendList = () => {
     };
 
     fetchFriendRequests();
-  }, [userId]);
+  }, [userId, requestList]);
 
   const handleAccept = async (waitingFriend) => {
     try {

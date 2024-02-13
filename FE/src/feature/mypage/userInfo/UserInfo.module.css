@@ -1,11 +1,3 @@
-.userInfoContainer {
-  position: relative;
-  background: #fefefe;
-  border-radius: 15px;
-  padding: 25px;
-  height: 100%;
-}
-
 .overlay {
   position: fixed;
   top: 0;
@@ -13,4 +5,74 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+}
+
+.userInfoContainer {
+  position: relative;
+  background: #fefefe;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.logoutButton {
+  height: 30px;
+  padding: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  color: #bca79d;
+  border: none;
+}
+
+.modifyButton {
+  position: relative;
+  padding: 2px;
+}
+
+.modifyButton:hover {
+  padding: 2px;
+  background-color: #efefef;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modifyButton::after {
+  content: "회원정보 수정"; /* 툴팁 텍스트 */
+  position: absolute;
+  top: -60%;
+  left: 40%;
+  transform: translateX(-50%); /* 정확한 중앙 정렬을 위해 */
+  background-color: rgba(128, 128, 128, 0.7); /* 툴팁 배경색 */
+  color: white; /* 텍스트 색상 */
+  padding: 0 2px; /* 패딩 */
+  border-radius: 3px; /* 모서리 둥글게 */
+  font-size: 10px; /* 툴팁 텍스트 크기 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  opacity: 0; /* 기본적으로 툴팁을 숨김 */
+  visibility: hidden; /* 접근성을 위해 visibility 속성도 조절 */
+  transition: opacity 0.3s, visibility 0.3s; /* 부드러운 효과 */
+}
+
+.modifyButton:hover::after {
+  opacity: 1; /* 호버 시 툴팁 표시 */
+  visibility: visible; /* 호버 시 보이게 함 */
+}
+
+.memo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #bca79d19;
+  border-radius: 10px;
+  padding: 10px 8px;
+  margin: 0 5px;
+}
+
+.highlight {
+  color: #f4b28e;
 }
