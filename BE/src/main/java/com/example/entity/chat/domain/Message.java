@@ -24,7 +24,6 @@ public class Message {
     @ManyToOne(fetch = FetchType.LAZY)
     private User receiver;
 
-
     private String content;
 
     private LocalDateTime timestamp;
