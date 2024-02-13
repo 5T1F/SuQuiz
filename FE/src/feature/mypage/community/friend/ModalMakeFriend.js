@@ -97,21 +97,28 @@ const Modal = ({ onClose }) => {
   return (
     <>
       <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
+        <div className={styles.modalTitle}>
+          <div>친구 추가</div>
+          <span className={styles.close} onClick={onClose}>
+            &times;
+          </span>
+        </div>
         <div className={styles.modalContent}>
-          <p>친구 추가</p>
-          <div>
-            <input
-              type="text"
-              placeholder="유저 닉네임"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
-          </div>
-          <div>
-            <button className={styles.close} onClick={onClose}>
+          <input
+            className={styles.searchInput}
+            type="text"
+            placeholder="유저 닉네임"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+
+          <div className={styles.btns}>
+            <button className={styles.cancelBtn} onClick={onClose}>
               취소
             </button>
-            <button onClick={handleSearch}>요청</button>
+            <button className={styles.requestBtn} onClick={handleSearch}>
+              요청
+            </button>
           </div>
         </div>
       </div>

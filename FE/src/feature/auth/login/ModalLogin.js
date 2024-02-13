@@ -4,6 +4,7 @@ import Naver from "./NaverLogin";
 import Kakao from "./KakaoLogin";
 
 import styles from "./ModalLogin.module.css";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 
 import naverIcon from "../../../assets/icons/naver-icon.png";
 import kakaoIcon from "../../../assets/icons/kakao-icon.png";

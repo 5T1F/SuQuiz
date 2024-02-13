@@ -8,6 +8,7 @@
   z-index: 950; /* overlay의 z-index 설정 (Nav보다 낮은 값으로 설정) */
   padding: 0 1rem;
   overflow-y: scroll;
+  overflow-x: hidden;
   scrollbar-color: #f4b28e #f2e2cc; /* 스크롤바 색상 설정 (핸들색, 트랙색) */
 }
 

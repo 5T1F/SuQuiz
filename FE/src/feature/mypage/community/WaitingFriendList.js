@@ -72,7 +72,7 @@ const WaitingFriendList = () => {
           ))}
         </ul>
       ) : (
-        <div>친구 요청이 없습니다.</div>
+        <div className={styles.friendItem}>친구 요청이 없습니다.</div>
       )}
     </div>
   );

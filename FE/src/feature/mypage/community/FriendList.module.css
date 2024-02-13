@@ -15,6 +15,7 @@
   background-color: #f4b28e;
 }
 
+/* 친구 추가 툴팁 */
 .addButton::after {
   content: "친구 추가"; /* 툴팁 텍스트 */
   position: absolute;
@@ -63,29 +64,29 @@
 .friendItem {
   display: flex;
   align-items: center;
-  justify-content: space-around; /* 요소들이 공간을 균등하게 나누어 가질 수 있도록 */
-  height: 48px; /* 높이 조정 */
+  justify-content: space-around;
+  height: 48px;
   margin: 0px 20px 8px 20px;
-  padding: 0 10px; /* 내부 패딩 */
+  padding: 0 10px;
   border-bottom: 1px solid #ffbec1;
 }
 
 .friendName,
 .friendLevel {
-  margin: 0; /* 기본 마진 제거 */
+  margin: 0;
 }
 
 .friendButton {
-  padding: 3px 10px; /* 버튼 패딩 */
-  border: none; /* 테두리 제거 */
-  border-radius: 5px; /* 버튼 모서리 둥글게 */
-  cursor: pointer; /* 마우스 오버시 커서 변경 */
-  border: 2px solid #ffbaab; /* 버튼 배경 색상 */
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  padding: 3px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 2px solid #ffbaab;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .friendButton:hover {
-  background-color: #f4b28e; /* 호버 효과 */
+  background-color: #f4b28e;
 }
 
 .deleteButton {
@@ -99,14 +100,16 @@
   justify-content: center;
   align-items: center;
 }
+
 .deleteButton:hover {
   padding: 3px;
   background-color: #ccc;
-  border: none; /* 테두리 제거 */
-  border-radius: 5px; /* 버튼 모서리 둥글게 */
-  cursor: pointer; /* 마우스 오버시 커서 변경 */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
+/* 친구 삭제 툴팁 */
 .deleteButton::after {
   content: "친구 삭제"; /* 툴팁 텍스트 */
   position: absolute;
