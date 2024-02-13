@@ -48,7 +48,7 @@
 .tableRow {
   transition: all 0.3s ease;
   padding: 8px;
-  border-bottom: 2px dashed #ddd;
+  border-bottom: 2px dashed #efefef;
   text-align: center;
 }
 
