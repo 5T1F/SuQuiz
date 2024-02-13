@@ -107,7 +107,7 @@
 }
 .deleteButton:hover {
   padding: 3px;
-  background-color: #ccc;
+  background-color: #efefef;
   border: none; /* 테두리 제거 */
   border-radius: 5px; /* 버튼 모서리 둥글게 */
   cursor: pointer; /* 마우스 오버시 커서 변경 */

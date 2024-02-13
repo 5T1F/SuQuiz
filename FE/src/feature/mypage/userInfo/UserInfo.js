@@ -2,9 +2,14 @@ import React, { useState, useEffect } from "react";
 
 import ModalModify from "../../auth/modify/ModalModify";
 
-import { dailyShare, dailyResult } from "../../../apis/singleplayApi";
+import RecordItem from "../../singleplay/RecordItem";
+
+import { dailyShare, dailyResult, dailyQuest } from "../../../apis/singleplayApi";
 
 import styles from "./UserInfo.module.css";
+import "react-circular-progressbar/dist/styles.css";
+import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
+import ManageAccountsRoundedIcon from "@mui/icons-material/ManageAccountsRounded";
 
 const UserInfo = () => {
   const storedId = localStorage.getItem("idStorage");
@@ -40,12 +45,22 @@ const UserInfo = () => {
         const data = await response.json();
         setUserInfoData(data.data);
       } catch (error) {
+        console.error("Error fetching UserInfoData:", error);
+      }
+    };
+
+    const fetchData = async () => {
+      try {
+        const resultData = await dailyResult(userId);
+        setDailyResultData(resultData.data);
+      } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchUserInfo();
-  }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 호출
+    fetchData();
+  }, []);
 
   const getUserInfo = () => {
     return userInfoData != null
@@ -107,46 +122,74 @@ const UserInfo = () => {
     setModalOpen(false);
   };
 
-  // const UserInfoProgress = ({ level, exp }) => {
-  //   // 경험치를 0에서 100 사이의 값으로 변환하는 로직을 추가해야 합니다.
-  //   // 예를 들어, 만약 exp가 0에서 1000 사이의 값이고, 현재 exp가 500이라면,
-  //   // percentage는 50이 되어야 합니다.
-  //   const percentage = exp; // 이 부분은 실제 exp 값을 퍼센테이지로 변환하는 로직으로 대체해야 합니다.
+  const UserInfoProgress = ({ level, exp }) => {
+    // 경험치를 0에서 100 사이의 값으로 변환하는 로직을 추가해야 합니다.
+    // 예를 들어, 만약 exp가 0에서 1000 사이의 값이고, 현재 exp가 500이라면,
+    // percentage는 50이 되어야 합니다.
+    const percentage = exp; // 이 부분은 실제 exp 값을 퍼센테이지로 변환하는 로직으로 대체해야 합니다.
 
-  //   return (
-  //     <CircularProgressbarWithChildren
-  //       value={percentage}
-  //       styles={buildStyles({
-  //         // 원형 프로그레스 바의 스타일 커스터마이징
-  //         textColor: "black",
-  //         pathColor: "#F4B28E",
-  //         trailColor: "grey",
-  //       })}
-  //     >
-  //       {/* 중앙에 표시될 텍스트*/}
-  //       <div style={{ fontSize: "20px", marginTop: "-5px" }}>
-  //         <div>{`Lv.${level}`}</div>
-  //       </div>
-  //       <div style={{ fontSize: "16px" }}>{`Exp ${exp}%`}</div>
-  //     </CircularProgressbarWithChildren>
-  //   );
-  // };
-  // 이런식으로 사용
-  // <UserInfoProgress level={getUserInfo().level} exp={getUserInfo().exp} />
+    return (
+      <CircularProgressbarWithChildren
+        value={percentage}
+        styles={buildStyles({
+          // 원형 프로그레스 바의 스타일 커스터마이징
+          textColor: "black",
+          pathColor: "#F4B28E",
+          trailColor: "#bca79d27",
+        })}
+      >
+        {/* 중앙에 표시될 텍스트*/}
+        <div style={{ fontSize: "20px", marginTop: "-5px" }}>
+          <div>{`Lv.${level}`}</div>
+        </div>
+        <div style={{ fontSize: "16px" }}>{`Exp ${exp}%`}</div>
+      </CircularProgressbarWithChildren>
+    );
+  };
 
   return (
     <>
       <div className={styles.userInfoContainer}>
-        <div className={styles.userNicknameContainer}>
-          <p>{getUserInfo().nickname}</p>
-          <button onClick={handleLogout}>로그아웃</button>
-          <button onClick={handleModify}>수정</button>
+        {/* 유저 닉네임, 로그아웃, 수정 */}
+        <div className="h-1/6 flex flex-row justify-between items-center">
+          <div className="flex flex-row justify-center items-center">
+            <img src="${getUserInfo().profileImage}" alt="프사" />
+            <div className="flex flex-row justify-center items-center w-full text-xl font-bold">
+              {getUserInfo().nickname}
+            </div>
+            <button className={styles.logoutButton} onClick={handleLogout}>
+              로그아웃
+            </button>
+          </div>
+          <div className="flex">
+            <button className={styles.modifyButton} onClick={handleModify}>
+              <ManageAccountsRoundedIcon />
+            </button>
+          </div>
         </div>
-        <img src="${getUserInfo().profileImage}" alt="프로필사진" />
-        <p>레벨 : {getUserInfo().level}</p>
-        <p>경험치 : {getUserInfo().exp}</p>
+        {/* 게임 정보 */}
+        <div className="h-3/5 flex flex-row justify-between">
+          <div className="w-[110px] flex justify-center items-center">
+            {/* 레벨, 경험치 프로그래스바 */}
+            <UserInfoProgress level={getUserInfo().level} exp={getUserInfo().exp} />
+          </div>
+          <div className="w-[180px]">
+            {/* 통계 */}
+            <div className="flex mb-1">
+              <RecordItem label="전체도전" value={getDailyResultData().allTrialCount} color="white" />
+              <RecordItem label="정답률" value={`${getDailyResultData().correctRate}%`} color="green" />
+            </div>
+            <div className="flex">
+              <RecordItem label={"최근 연속 정답 기록"} value={getDailyResultData().correctCount} color="brown" />
+              <RecordItem label={"최장 연속 스트릭"} value={getDailyResultData().maxCorrectCount} color="yellow" />
+            </div>
+          </div>
+        </div>
+        <div className="h-1/6">
+          {/* 스트릭 */}
+          <div className={styles.memo}>{getDailyResultData().solveCount}일 연속 문제를 푸셨어요!</div>
+        </div>
       </div>
-
       {/* modalOpen이 true일 때만 모달 렌더링 */}
       {modalOpen && <ModalModify onClose={handleCloseModal} />}
     </>
