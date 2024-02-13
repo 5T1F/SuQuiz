@@ -206,7 +206,7 @@ const MultiplayPage = () => {
         if (!visitedList[i] && quizList[i] === finger) {
           setVisitedList((prevVisitedList) => {
             const updatedList = [...prevVisitedList]; // 이전 상태를 복사하여 새로운 배열 생성
-            updatedList[j] = true; // i번째 인덱스를 true로 변경
+            updatedList[i] = true; // i번째 인덱스를 true로 변경
             return updatedList; // 새로운 배열을 반환하여 상태를 업데이트
           });
           setResCnt((prevResCnt) => prevResCnt + 1);

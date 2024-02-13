@@ -38,9 +38,11 @@ export default function MainPage() {
           </motion.div> */}
         </div>
       </Container>
-      <video className={styles.video} autoPlay loop muted>
-        <source src={backgroundVideo} type="video/mp4" />
-      </video>
+      <div className={styles.videoContainer}>
+        <video className={styles.video} autoPlay loop muted>
+          <source src={backgroundVideo} type="video/mp4" />
+        </video>
+      </div>
     </>
   );
 }

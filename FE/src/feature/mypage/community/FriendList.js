@@ -5,6 +5,9 @@ import ModalEndFriendship from "./friend/ModalEndFriendship";
 import Chatting from "../community/Chatting";
 
 import styles from "./FriendList.module.css";
+import PersonAddRoundedIcon from "@mui/icons-material/PersonAddRounded";
+import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const FriendList = ({ isMultiplay }) => {
   const storedId = localStorage.getItem("idStorage");
@@ -49,7 +52,8 @@ const FriendList = ({ isMultiplay }) => {
     setSelectedFriend(friend);
   };
 
-  const handleSearchFriend = () => {
+  const handleSearchFriend = (e) => {
+    e.preventDefault();
     // friends 리스트에서 searchValue를 포함하는 객체들을 filterFriend 리스트에 필터링하여 담는 부분
     const filteredFriends = friends.filter((friend) => friend.nickname.includes(searchValue));
     setFilterFriend(filteredFriends);
@@ -85,54 +89,63 @@ const FriendList = ({ isMultiplay }) => {
 
   return (
     <>
-      <div className="p-1 space-y-1 border-4 border-blue-500 h-full">
+      <div>
         {selectedFriend === null ? (
           <>
             {isMultiplay ? (
               <></>
             ) : (
               <>
-                <button onClick={openMakeModal}>친구추가</button>
-
-                <input
-                  type="text"
-                  placeholder="친구 닉네임"
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                ></input>
-                <button onClick={handleSearchFriend}>검색</button>
+                <div className="flex justify-center items-center">
+                  <div className="flex justify-center items-center mt-2">
+                    <button className={styles.addButton} onClick={openMakeModal}>
+                      <PersonAddRoundedIcon />
+                    </button>
+                    <form onSubmit={handleSearchFriend} className="flex items-center">
+                      <input
+                        className={styles.searchInput}
+                        type="text"
+                        placeholder="친구 닉네임"
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                      ></input>
+                      <button className={styles.searchButton} onClick={handleSearchFriend}>
+                        <SearchRoundedIcon />
+                      </button>
+                    </form>
+                  </div>
+                </div>
               </>
             )}
-            <div className="p-1 space-y-1 border-4 border-orange-500 h-full">
-              <h2>Friends List()</h2>
+            <div>
               {!doSearch && (
                 <ul>
-                  {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
-                  {friends.map((friend, index) => (
-                    <li
-                      className={`flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow`}
-                      key={index}
-                    >
-                      <p>Nickname: {friend.nickname}</p>
-                      <p>Level: {friend.level}</p>
-                      <button onClick={() => handleChatButtonClick(friend)}>채팅</button>
-                      <button onClick={() => openEndModal(friend.nickname)}>&times;</button>
+                  {friends.map((friend) => (
+                    <li className={styles.friendItem} key={friend.nickname}>
+                      <p className={styles.friendName}>{friend.nickname}</p>
+                      <p className={styles.friendLevel}>Lv.{friend.level}</p>
+                      <button className={styles.friendButton} onClick={() => handleChatButtonClick(friend)}>
+                        채팅
+                      </button>
+                      <button className={styles.deleteButton} onClick={() => openEndModal(friend.nickname)}>
+                        <PersonRemoveRoundedIcon />
+                      </button>
                     </li>
                   ))}
                 </ul>
               )}
               {doSearch && (
                 <ul>
-                  {/* 나중에 key를 index말고 단어의 고유식별자를 key로 사용할 것 */}
-                  {filterFriend.map((friend, index) => (
-                    <li
-                      className={`flex items-center justify-center h-8 rounded-lg outline-none bg-yellow-200 shadow`}
-                      key={index}
-                    >
-                      <p>Nickname: {friend.nickname}</p>
-                      <p>Level: {friend.level}</p>
-                      <button onClick={() => handleChatButtonClick(friend)}>채팅</button>
-                      <button onClick={() => openEndModal(friend.nickname)}>&times;</button>
+                  {filterFriend.map((friend) => (
+                    <li className={styles.friendItem} key={friend.nickname}>
+                      <p className={styles.friendName}>{friend.nickname}</p>
+                      <p className={styles.friendLevel}>{friend.level}</p>
+                      <button className={styles.friendButton} onClick={() => handleChatButtonClick(friend)}>
+                        채팅
+                      </button>
+                      <button className={styles.deleteButton} onClick={() => openEndModal(friend.nickname)}>
+                        <PersonRemoveRoundedIcon />
+                      </button>
                     </li>
                   ))}
                 </ul>

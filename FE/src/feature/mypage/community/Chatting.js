@@ -11,7 +11,7 @@ const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
 
   // 웹소켓 연결 및 메시지 구독
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/api/ws");
+    const socket = new SockJS("http://localhost:5000/api/ws");
     const client = Stomp.over(socket);
 
     client.connect(
@@ -47,7 +47,7 @@ const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
 
   // 이전 메시지 불러오기
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_ROOT}/api/messages/history/${userId}/${friendId}`)
+    fetch(`${process.env.REACT_APP_API_ROOT}/messages/history/${userId}/${friendId}`)
       .then((response) => response.json())
       .then((data) => setMessages(data.data))
       .catch((error) => console.error("Failed to fetch messages:", error));

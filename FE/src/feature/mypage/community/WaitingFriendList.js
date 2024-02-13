@@ -57,14 +57,17 @@ const WaitingFriendList = () => {
 
   return (
     <div>
-      <h3>친구 요청 목록</h3>
       {requestList.length > 0 ? (
         <ul>
-          {requestList.map((friend, index) => (
-            <li key={index}>
-              <p>Nickname: {friend.nickname}</p>
-              <p>Level: {friend.level}</p>
-              <button onClick={() => handleAccept(friend.nickname)}>수락</button>
+          {requestList.map((friend) => (
+            <li className={styles.friendItem} key={friend.nickname}>
+              <p className={styles.friendName}>
+                <span className={styles.friendNickname}>{friend.nickname}</span> 님의 친구 요청
+              </p>
+              {/* <p className={styles.friendLevel}>Lv.{friend.level}</p> */}
+              <button className={styles.friendButton} onClick={() => handleAccept(friend.nickname)}>
+                수락하기
+              </button>
             </li>
           ))}
         </ul>

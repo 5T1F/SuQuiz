@@ -1,0 +1,27 @@
+.tabTitle button {
+  padding: 5px 10px;
+  border-radius: 1rem 1rem 0 0;
+  text-align: center;
+  min-width: 108px;
+  height: 32px;
+}
+
+/* 활성 탭 스타일 */
+.activeTab {
+  background: #fefefe;
+  font-weight: 600;
+}
+
+/* 비활성 탭을 회색으로 처리 */
+.inactiveTab {
+  color: #c9c9c9;
+  background: #efefef;
+}
+
+.tabContentContainer {
+  background: #fefefe;
+  border-radius: 0 15px 15px 15px;
+  padding: 10px 0;
+  min-height: 38vh;
+  max-height: 95vh;
+}
