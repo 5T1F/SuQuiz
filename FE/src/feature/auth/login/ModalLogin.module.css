@@ -1,7 +1,7 @@
 .modal {
   /* 모달창 크기 */
-  width: 300px;
-  height: 200px;
+  width: 320px;
+  height: 300px;
 
   /* 최상단 위치 */
   z-index: 999;
@@ -14,23 +14,107 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fefefe;
+  box-shadow: 0px 0px 20px 10px rgba(244, 178, 142, 0.5);
+  border-radius: 15px;
 }
 
-.modal-content {
-  background-color: #fffff;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+.modalTitle {
+  position: absolute;
+  width: 100%;
+  height: 60px;
+  background: #bca79d;
+  border-radius: 15px 15px 0px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalTitle div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #ffffff;
+  margin: 0 8%;
+  text-shadow: 0px 0px 5px rgba(188, 243, 187, 0.5);
 }
 
 .close {
-  color: #aaa;
+  color: #ffffff;
   float: right;
-  font-size: 28px;
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
+  margin: 0 8%;
 }
 
 .close:hover {
-  color: black;
+  color: gray;
+}
+
+.modalContent {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  top: 60px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 60px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.naverContainer {
+  height: 36px;
+  background: #ffffff;
+  border: 2px solid #1ec800;
+  color: #1ec800;
+  box-shadow: 0px 0px 4px 1px #efefef;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.naverContainer:hover {
+  background: #1ec800;
+  color: #ffffff;
+  border: 2px solid rgb(219, 219, 219);
+  /* 기본 shadow */
+  box-shadow: 0px 0px 4px 1px #efefef;
+}
+
+.kakaoContainer {
+  height: 36px;
+  background: #ffffff;
+  border: 2px solid #fee500;
+  color: #f5df16;
+  text-shadow: 2px 2px 4px #000000;
+  /* 기본 shadow */
+  box-shadow: 0px 0px 4px 1px #efefef;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kakaoContainer:hover {
+  background: #f5df16;
+  color: #ffffff;
+  border: 2px solid rgb(219, 219, 219);
+  /* 기본 shadow */
+  box-shadow: 0px 0px 4px 1px #efefef;
+}
+
+.naverContainer img {
+  width: 30px;
+  border-radius: 10%;
+  margin-right: 10px;
+}
+
+.kakaoContainer img {
+  width: 25px;
+  margin-right: 10px;
 }

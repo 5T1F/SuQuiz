@@ -5,6 +5,9 @@ import Kakao from "./KakaoLogin";
 
 import styles from "./ModalLogin.module.css";
 
+import naverIcon from "../../../assets/icons/naver-icon.png";
+import kakaoIcon from "../../../assets/icons/kakao-icon.png";
+
 const Modal = ({ onClose }) => {
   const modalRef = useRef();
 
@@ -29,12 +32,21 @@ const Modal = ({ onClose }) => {
 
   return (
     <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
-      <div className={styles.modalContent}>
+      <div className={styles.modalTitle}>
+        <div>간편 로그인</div>
         <span className={styles.close} onClick={onClose}>
           &times;
         </span>
-        <Naver />
-        <Kakao />
+      </div>
+      <div className={styles.modalContent}>
+        <div className={styles.naverContainer}>
+          <img src={naverIcon} alt="Naver login" />
+          <Naver />
+        </div>
+        <div className={styles.kakaoContainer}>
+          <img src={kakaoIcon} alt="Kakao login" />
+          <Kakao />
+        </div>
       </div>
     </div>
   );
