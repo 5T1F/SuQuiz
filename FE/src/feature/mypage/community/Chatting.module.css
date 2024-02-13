@@ -5,32 +5,39 @@
   margin: 3px;
 }
 
-.myMessage {
-  text-align: right;
-  background-color: #fcd9db;
-  padding: 4px 8px;
-  margin: 4px;
-  border-radius: 8px;
-  display: inline-block;
-  max-width: 80%;
-}
-
-.otherMessage {
-  text-align: left;
-  background-color: #f1f0f0;
-  padding: 4px 8px;
-  margin: 4px;
-  border-radius: 8px;
-  display: inline-block;
-  max-width: 80%;
-}
-
 .messageContainer {
   position: relative;
+  width: 280px;
   margin: 12px 10px;
   max-height: 40vh;
   overflow-y: scroll;
   scrollbar-color: #f4b28e #f1f0f0;
+  background-color: #f1f0f0;
+}
+
+.myMessage {
+  width: 60%;
+  float: right;
+  background-color: #fcd9db;
+  border-width: 2px;
+  border-color: #fcd9db;
+  padding: 4px 8px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  text-align: right;
+  overflow-wrap: break-word;
+}
+
+.otherMessage {
+  width: 60%;
+  background-color: #e0e0e0;
+  padding: 4px 8px;
+  margin: 4px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  display: inline-block;
+  text-align: left;
+  overflow-wrap: break-word;
 }
 
 .message {

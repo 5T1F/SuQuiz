@@ -1,5 +1,9 @@
 .userInfoContainer {
   position: relative;
+  background: #fefefe;
+  border-radius: 15px;
+  padding: 25px;
+  height: 100%;
 }
 
 .overlay {

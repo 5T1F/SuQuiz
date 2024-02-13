@@ -31,7 +31,7 @@ const Slidebar = ({ onClose, isSlidebarOpen }) => {
           <ArrowForwardIosRoundedIcon />
         </button>
         <div>
-          <div className="h-[45vh] border-4 border-orange-600 mb-3">
+          <div className="h-[45vh] mb-3">
             <UserInfo />
           </div>
           <div className="h-full">

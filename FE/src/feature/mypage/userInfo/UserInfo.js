@@ -4,6 +4,8 @@ import ModalModify from "../../auth/modify/ModalModify";
 
 import { dailyShare, dailyResult } from "../../../apis/singleplayApi";
 
+import styles from "./UserInfo.module.css";
+
 const UserInfo = () => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
@@ -134,9 +136,8 @@ const UserInfo = () => {
 
   return (
     <>
-      {/* 단어사이 간격  space-y-1  */}
-      <div>
-        <div>
+      <div className={styles.userInfoContainer}>
+        <div className={styles.userNicknameContainer}>
           <p>{getUserInfo().nickname}</p>
           <button onClick={handleLogout}>로그아웃</button>
           <button onClick={handleModify}>수정</button>

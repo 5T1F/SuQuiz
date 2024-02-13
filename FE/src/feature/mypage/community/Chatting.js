@@ -97,9 +97,7 @@ const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
           {messages.map((msg, index) => (
             <div key={index} className={styles.message}>
               {msg.senderId === userId ? (
-                <div className={styles.myMessage}>
-                  <strong>나:</strong> {msg.content}
-                </div>
+                <div className={styles.myMessage}>{msg.content}</div>
               ) : (
                 <div className={styles.otherMessage}>
                   <strong>{friendNickname}:</strong> {msg.content}
