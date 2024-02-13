@@ -2,16 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import RecordItem from "./RecordItem";
-import styles from "./SingleplayModal.module.css";
-import TrialSpread from "./TrialSpread";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import Lottie from "react-lottie";
 import moment from "moment";
+
+import RecordItem from "./RecordItem";
+import TrialSpread from "./TrialSpread";
+
+import { useWordleStore } from "../../app/store";
 import { isSolved } from "../../apis/singleplayApi";
 import { allWords } from "../../apis/learningApi";
-import { useWordleStore } from "../../app/store";
-import Lottie from "react-lottie";
+
+import styles from "./SingleplayModal.module.css";
+import "react-calendar/dist/Calendar.css";
 import congratulation from "../../assets/lottie/congratulation.json";
 
 const SingleplayModal = ({ onClose }) => {
@@ -146,7 +149,9 @@ const SingleplayModal = ({ onClose }) => {
               )}
               {wordInfo ? (
                 <>
-                  <p>정답 단어는 "{wordInfo.wordName}" 입니다.</p>
+                  <p>
+                    정답 단어는 <span className={styles.highlight}>"{wordInfo.wordName}"</span> 입니다.
+                  </p>
                   <p>수어로는 어떤 동작인지 알아볼까요?</p>
                   {/* <div>북마크 여부: {wordInfo.bookmarked}</div> */}
                   <div className={styles.video}>
@@ -179,7 +184,9 @@ const SingleplayModal = ({ onClose }) => {
                 <div className={styles.streakContainer}>
                   {/* <div className="flex"> */}
                   <div className="font-bold">스트릭 </div>
-                  <div className={styles.memo}>*{modalResult.solveCount}일 연속 문제를 푸셨어요!</div>
+                  <div className={styles.memo}>
+                    *<span className={styles.highlight}>{modalResult.solveCount}일</span> 연속 문제를 푸셨어요!
+                  </div>
                   {/* </div> */}
                   <div>
                     <Calendar
@@ -197,21 +204,22 @@ const SingleplayModal = ({ onClose }) => {
               </div>
             </div>
           </div>
-          <div className="float-right mt-3">
-            <button onClick={handleMoreQuestion} className="mr-2">
+          <div className={styles.btns}>
+            <button onClick={handleMoreQuestion} className={styles.moreQuizBtn}>
               더 풀어보기
             </button>
-            {modalResult.isSolved ? (
-              <button
-                onClick={copyDummyDataToClipboard}
-                disabled={!modalResult.isSolved}
-                style={{ backgroundColor: solved ? "#ccc" : "#007bff", color: "#ffffff" }}
-              >
-                복사하기
-              </button>
-            ) : (
-              <button onClick={copyDummyDataToClipboard}>복사하기</button>
-            )}
+            <button
+              className={styles.copyBtn}
+              onClick={copyDummyDataToClipboard}
+              disabled={!modalResult.isSolved}
+              style={{
+                backgroundColor: modalResult.isSolved ? "#ddd" : "",
+                color: modalResult.isSolved ? "#eee" : "",
+                cursor: modalResult.isSolved ? "" : "",
+              }}
+            >
+              복사하기
+            </button>
           </div>
         </div>
       </div>

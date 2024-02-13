@@ -108,6 +108,10 @@
   margin-right: 10px;
 }
 
+.highlight {
+  color: #ec9363;
+}
+
 .dotContainer {
   position: relative;
   display: flex;
@@ -151,4 +155,42 @@
   color: #222;
   background: 222;
   text-align: 222;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding-top: 10px;
+}
+
+.moreQuizBtn {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  color: #bca79d;
+  border: 1px solid #bca79d;
+}
+
+.moreQuizBtn:hover {
+  color: #fefefe;
+  background-color: #9c8a82;
+}
+
+.copyBtn {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  color: #fefefe;
+  background-color: #bca79d;
+}
+
+.copyBtn:hover {
+  color: #fefefe;
+  background-color: #9c8a82;
 }
