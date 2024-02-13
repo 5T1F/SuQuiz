@@ -1,7 +1,19 @@
-.code {
+* {
+  color: #616961;
+}
+
+.topButton {
+  margin: 10%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.member {
+}
+
+.leave {
   display: flex inline-block;
   border-radius: 5px;
-  border: 1px solid orange;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 
   &:hover {
@@ -15,9 +27,56 @@
   }
 }
 
+/* .leftContainer {
+  padding: 0.25rem;
+  --tw-border-opacity: 1;
+  border-color: rgb(139 92 246 / var(--tw-border-opacity));
+  border-width: 4px;
+  width: 66.666667%;
+} */
+
+.bottomButton {
+  justify-content: center;
+  display: flex;
+  margin: 10% 0;
+}
+
+.code {
+  display: flex inline-block;
+  text-align: center;
+  width: 33%;
+  border-radius: 5px;
+  border: 1px solid #bcf3bb;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 클릭시 음각이 되는 효과 */
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.unactive {
+  display: inline-block;
+  text-align: center;
+  background-color: gray;
+  color: #fff;
+  width: 15%;
+  border-radius: 5px;
+  margin-left: 3%;
+}
+
 .start {
   display: inline-block;
-  border: 1px solid red;
+  text-align: center;
+  background-color: #bcf3bb;
+  color: #ffffff;
+  width: 15%;
+  border-radius: 5px;
   margin-left: 3%;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 

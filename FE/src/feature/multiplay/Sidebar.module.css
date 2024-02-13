@@ -1,6 +1,9 @@
 .sentMessage {
-  background-color: #dcf8c6; /* 배경색을 녹색으로 지정 */
-  color: #000; /* 글자색을 검정으로 지정 */
+  width: 70%;
+  float: right;
+  background-color: #fff; /* 배경색을 흰색으로 지정 */
+  border-width: 2px;
+  border-color: #dcf8c6; /* 테두리색을 라임으로 지정 */
   padding: 8px; /* 내부 여백을 추가 */
   border-radius: 8px; /* 모서리를 둥글게 만듦 */
   margin-bottom: 4px; /* 아래쪽 여백을 추가하여 메시지 간 간격 조절 */
@@ -8,6 +11,7 @@
 }
 
 .receivedMessage {
+  width: 70%;
   background-color: #e0e0e0; /* 배경색을 회색으로 지정 */
   color: #000; /* 글자색을 검정으로 지정 */
   padding: 8px; /* 내부 여백을 추가 */

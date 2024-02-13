@@ -8,10 +8,11 @@ import MyCam from "../feature/Learning/MyCam";
 import LemonSuquiz from "../feature/multiplay/LemonSuquiz";
 import { exitQuiz, playsers, quiz } from "../apis/multiplayApi";
 
-import GroupIcon from "@mui/icons-material/Group";
+import GroupsIcon from "@mui/icons-material/Groups";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import styles from "./MultiplayPage.module.css";
+import { button } from "@material-tailwind/react";
 
 const MultiplayPage = () => {
   const storedId = localStorage.getItem("idStorage");
@@ -371,16 +372,21 @@ const MultiplayPage = () => {
         <>
           {/* 게임 시작 전 */}
           <div className="flex">
-            <div className="w-4/6 p-1 border-4 border-violet-500">
-              <p>
-                <GroupIcon />
-                {subscribers.length + 1} / 4
-              </p>
+            <div className={styles.leftContainer}>
+              <div className={styles.topButton}>
+                <div className={styles.member}>
+                  <GroupsIcon fontSize="large" /> &nbsp;
+                  {subscribers.length + 1} / 4
+                </div>
+                <button onClick={leaveSession} className={styles.leave}>
+                  나가기
+                </button>
+              </div>
               <Players publisher={publisher} subscribers={subscribers} />
-              <div className="flex justify-center">
+              <div className={styles.bottomButton}>
                 <div className={styles.code} onClick={copyCode}>
                   입장 코드 : {inviteCode} &nbsp;
-                  <ContentCopyIcon fontSize="small" />
+                  <ContentCopyIcon fontSize="x-small" />
                 </div>
                 {isModerator ? (
                   <>
@@ -397,9 +403,6 @@ const MultiplayPage = () => {
                 ) : (
                   <>{/* 참가자라서 시작하기 버튼 X */}</>
                 )}
-              </div>
-              <div onClick={leaveSession} className={styles.leave}>
-                나가기
               </div>
             </div>
             <div className="w-2/6 h-[90vh] p-1 border-4 border-red-500">

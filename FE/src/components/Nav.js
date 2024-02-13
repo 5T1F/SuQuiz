@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { useAuthStore, useUserNicknameStore, useProviderStore, useTokenStore } from "../app/store";
 import Logo from "../assets/logoShort.png";
@@ -14,6 +14,7 @@ export default function Nav() {
   const { provider, setProvider } = useProviderStore();
   const { accessToken, setAccessToken } = useTokenStore();
   const [isSlidebarOpen, setIsSlidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedId = localStorage.getItem("idStorage");
@@ -55,6 +56,16 @@ export default function Nav() {
     setModalOpen(false);
   };
 
+  const selectedMain = "단어장";
+  const selectedSub = "";
+  const handleLearningBookmark = () => {
+    if (userId !== 0) {
+      navigate("/learning/start", { state: { selectedMain, selectedSub } });
+    } else {
+      setModalOpen(true);
+    }
+  };
+
   return (
     <>
       <nav className={styles.navContainer}>
@@ -66,7 +77,7 @@ export default function Nav() {
           </div>
           <div className={styles.navItem}>
             <div>
-              <NavLink to="/learning/bookmark">단어장</NavLink>
+              <button onClick={handleLearningBookmark}>단어장</button>
             </div>
             <div className={styles.userInfoContainer}>
               {userId === 0 ? (
