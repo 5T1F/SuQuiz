@@ -81,7 +81,7 @@ const MultiplayPage = () => {
         const publisher = OVInstance.initPublisher(undefined, {
           audioSource: undefined,
           videoSource: undefined,
-          publishAudio: true,
+          publishAudio: false,
           publishVideo: true,
           resolution: "640x480",
           frameRate: 30,

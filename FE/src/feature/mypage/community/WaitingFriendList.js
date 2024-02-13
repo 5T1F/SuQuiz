@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-import { useAuthStore, useUserNicknameStore } from "../../../app/store";
 import styles from "./WaitingFriendList.module.css";
 
 const WaitingFriendList = () => {
-  const { userId, setUserId } = useAuthStore();
-  const { userNickname, setUserNickname } = useUserNicknameStore();
+  const storedId = localStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
+  const storedNickname = localStorage.getItem("nicknameStorage");
+  const parsedNickname = JSON.parse(storedNickname);
+  const userNickname = parsedNickname.state.userNickname;
+  const storedToken = localStorage.getItem("tokenStorage");
+  const parsedToken = JSON.parse(storedToken);
+  const accessToken = parsedToken.state.accessToken;
   const [requestList, setRequestList] = useState([]);
 
   useEffect(() => {
@@ -37,10 +43,12 @@ const WaitingFriendList = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(requestBody),
       });
-
+      const data = await response.json();
+      console.log(data);
       if (response.ok) {
         // 성공적으로 요청이 완료된 경우, requestList 상태를 갱신
         setRequestList((prevList) => prevList.filter((friend) => friend.nickname !== waitingFriend));

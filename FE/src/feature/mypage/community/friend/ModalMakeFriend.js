@@ -9,6 +9,9 @@ const Modal = ({ onClose }) => {
   const storedNickname = localStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
+  const storedToken = localStorage.getItem("tokenStorage");
+  const parsedToken = JSON.parse(storedToken);
+  const accessToken = parsedToken.state.accessToken;
   const modalRef = useRef();
   const [searchValue, setSearchValue] = useState("");
   // 모달창 노출 여부 state
@@ -28,28 +31,27 @@ const Modal = ({ onClose }) => {
     event.stopPropagation();
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     // 여기에서 API 요청을 보내도록 작성
-
-    fetch(`${process.env.REACT_APP_API_ROOT}/users/friends?search=${searchValue}`, {
-      method: "GET",
-
-      // 기타 필요한 설정들 추가
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // 요청에 대한 응답을 처리
-
-        handleSendFriendRequest(searchValue);
-        //만약 친구가 없으면 에러 발생시키기
-        onClose();
-      })
-      .catch((error) => {
-        // 경고 모달 띄우고
-        handleNoMatchingUser();
-        // 요청 모달 닫기
-        // onClose(); // 두개 다 닫힘;;;;;
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends?search=${searchValue}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
+      onClose(); // 요청 보내면 모달 닫기
+      const data = await response.json();
+      if (data.data === null) {
+        handleNoMatchingUser();
+      } else {
+        handleSendFriendRequest(searchValue);
+      }
+    } catch (error) {
+      // 오류 발생 시
+      console.error("Error sending friend request:", error);
+    }
   };
 
   const handleSendFriendRequest = async (searchValue) => {
@@ -63,11 +65,12 @@ const Modal = ({ onClose }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(requestBody),
       });
-
-      if (response.ok) {
+      console.log(response);
+      if (response.status === 200) {
         // 성공적으로 요청이 완료된 경우
         console.log("Friend request sent successfully!");
       } else {

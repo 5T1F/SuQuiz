@@ -22,6 +22,14 @@ const Modal = ({ onClose, email }) => {
   const { accessToken, setAccessToken } = useTokenStore();
   const navigate = useNavigate();
 
+  const checkCondition = (value) => {
+    // 정규식을 사용하여 주어진 문자열이 한글로만 이루어져 있는지 확인
+    const koreanRegex = /^[가-힣]+$/;
+
+    // 주어진 문자열이 한글로만 이루어져 있고, 길이가 15 이하일 경우 true를 반환
+    return koreanRegex.test(value) && value.length <= 15;
+  };
+
   const handleCheck = async () => {
     try {
       console.log("중복검사");
@@ -29,7 +37,11 @@ const Modal = ({ onClose, email }) => {
       const data = await response.json();
       // data.data가 true면 사용가능한 닉네임
       if (data.data) {
-        setIsConfirmed(2);
+        if (checkCondition(checkValue)) {
+          setIsConfirmed(2);
+        } else {
+          setIsConfirmed(3);
+        }
       } else {
         setIsConfirmed(1);
       }
@@ -97,13 +109,14 @@ const Modal = ({ onClose, email }) => {
           <p>닉네임 설정</p>
           <input
             type="text"
-            placeholder="한글만으로 15자 이하"
+            placeholder="한글로만 이루어진 15자 이하의 닉네임을 입력하세요"
             value={checkValue}
             onChange={(e) => setCheckValue(e.target.value)}
           ></input>
           <button onClick={handleCheck}>중복검사</button>
           {isConfirmed === 2 && <p style={{ color: "blue" }}>사용 가능한 닉네임입니다.</p>}
           {isConfirmed === 1 && <p style={{ color: "red" }}>이미 사용 중인 닉네임입니다.</p>}
+          {isConfirmed === 3 && <p style={{ color: "red" }}>부적합한 닉네임입니다.</p>}
 
           <p>SuQuiz 서비스 이용약관에 동의하시면 '저장'을 눌러주세요.</p>
           <div>
