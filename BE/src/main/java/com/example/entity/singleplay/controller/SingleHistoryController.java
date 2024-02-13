@@ -51,7 +51,7 @@ public class SingleHistoryController {
 
         return new ResponseEntity<>(CommonResponse.<QuestDto.DailyStringResponse>builder()
                 .status(HttpStatus.OK.value())
-                .message("share daily single history")
+                .message("return additional quest")
                 .data(singleHistoryService.additionalQuest())
                 .build(), HttpStatus.OK);
     }
@@ -103,7 +103,7 @@ public class SingleHistoryController {
 
         return new ResponseEntity<>(CommonResponse.<SingleHistoryDto.AllResultResponse>builder()
                 .status(HttpStatus.OK.value())
-                .message("share daily single history")
+                .message("get daily result")
                 .data(singleHistoryService.singlePlayAllResult(userId))
                 .build(), HttpStatus.OK);
     }
