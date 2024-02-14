@@ -2,9 +2,52 @@
   color: #616961;
 }
 
-.leftContainer {
+.container {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.topContainer {
+  height: 90vh;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.beforePlaying {
+  gap: 10px;
+  background-color: #f3f3f3;
+  padding: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  height: 100%; /* 컴포넌트의 전체 높이를 설정 */
+  width: 320px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3%;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 10px;
+}
+
+.progressBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+  width: 200px;
+}
+
+.middleContainer {
   position: relative;
   height: 90vh;
+  width: 100%;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   padding-left: 2.5rem;
@@ -12,9 +55,9 @@
 }
 
 .topButton {
-  margin: 1% 10% 1% 0;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .member {
@@ -24,9 +67,10 @@
   padding: 3px 10px;
   border: none;
   border-radius: 5px;
+  border: 1px solid #bcf3bb;
   cursor: pointer;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 
   &:hover {
     background-color: #d3d3d3;
@@ -56,7 +100,7 @@
   width: 33%;
   border-radius: 5px;
   border: 1px solid #bcf3bb;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 
   &:hover {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
@@ -82,12 +126,12 @@
 .start {
   display: inline-block;
   text-align: center;
-  background-color: #bcf3bb;
+  background-color: #97ce9b;
   color: #ffffff;
   width: 15%;
   border-radius: 5px;
   margin-left: 3%;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 
   &:hover {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
@@ -100,17 +144,10 @@
   }
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-}
-
 .sidebar {
-  height: 83vh;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+  position: relative;
+  right: 0px;
+  height: 90vh;
 }
 
 .bottombar {
