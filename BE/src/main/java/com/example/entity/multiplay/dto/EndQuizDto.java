@@ -14,7 +14,7 @@ public class EndQuizDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request {
-        int score;
+        int myScore;
         long userId;
     }
 

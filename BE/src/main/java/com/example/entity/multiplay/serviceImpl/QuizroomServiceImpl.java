@@ -1,6 +1,5 @@
 package com.example.entity.multiplay.serviceImpl;
 
-import com.example.entity.education.dto.WordDTO;
 import com.example.entity.global.service.EntityAndDtoConversionService;
 import com.example.entity.multiplay.domain.Quizroom;
 import com.example.entity.multiplay.dto.EndQuizDto;
@@ -12,18 +11,14 @@ import com.example.entity.user.domain.Level;
 import com.example.entity.user.domain.User;
 import com.example.entity.user.repository.LevelRepository;
 import com.example.entity.user.repository.UserRepository;
-import com.example.entity.word.domain.Category;
-import com.example.entity.word.domain.Word;
 import com.example.entity.word.repository.WordRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -43,18 +38,18 @@ public class QuizroomServiceImpl implements QuizroomService {
             User user = optionalUser.get();
 
 
-                Quizroom quizroom = Quizroom.builder().sessionId(sessionId).inviteCode(inviteCode).build();
-                quizroomRepository.save(quizroom);
-                user.changeQuizroom(quizroom);
-                quizroom.addUser(user);
-                System.out.println("남은 유저 : " + quizroom.getUserList().size() );
-            
+            Quizroom quizroom = Quizroom.builder().sessionId(sessionId).inviteCode(inviteCode).build();
+            quizroomRepository.save(quizroom);
+            user.changeQuizroom(quizroom);
+            quizroom.addUser(user);
+            System.out.println("남은 유저 : " + quizroom.getUserList().size());
+
 
         }
 
 
     }
-    
+
     // 4명 이하로 입장 가능한지 조회
     @Override
     public boolean checkIsRoomJoinable(String inviteCode) {
@@ -67,7 +62,7 @@ public class QuizroomServiceImpl implements QuizroomService {
 
         return false;
     }
-    
+
     // 게임이 플레이중인지 조회
     @Override
     public boolean checkIsRoomPlaying(String inviteCode) {
@@ -79,10 +74,11 @@ public class QuizroomServiceImpl implements QuizroomService {
 
         return false;
     }
-    
+
     //게임 시작
     @Override
-    public List<WordDTO.WordResponseDto> startQuizroom(String sessionId) {
+    @Transactional
+    public void startQuizroom(String sessionId) {
         Optional<Quizroom> optionalQuizroom = quizroomRepository.findBySessionId(sessionId);
 
         if (optionalQuizroom.isPresent()) {
@@ -94,28 +90,14 @@ public class QuizroomServiceImpl implements QuizroomService {
                 user.updateIsPlaying();
             }
 
-            List<Word> allWord = wordRepository.findByCategory(Category.낱말);
-            List<Word> selectedWords = new ArrayList<>();
-            Random random = new Random();
-            for (int i = 0; i < 3; i++) {
-                int randomIndex = random.nextInt(allWord.size());
-                Word randomWord = allWord.get(randomIndex);
-                selectedWords.add(randomWord);
-                allWord.remove(randomIndex);
-            }
-
-            List<WordDTO.WordResponseDto> wordList = entityAndDtoConversionService.mapWordEntitiesToDto(selectedWords);
-            return wordList;
         }
-
-        return null;
     }
-    
+
     // 게임 종료
     @Override
-    public List<EndQuizDto.Response> endQuizgame(String sessionId, List<EndQuizDto.Request> requests) {
+    @Transactional
+    public EndQuizDto.Response endQuizgame(String sessionId, EndQuizDto.Request rq) {
         Optional<Quizroom> optionalQuizroom = quizroomRepository.findBySessionId(sessionId);
-        List<EndQuizDto.Response> resultList = new ArrayList<>();
 
         if (optionalQuizroom.isPresent()) {
             // 퀴즈룸 종료로 변환
@@ -124,39 +106,38 @@ public class QuizroomServiceImpl implements QuizroomService {
                 quizroom.updateIsPlaying();
 
             // 스코어에 따라 각 유저의 경험치 및 레벨 변화
-            for (EndQuizDto.Request rq : requests) {
-                Optional<User> optionalUser = userRepository.findById(rq.getUserId());
-                if (optionalUser.isPresent()) {
-                    // 경험치 업데이트
-                    User user = optionalUser.get();
-                    int score = rq.getScore();
-                    user.addExp(score);
+
+            Optional<User> optionalUser = userRepository.findById(rq.getUserId());
+            if (optionalUser.isPresent()) {
+                // 경험치 업데이트
+                User user = optionalUser.get();
+                int score = rq.getMyScore();
+                user.addExp(score);
 
 
-                    // 레벨 업데이트
-                    int userLevel = user.getLevel();
-                    Optional<Level> optionalLevel = levelRepository.findByLevel(userLevel + 1);
-                    if (optionalLevel.isPresent()) {
-                        Level nextLevel = optionalLevel.get();
-                        if (user.getXp() >= nextLevel.getXp()) {
-                            user.levelUp();
-                            user.updateExp(user.getXp() - nextLevel.getXp());
-                        }
+                // 레벨 업데이트
+                int userLevel = user.getLevel();
+                Optional<Level> optionalLevel = levelRepository.findByLevel(userLevel + 1);
+                if (optionalLevel.isPresent()) {
+                    Level nextLevel = optionalLevel.get();
+                    if (user.getXp() >= nextLevel.getXp()) {
+                        user.levelUp();
+                        user.updateExp(user.getXp() - nextLevel.getXp());
                     }
-
-                    // 결과 전송
-                    resultList.add(EndQuizDto.Response.builder()
-                            .userId(user.getId())
-                            .exp(user.getXp())
-                            .level(user.getLevel())
-                            .build());
                 }
+
+                // 결과 전송
+                return EndQuizDto.Response.builder()
+                        .userId(user.getId())
+                        .exp(user.getXp())
+                        .level(user.getLevel())
+                        .build();
             }
 
-
         }
+        return null;
 
-        return resultList;
+
     }
 
     //게임방 퇴장하기
@@ -165,19 +146,19 @@ public class QuizroomServiceImpl implements QuizroomService {
     public void exitQuizroom(ExitQuizDto.Request req) {
         Optional<Quizroom> optionalQuizroom = quizroomRepository.findBySessionId(req.getSessionId());
 
-        if(optionalQuizroom.isPresent()) {
+        if (optionalQuizroom.isPresent()) {
             Quizroom quizroom = optionalQuizroom.get();
             List<User> userList = quizroom.getUserList();
-            for(User u : userList) {
-                if(u.getId()==req.getUserId()) {
+            for (User u : userList) {
+                if (u.getId() == req.getUserId()) {
                     u.changeQuizroom(null);
                     userList.remove(u);
                     break;
                 }
             }
-            System.out.println("남은 유저 : " + userList.size() );
-            if(userList.isEmpty()) {
-              quizroomRepository.delete(quizroom);
+            System.out.println("남은 유저 : " + userList.size());
+            if (userList.isEmpty()) {
+                quizroomRepository.delete(quizroom);
             }
         }
 
@@ -188,13 +169,13 @@ public class QuizroomServiceImpl implements QuizroomService {
     public void joinQuizroom(String sessionId, long userId) {
         Optional<Quizroom> optionalQuizroom = quizroomRepository.findBySessionId(sessionId);
         Optional<User> optionalUser = userRepository.findById(userId);
-        if(optionalQuizroom.isPresent()&&optionalUser.isPresent()) {
+        if (optionalQuizroom.isPresent() && optionalUser.isPresent()) {
             Quizroom quizroom = optionalQuizroom.get();
-            System.out.println("기존 유저 : " + quizroom.getUserList().size() );
+            System.out.println("기존 유저 : " + quizroom.getUserList().size());
             User user = optionalUser.get();
             quizroom.addUser(user);
             user.changeQuizroom(quizroom);
-            System.out.println("남은 유저 : " + quizroom.getUserList().size() );
+            System.out.println("남은 유저 : " + quizroom.getUserList().size());
         }
     }
 
@@ -204,7 +185,7 @@ public class QuizroomServiceImpl implements QuizroomService {
         List<User> userList = quizroom.getUserList();
 
         List<PlayerDto.Response> playerList = new ArrayList<>();
-        for(User u : userList) {
+        for (User u : userList) {
             PlayerDto.Response res = PlayerDto.Response.builder()
                     .playerId(u.getId())
                     .playerNickname(u.getNickname())

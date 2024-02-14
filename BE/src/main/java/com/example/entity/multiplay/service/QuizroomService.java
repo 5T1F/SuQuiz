@@ -1,10 +1,8 @@
 package com.example.entity.multiplay.service;
 
-import com.example.entity.education.dto.WordDTO;
 import com.example.entity.multiplay.dto.EndQuizDto;
 import com.example.entity.multiplay.dto.ExitQuizDto;
 import com.example.entity.multiplay.dto.PlayerDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -17,9 +15,9 @@ public interface QuizroomService {
     boolean checkIsRoomPlaying(String inviteCode);
 
 
-    List<WordDTO.WordResponseDto> startQuizroom(String sessionId);
+    void startQuizroom(String sessionId);
 
-    List<EndQuizDto.Response> endQuizgame(String sessionId, List<EndQuizDto.Request> requests);
+    EndQuizDto.Response endQuizgame(String sessionId, EndQuizDto.Request request);
 
     void exitQuizroom(ExitQuizDto.Request req);
 
