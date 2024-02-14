@@ -9,6 +9,8 @@ import {
   useProviderStore,
   useTokenStore,
 } from "../../../app/store";
+import backgroundVideo from "../../../assets/backgroundVideo.mp4";
+import styles from "./Callback.module.css";
 import ModalSignup from "../signup/ModalSignup";
 
 const NaverCallback = () => {
@@ -83,8 +85,10 @@ const NaverCallback = () => {
 
   return (
     <>
-      <div>
-        <div>Processing...</div>
+      <div className={styles.videoContainer}>
+        <video className={styles.video} autoPlay loop muted>
+          <source src={backgroundVideo} type="video/mp4" />
+        </video>
       </div>
 
       {/* modalOpen이 true일 때만 모달 렌더링 */}

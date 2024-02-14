@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import styles from "./Sidebar.module.css";
 
 import FriendList from "../mypage/community/FriendList";
 
-const WaitingRoomSidebar = ({ session }) => {
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import styles from "./Sidebar.module.css";
+import flag from "../../assets/images/flag.png";
+
+const WaitingRoomSidebar = ({ session, isPlaying }) => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
@@ -77,34 +80,64 @@ const WaitingRoomSidebar = ({ session }) => {
     };
   }, [session]);
 
+  const LinearProgressbar = ({ level, exp }) => {
+    const maxExp = (level - 1) * 50 + 100;
+    const percentage = Math.min(100, (exp / maxExp) * 100); // 현재 경험치를 퍼센트로 변환, 최대 100%
+
+    return (
+      <div className="w-full h-4 bg-gray-200 rounded-full">
+        <div className="h-4 rounded-full bg-coutom-yellow" style={{ width: `${percentage}%` }}></div>
+      </div>
+    );
+  };
+
   return (
     <>
-      {/* 단어사이 간격  space-y-1  */}
-      <div className="space-y-1">
-        <div className="flex">
-          <p>Lv. {userInfoData.level}</p>
-          <p>{userInfoData.nickname}</p>
-        </div>
-        {/* 친구한테 초대코드 보내기 위한 컴포넌트 */}
-        <FriendList isMultiplay={true} />
-        {/* 오픈비두로 대기실 내 실시간 채팅 */}
-        {/* 채팅 메시지 UI */}
-        <div>
-          <div style={{ height: "200px", overflowY: "scroll" }}>
-            {chatHistory.map((message, index) => (
-              <div key={index}>
-                {message.senderNickname !== userInfoData.nickname && <div>{message.senderNickname}</div>}
-                <div
-                  className={
-                    message.senderNickname === userInfoData.nickname ? styles.sentMessage : styles.receivedMessage
-                  }
-                >
-                  {message.message}
-                </div>
+      {isPlaying ? (
+        <></>
+      ) : (
+        <>
+          {/* 사용자 정보 표시 부분 */}
+          <div className={styles.userInfo}>
+            <div className="relative w-20 h-24">
+              <img src={flag} alt="Flag" className="absolute inset-0 z-10 object-cover w-full h-full" />
+              <div className="absolute inset-0 z-20 flex items-center justify-center pb-3">
+                <div className="font-bold text-2xl text-[#f4b28e]">Lv.{userInfoData.level}</div>
               </div>
-            ))}
+            </div>
+            {/* <img src={getUserInfo().profileImage} alt="프로필 이미지" className={styles.profileImage} /> */}
+            <div className="w-72">
+              <div className="w-full mb-1 text-2xl font-bold">{userInfoData.nickname}</div>
+              <div className="text-gray-500">EXP.{userInfoData.exp}</div>
+              <div className={styles.progressBar}>
+                <LinearProgressbar level={userInfoData.level} exp={userInfoData.exp} />
+              </div>
+            </div>
           </div>
+          {/* 친구한테 초대코드 보내기 위한 컴포넌트 */}
+          <FriendList isMultiplay={true} />
+        </>
+      )}
+
+      {/* 오픈비두로 대기실 내 실시간 채팅 */}
+      {/* 채팅 메시지 UI */}
+      <div className={styles.chat}>
+        <div className={styles.messageSet}>
+          {chatHistory.map((message, index) => (
+            <div key={index}>
+              {message.senderNickname !== userInfoData.nickname ? (
+                <div className={styles.receivedMessage}>
+                  {message.senderNickname} : {message.message}
+                </div>
+              ) : (
+                <div className={styles.sentMessage}>{message.message}</div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-center">
           <input
+            className={styles.sendInput}
             type="text"
             value={chatMessage}
             onChange={(e) => setChatMessage(e.target.value)}
@@ -116,7 +149,9 @@ const WaitingRoomSidebar = ({ session }) => {
             }}
             placeholder="Type a message..."
           />
-          <button onClick={sendMessage}>Send</button>
+          <button className={styles.sendButton} onClick={sendMessage}>
+            <SendRoundedIcon />
+          </button>
         </div>
       </div>
     </>
