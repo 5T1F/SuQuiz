@@ -49,6 +49,8 @@ dependencies {
 	//openvidu 라이브러리
 	implementation 'io.openvidu:openvidu-java-client:2.29.0'
 
+	// s3 라이브러리
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 }
 

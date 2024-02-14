@@ -7,11 +7,11 @@ server:
 # DB와 secret key 세팅 값
 spring:
   profiles:
-    include: DB
+    include: h2, s3
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         show_sql: true
