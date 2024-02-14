@@ -10,18 +10,27 @@ const Modal = ({ onClose }) => {
   const [isConfirmed, setIsConfirmed] = useState(null);
   const modalRef = useRef();
 
+  const checkCondition = (value) => {
+    // 정규식을 사용하여 주어진 문자열이 한글로만 이루어져 있는지 확인
+    const koreanRegex = /^[가-힣]+$/;
+
+    // 주어진 문자열이 한글로만 이루어져 있고, 길이가 15 이하일 경우 true를 반환
+    return koreanRegex.test(value) && value.length <= 15;
+  };
+
   const handleCheck = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/validate/${checkValue}`); // API 경로
       const data = await response.json();
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
-      if (data.data == true) {
+      if (data.data) {
+        if (checkCondition(checkValue)) {
+          setIsConfirmed(2);
+        } else {
+          setIsConfirmed(3);
+        }
+      } else {
         setIsConfirmed(1);
-        console.log(data.message);
-      } else if (data.data == false) {
-        // 응답이 성공이 아니거나 data.data가 없을 경우에 대한 처리
-        setIsConfirmed(0);
-        console.error("Error fetching data:", data.message);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -89,7 +98,8 @@ const Modal = ({ onClose }) => {
         </div>
         <div className={styles.modalContent}>
           <p>닉네임 수정하기</p>
-          <div>
+          <div style={{ height: "7vh" }}>
+            {" "}
             <input
               className={styles.searchInput}
               type="text"
@@ -101,10 +111,10 @@ const Modal = ({ onClose }) => {
             <button className={styles.cancelBtn} onClick={handleCheck}>
               중복검사
             </button>
+            {isConfirmed === 2 && <p style={{ color: "blue", fontSize: "xx-small" }}>사용 가능한 닉네임입니다.</p>}
+            {isConfirmed === 1 && <p style={{ color: "red", fontSize: "xx-small" }}>이미 사용 중인 닉네임입니다.</p>}
+            {isConfirmed === 3 && <p style={{ color: "red", fontSize: "xx-small" }}>부적합한 닉네임입니다.</p>}
           </div>
-
-          {isConfirmed === 1 && <p style={{ color: "blue" }}>사용 가능한 닉네임입니다.</p>}
-          {isConfirmed === 0 && <p style={{ color: "red" }}>사용 중인 닉네임입니다.</p>}
           <p>탈퇴하기</p>
           <div className={styles.btns}>
             <button className={styles.cancelBtn} onClick={onClose}>

@@ -32,7 +32,6 @@ const Modal = ({ onClose, email }) => {
 
   const handleCheck = async () => {
     try {
-      console.log("중복검사");
       const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/validate/${checkValue}`); // API 경로
       const data = await response.json();
       // data.data가 true면 사용가능한 닉네임
@@ -107,41 +106,23 @@ const Modal = ({ onClose, email }) => {
   };
 
   return (
-    <div className={styles.modalBackground}>
-      <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
-        <div className={styles.modalTitle}>
-          <div>회원 가입</div>
-          <span className={styles.close} onClick={onClose}>
-            &times;
-          </span>
-        </div>
-        <div className={styles.modalContent}>
-          <div>
-            <p>닉네임 설정</p>
+    <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
+      <div className={styles.modalContent}>
+        <p>회원정보 입력</p>
 
-            <div>
-              <input
-                className={styles.searchInput}
-                type="text"
-                placeholder="15자 이하의 한글"
-                value={checkValue}
-                onChange={(e) => setCheckValue(e.target.value)}
-                onKeyPress={handleKeyPress}
-              ></input>
-              <button className={styles.cancelBtn} onClick={handleCheck}>
-                중복검사
-              </button>
-              {isConfirmed === 2 && (
-                <p style={{ color: "blue", fontSize: "10px", textAlign: "right" }}>사용 가능한 닉네임입니다.</p>
-              )}
-              {isConfirmed === 1 && (
-                <p style={{ color: "red", fontSize: "10px", textAlign: "right" }}>사용 중인 닉네임입니다.</p>
-              )}
-              {isConfirmed === 3 && (
-                <p style={{ color: "red", fontSize: "10px", textAlign: "right" }}>적합하지 않은 닉네임입니다.</p>
-              )}
-            </div>
-          </div>
+        <div>
+          <p>닉네임 설정</p>
+          <input
+            type="text"
+            placeholder="한글로만 이루어진 15자 이하의 닉네임을 입력하세요"
+            value={checkValue}
+            onChange={(e) => setCheckValue(e.target.value)}
+            onKeyPress={handleKeyPress}
+          ></input>
+          <button onClick={handleCheck}>중복검사</button>
+          {isConfirmed === 2 && <p style={{ color: "blue", fontSize: "xx-small" }}>사용 가능한 닉네임입니다.</p>}
+          {isConfirmed === 1 && <p style={{ color: "red", fontSize: "xx-small" }}>이미 사용 중인 닉네임입니다.</p>}
+          {isConfirmed === 3 && <p style={{ color: "red", fontSize: "xx-small" }}>부적합한 닉네임입니다.</p>}
 
           <p>SuQuiz 서비스 이용약관에 동의하시면 '저장'을 눌러주세요.</p>
           <div className={styles.btns}>

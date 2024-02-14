@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useMultiplayStore } from "../../app/store";
 
-export default function LemonSuquiz(resList, stage) {
+export default function LemonSuquiz(resCnt, resList, stage) {
   return (
     <>
       <div className="border-4 border-violet-500">
