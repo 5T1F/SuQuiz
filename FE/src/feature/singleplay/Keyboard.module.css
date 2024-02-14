@@ -7,39 +7,65 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px;
+  margin: 6px 0;
+  gap: 3px;
 }
 
 .keyboardColWhite {
-  font-size: 30px;
-  background-color: #e2e8f0;
+  font-size: 24px;
+  background-color: #ffffff;
   border-radius: 10%;
+  width: 36px;
+  height: 48px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-.keyboardColHover {
-  font-size: 30px;
-  background-color: #e2e8f0;
+.keyboardColWhite:hover {
+  font-size: 24px;
+  background-color: #ffffff;
   border-radius: 10%;
   font-weight: 900;
+  width: 36px;
+  height: 48px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .keyboardColYellow {
-  font-size: 30px;
-  background-color: #ffea00;
+  font-size: 24px;
+  background-color: #f6e58d;
   border-radius: 10%;
+  width: 36px;
+  height: 48px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .keyboardColGreen {
-  font-size: 30px;
-  background-color: #00c853;
+  font-size: 24px;
+  background-color: #97ce9b;
   border-radius: 10%;
+  width: 36px;
+  height: 48px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .specialKey {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
-  border: 1px solid #e2e8f0;
+  font-size: 24px;
+  border: 1px solid #ffffff;
   border-radius: 10%;
+  width: 36px;
+  height: 48px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.specialKey:hover {
+  font-size: 32px;
+  background-color: #ffffff;
+  border-radius: 10%;
+  font-weight: 900;
+  width: 36px;
+  height: 48px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
