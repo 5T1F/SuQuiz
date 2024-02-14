@@ -1,8 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 
-import { useUserNicknameStore } from "../../../../app/store";
-import ModalNoMatchingUser from "./ModalNoMatchingUser";
-
 import styles from "./ModalEndFriendship.module.css";
 
 const ModalEndFriendship = ({ onClose, friendNickname }) => {

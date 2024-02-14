@@ -1,8 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 
-import { useUserNicknameStore } from "../../../../app/store";
-import ModalNoMatchingUser from "./ModalNoMatchingUser";
-
 import styles from "./ModalMakeFriend.module.css";
 
 const Modal = ({ onClose }) => {
@@ -14,18 +11,7 @@ const Modal = ({ onClose }) => {
   const accessToken = parsedToken.state.accessToken;
   const modalRef = useRef();
   const [searchValue, setSearchValue] = useState("");
-  // 모달창 노출 여부 state
-  const [modalOpen, setModalOpen] = useState(false);
-
-  // 함수를 전달하여 클릭 시 모달 열기
-  const handleNoMatchingUser = () => {
-    setModalOpen(true);
-  };
-
-  // 함수를 전달하여 모달 닫기
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
+  const [isConfirmed, setIsConfirmed] = useState(0);
 
   const handleClickInside = (event) => {
     event.stopPropagation();
@@ -41,10 +27,9 @@ const Modal = ({ onClose }) => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      onClose(); // 요청 보내면 모달 닫기
       const data = await response.json();
       if (data.data === null) {
-        handleNoMatchingUser();
+        setIsConfirmed(3);
       } else {
         handleSendFriendRequest(searchValue);
       }
@@ -97,6 +82,12 @@ const Modal = ({ onClose }) => {
     };
   }, [onClose]);
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <>
       <div className={styles.modalBackground}>
@@ -108,14 +99,17 @@ const Modal = ({ onClose }) => {
             </span>
           </div>
           <div className={styles.modalContent}>
-            <input
-              className={styles.searchInput}
-              type="text"
-              placeholder="유저 닉네임"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
-
+            <div style={{ height: "7vh" }}>
+              <input
+                className={styles.searchInput}
+                type="text"
+                placeholder="유저 닉네임"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                onKeyPress={handleKeyPress}
+              />
+              {isConfirmed === 3 && <p style={{ color: "red", fontSize: "xx-small" }}>존재하지 않는 유저입니다.</p>}
+            </div>
             <div className={styles.btns}>
               <button className={styles.cancelBtn} onClick={onClose}>
                 취소
@@ -126,9 +120,6 @@ const Modal = ({ onClose }) => {
             </div>
           </div>
         </div>
-
-        {/* modalOpen이 true일 때만 모달 렌더링 */}
-        {modalOpen && <ModalNoMatchingUser onClose={handleCloseModal} />}
       </div>
     </>
   );
