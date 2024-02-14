@@ -119,3 +119,11 @@
   border-width: 4px;
   border-color: red;
 }
+
+.video {
+  transform: scaleX(-1);
+  /* display: none; */
+  width: 40%; /* 여기서 크기 조절 */
+  height: auto;
+  border-radius: 0.5rem;
+}

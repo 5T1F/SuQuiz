@@ -508,7 +508,7 @@ const MultiplayPage = () => {
 
   return (
     <Container>
-      <div className={`${isPlaying ? "" : styles.container}`}>
+      <div className={styles.container}>
         {!isPlaying ? (
           <>
             {/* 게임 시작 전 */}
@@ -565,12 +565,6 @@ const MultiplayPage = () => {
                     퇴장하기
                   </div>
                   <Players publisher={publisher} subscribers={subscribers} />
-                  <div className={styles.video}>
-                    <video key={quizVideoList} loop autoPlay muted>
-                      <source src={quizVideoList[stage]} type="video/mp4" />
-                      영상이 존재하지 않습니다.
-                    </video>
-                  </div>
                   {resCnt}
                   {resList}
                   <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} />
@@ -580,8 +574,20 @@ const MultiplayPage = () => {
             }
           </>
         )}
-        <div className={`${isPlaying ? styles.bottombar : styles.sidebar}`}>
-          <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
+        <div>
+          {!isPlaying ? (
+            <></>
+          ) : (
+            <div className={styles.video}>
+              <video key={quizVideoList} loop autoPlay muted>
+                <source src={quizVideoList[stage]} type="video/mp4" />
+                영상이 존재하지 않습니다.
+              </video>
+            </div>
+          )}
+          <div className={styles.sidebar}>
+            <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
+          </div>
         </div>
       </div>
     </Container>
