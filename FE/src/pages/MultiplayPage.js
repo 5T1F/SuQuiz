@@ -6,13 +6,12 @@ import Players from "../feature/multiplay/Players";
 import Sidebar from "../feature/multiplay/Sidebar";
 import MyCam from "../feature/Learning/MyCam";
 import LemonSuquiz from "../feature/multiplay/LemonSuquiz";
-import { exitQuiz, playsers, quiz } from "../apis/multiplayApi";
+import { exitQuiz, players, quiz, start, end } from "../apis/multiplayApi";
 
-import GroupsIcon from "@mui/icons-material/Groups";
+import GroupIcon from "@mui/icons-material/Group";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import styles from "./MultiplayPage.module.css";
-import { button } from "@material-tailwind/react";
 
 const MultiplayPage = () => {
   const storedId = localStorage.getItem("idStorage");
@@ -37,184 +36,133 @@ const MultiplayPage = () => {
   const [solver, setSolver] = useState(null);
   const [stage, setStage] = useState(0);
   const order = 0;
+  const [nowQuiz, setNowQuiz] = useState({});
   const [quizList, setQuizList] = useState([]);
   const [quizWordList, setQuizWordList] = useState([]);
-  const [quizViedoList, setQuizVideoList] = useState([]);
+  const [quizVideoList, setQuizVideoList] = useState([]);
   const [resCnt, setResCnt] = useState(0);
-  const resList = [" ", " ", " ", " ", " "];
-  const visitedList = [false, false, false, false, false];
+  const [resList, setResList] = useState([]);
+  let visitedList = [false, false, false, false, false];
   const [isAnswer, setIsAnswer] = useState(false);
   const [isStartStage, setIsStartStage] = useState(true);
   const [isModerator, setIsModerator] = useState(initialIsModerator);
   const [finger, setFinger] = useState("#");
-  const changeFinger = (value) => {
-    setFinger(value);
-    console.log(value);
-  };
+  let myScore = 0;
+ 
 
-  useEffect(() => {
-    const OVInstance = new OpenVidu();
-    setOV(OVInstance);
-    const sessionInstance = OVInstance.initSession();
-
-    sessionInstance.on("streamCreated", (event) => {
-      const subscriber = sessionInstance.subscribe(event.stream, undefined);
-      // 구독자의 connectionData에서 닉네임 파싱
-      console.log(event.stream.connection.data);
-      const connectionData = event.stream.connection.data;
-      const nickname = connectionData || "Anonymous";
-      setSubscribers((prevSubscribers) => [
-        ...prevSubscribers,
-        { streamManager: subscriber, nickname: nickname }, // 구독자 객체에 닉네임 추가
-      ]);
-    });
-
-    sessionInstance.on("streamDestroyed", (event) => {
-      setSubscribers((prevSubscribers) =>
-        prevSubscribers.filter((sub) => sub.streamManager.stream.streamId !== event.stream.streamId)
-      );
-    });
-
-    sessionInstance
-      .connect(token)
-      .then(() => {
-        const publisher = OVInstance.initPublisher(undefined, {
-          audioSource: undefined,
-          videoSource: undefined,
-          publishAudio: true,
-          publishVideo: true,
-          resolution: "320x240",
-          frameRate: 30,
-          insertMode: "APPEND",
-          mirror: true,
-        });
-        sessionInstance.publish(publisher);
-        setPublisher(publisher);
-      })
-      .catch((error) => console.log("There was an error connecting to the session:", error));
-
-    setSession(sessionInstance);
-
-    // 새로운 방장 정보를 처리하는 이벤트 리스너 추가
-    sessionInstance.on("signal:newModerator", (event) => {
-      const newModeratorNickname = event.data;
-      // 현재 사용자가 새로운 방장인지 확인하고 상태 업데이트
-      if (userNickname === newModeratorNickname) {
-        setIsModerator(true);
-        console.log("방장이 되었습니다.");
-      }
-    });
-
-    return () => {
-      if (sessionInstance) {
-        sessionInstance.disconnect();
-      }
-    };
-  }, [sessionId, token]);
-
+  // 초대코드 복사
   const copyCode = () => {
-    // 텍스트를 복사하기 위한 임시 요소를 생성합니다.
     var tempInput = document.createElement("input");
     tempInput.value = inviteCode;
 
-    // 요소를 페이지에 추가합니다.
     document.body.appendChild(tempInput);
 
-    // 입력 요소를 선택하고 복사 명령을 실행합니다.
     tempInput.select();
     document.execCommand("copy");
 
-    // 임시 요소를 제거합니다.
     document.body.removeChild(tempInput);
   };
 
-  const startQuiz = async () => {
-    setIsPlaying(true); // 퀴즈 시작으로 변경
-
-    if (session) {
-      await session
-        .signal({
-          data: JSON.stringify({ isPlaying: true }), // 퀴즈 시작 정보를 담아서,
-          type: "quiz-start",
-        })
-        .then(() => {
-          console.log("Quiz successfully start");
-        })
-        .catch((error) => {
-          console.error("Error starting quiz:", error);
-        });
-    }
-  };
-
-  // 새로운 참가자가 들어오면 4명인지 검사하기 위해 실행
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const players = await playsers(sessionId);
-        setPlayersList(players.data);
-        // 배포 전에 4로 수정하기 ***************************************
-        if (players.data.length < 5) {
-          setIsFour(true);
-        }
-      } catch (error) {
-        console.error("Error fetching playersList:", error);
-      }
-    };
-
-    fetchData();
-  }, [subscribers]);
-
-  // 게임이 시작되면 문제를 가져오기 위해 실행
-  useEffect(() => {
-    const fetchQuiz = async () => {
-      try {
-        const wordle = await quiz();
-        // 정답 단어를 리스트에 저장
-        const extractedWordNames = wordle.data.map((item) => item.wordName);
-        setQuizWordList(extractedWordNames);
-        // 정답 수어 영상을 리스트에 저장
-        const extractedViedeoUrls = wordle.data.map((item) => item.videoUrl);
-        setQuizVideoList(extractedViedeoUrls);
-
-        // 데이터에서 syllables만 추출하여 quizList에 저장
-        const extractedSyllables = wordle.data.map((item) => item.syllables);
-        console.log(extractedSyllables);
-        setQuizList(extractedSyllables);
-      } catch (error) {
-        console.error("Error fetching playersList:", error);
-      }
-    };
-
-    fetchQuiz();
-  }, [isPlaying]);
-
   const changeSolver = async () => {
-    setSolver(playersList[order++ % 4]);
-
     if (session) {
       await session
         .signal({
-          data: JSON.stringify({ solver: solver }), // 퀴즈 시작 정보를 담아서,
+          data: JSON.stringify({
+            solver:solver
+          }), 
           type: "change-solver",
         })
         .then(() => {
-          console.log("Solver successfully change");
+          console.log("solver successfully change");
         })
         .catch((error) => {
           console.error("Error changing solver:", error);
         });
     }
+  }
+
+  useEffect(()=> {
+    if (solver !== null) {
+
+      if(!isPlaying)
+      setIsPlaying(true);
+      // solver 정보 보내기
+      changeSolver();
+    } else {
+      if(isPlaying)
+      setIsPlaying(false);
+      changeSolver();
+    }
+  }, [solver])
+
+  // 게임 시작 이벤트, 방장만 가능
+  const startQuiz = async () => {
+    
+
+    // 유저들과 방 db정보 isPlaying을 true로 변경요청
+    await start(sessionId);
+    
+    
+
+    // 문제 리스트 업데이트
+    await fetchQuizList();
+    
+    
+    setResList(["?", "?", "?", "?", "?"])
+
+    // solver 할당, 참가자들에게 알림. solver가 바뀌면, MyCam이 인식 -> Solver의 finger 인식 시작
+    setSolver(userNickname);
+    
+   
   };
 
-  const changeResList = async (i) => {
-    resList[i] = finger;
-    visitedList[i] = true;
+   // 퀴즈리스트 받아오기
+   const fetchQuizList = async () => {
+    try {
+      const wordle = await quiz();
+      console.log("오늘의 문제");
+      
+      // 정답 단어를 리스트에 저장
+      const extractedWordNames = wordle.data.map((item) => item.wordName);
+      setQuizWordList(extractedWordNames);
+      // 정답 수어 영상을 리스트에 저장
+      const extractedVideoUrls = wordle.data.map((item) => item.videoUrl);
+      setQuizVideoList(extractedVideoUrls);
+      // 데이터에서 현재 문제의 syllables만 추출하여 quizList에 저장
+      const extractedSyllables = wordle.data.map((item) => item.syllables);
+      console.log(extractedSyllables);
+      const newArray = [...quizList, extractedSyllables]
+      setQuizList(newArray);
 
+      if (session) {
+        await session
+          .signal({
+            data: JSON.stringify({quizList:JSON.stringify(extractedSyllables), quizWordList:JSON.stringify(extractedWordNames), quizVideoList:JSON.stringify(extractedVideoUrls)}), // 퀴즈 시작 정보 및 문제리스트
+            type: "quiz-start",
+          })
+          .then(() => {
+            console.log("Quiz successfully start");
+          })
+          .catch((error) => {
+            console.error("Error starting quiz:", error);
+          });
+      }
+    } catch (error) {
+      console.error("Error fetching playersList:", error);
+    }
+  };
+
+  // 현재 문제의 진행배열 변화
+  const changeResList = async (tempResCnt, tempResList) => {
+    
+    //글자 입력 시그널
     if (session) {
       await session
         .signal({
           data: JSON.stringify({
-            resList: resList,
+            resList: JSON.stringify(tempResList),
+            visitedList:JSON.stringify(visitedList),
+            resCnt : tempResCnt
           }), // 퀴즈 시작 정보를 담아서,
           type: "change-resList",
         })
@@ -225,21 +173,29 @@ const MultiplayPage = () => {
           console.error("Error changing resList:", error);
         });
     }
+    
   };
 
+  // 정답시 다음 스테이지 (3개로 구성) 이동
   const changeStage = async () => {
-    setStage((prevResCnt) => prevResCnt + 1);
-    setIsAnswer(true);
-
+    // 다음 문제로 이동
+    // 다음 스테이지 진행 시 영상 변경, 글자 이펙트 초기화, 리스트에서 새로운 문제 할당
+    // 모든 자모를 맞추면 현재 solver에게 점수 부여, resCnt 초기화, resList 초기화, visitedResList 초기화
+    let nextStage = stage+1;
+    setStage((prevStage) => prevStage + 1);
+    setResCnt(0);
+    setResList(["?","?","?","?","?"]);
+    visitedList = [false, false, false, false, false];
+    
     if (session) {
       await session
         .signal({
           data: JSON.stringify({
-            isAnswer: isAnswer,
+            isAnswer: true,
             stage: stage,
-            res: " ",
+            res: "?",
             visited: false,
-          }), // 퀴즈 시작 정보를 담아서,
+          }),
           type: "change-stage",
         })
         .then(() => {
@@ -249,76 +205,52 @@ const MultiplayPage = () => {
           console.error("Error changing stage:", error);
         });
     }
-  };
+    setTimeout(function() {
+      setIsAnswer(false);
+    }, 3000);
 
-  // 문풀자의 finger가 인식되면 채점을 위해 실행되는 부분
-  useEffect(() => {
-    if (finger) {
-      for (let i = stage; i < stage + 5; i++) {
-        if (!visitedList[i] && quizList[i] === finger) {
-          setResCnt((prevResCnt) => prevResCnt + 1);
-          changeResList(i);
-        }
-        // 모든 자모를 맞추면 다음 문제
-        if (resCnt === 5) {
-          changeStage();
-        }
-      }
-    }
-  }, [finger]);
+    // 만약 마지막 스테이지라면 종료 함수 호출
+    if(nextStage>=quizWordList.length)
+      endGame();
+  }; 
 
-  useEffect(() => {
-    // 게임이 시작되면 실행될 콜백 함수
-    const handleStartQuiz = (event) => {
-      const data = JSON.parse(event.data);
-      console.log("Quiz start :", data.isPlaying);
-      setIsPlaying(data.isPlaying); // 참가자들의 퀴즈 시작 정보 세팅
-      // 게임 시작
-      for (; stage < 3; ) {
-        // 1. 문풀자의 차례가 순서대로 진행, 참가자들에게 알림
-        changeSolver();
-        // 2. 문풀자가 바뀌면, MyCam이 인식 -> 문풀자의 finger 채점
-        // 여기서부터 useEffect[finger]에서 처리
-        // 4. 나온 적 없는 자모 && 정답이라면
-        // 5. 해당 자리에 자모 채우고
-        // 6. resCnt += 정답 자모 수
-        // 7. resCnt가 5가 되면 stage++
-      }
-      // 3문제가 끝나면 게임 종료
-    };
+  const endGame = async () => {
+    // BE에 결과 종료 요청
+    const result = await end(sessionId, userId, myScore);
+    
 
-    const handleChangeSolver = (event) => {
-      const data = JSON.parse(event.data);
-      console.log("now solver :", data.solver);
-      setSolver(data.solver); // 현재 문풀자 정보 세팅
-    };
+    // result 이용하여 필요한 정보 갖고 결과 모달 띄우기 - 나가기는 leaveSession() 호출, 다시하기는 모달 닫기
 
-    const handleSetResList = (event) => {
-      const newData = JSON.parse(event.data);
-      resList = [newData.resList[0], newData.resList[1], newData.resList[2], newData.resList[3], newData.resList[4]];
-    };
 
-    const handleSetStage = (event) => {
-      const newData = JSON.parse(event.data);
-      setStage(newData.stage);
-      setIsAnswer(newData.isAnswer);
-      resList = [newData.res, newData.res, newData.res, newData.res, newData.res];
-      visitedList = [newData.visited, newData.visited, newData.visited, newData.visited, newData.visited];
-    };
-
+    
+    
+    //다른 사용자도 게임 끝내기
     if (session) {
-      session.on("signal:quiz-start", handleStartQuiz); // 게임 시작 정보 전달
-      session.on("signal:change-solver", handleChangeSolver); // 문풀자 변경 정보 전달
-      session.on("signal:change-resList", handleSetResList); // 답안지 리스트 변경 정보 전달
-      session.on("signal:change-stage", handleSetStage); // 스테이지 변경 정보 전달
-    }
+      await session
+        .signal({
+          data: JSON.stringify({
 
-    return () => {
-      if (session) {
-        session.off("signal:quiz-start", handleStartQuiz);
-      }
-    };
-  }, [session]);
+          }), 
+          type: "quiz-end",
+        })
+        .then(() => {
+          console.log("quiz successfully finished");
+        })
+        .catch((error) => {
+          console.error("Error finishing quiz:", error);
+        });
+    }
+    // solver, stage, isPlaying, 퀴즈 리스트초기화
+    myScore = 0;
+    setSolver(null);
+    setStage(0);
+    setIsPlaying(false);
+    setQuizList([]);
+    setQuizWordList([]);
+    setQuizVideoList([]);
+    
+     
+  }
 
   const leaveSession = async () => {
     const requestBody = {
@@ -355,6 +287,243 @@ const MultiplayPage = () => {
       navigate("/quizLobby"); // 퇴장 후 리다이렉트
     }
   };
+
+  // 렌더링 시 오픈비두 띄우기
+  useEffect(() => {
+    const OVInstance = new OpenVidu();
+    setOV(OVInstance);
+    const sessionInstance = OVInstance.initSession();
+
+    sessionInstance.on("streamCreated", (event) => {
+      const subscriber = sessionInstance.subscribe(event.stream, undefined);
+      // 구독자의 connectionData에서 닉네임 파싱
+      console.log(event.stream.connection.data);
+      const connectionData = event.stream.connection.data;
+      const nickname = connectionData || "Anonymous";
+      setSubscribers((prevSubscribers) => [
+        ...prevSubscribers,
+        { streamManager: subscriber, nickname: nickname }, // 구독자 객체에 닉네임 추가
+      ]);
+    });
+
+    sessionInstance.on("streamDestroyed", (event) => {
+      setSubscribers((prevSubscribers) =>
+        prevSubscribers.filter((sub) => sub.streamManager.stream.streamId !== event.stream.streamId)
+      );
+    });
+
+    sessionInstance
+      .connect(token)
+      .then(() => {
+        const publisher = OVInstance.initPublisher(undefined, {
+          audioSource: undefined,
+          videoSource: undefined,
+          publishAudio: false,
+          publishVideo: true,
+          resolution: "640x480",
+          frameRate: 30,
+          insertMode: "APPEND",
+          mirror: true,
+        });
+        sessionInstance.publish(publisher);
+        setPublisher(publisher);
+      })
+      .catch((error) => console.log("There was an error connecting to the session:", error));
+
+    setSession(sessionInstance);
+
+    // 새로운 방장 정보를 처리하는 이벤트 리스너 추가
+    sessionInstance.on("signal:newModerator", (event) => {
+      const newModeratorNickname = event.data;
+      // 현재 사용자가 새로운 방장인지 확인하고 상태 업데이트
+      if (userNickname === newModeratorNickname) {
+        setIsModerator(true);
+        console.log("방장이 되었습니다.");
+      }
+    });
+
+    return () => {
+      if (sessionInstance) {
+        sessionInstance.disconnect();
+      }
+    };
+  }, [sessionId, token]);
+
+  
+  // 새로운 참가자가 들어오면 4명인지 검사하기 위해 실행
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const playerResponse = await players(sessionId);
+        setPlayersList(playerResponse.data);
+        // 참가 인원 배포 전에 4로 수정하기 ***************************************
+        if (playerResponse.data.length <= 4) {
+          setIsFour(true);
+        }
+      } catch (error) {
+        console.error("Error fetching playersList:", error);
+      }
+    };
+
+    fetchData();
+  }, [subscribers]);
+
+  const changeFinger = (value) => {
+    setFinger(value);
+    console.log(value);
+  };
+
+  useEffect(()=> {
+    console.log("resList변화")
+    console.log(resList)
+  },[resList])
+
+  // 글자 하나 입력 (finger 변화할 때마다)시 채점을 위해 실행되는 부분.
+  useEffect(() => {
+      console.log("모션인식")
+      if(isPlaying&&solver===userNickname) {
+      
+      let tempResCnt = resCnt;
+      let tempResList = [...resList];
+      let isCorrect = false;
+      console.log(tempResList)
+        for(let i=0; i<5; i++) {
+          
+          console.log(quizList[stage][0][i]);
+          console.log(finger);
+          
+          // 입력한 적 없는 정답 - 해당 글자의 위치에 맞게 글자 체크, 이펙트 등장
+          if (!visitedList[i] && quizList[stage][0][i]===finger) {
+              
+              console.log(tempResList)
+              tempResList[i] = finger;
+              console.log("afterChange")
+              console.log(tempResList)
+              visitedList[i] = true;
+              tempResCnt += 1;
+              isCorrect = true;
+            }
+        }
+        
+
+        if(isCorrect) {
+          setResList(tempResList)
+          setResCnt(tempResCnt);
+          console.log("포함")
+          console.log(resCnt)
+          changeResList(tempResCnt, tempResList);
+          // 만약 모두 맞추어 낱말을 완성했다면 정답 시그널
+          if (tempResCnt === 5) {
+            if(solver===userNickname) {
+              myScore += 1;
+            }
+            changeStage();
+          } 
+        } 
+        // 오답이거나 입력한 적 있는 정답이면 solver 변화 
+        else {
+          for(let j=0; j<playersList.length; j++) {
+            if(playersList[j].playerNickname===userNickname) {
+              setSolver(playersList[(j+1)%playersList.length].playerNickname);
+              console.log(playersList[(j+1)%playersList.length].playerNickname)
+              break;
+            }
+          }
+          console.log("불포함");
+          // changeSolver();
+        }
+
+        
+        
+      
+      }
+  }, [finger]);
+
+
+  // 세션 시그널 & on 이벤트 부분! 모든 구독자에게 뿌려주는 데이터 위주
+  useEffect(() => {
+    // 게임이 시작되면 실행될 콜백 함수
+    const handleStartQuiz = (event) => {
+      let data = JSON.parse(event.data);
+      
+      // 퀴즈 리스트 업데이트
+      setQuizList( [...quizList, JSON.parse(data.quizList)]);
+      setQuizWordList([...quizWordList, JSON.parse(data.quizWordList)]);
+      setQuizVideoList([...quizVideoList, JSON.parse(data.quizVideoList)]);
+      // 참가자들의 퀴즈 시작 정보 업데이트
+      setIsPlaying(true); 
+
+  
+
+    };
+  
+  
+    const handleChangeSolver = (event) => {
+      let data = JSON.parse(event.data);
+      console.log("now solver :", data.solver);
+      setSolver(data.solver); // 현재 Solver 정보 업데이트
+    };
+
+    const handleNewModerator = (event) => {
+      let newModeratorNickname = event.data;
+      // 현재 사용자가 새로운 방장인지 확인하고 상태 업데이트
+      if (userNickname === newModeratorNickname) {
+        setIsModerator(true);
+        console.log("방장이 되었습니다.");
+      }
+    };
+
+    const handleSetResList = (event) => {
+      let newData = JSON.parse(event.data);
+      setResList([...resList, JSON.parse(newData.resList)])
+      visitedList = JSON.parse(newData.visitedList);
+      // setVisitedList(JSON.parse(newData.visitedList))
+      console.log(newData.resCnt);
+      setResCnt(newData.resCnt);
+      console.log(resCnt)
+    };
+
+    const handleSetStage = (event) => {
+      let newData = JSON.parse(event.data);
+      setStage(newData.stage);
+      setResCnt(0);
+      setResList([newData.res, newData.res, newData.res, newData.res, newData.res]);
+      visitedList = [newData.visited, newData.visited, newData.visited, newData.visited, newData.visited];
+
+      setIsAnswer(newData.isAnswer);
+
+      setTimeout(function() {
+        setIsAnswer(false);
+      }, 3000);
+      
+    };
+
+    const handleEndQuiz = (event) => {
+      if(solver!=null)
+      endGame();
+      
+    };
+
+    if (session) {
+      session.on("signal:quiz-start", handleStartQuiz); // 게임 시작 정보 전달
+      session.on("signal:change-solver", handleChangeSolver); // solver 변경 정보 전달
+      session.on("signal:newModerator", handleNewModerator); // 방장이 방 나가면 방장 변경 정보 전달
+      session.on("signal:change-resList", handleSetResList); // 답안 배열 변경 정보 전달
+      session.on("signal:change-stage", handleSetStage); // 스테이지 변경 정보 전달
+      session.on("signal:quiz-end", handleEndQuiz);
+    }
+
+    return () => {
+      if (session) {
+        session.off("signal:quiz-start", handleStartQuiz);
+        session.off("signal:change-solver", handleChangeSolver); // solver 변경 정보 전달
+        session.off("signal:newModerator", handleNewModerator); // 방장이 방 나가면 방장 변경 정보 전달
+        session.off("signal:change-resList", handleSetResList); // 답안 배열 변경 정보 전달
+        session.off("signal:change-stage", handleSetStage); // 스테이지 변경 정보 전달
+        session.off("signal:quiz-end", handleEndQuiz);
+      }
+    };
+  }, [session]);
 
   return (
     <Container>
@@ -408,7 +577,7 @@ const MultiplayPage = () => {
             ) : (
               <></>
             )}
-            {resList.length === 5 && (
+            {(
               <>
                 <div className="p-1 border-4 border-violet-500">
                   <div onClick={leaveSession} className={styles.leave}>
@@ -416,13 +585,15 @@ const MultiplayPage = () => {
                   </div>
                   <Players publisher={publisher} subscribers={subscribers} />
                   <div className={styles.video}>
-                    <video loop autoPlay muted>
-                      <source src={quizViedoList[stage - 1]} type="video/mp4" />
-                      영상이 존재하지 않습니다.
-                    </video>
+                  <video key={quizVideoList} loop autoPlay muted>
+                    <source src={quizVideoList[stage]} type="video/mp4" />
+                    영상이 존재하지 않습니다.
+                  </video>
                   </div>
-                  <LemonSuquiz resList={resList} stage={stage} />
-                  {isAnswer && <></>}
+                  {resCnt}
+                  {resList}
+                  <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} />
+                  {isAnswer && <div>{solver}님이 정답입니다!!</div>}
                 </div>
               </>
             )}
