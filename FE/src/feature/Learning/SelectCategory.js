@@ -20,7 +20,15 @@ export default function SelectCategory() {
         const filteredSubjects = subjectData.data.filter(
           (subject) => subject.subjectName !== "테스트" && subject.subjectName !== "none"
         );
-        setSubCategories(filteredSubjects);
+
+        // 중복 제거 로직 추가
+        const uniqueSubjects = Array.from(new Set(filteredSubjects.map((sub) => sub.subjectName))).map(
+          (subjectName) => {
+            return filteredSubjects.find((sub) => sub.subjectName === subjectName);
+          }
+        );
+
+        setSubCategories(uniqueSubjects);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -47,8 +55,8 @@ export default function SelectCategory() {
   const CategoryButton = ({ category, onClick, isSelected }) => (
     <button
       className={`mx-1 my-2 px-4 py-1.5 border-2 ${
-        isSelected ? "bg-orange-500 text-white outline-none ring-2 ring-custom-orange" : "bg-white text-orange-500 "
-      } font-medium rounded-lg shadow hover:bg-orange-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-custom-orange focus:ring-opacity-75 transition-colors duration-500`}
+        isSelected ? "bg-orange-100 text-white  ring-1 ring-custom-orange" : "bg-white text-orange-100 "
+      } font-medium rounded-lg border-none shadow-md hover:bg-orange-200 hover:text-white  focus:ring-1 focus:ring-custom-orange focus:ring-opacity-75 transition-colors duration-500`}
       onClick={() => onClick(category)}
     >
       <div>{category}</div>
@@ -83,7 +91,7 @@ export default function SelectCategory() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="w-full h-[90vh] mt-52 flex flex-col justify-start items-center gap-8"
+      className="w-full h-[90vh] flex flex-col justify-center items-center gap-8"
     >
       <motion.div variants={itemVariants} className="font-bold text-2xl">
         오늘의 학습 분야를 골라볼까요?
@@ -103,11 +111,14 @@ export default function SelectCategory() {
           <motion.div variants={itemVariants} className="font-bold text-2xl">
             낱말 주제도 골라보세요!
           </motion.div>
-          <motion.div variants={itemVariants} className="flex justify-center items-center gap-6">
-            {subCategories.map((item, index) => {
+          <motion.div
+            variants={itemVariants}
+            className="w-[40vw] flex justify-center items-center gap-6 overflow-x-auto"
+          >
+            {subCategories.map((item) => {
               return (
                 <CategoryButton
-                  key={index}
+                  key={item.subjectName}
                   category={item.subjectName}
                   onClick={handleSubCategoryChange}
                   isSelected={selectedSub === item.subjectName}
@@ -120,11 +131,14 @@ export default function SelectCategory() {
       {((selectedMain && selectedMain !== "낱말") || (selectedMain === "낱말" && selectedSub)) && (
         <>
           <motion.div variants={itemVariants} className="font-semibold text-2xl  text-center">
-            그럼, {JSON.parse(localStorage.getItem("nicknameStorage")).state.userNickname} 님! SuQuiz와 함께 수어 학습을
-            시작해 볼까요?
+            그럼,{" "}
+            <span className="text-[#d19372]">
+              {JSON.parse(localStorage.getItem("nicknameStorage")).state.userNickname}님!
+            </span>{" "}
+            SuQuiz와 함께 수어 학습을 시작해 볼까요?
             <motion.div
               variants={itemVariants}
-              className="font-medium text-lg text-orange-950 bg-orange-200 rounded-lg mt-2 p-1 px-2"
+              className="font-medium text-lg shadow bg-orange-200 rounded-lg mt-2 p-1 px-2"
             >
               선택한 학습 분야는 '{selectedMain}
               {selectedSub ? `' 이고, 주제는 '` : null}
@@ -132,11 +146,10 @@ export default function SelectCategory() {
             </motion.div>
           </motion.div>
           <motion.div
-            variants={itemVariants}
             onClick={handleStart}
-            className="px-6 py-2 border-custom-yellow rounded-lg shadow-md border-2  hover:bg-amber-400 transition duration-300"
+            className="px-6 py-2 border-[#d19372] bg-white rounded-lg shadow-md border-1 hover:text-white hover:bg-[#d19372]  transition duration-300"
           >
-            <div>학습 시작하기</div>
+            학습 시작하기
           </motion.div>
         </>
       )}

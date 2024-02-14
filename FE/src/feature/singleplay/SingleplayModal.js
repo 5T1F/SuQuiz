@@ -116,7 +116,15 @@ const SingleplayModal = ({ onClose }) => {
             </div>
           </>
         )}
-        {incorrectDateFound && <div className={styles.dot}>&#10060;</div>}
+        {incorrectDateFound && (
+          <>
+            <div className={styles.dotContainer}>
+              <div className={styles.dot}>
+                <span className={styles.unicode}>&#10060;</span>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     );
   };
@@ -136,7 +144,10 @@ const SingleplayModal = ({ onClose }) => {
         />
         <div className={styles.modalContent}>
           <div className={styles.modalTitle}>
-            싱글 플레이 결과<button onClick={onClose}>닫기</button>
+            싱글 플레이 결과
+            <button className={styles.close} onClick={onClose}>
+              &times;
+            </button>
           </div>
           <div className="flex row">
             <div className={styles.wordContent}>

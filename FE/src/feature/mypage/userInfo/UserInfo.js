@@ -10,6 +10,7 @@ import styles from "./UserInfo.module.css";
 import "react-circular-progressbar/dist/styles.css";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import ManageAccountsRoundedIcon from "@mui/icons-material/ManageAccountsRounded";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 const UserInfo = () => {
   const storedId = localStorage.getItem("idStorage");
@@ -153,8 +154,12 @@ const UserInfo = () => {
         {/* 유저 닉네임, 로그아웃, 수정 */}
         <div className="h-1/6 flex flex-row justify-between items-center">
           <div className="flex flex-row justify-center items-center">
-            <img src="${getUserInfo().profileImage}" alt="프사" />
-            <div className="flex flex-row justify-center items-center w-full text-xl font-bold">
+            {getUserInfo().profileImage ? (
+              <img src="${getUserInfo().profileImage}" alt="프로필 이미지" />
+            ) : (
+              <AccountCircleOutlinedIcon style={{ fontSize: 30 }} />
+            )}
+            <div className="flex flex-row justify-center items-center w-full text-xl font-bold mx-2">
               {getUserInfo().nickname}
             </div>
             <button className={styles.logoutButton} onClick={handleLogout}>

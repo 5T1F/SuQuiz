@@ -16,16 +16,21 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logoutButton {
-  height: 30px;
-  padding: 0 5px;
+  /* height: 25px; */
+  padding: 2px 5px;
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   color: #bca79d;
   border: none;
+}
+
+.logoutButton:hover {
+  background-color: #efefef;
 }
 
 .modifyButton {
@@ -67,7 +72,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #bca79d19;
+  background-color: #bca79d27;
   border-radius: 10px;
   padding: 10px 8px;
   margin: 0 5px;

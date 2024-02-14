@@ -22,7 +22,7 @@
     "axios": "^1.6.7",
     "buffer": "^6.0.3",
     "classnames": "^2.5.1",
-    "framer-motion": "^11.0.3",
+    "framer-motion": "^11.0.5",
     "jquery": "^3.7.1",
     "hangul-js": "^0.2.6",
     "moment": "^2.30.1",

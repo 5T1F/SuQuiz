@@ -1,11 +1,10 @@
 import React, { useRef, useEffect } from "react";
-import styles from "./ModalNoMatchingUser.module.css";
+import styles from "./AlertModal.module.css";
 
-const Modal = ({ onClose }) => {
+const AlertModal = ({ onClose, children, className }) => {
   const modalRef = useRef();
 
   const handleClickInside = (event) => {
-    // 모달 내부를 클릭한 경우 이벤트 전파를 중지시킴
     event.stopPropagation();
   };
 
@@ -24,15 +23,15 @@ const Modal = ({ onClose }) => {
   }, [onClose]);
 
   return (
-    <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
-      <div className={styles.modalContent}>
-        <span className={styles.noButton} onClick={onClose}>
+    <div className={styles.modalBackground}>
+      <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
+        <span className={styles.close} onClick={onClose}>
           &times;
         </span>
-        <p>일치하는 사용자가 존재하지 않습니다.</p>
+        <div className={styles.modalContent}>{children}</div>
       </div>
     </div>
   );
 };
 
-export default Modal;
+export default AlertModal;

@@ -37,44 +37,18 @@
   gap: 15px;
 }
 
-.title {
-  font-size: 18px;
-  color: #bca79d;
-}
-
-.btns {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.yesButton {
-  padding: 3px 10px;
-  border: none;
-  border-radius: 5px;
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  /* color: #ffffff; */
+  color: rgb(244, 178, 142);
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  color: #bca79d;
-  border: 1px solid #bca79d;
 }
 
-.yesButton:hover {
-  color: #fefefe;
-  background-color: #9c8a82;
-}
-
-.noButton {
-  padding: 3px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  color: #fefefe;
-  background-color: #bca79d;
-}
-
-.noButton:hover {
-  color: #fefefe;
-  background-color: #9c8a82;
+.close:hover {
+  color: #9c8a82;
 }

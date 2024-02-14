@@ -105,7 +105,7 @@ const RankingList = () => {
     const percentage = Math.min(100, (exp / maxExp) * 100); // 현재 경험치를 퍼센트로 변환, 최대 100%
 
     return (
-      <div className="w-full h-4 bg-gray-200 rounded-full">
+      <div className="w-full h-4 bg-[#e8ebed] rounded-full">
         <div className="h-4 rounded-full bg-coutom-yellow" style={{ width: `${percentage}%` }}></div>
       </div>
     );

@@ -61,7 +61,7 @@ export default function LearningStartPage() {
       <div className="flex h-[90vh]">
         {/* 학습 화면 */}
         {/* 사이드메뉴 */}
-        <div className="px-10 py-6 bg-gray-100 ">
+        <div className="px-10 py-6 bg-[#f3f3f3] ">
           <SideMenu
             selectedMain={selectedMain}
             selectedSub={selectedSub}
@@ -86,7 +86,7 @@ export default function LearningStartPage() {
             <div className={styles.buttonContainer}>
               <button
                 onClick={handleEnd}
-                className="px-6 py-1 border-custom-yellow rounded-lg shadow-md border-2  hover:bg-amber-400 transition duration-300"
+                className="px-6 py-1 border-custom-yellow rounded-lg shadow border-2  hover:bg-amber-100 transition duration-300"
               >
                 학습 종료
               </button>
