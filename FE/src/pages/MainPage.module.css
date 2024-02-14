@@ -3,8 +3,9 @@
 }
 
 .easterEgg {
-  bottom: 0;
-  display: fixed;
+  position: absolute;
+  right: 6px;
+  top: 260px;
 }
 
 .startbuttons {

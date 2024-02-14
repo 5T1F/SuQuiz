@@ -12,7 +12,7 @@ const KakaoLogin = () => {
   };
 
   return (
-    <button className="h-full w-full flex justify-center items-center" onClick={loginKakao}>
+    <button className="flex items-center justify-center w-full h-full" onClick={loginKakao}>
       <img src={kakaoIcon} alt="Kakao login" />
       카카오 로그인
     </button>

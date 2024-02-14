@@ -10,16 +10,15 @@ import {
 } from "../../../app/store";
 
 import styles from "./ModalSignup.module.css";
+import { bottom } from "@popperjs/core";
 
 const Modal = ({ onClose, email }) => {
   const modalRef = useRef();
   const [checkValue, setCheckValue] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(0);
-  const { userId, setUserId } = useAuthStore();
   const { userEmail, setUserEmail } = useUserEmailStore();
   const { provider, setProvider } = useProviderStore();
   const { userNickname, setUserNickname } = useUserNicknameStore();
-  const { accessToken, setAccessToken } = useTokenStore();
   const navigate = useNavigate();
 
   const checkCondition = (value) => {
@@ -116,7 +115,7 @@ const Modal = ({ onClose, email }) => {
         </div>
         <div className={styles.modalContent}>
           <div>
-            <p>닉네임 설정</p>
+            <p className={styles.subtitle}>닉네임 설정</p>
 
             <div className={styles.input}>
               <input
@@ -130,26 +129,22 @@ const Modal = ({ onClose, email }) => {
               <button className={styles.cancelBtn} onClick={handleCheck}>
                 중복검사
               </button>
-              {isConfirmed === 2 && (
-                <p style={{ color: "blue", fontSize: "16px", textAlign: "right" }}>사용 가능한 닉네임입니다.</p>
-              )}
-              {isConfirmed === 1 && (
-                <p style={{ color: "red", fontSize: "16px", textAlign: "right" }}>사용 중인 닉네임입니다.</p>
-              )}
-              {isConfirmed === 3 && (
-                <p style={{ color: "red", fontSize: "16px", textAlign: "right" }}>적합하지 않은 닉네임입니다.</p>
-              )}
+              {isConfirmed === 2 && <p style={{ color: "blue", fontSize: "12px" }}>사용 가능한 닉네임입니다.</p>}
+              {isConfirmed === 1 && <p style={{ color: "red", fontSize: "12px" }}>사용 중인 닉네임입니다.</p>}
+              {isConfirmed === 3 && <p style={{ color: "red", fontSize: "12px" }}>적합하지 않은 닉네임입니다.</p>}
             </div>
           </div>
 
-          <p>SuQuiz 서비스 이용약관에 동의하시면 '저장'을 눌러주세요.</p>
-          <div className={styles.btns}>
-            <button
-              className={isConfirmed === 2 ? styles.requestBtn : styles.disable}
-              onClick={isConfirmed === 2 && handleSignup}
-            >
-              저장
-            </button>
+          <div className={styles.bottomBox}>
+            <p>SuQuiz 서비스 이용약관에 동의하시면 '저장'을 눌러주세요.</p>
+            <div className={styles.btns}>
+              <button
+                className={isConfirmed === 2 ? styles.requestBtn : styles.disable}
+                onClick={isConfirmed === 2 && handleSignup}
+              >
+                저장
+              </button>
+            </div>
           </div>
         </div>
       </div>
