@@ -75,6 +75,10 @@
   color: black;
 }
 
+.input {
+  height: 7vh;
+}
+
 .searchInput {
   padding: 3px;
   margin: 5px 0;

@@ -78,13 +78,15 @@ export default function Nav() {
             </NavLink>
           </div>
           <div className={styles.navItem}>
-            <div className={styles.bookmark}>
+            <div className={styles.fontSize}>
               <button onClick={handleLearningBookmark}>단어장</button>
             </div>
             <div className={styles.userInfoContainer}>
               {userNickname === null ? (
                 <div>
-                  <button onClick={handleLoginClick}>로그인</button>
+                  <button className={styles.fontSize} onClick={handleLoginClick}>
+                    로그인
+                  </button>
                 </div>
               ) : (
                 <>

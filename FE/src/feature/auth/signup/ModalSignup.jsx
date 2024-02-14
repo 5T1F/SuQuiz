@@ -118,7 +118,7 @@ const Modal = ({ onClose, email }) => {
           <div>
             <p>닉네임 설정</p>
 
-            <div>
+            <div className={styles.input}>
               <input
                 className={styles.searchInput}
                 type="text"
@@ -131,13 +131,13 @@ const Modal = ({ onClose, email }) => {
                 중복검사
               </button>
               {isConfirmed === 2 && (
-                <p style={{ color: "blue", fontSize: "10px", textAlign: "right" }}>사용 가능한 닉네임입니다.</p>
+                <p style={{ color: "blue", fontSize: "16px", textAlign: "right" }}>사용 가능한 닉네임입니다.</p>
               )}
               {isConfirmed === 1 && (
-                <p style={{ color: "red", fontSize: "10px", textAlign: "right" }}>사용 중인 닉네임입니다.</p>
+                <p style={{ color: "red", fontSize: "16px", textAlign: "right" }}>사용 중인 닉네임입니다.</p>
               )}
               {isConfirmed === 3 && (
-                <p style={{ color: "red", fontSize: "10px", textAlign: "right" }}>적합하지 않은 닉네임입니다.</p>
+                <p style={{ color: "red", fontSize: "16px", textAlign: "right" }}>적합하지 않은 닉네임입니다.</p>
               )}
             </div>
           </div>
