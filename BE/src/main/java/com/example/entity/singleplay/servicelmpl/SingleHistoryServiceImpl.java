@@ -273,7 +273,6 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
         List<QuestDto.DailyListResponse> threeQuest = new ArrayList<>();
 
-        System.out.println("create daily quest");
         List<Word> words = wordRepository.findByCategory(Category.낱말);
 
         // 랜덤으로 하나 선택
@@ -281,8 +280,10 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
             while(true) {
                 Random random = new Random();
-                int index = random.nextInt(words.size());
-                Word word = words.get(index);
+                //시연 시 단어 "친구"로 고정
+                Word word = wordRepository.findByWordName("친구");
+//                int index = random.nextInt(words.size());
+//                Word word = words.get(index);
 
                 System.out.println(word.getWordName());
 
@@ -310,7 +311,8 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
                             .syllables(list)
                             .build());
                 }
-                if (threeQuest.size() == 3) break;
+                // 시연 시 단어개수 1로 고정
+                if (threeQuest.size() == 1) break;
             }
         }
 

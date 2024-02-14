@@ -56,15 +56,7 @@ public class SingleHistoryController {
                 .build(), HttpStatus.OK);
     }
 
-    @GetMapping("/multi/quest")
-    public ResponseEntity<CommonResponse<List<QuestDto.DailyListResponse>>> multiQuest() {
 
-        return new ResponseEntity<>(CommonResponse.<List<QuestDto.DailyListResponse>>builder()
-                .status(HttpStatus.OK.value())
-                .message("multi quest")
-                .data(singleHistoryService.multiQuest())
-                .build(), HttpStatus.OK);
-    }
 
     // 종료
     @PostMapping("/end")
