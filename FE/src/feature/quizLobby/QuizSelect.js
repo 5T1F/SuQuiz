@@ -199,6 +199,12 @@ const QuizSelect = () => {
     },
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      joinSession();
+    }
+  };
+
   return (
     <>
       <div className="flex items-center justify-center w-full h-full">
@@ -243,7 +249,7 @@ const QuizSelect = () => {
                   <div
                     className={`w-full h-24 p-1 rounded-xl shadow transition bg-white flex flex-col items-center justify-center`}
                   >
-                    <div onClick={joinSession} className="mb-2 flex items-center justify-center">
+                    <div onClick={joinSession} className="flex items-center justify-center mb-2">
                       코드로 입장하기
                     </div>
                     <input
@@ -251,6 +257,7 @@ const QuizSelect = () => {
                       placeholder=" 입장 코드를 입력하세요 "
                       value={codeValue}
                       onChange={(e) => setCodeValue(e.target.value)}
+                      onKeyPress={handleKeyPress}
                       className="z-50 mx-1 text-center placeholder-gray-400 border-2 rounded-md border-custom-green h-9 cursor-text placeholder-opacity-80"
                     />
                   </div>
@@ -258,8 +265,8 @@ const QuizSelect = () => {
               </>
             )}
           </AnimatePresence>
-          <div className="flex justify-center items-start overflow:hidden">
-            <div className="h-60 flex justify-center items-center">
+          <div className="flex items-start justify-center overflow:hidden">
+            <div className="flex items-center justify-center h-60">
               <Lottie options={limeJuiceOptions} height={300} isStopped={!isHoveredMulti} />
             </div>
             <div className="flex items-center justify-center h-60">
