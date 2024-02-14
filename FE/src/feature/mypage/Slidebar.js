@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import UserInfo from "./userInfo/UserInfo";
@@ -12,6 +12,27 @@ const Slidebar = ({ onClose, isSlidebarOpen }) => {
     onClose(); // 버튼 클릭 시 사이드바 닫기
   };
 
+  const modalRef = useRef();
+
+  const handleClickInside = (event) => {
+    // 모달 내부를 클릭한 경우 이벤트 전파를 중지시킴
+    event.stopPropagation();
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   const slideInAnimation = {
     hidden: { x: "100%", opacity: 30 },
     visible: { x: 0, opacity: 1, transition: { type: "inertia", velocity: 125, timeConstant: 80 } },
@@ -19,7 +40,7 @@ const Slidebar = ({ onClose, isSlidebarOpen }) => {
   };
 
   return (
-    <>
+    <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
       <motion.div
         className={styles.slidebar}
         variants={slideInAnimation}
@@ -39,7 +60,7 @@ const Slidebar = ({ onClose, isSlidebarOpen }) => {
           </div>
         </div>
       </motion.div>
-    </>
+    </div>
   );
 };
 
