@@ -1,7 +1,9 @@
 package com.example.entity.config.dummy;
 
+import com.example.entity.user.domain.Level;
 import com.example.entity.user.domain.OAuthProvider;
 import com.example.entity.user.domain.User;
+import com.example.entity.user.repository.LevelRepository;
 import com.example.entity.user.repository.UserRepository;
 import com.example.entity.word.domain.Category;
 import com.example.entity.word.domain.Subject;
@@ -21,19 +23,19 @@ public class DummyDataService {
     private final WordRepository wordRepository;
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
-
+    private final LevelRepository levelRepository;
     @Transactional
     public void insertDummyData() {
 
         User user1 = User.builder()
-                .email("asdfg@naver.com")
+                .email("asdf@kakao.com")
                 .correctCount(0)
                 .maxCorrectCount(0)
                 .solveCount(0)
                 .imageUrl("image.com")
                 .xp(0)
-                .level(1)
-                .nickname("DummyUser")
+                .level(5)
+                .nickname("하이테이블")
                 .oAuthProvider(OAuthProvider.KAKAO)
                 .isPlaying(false).build();
 
@@ -45,13 +47,150 @@ public class DummyDataService {
                 .maxCorrectCount(0)
                 .solveCount(0)
                 .imageUrl("image.com")
-                .xp(0)
-                .level(1)
-                .nickname("DummyUser2")
+                .xp(50)
+                .level(10)
+                .nickname("싸피십기생")
                 .oAuthProvider(OAuthProvider.KAKAO)
                 .isPlaying(false).build();
 
         userRepository.save(user2);
+
+        User user12 = User.builder()
+                .email("asdawda@kakao.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(90)
+                .level(20)
+                .nickname("수어왕")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        User user3 = User.builder()
+                .email("bbbnkajw@kakao.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(5)
+                .level(2)
+                .nickname("수어는참수어")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        User user4 = User.builder()
+                .email("asiiiad@kakao.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(0)
+                .level(1)
+                .nickname("덕명동소통왕")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        User user5 = User.builder()
+                .email("asdleza@kakao.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(15)
+                .level(3)
+                .nickname("레자미")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        User user6 = User.builder()
+                .email("aggeasd@kakao.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(5)
+                .level(1)
+                .nickname("수어학과신입생")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        User user7 = User.builder()
+                .email("asbrjskwd@kakao.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(145)
+                .level(11)
+                .nickname("베토벤")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        User user8 = User.builder()
+                .email("abetho@kakao.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(320)
+                .level(15)
+                .nickname("헬렌켈러")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        User user9 = User.builder()
+                .email("asd999@kakao.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(0)
+                .level(9)
+                .nickname("비둘기")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        User user10 = User.builder()
+                .email("asdotjdd@kakao.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(0)
+                .level(6)
+                .nickname("대성혁")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+
+        User user11 = User.builder()
+                .email("asb302d@kakao.com")
+                .correctCount(0)
+                .maxCorrectCount(0)
+                .solveCount(0)
+                .imageUrl("image.com")
+                .xp(15)
+                .level(1)
+                .nickname("비삼공이")
+                .oAuthProvider(OAuthProvider.KAKAO)
+                .isPlaying(false).build();
+        userRepository.save(user3);
+        userRepository.save(user4);
+        userRepository.save(user5);
+        userRepository.save(user6);
+        userRepository.save(user7);
+        userRepository.save(user8);
+        userRepository.save(user9);
+        userRepository.save(user10);
+        userRepository.save(user11);
+        userRepository.save(user12);
+
+        for(int i=2; i<=100; i++) {
+            Level newLv = Level.builder().level(i).xp(10+(50*(i-2))).build();
+            levelRepository.save(newLv);
+        }
+
+
 
         Subject none = insertSubject("none");
         Subject 일상 = insertSubject("일상");
