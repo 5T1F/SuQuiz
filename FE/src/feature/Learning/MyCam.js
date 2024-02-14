@@ -48,7 +48,7 @@ const MyCam = ({ categoryNumber, changeFinger, isVideoVisible }) => {
      * Django는 ASGI로 실행되어야함 ... 매우매우 중요
      */
     // const url = "ws://" + "localhost:8000" + "/ws/somepath/";
-    const url = "ws://" + "i10b302.p.ssafy.io:8000/" + "ws/" + `${categoryNumber}`;
+    const url = "wss://" + "suquiz.shop/" + "ws/" + `${categoryNumber}`;
     socketRef.current = new WebSocket(url);
 
     // 소켓 연결
@@ -165,11 +165,7 @@ const MyCam = ({ categoryNumber, changeFinger, isVideoVisible }) => {
 
   return (
     <div>
-      <video
-        ref={videoRef}
-        className={styles.video}
-        style={{ display: isVideoVisible ? "block" : "none" }}
-      ></video>
+      <video ref={videoRef} className={styles.video} style={{ display: isVideoVisible ? "block" : "none" }}></video>
       <canvas ref={canvasRef} className={styles.canvas}></canvas>
 
       {/* draw landmarks to hand

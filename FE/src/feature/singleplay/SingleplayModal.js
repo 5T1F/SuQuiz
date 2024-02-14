@@ -79,7 +79,7 @@ const SingleplayModal = ({ onClose }) => {
       return chunkedArr;
     };
 
-    const textChunks = chunkString(modalResult.resultText, 5);
+    const textChunks = chunkString(modalResult.resultText, 10);
     correctString += textChunks.join("\n");
 
     navigator.clipboard
