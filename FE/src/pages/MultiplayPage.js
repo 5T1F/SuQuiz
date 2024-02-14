@@ -42,7 +42,7 @@ const MultiplayPage = () => {
   const [quizVideoList, setQuizVideoList] = useState([]);
   const [resCnt, setResCnt] = useState(0);
   const [resList, setResList] = useState([]);
-  let visitedList = [false, false, false, false, false];
+  const [visitedList, setVisitedList] = useState([false, false, false, false, false]);
   const [isAnswer, setIsAnswer] = useState(false);
   const [isStartStage, setIsStartStage] = useState(true);
   const [isModerator, setIsModerator] = useState(initialIsModerator);
@@ -146,14 +146,14 @@ const MultiplayPage = () => {
   };
 
   // 현재 문제의 진행배열 변화
-  const changeResList = async (tempResCnt, tempResList) => {
+  const changeResList = async (tempResCnt, tempResList, tempVisitedList) => {
     //글자 입력 시그널
     if (session) {
       await session
         .signal({
           data: JSON.stringify({
             resList: JSON.stringify(tempResList),
-            visitedList: JSON.stringify(visitedList),
+            visitedList: JSON.stringify(tempVisitedList),
             resCnt: tempResCnt,
           }), // 퀴즈 시작 정보를 담아서,
           type: "change-resList",
@@ -176,7 +176,7 @@ const MultiplayPage = () => {
     setStage((prevStage) => prevStage + 1);
     setResCnt(0);
     setResList(["?", "?", "?", "?", "?"]);
-    visitedList = [false, false, false, false, false];
+    setVisitedList([false, false, false, false, false]);
 
     if (session) {
       await session
@@ -364,31 +364,48 @@ const MultiplayPage = () => {
     console.log("모션인식");
     if (isPlaying && solver === userNickname) {
       let tempResCnt = resCnt;
-      let tempResList = [...resList];
       let isCorrect = false;
-      console.log(tempResList);
-      for (let i = 0; i < 5; i++) {
-        console.log(quizList[stage][0][i]);
-        console.log(finger);
+      // let tempResList = [...resList];
+      
+      // console.log(tempResList);
+      // for (let i = 0; i < 5; i++) {
+      //   console.log(quizList[stage][0][i]);
+      //   console.log(finger);
 
         // 입력한 적 없는 정답 - 해당 글자의 위치에 맞게 글자 체크, 이펙트 등장
-        if (!visitedList[i] && quizList[stage][0][i] === finger) {
-          console.log(tempResList);
-          tempResList[i] = finger;
-          console.log("afterChange");
-          console.log(tempResList);
-          visitedList[i] = true;
-          tempResCnt += 1;
-          isCorrect = true;
-        }
-      }
+      //   if (!visitedList[i] && quizList[stage][0][i] === finger) {
+      //     console.log(tempResList);
+      //     tempResList[i] = finger;
+      //     console.log("afterChange");
+      //     console.log(tempResList);
+      //     visitedList[i] = true;
+      //     tempResCnt += 1;
+      //     isCorrect = true;
+      //   }
+      // }
+      let tempVisitedList = [...visitedList];
+      console.log(quizList[stage][0]);
+      console.log(finger);
+      console.log(visitedList);
+      console.log(resList)
+       // 새로운 resList 계산
+      const tempResList = resList.map((item, index) => {
+      if (!visitedList[index] && quizList[stage][0][index] == finger) {
+        tempVisitedList[index] = true;
+        tempResCnt += 1;
+        isCorrect = true;
+        return finger; // 현재 finger 값으로 업데이트
+       }
+        return item; // 변경 없음
+      });
+
 
       if (isCorrect) {
         setResList(tempResList);
         setResCnt(tempResCnt);
         console.log("포함");
         console.log(resCnt);
-        changeResList(tempResCnt, tempResList);
+        changeResList(tempResCnt, tempResList, tempVisitedList);
         // 만약 모두 맞추어 낱말을 완성했다면 정답 시그널
         if (tempResCnt === 5) {
           if (solver === userNickname) {
@@ -444,7 +461,7 @@ const MultiplayPage = () => {
     const handleSetResList = (event) => {
       let newData = JSON.parse(event.data);
       setResList([...resList, JSON.parse(newData.resList)]);
-      visitedList = JSON.parse(newData.visitedList);
+      setVisitedList(JSON.parse(newData.visitedList));
       // setVisitedList(JSON.parse(newData.visitedList))
       console.log(newData.resCnt);
       setResCnt(newData.resCnt);
@@ -456,7 +473,7 @@ const MultiplayPage = () => {
       setStage(newData.stage);
       setResCnt(0);
       setResList([newData.res, newData.res, newData.res, newData.res, newData.res]);
-      visitedList = [newData.visited, newData.visited, newData.visited, newData.visited, newData.visited];
+      setVisitedList([newData.visited, newData.visited, newData.visited, newData.visited, newData.visited]);
 
       setIsAnswer(newData.isAnswer);
 
