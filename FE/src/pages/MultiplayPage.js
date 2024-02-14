@@ -17,9 +17,9 @@ const MultiplayPage = () => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const storedToken = localStorage.getItem("tokenStorage");
-  const parsedToken = JSON.parse(storedToken);
-  const accessToken = parsedToken.state.accessToken;
+  // const storedToken = localStorage.getItem("tokenStorage");
+  // const parsedToken = JSON.parse(storedToken);
+  // const accessToken = parsedToken.state.accessToken;
   const storedNickname = localStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
