@@ -41,7 +41,7 @@ const WaitingRoomSidebar = ({ session, isPlaying }) => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch(`/mypage/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/mypage/${userId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -130,14 +130,14 @@ const WaitingRoomSidebar = ({ session, isPlaying }) => {
                 message.senderNickname !== userInfoData.nickname ? styles.receivedMessageRow : styles.sentMessageRow
               }`}
             >
+              {message.senderNickname !== userInfoData.nickname && (
+                <div className={styles.senderNickname}>{message.senderNickname}</div>
+              )}
               <div
                 className={`${
                   message.senderNickname !== userInfoData.nickname ? styles.receivedMessage : styles.sentMessage
                 }`}
               >
-                {message.senderNickname !== userInfoData.nickname && (
-                  <span className={styles.senderNickname}>{message.senderNickname}</span>
-                )}
                 <span className={styles.messageContent}>{message.message}</span>
               </div>
             </div>
