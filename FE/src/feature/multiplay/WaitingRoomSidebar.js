@@ -97,31 +97,35 @@ const WaitingRoomSidebar = ({ session, isPlaying }) => {
         <></>
       ) : (
         <>
-          {/* 사용자 정보 표시 부분 */}
-          <div className={styles.userInfo}>
-            <div className="relative w-20 h-24">
-              <img src={flag} alt="Flag" className="absolute inset-0 z-10 object-cover w-full h-full" />
-              <div className="absolute inset-0 z-20 flex items-center justify-center pb-3">
-                <div className="font-bold text-2xl text-[#f4b28e]">Lv.{userInfoData.level}</div>
+          <div className={styles.beforePlaying}>
+            {/* 사용자 정보 표시 부분 */}
+            <div className={styles.userInfo}>
+              <div className="relative w-20 h-24">
+                <img src={flag} alt="Flag" className="absolute inset-0 z-10 object-cover w-full h-full" />
+                <div className="absolute inset-0 z-20 flex items-center justify-center pb-3">
+                  <div className="font-bold text-2xl text-[#f4b28e]">Lv.{userInfoData.level}</div>
+                </div>
+              </div>
+              {/* <img src={getUserInfo().profileImage} alt="프로필 이미지" className={styles.profileImage} /> */}
+              <div className="w-72">
+                <div className="w-full mb-1 text-2xl font-bold">{userInfoData.nickname}</div>
+                <div className="text-gray-500">EXP.{userInfoData.exp}</div>
+                <div className={styles.progressBar}>
+                  <LinearProgressbar level={userInfoData.level} exp={userInfoData.exp} />
+                </div>
               </div>
             </div>
-            {/* <img src={getUserInfo().profileImage} alt="프로필 이미지" className={styles.profileImage} /> */}
-            <div className="w-72">
-              <div className="w-full mb-1 text-2xl font-bold">{userInfoData.nickname}</div>
-              <div className="text-gray-500">EXP.{userInfoData.exp}</div>
-              <div className={styles.progressBar}>
-                <LinearProgressbar level={userInfoData.level} exp={userInfoData.exp} />
-              </div>
+            {/* 친구한테 초대코드 보내기 위한 컴포넌트 */}
+            <div className={styles.friendList}>
+              <FriendList isMultiplay={true} />
             </div>
           </div>
-          {/* 친구한테 초대코드 보내기 위한 컴포넌트 */}
-          <FriendList isMultiplay={true} />
         </>
       )}
 
       {/* 오픈비두로 대기실 내 실시간 채팅 */}
       {/* 채팅 메시지 UI */}
-      <div className={styles.chat}>
+      <div className={`${isPlaying ? styles.bottombar : styles.sidebar}`}>
         <div className={styles.messageSet}>
           {chatHistory.map((message, index) => (
             <div

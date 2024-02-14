@@ -1,12 +1,17 @@
-.userInfo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+.beforePlaying {
   gap: 10px;
   background-color: white;
   border-radius: 1rem;
   padding: 10px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  height: 48%; /* 컴포넌트의 전체 높이를 설정 */
+  margin-bottom: 5%;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3%;
 }
 
 .progressBar {
@@ -16,17 +21,25 @@
   padding-right: 10px;
 }
 
-.chat {
+.sidebar {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 80%; /* 채팅 컴포넌트의 전체 높이를 설정 */
+  height: 60%; /* 채팅 컴포넌트의 전체 높이를 설정 */
+  background-color: #f3f3f3;
+  border-radius: 15px;
+}
+
+.bottombar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: #f3f3f3;
   border-radius: 15px;
 }
 
 .messageSet {
-  overflow-y: auto;
+  overflow-y: scroll;
   padding: 20px;
   height: calc(100% - 60px); /* 입력 필드 높이를 제외한 높이 */
 }

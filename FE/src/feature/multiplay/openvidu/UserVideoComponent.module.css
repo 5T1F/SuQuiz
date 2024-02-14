@@ -3,6 +3,13 @@
   margin: 0 10% 10% 0;
 }
 
+.video {
+  transform: scaleX(-1);
+  height: auto;
+  border-radius: 0.5rem;
+  margin-bottom: 2%;
+}
+
 .nickname {
   display: flex;
   justify-content: center;

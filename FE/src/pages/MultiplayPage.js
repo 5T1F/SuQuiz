@@ -514,13 +514,13 @@ const MultiplayPage = () => {
             {/* 게임 시작 전 */}
             <div className={styles.leftContainer}>
               <div className={styles.topButton}>
+                <button onClick={leaveSession} className={styles.leave}>
+                  나가기
+                </button>
                 <div className={styles.member}>
                   <GroupsIcon fontSize="large" /> &nbsp;
                   {subscribers.length + 1} / 4
                 </div>
-                <button onClick={leaveSession} className={styles.leave}>
-                  나가기
-                </button>
               </div>
               <Players publisher={publisher} subscribers={subscribers} />
               <div className={styles.bottomButton}>
