@@ -6,6 +6,7 @@ import Players from "../feature/multiplay/Players";
 import WaitingRoomSidebar from "../feature/multiplay/WaitingRoomSidebar";
 import MyCam from "../feature/Learning/MyCam";
 import LemonSuquiz from "../feature/multiplay/LemonSuquiz";
+import MultiplayModal from "../feature/multiplay/MultiplayModal";
 import { exitQuiz, players, quiz, start, end } from "../apis/multiplayApi";
 
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -48,6 +49,13 @@ const MultiplayPage = () => {
   const [isModerator, setIsModerator] = useState(initialIsModerator);
   const [finger, setFinger] = useState("#");
   let myScore = 0;
+  // 모달창 노출 여부 state
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 함수를 전달하여 모달 닫기
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   // 초대코드 복사
   const copyCode = () => {
@@ -207,8 +215,12 @@ const MultiplayPage = () => {
   const endGame = async () => {
     // BE에 결과 종료 요청
     const result = await end(sessionId, userId, myScore);
-
-    // result 이용하여 필요한 정보 갖고 결과 모달 띄우기 - 나가기는 leaveSession() 호출, 다시하기는 모달 닫기
+    // 결과가 제대로 반환 되었다면
+    if (result.data) {
+      // setQuizResultList(result.data); //세팅하자
+      // result 이용하여 필요한 정보 갖고 결과 모달 띄우기 - 나가기는 leaveSession() 호출, 다시하기는 모달 닫기
+      setModalOpen(true);
+    }
 
     //다른 사용자도 게임 끝내기
     if (session) {
@@ -331,7 +343,7 @@ const MultiplayPage = () => {
     };
   }, [sessionId, token]);
 
-  // 새로운 참가자가 들어오면 4명인지 검사하기 위해 실행
+  // 새로운 참가자가 들어오면 4명인지 검사하기 위 해 실행
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -507,93 +519,96 @@ const MultiplayPage = () => {
   }, [session]);
 
   return (
-    <Container>
-      <div className={styles.container}>
-        {!isPlaying ? (
-          <>
-            {/* 게임 시작 전 */}
-            <div className={styles.leftContainer}>
-              <div className={styles.topButton}>
-                <button onClick={leaveSession} className={styles.leave}>
-                  나가기
-                </button>
-                <div className={styles.member}>
-                  <GroupsIcon fontSize="large" /> &nbsp;
-                  {subscribers.length + 1} / 4
-                </div>
-              </div>
-              <Players publisher={publisher} subscribers={subscribers} />
-              <div className={styles.bottomButton}>
-                <div className={styles.code} onClick={copyCode}>
-                  입장 코드 : {inviteCode} &nbsp;
-                  <ContentCopyIcon fontSize="x-small" />
-                </div>
-                {isModerator ? (
-                  <>
-                    {/* 방장 */}
-                    {/* 4명이 모이기 전/후 */}
-                    {isFour ? (
-                      <div onClick={startQuiz} className={styles.start}>
-                        시작하기
-                      </div>
-                    ) : (
-                      <div className={styles.unactive}>시작하기</div>
-                    )}
-                  </>
-                ) : (
-                  <>{/* 참가자라서 시작하기 버튼 X */}</>
-                )}
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            {/* 게임 시작 후 */}
-            {solver === userNickname ? (
-              <>
-                <div className={styles.mycam}>
-                  <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={false}></MyCam>
-                </div>
-              </>
-            ) : (
-              <></>
-            )}
-            {
-              <>
-                <div className={styles.leftContainer}>
-                  <div onClick={leaveSession} className={styles.leave}>
-                    나가기
-                  </div>
-                  <div className={styles.cellList}>
-                    {resList.map((index) => (
-                      <div className={styles.cell}>{index === "?" ? "ㅤ" : index}</div>
-                    ))}
-                  </div>
-                  <Players publisher={publisher} subscribers={subscribers} solver={solver} />
-                  {/* <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} /> */}
-                  {isAnswer && <div>{solver}님이 정답입니다!!</div>}
-                </div>
-              </>
-            }
-          </>
-        )}
-        <div>
+    <>
+      <Container>
+        <div className={styles.container}>
           {!isPlaying ? (
-            <></>
+            <>
+              {/* 게임 시작 전 */}
+              <div className={styles.leftContainer}>
+                <div className={styles.topButton}>
+                  <button onClick={leaveSession} className={styles.leave}>
+                    나가기
+                  </button>
+                  <div className={styles.member}>
+                    <GroupsIcon fontSize="large" /> &nbsp;
+                    {subscribers.length + 1} / 4
+                  </div>
+                </div>
+                <Players publisher={publisher} subscribers={subscribers} />
+                <div className={styles.bottomButton}>
+                  <div className={styles.code} onClick={copyCode}>
+                    입장 코드 : {inviteCode} &nbsp;
+                    <ContentCopyIcon fontSize="x-small" />
+                  </div>
+                  {isModerator ? (
+                    <>
+                      {/* 방장 */}
+                      {/* 4명이 모이기 전/후 */}
+                      {isFour ? (
+                        <div onClick={startQuiz} className={styles.start}>
+                          시작하기
+                        </div>
+                      ) : (
+                        <div className={styles.unactive}>시작하기</div>
+                      )}
+                    </>
+                  ) : (
+                    <>{/* 참가자라서 시작하기 버튼 X */}</>
+                  )}
+                </div>
+              </div>
+            </>
           ) : (
-            <div className={styles.video}>
-              <video key={quizVideoList} loop autoPlay muted style={{ borderRadius: "0.5rem" }}>
-                <source src={quizVideoList[stage]} type="video/mp4" />
-                영상이 존재하지 않습니다.
-              </video>
-            </div>
+            <>
+              {/* 게임 시작 후 */}
+              {solver === userNickname ? (
+                <>
+                  <div className={styles.mycam}>
+                    <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={false}></MyCam>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+              {
+                <>
+                  <div className={styles.leftContainer}>
+                    <div onClick={leaveSession} className={styles.leave}>
+                      나가기
+                    </div>
+                    <div className={styles.cellList}>
+                      {resList.map((index) => (
+                        <div className={styles.cell}>{index === "?" ? "ㅤ" : index}</div>
+                      ))}
+                    </div>
+                    <Players publisher={publisher} subscribers={subscribers} solver={solver} />
+                    {/* <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} /> */}
+                  </div>
+                </>
+              }
+            </>
           )}
-          <div className={styles.sidebar} style={isPlaying ? {} : { height: "83vh" }}>
-            <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
+          <div>
+            {!isPlaying ? (
+              <></>
+            ) : (
+              <div className={styles.video}>
+                <video key={quizVideoList} loop autoPlay muted style={{ borderRadius: "0.5rem" }}>
+                  <source src={quizVideoList[stage]} type="video/mp4" />
+                  영상이 존재하지 않습니다.
+                </video>
+              </div>
+            )}
+            <div className={styles.sidebar} style={isPlaying ? {} : { height: "83vh" }}>
+              <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
+            </div>
           </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+
+      {modalOpen && <MultiplayModal sessionId={sessionId} myScore={myScore} onClose={handleCloseModal} />}
+    </>
   );
 };
 
