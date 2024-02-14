@@ -2,6 +2,11 @@
   height: 90vh;
 }
 
+.easterEgg {
+  bottom: 0;
+  display: fixed;
+}
+
 .startbuttons {
   position: absolute;
   left: 10vw;

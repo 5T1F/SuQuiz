@@ -43,7 +43,7 @@ export default function MainPage() {
   return (
     <>
       <Container>
-        <img src={EasterEgg} width={20} onClick={redirectToLink} className="float-right m-10" />
+        <img src={EasterEgg} width={20} onClick={redirectToLink} className={styles.easterEgg} />
         <div className={styles.container}>
           <div className={styles.startbuttons}>
             <button className={styles.quizStart} onClick={handleQuizStart}>

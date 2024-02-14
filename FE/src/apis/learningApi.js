@@ -1,4 +1,4 @@
-const BASE_URL = "";
+const BASE_URL = process.env.REACT_APP_API_ROOT;
 const storedToken = localStorage.getItem("tokenStorage");
 const parsedToken = JSON.parse(storedToken || "{}");
 const accessToken = parsedToken?.state?.accessToken;

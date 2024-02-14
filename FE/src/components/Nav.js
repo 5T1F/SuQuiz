@@ -74,11 +74,11 @@ export default function Nav() {
         <div>
           <div className={styles.navLogo}>
             <NavLink to="/">
-              <img src={Logo} alt="logo" width={120} />
+              <img src={Logo} alt="logo" width={130} />
             </NavLink>
           </div>
           <div className={styles.navItem}>
-            <div>
+            <div className={styles.bookmark}>
               <button onClick={handleLearningBookmark}>단어장</button>
             </div>
             <div className={styles.userInfoContainer}>
@@ -89,7 +89,7 @@ export default function Nav() {
               ) : (
                 <>
                   <div className={styles.accountCircleIcon}>
-                    <AccountCircleIcon onClick={toggleSlidebar} />
+                    <AccountCircleIcon fontSize="large" onClick={toggleSlidebar} />
                   </div>
                   {isSlidebarOpen && <div className={styles.overlay} onClick={toggleSlidebar} />}
                   <AnimatePresence>
