@@ -81,9 +81,9 @@ const MultiplayPage = () => {
         const publisher = OVInstance.initPublisher(undefined, {
           audioSource: undefined,
           videoSource: undefined,
-          publishAudio: false,
+          publishAudio: true,
           publishVideo: true,
-          resolution: "640x480",
+          resolution: "320x240",
           frameRate: 30,
           insertMode: "APPEND",
           mirror: true,
@@ -153,7 +153,7 @@ const MultiplayPage = () => {
         const players = await playsers(sessionId);
         setPlayersList(players.data);
         // 배포 전에 4로 수정하기 ***************************************
-        if (players.data.length === 2) {
+        if (players.data.length < 5) {
           setIsFour(true);
         }
       } catch (error) {
@@ -293,15 +293,6 @@ const MultiplayPage = () => {
       setSolver(data.solver); // 현재 문풀자 정보 세팅
     };
 
-    const handleNewModerator = (event) => {
-      const newModeratorNickname = event.data;
-      // 현재 사용자가 새로운 방장인지 확인하고 상태 업데이트
-      if (userNickname === newModeratorNickname) {
-        setIsModerator(true);
-        console.log("방장이 되었습니다.");
-      }
-    };
-
     const handleSetResList = (event) => {
       const newData = JSON.parse(event.data);
       resList = [newData.resList[0], newData.resList[1], newData.resList[2], newData.resList[3], newData.resList[4]];
@@ -318,7 +309,6 @@ const MultiplayPage = () => {
     if (session) {
       session.on("signal:quiz-start", handleStartQuiz); // 게임 시작 정보 전달
       session.on("signal:change-solver", handleChangeSolver); // 문풀자 변경 정보 전달
-      session.on("signal:newModerator", handleNewModerator); // 방장이 방 나가면 방장 변경 정보 전달
       session.on("signal:change-resList", handleSetResList); // 답안지 리스트 변경 정보 전달
       session.on("signal:change-stage", handleSetStage); // 스테이지 변경 정보 전달
     }
@@ -368,10 +358,10 @@ const MultiplayPage = () => {
 
   return (
     <Container>
-      {!isPlaying ? (
-        <>
-          {/* 게임 시작 전 */}
-          <div className="flex">
+      <div className={`${isPlaying ? "" : styles.container}`}>
+        {!isPlaying ? (
+          <>
+            {/* 게임 시작 전 */}
             <div className={styles.leftContainer}>
               <div className={styles.topButton}>
                 <div className={styles.member}>
@@ -405,47 +395,43 @@ const MultiplayPage = () => {
                 )}
               </div>
             </div>
-            <div className="w-2/6 h-[90vh] p-1 border-4 border-red-500">
-              <Sidebar isManager={isModerator} session={session} />
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          {/* 게임 시작 후 */}
-          {solver === userNickname ? (
-            <>
-              <div className={styles.mycam}>
-                <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={false}></MyCam>
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
-          {resList.length === 5 && (
-            <>
-              <h1>QuizPage : {sessionId}</h1>
-              <div className="p-1 border-4 border-violet-500">
-                <div onClick={leaveSession} className={styles.leave}>
-                  퇴장하기
+          </>
+        ) : (
+          <>
+            {/* 게임 시작 후 */}
+            {solver === userNickname ? (
+              <>
+                <div className={styles.mycam}>
+                  <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={false}></MyCam>
                 </div>
-                <Players publisher={publisher} subscribers={subscribers} isPlaying={isPlaying} />
-                <div className={styles.video}>
-                  <video loop autoPlay muted>
-                    <source src={quizViedoList[stage - 1]} type="video/mp4" />
-                    영상이 존재하지 않습니다.
-                  </video>
+              </>
+            ) : (
+              <></>
+            )}
+            {resList.length === 5 && (
+              <>
+                <div className="p-1 border-4 border-violet-500">
+                  <div onClick={leaveSession} className={styles.leave}>
+                    퇴장하기
+                  </div>
+                  <Players publisher={publisher} subscribers={subscribers} />
+                  <div className={styles.video}>
+                    <video loop autoPlay muted>
+                      <source src={quizViedoList[stage - 1]} type="video/mp4" />
+                      영상이 존재하지 않습니다.
+                    </video>
+                  </div>
+                  <LemonSuquiz resList={resList} stage={stage} />
+                  {isAnswer && <></>}
                 </div>
-                <LemonSuquiz resList={resList} stage={stage} />
-                {isAnswer && <></>}
-              </div>
-              <div className="p-1 border-4 border-red-500">
-                <p>채팅창</p>
-              </div>
-            </>
-          )}
-        </>
-      )}
+              </>
+            )}
+          </>
+        )}
+        <div className={`${isPlaying ? styles.bottombar : styles.sidebar}`}>
+          <Sidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
+        </div>
+      </div>
     </Container>
   );
 };

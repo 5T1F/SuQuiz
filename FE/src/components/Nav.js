@@ -82,7 +82,7 @@ export default function Nav() {
               <button onClick={handleLearningBookmark}>단어장</button>
             </div>
             <div className={styles.userInfoContainer}>
-              {userId === 0 ? (
+              {userNickname === null ? (
                 <div>
                   <button onClick={handleLoginClick}>로그인</button>
                 </div>

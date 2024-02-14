@@ -9,6 +9,8 @@ import {
   useProviderStore,
   useTokenStore,
 } from "../../../app/store";
+import backgroundVideo from "../../../assets/backgroundVideo.mp4";
+import styles from "./Callback.module.css";
 import ModalSignup from "../signup/ModalSignup";
 
 const KakaoCallback = () => {
@@ -64,12 +66,6 @@ const KakaoCallback = () => {
       setProvider(response.data.data.oauthProvider);
       setAccessToken(response.data.data.authTokens.accessToken);
       await fetchNickname(response.data.data.email, response.data.data.oauthProvider);
-
-      // //메인 페이지로 이동
-      // window.location.href = "/";
-      // 아래는 현재 페이지를 새로운 페이지로 덮어 씌우기 때문에 이전 페이지로 이동이 불가능
-      // 보안상 아래가 나을듯
-      // window.location.replace("/");
     } catch (error) {
       alert(error);
     }
@@ -85,8 +81,10 @@ const KakaoCallback = () => {
 
   return (
     <>
-      <div>
-        <div>Processing...</div>
+      <div className={styles.videoContainer}>
+        <video className={styles.video} autoPlay loop muted>
+          <source src={backgroundVideo} type="video/mp4" />
+        </video>
       </div>
 
       {/* openModal이 true일 때만 모달 렌더링 */}
