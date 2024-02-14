@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 import Container from "../components/Container";
 import Players from "../feature/multiplay/Players";
-import Sidebar from "../feature/multiplay/Sidebar";
+import WaitingRoomSidebar from "../feature/multiplay/WaitingRoomSidebar";
 import MyCam from "../feature/Learning/MyCam";
 import LemonSuquiz from "../feature/multiplay/LemonSuquiz";
 import { exitQuiz, players, quiz, start, end } from "../apis/multiplayApi";
@@ -366,7 +366,7 @@ const MultiplayPage = () => {
       let tempResCnt = resCnt;
       let isCorrect = false;
       // let tempResList = [...resList];
-      
+
       // console.log(tempResList);
       // for (let i = 0; i < 5; i++) {
       //   console.log(quizList[stage][0][i]);
@@ -387,19 +387,18 @@ const MultiplayPage = () => {
       console.log(quizList[stage][0]);
       console.log(finger);
       console.log(visitedList);
-      console.log(resList)
-       // 새로운 resList 계산
+      console.log(resList);
+      // 새로운 resList 계산
       const tempResList = resList.map((item, index) => {
-      if (!visitedList[index] && quizList[stage][0][index] == finger) {
-        console.log("여기옴")
-        tempVisitedList[index] = true;
-        tempResCnt += 1;
-        isCorrect = true;
-        return finger; // 현재 finger 값으로 업데이트
-       }
+        if (!visitedList[index] && quizList[stage][0][index] == finger) {
+          console.log("여기옴");
+          tempVisitedList[index] = true;
+          tempResCnt += 1;
+          isCorrect = true;
+          return finger; // 현재 finger 값으로 업데이트
+        }
         return item; // 변경 없음
       });
-
 
       if (isCorrect) {
         setResList(tempResList);

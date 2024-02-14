@@ -54,7 +54,7 @@ const RankingList = () => {
 
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch(`/mypage/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/mypage/${userId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,
