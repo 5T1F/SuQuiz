@@ -1,13 +1,10 @@
 import React, { useRef, useEffect } from "react";
 
-import Naver from "./NaverLogin";
-import Kakao from "./KakaoLogin";
-
 import styles from "./ModalLogin.module.css";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 
-import naverIcon from "../../../assets/icons/naver-icon.png";
-import kakaoIcon from "../../../assets/icons/kakao-icon.png";
+import Kakao from "./KakaoLogin";
+import Naver from "./NaverLogin";
 
 const Modal = ({ onClose }) => {
   const modalRef = useRef();
@@ -41,11 +38,9 @@ const Modal = ({ onClose }) => {
       </div>
       <div className={styles.modalContent}>
         <div className={styles.naverContainer}>
-          <img src={naverIcon} alt="Naver login" />
           <Naver />
         </div>
         <div className={styles.kakaoContainer}>
-          <img src={kakaoIcon} alt="Kakao login" />
           <Kakao />
         </div>
       </div>

@@ -1,8 +1,16 @@
+.modalBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(2px);
+}
+
 .modal {
   /* 모달창 크기 */
-  width: 300px;
-  height: 200px;
-
+  width: 320px;
+  height: 240px;
   /* 최상단 위치 */
   z-index: 999;
 
@@ -14,23 +22,94 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fefefe;
+  box-shadow: 0px 0px 20px rgba(244, 178, 142, 0.5);
+  border-radius: 15px;
 }
 
-.modal-content {
-  background-color: #fffff;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+.modalTitle {
+  width: 100%;
+  height: 60px;
+  background: #bca79d;
+  border-radius: 15px 15px 0px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalTitle div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #ffffff;
+  margin: 0 8%;
+  text-shadow: 0px 0px 5px rgba(188, 243, 187, 0.5);
 }
 
 .close {
-  color: #aaa;
+  color: #ffffff;
   float: right;
-  font-size: 28px;
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
+  margin: 0 8%;
 }
 
 .close:hover {
-  color: black;
+  color: gray;
+}
+
+.modalContent {
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.searchInput {
+  padding: 3px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0px 0px 1px #bca79d;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  gap: 8px;
+}
+
+.cancelBtn {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  color: #bca79d;
+  border: 1px solid #bca79d;
+}
+
+.cancelBtn:hover {
+  color: #fefefe;
+  background-color: #9c8a82;
+}
+
+.requestBtn {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  color: #fefefe;
+  background-color: #bca79d;
+}
+
+.requestBtn:hover {
+  color: #fefefe;
+  background-color: #9c8a82;
 }

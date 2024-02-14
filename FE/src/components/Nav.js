@@ -5,7 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import { useAuthStore, useUserNicknameStore, useProviderStore, useTokenStore } from "../app/store";
 import Logo from "../assets/logoShort.png";
 import Slidebar from "../feature/mypage/Slidebar";
-import ModalLogin from "../feature/auth/login/ModalLogin"; // 모달 컴포넌트를 import
+import ModalLogin from "../feature/auth/login/ModalLogin";
 
 import styles from "./Nav.module.css";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -74,7 +74,7 @@ export default function Nav() {
         <div>
           <div className={styles.navLogo}>
             <NavLink to="/">
-              <img src={Logo} alt="logo" width={108} />
+              <img src={Logo} alt="logo" width={120} />
             </NavLink>
           </div>
           <div className={styles.navItem}>

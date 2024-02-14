@@ -99,35 +99,37 @@ const Modal = ({ onClose }) => {
 
   return (
     <>
-      <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
-        <div className={styles.modalTitle}>
-          <div>친구 추가</div>
-          <span className={styles.close} onClick={onClose}>
-            &times;
-          </span>
-        </div>
-        <div className={styles.modalContent}>
-          <input
-            className={styles.searchInput}
-            type="text"
-            placeholder="유저 닉네임"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
+      <div className={styles.modalBackground}>
+        <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
+          <div className={styles.modalTitle}>
+            <div>친구 추가</div>
+            <span className={styles.close} onClick={onClose}>
+              &times;
+            </span>
+          </div>
+          <div className={styles.modalContent}>
+            <input
+              className={styles.searchInput}
+              type="text"
+              placeholder="유저 닉네임"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
 
-          <div className={styles.btns}>
-            <button className={styles.cancelBtn} onClick={onClose}>
-              취소
-            </button>
-            <button className={styles.requestBtn} onClick={handleSearch}>
-              요청
-            </button>
+            <div className={styles.btns}>
+              <button className={styles.cancelBtn} onClick={onClose}>
+                취소
+              </button>
+              <button className={styles.requestBtn} onClick={handleSearch}>
+                요청
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* modalOpen이 true일 때만 모달 렌더링 */}
-      {modalOpen && <ModalNoMatchingUser onClose={handleCloseModal} />}
+        {/* modalOpen이 true일 때만 모달 렌더링 */}
+        {modalOpen && <ModalNoMatchingUser onClose={handleCloseModal} />}
+      </div>
     </>
   );
 };

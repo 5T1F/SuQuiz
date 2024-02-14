@@ -1,39 +1,12 @@
-import React, { useRef, useEffect } from "react";
-import styles from "./ModalFullRoom.module.css";
+import React from "react";
+import AlertModal from "../../components/common/Modal/AlertModal";
+import styles from "../../components/common/Modal/AlertModal";
 
-const Modal = ({ onClose }) => {
-  const modalRef = useRef();
+const ModalFullRoom = ({ onClose }) => (
+  <AlertModal onClose={onClose} className={styles.fullRoom}>
+    <p>가득찬 방입니다.</p>
+    <p>입장이 불가합니다.</p>
+  </AlertModal>
+);
 
-  const handleClickInside = (event) => {
-    // 모달 내부를 클릭한 경우 이벤트 전파를 중지시킴
-    event.stopPropagation();
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        onClose();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
-
-  return (
-    <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
-      <div className={styles.modalContent}>
-        <span className={styles.close} onClick={onClose}>
-          &times;
-        </span>
-        <p>모달입니다.</p>
-        <p>만원입니다.</p>
-      </div>
-    </div>
-  );
-};
-
-export default Modal;
+export default ModalFullRoom;

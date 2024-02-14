@@ -11,6 +11,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.76);
+  border-radius: 15px;
 }
 
 .FlexColumn {
@@ -30,6 +32,10 @@
   color: #f4b28e;
 }
 
+.quizStart:hover {
+  background: #efefef;
+}
+
 .learningStart {
   /* border: 5px solid violet; */
   height: 75px;
@@ -39,6 +45,10 @@
   border-radius: 0px 0px 15px 15px;
   background: #f17b3c;
   color: #ffffff;
+}
+
+.learningStart:hover {
+  background: #d16c36;
 }
 
 .quizStart,

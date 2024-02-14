@@ -1,14 +1,11 @@
 .modalOverlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  backdrop-filter: blur(4px);
+  /* background-color: #bdbdbd87; */
 }
 
 .modalContent {
@@ -25,7 +22,8 @@
   padding: 20px 0;
   z-index: 1050;
   background: #ffffff;
-  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 0px 20px rgba(244, 178, 142, 0.5);
+
   border-radius: 15px;
 }
 
@@ -33,8 +31,8 @@
   /* position: absolute; */
   width: 1040px;
   margin: 0 20px 10px 20px;
-  padding: 0 10px;
-
+  padding: 0 10px 1px 10px;
+  font-size: 16px;
   height: 26px;
   background: #f4b28e;
   border-radius: 15px;
@@ -42,6 +40,19 @@
   align-items: center;
   justify-content: space-between;
   color: #3e3300;
+}
+
+.close {
+  color: #ffffff;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  padding-top: 1px;
+}
+
+.close:hover {
+  color: #9c8a82;
 }
 
 .wordContent {

@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useUserNicknameStore } from "../../../../app/store";
 import ModalNoMatchingUser from "./ModalNoMatchingUser";
 
-import styles from "./ModalMakeFriend.module.css";
+import styles from "./ModalEndFriendship.module.css";
 
 const ModalEndFriendship = ({ onClose, friendNickname }) => {
   const storedNickname = localStorage.getItem("nicknameStorage");
@@ -68,13 +68,15 @@ const ModalEndFriendship = ({ onClose, friendNickname }) => {
     <>
       <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
         <div className={styles.modalContent}>
-          <p>친구 삭제</p>
+          <p className={styles.title}>친구 삭제</p>
           <p>정말 삭제하시겠습니까?</p>
-          <div>
-            <button className={styles.close} onClick={onClose}>
+          <div className={styles.btns}>
+            <button className={styles.yesButton} onClick={handleEndFriendship}>
+              예
+            </button>
+            <button className={styles.noButton} onClick={onClose}>
               아니오
             </button>
-            <button onClick={handleEndFriendship}>예</button>
           </div>
         </div>
       </div>
