@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function SingleplayPage() {
   // motion detect value
-  const [finger, setFinger] = useState("#");
+  const [finger, setFinger] = useState("");
   const changeFinger = (value) => {
     setFinger(value);
     console.log(value);
@@ -17,7 +17,7 @@ export default function SingleplayPage() {
       <Container>
         <div className={styles.container}>
           <div className={styles.mycam}>
-          <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={true}></MyCam>
+            <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={true}></MyCam>
           </div>
           <div className={styles.wordle}>
             <Wordle finger={finger}></Wordle>
