@@ -125,9 +125,9 @@ const Modal = ({ onClose, email }) => {
           {isConfirmed === 3 && <p style={{ color: "red", fontSize: "xx-small" }}>부적합한 닉네임입니다.</p>}
 
           <p>SuQuiz 서비스 이용약관에 동의하시면 '저장'을 눌러주세요.</p>
-          <div>
+          <div className={styles.btns}>
             <button
-              className={isConfirmed === 2 ? styles.close : styles.disable}
+              className={isConfirmed === 2 ? styles.requestBtn : styles.disable}
               onClick={isConfirmed === 2 && handleSignup}
             >
               저장

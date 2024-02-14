@@ -53,6 +53,11 @@
   border: 1px solid #ccc;
   border-radius: 4px 0 0 4px;
   box-shadow: 0px 0px 1px #bca79d;
+  outline: none;
+}
+
+.sendInput:focus {
+  border-color: #bca79d; /* 포커스 시 테두리 색상 변경 */
 }
 
 .sendButton {
