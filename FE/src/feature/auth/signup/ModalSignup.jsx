@@ -16,12 +16,8 @@ const Modal = ({ onClose, email }) => {
   const modalRef = useRef();
   const [checkValue, setCheckValue] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(0);
-  const storedProvider = localStorage.getItem("providerStorage");
-  const parsedProvider = JSON.parse(storedProvider);
-  const provider = parsedProvider.state.provider;
-  const storedEmail = localStorage.getItem("emailStorage");
-  const parsedEmail = JSON.parse(storedEmail);
-  const userEmail = parsedEmail.state.userEmail;
+  const { userEmail, setUserEmail } = useUserEmailStore();
+  const { provider, setProvider } = useProviderStore();
   const { userNickname, setUserNickname } = useUserNicknameStore();
   const navigate = useNavigate();
 

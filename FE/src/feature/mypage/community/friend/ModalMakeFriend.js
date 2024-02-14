@@ -18,7 +18,6 @@ const Modal = ({ onClose }) => {
   };
 
   const handleSearch = async () => {
-    // 여기에서 API 요청을 보내도록 작성
     try {
       const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends?search=${searchValue}`, {
         method: "GET",
@@ -58,6 +57,7 @@ const Modal = ({ onClose }) => {
       if (response.status === 200) {
         // 성공적으로 요청이 완료된 경우
         console.log("Friend request sent successfully!");
+        onClose();
       } else {
         // 요청이 실패한 경우
         console.error("Failed to send friend request.");

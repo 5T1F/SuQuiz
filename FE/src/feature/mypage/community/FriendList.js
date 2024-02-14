@@ -64,7 +64,7 @@ const FriendList = ({ isMultiplay }) => {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch(`/users/friends/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/${userId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,
