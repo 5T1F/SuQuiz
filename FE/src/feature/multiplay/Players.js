@@ -17,20 +17,11 @@ const Players = ({ publisher, subscribers }) => {
       <div>
         <UserVideoComponent nickname={userNickname} streamManager={publisher} />
       </div>
-      <div>
-        <UserVideoComponent nickname={userNickname} streamManager={publisher} />
-      </div>
-      <div>
-        <UserVideoComponent nickname={userNickname} streamManager={publisher} />
-      </div>
-      <div>
-        <UserVideoComponent nickname={userNickname} streamManager={publisher} />
-      </div>
-      {/* {playerSubscribers.map((subscriber, index) => (
+      {playerSubscribers.map((subscriber, index) => (
         <div key={index}>
           <UserVideoComponent nickname={subscriber.nickname} streamManager={subscriber.streamManager} />
         </div>
-      ))} */}
+      ))}
     </div>
   );
 };
