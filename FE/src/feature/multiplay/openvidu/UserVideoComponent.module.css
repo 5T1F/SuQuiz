@@ -3,6 +3,15 @@
   margin: 0 10% 10% 0;
 }
 
+.solverSet {
+  font-size: 16px;
+  margin: 0 10% 10% 0;
+  height: auto;
+  background-color: #dcf8c6;
+  border-radius: 0.5rem;
+  padding: 5px;
+}
+
 .video {
   transform: scaleX(-1);
   height: auto;

@@ -4,6 +4,7 @@
 
 .leftContainer {
   position: relative;
+  width: 60vw;
   height: 90vh;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -21,6 +22,7 @@
 }
 
 .leave {
+  display: inline-block;
   padding: 3px 10px;
   border: none;
   border-radius: 5px;
@@ -106,24 +108,28 @@
 }
 
 .sidebar {
-  height: 83vh;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   padding-left: 2.5rem;
   padding-right: 2.5rem;
 }
 
-.bottombar {
-  height: 20vh;
-  padding: 0.25rem;
-  border-width: 4px;
-  border-color: red;
-}
-
 .video {
+  margin: 10% auto;
+  width: 50%;
+  display: flex;
+  align-items: center;
   transform: scaleX(-1);
   /* display: none; */
-  width: 40%; /* 여기서 크기 조절 */
-  height: auto;
-  border-radius: 0.5rem;
+}
+
+.cellList {
+  display: flex;
+  justify-content: center;
+}
+
+.cell {
+  margin: 2%;
+  font-size: 32px;
+  border-bottom: solid #97ce9b;
 }

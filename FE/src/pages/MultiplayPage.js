@@ -560,14 +560,17 @@ const MultiplayPage = () => {
             )}
             {
               <>
-                <div className="p-1 border-4 border-violet-500">
+                <div className={styles.leftContainer}>
                   <div onClick={leaveSession} className={styles.leave}>
-                    퇴장하기
+                    나가기
                   </div>
-                  <Players publisher={publisher} subscribers={subscribers} />
-                  {resCnt}
-                  {resList}
-                  <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} />
+                  <div className={styles.cellList}>
+                    {resList.map((index) => (
+                      <div className={styles.cell}>{index === "?" ? "ㅤ" : index}</div>
+                    ))}
+                  </div>
+                  <Players publisher={publisher} subscribers={subscribers} solver={solver} />
+                  {/* <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} /> */}
                   {isAnswer && <div>{solver}님이 정답입니다!!</div>}
                 </div>
               </>
@@ -579,13 +582,13 @@ const MultiplayPage = () => {
             <></>
           ) : (
             <div className={styles.video}>
-              <video key={quizVideoList} loop autoPlay muted>
+              <video key={quizVideoList} loop autoPlay muted style={{ borderRadius: "0.5rem" }}>
                 <source src={quizVideoList[stage]} type="video/mp4" />
                 영상이 존재하지 않습니다.
               </video>
             </div>
           )}
-          <div className={styles.sidebar}>
+          <div className={styles.sidebar} style={isPlaying ? {} : { height: "83vh" }}>
             <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
           </div>
         </div>

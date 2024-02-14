@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import styles from "./UserVideoComponent.module.css";
 
-const UserVideoComponent = ({ nickname, streamManager }) => {
+const UserVideoComponent = ({ nickname, streamManager, solver }) => {
   const storedNickname = localStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
@@ -17,7 +17,7 @@ const UserVideoComponent = ({ nickname, streamManager }) => {
   }, [streamManager]);
 
   return (
-    <div className={styles.set}>
+    <div className={` ${solver === videoUserNickname ? styles.solverSet : styles.set}`}>
       <video autoPlay={true} ref={videoRef} className={styles.video} />
       {userNickname === videoUserNickname ? (
         <div className={styles.myNickname}>{videoUserNickname}</div>
