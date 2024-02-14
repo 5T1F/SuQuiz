@@ -1,9 +1,10 @@
 .tabTitle button {
-  padding: 5px 10px;
+  padding: 10px 20px;
   border-radius: 1rem 1rem 0 0;
   text-align: center;
   min-width: 108px;
-  height: 32px;
+  height: 48px;
+  font-size: 20px;
 }
 
 /* 활성 탭 스타일 */

@@ -6,7 +6,7 @@
   border: none;
   background-color: #eee;
   border-radius: 15px;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 0 1px 4px #ffb79a3d;
 }
 
@@ -36,6 +36,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 15px 0;
 }
 
 .notification {
@@ -44,6 +45,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 5px 0;
 }
 
 .keyboardContainer {

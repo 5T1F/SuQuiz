@@ -173,12 +173,12 @@ const UserInfo = () => {
           </div>
         </div>
         {/* 게임 정보 */}
-        <div className="h-3/5 flex flex-row justify-between">
-          <div className="w-[130px] flex justify-center items-center">
+        <div className="h-3/5 flex flex-row justify-center items-center gap-2">
+          <div className="w-[160px] flex justify-center items-center">
             {/* 레벨, 경험치 프로그래스바 */}
             <UserInfoProgress level={getUserInfo().level} exp={getUserInfo().exp} />
           </div>
-          <div className="w-[250px]">
+          <div className="w-[270px]">
             {/* 통계 */}
             <div className="flex mb-1">
               <RecordItem label="전체도전" value={getDailyResultData().allTrialCount} color="white" />
