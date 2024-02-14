@@ -13,11 +13,6 @@ import { syllablesToWord } from "../../utils/syllablesToWord";
 
 import styles from "./Wordle.module.css";
 
-/**
- *
- * handleEnter =>
- */
-
 const Wordle = ({ finger }) => {
   const MAX_LETTERS_PER_ROW = 5;
   const MAX_ATTEMPTS = 6;
@@ -201,22 +196,7 @@ const Wordle = ({ finger }) => {
 
       console.log("keyboard maps ....", keyboardMaps);
 
-      // call useEffect - cellColors
       setCellColors(lineColors);
-
-      // // 기존 색상 업데이트
-      // setColors((prevColors) => {
-      //   const startIndex = (currentRow - 1) * MAX_LETTERS_PER_ROW;
-      //   const newColors = [
-      //     ...prevColors.slice(0, startIndex),
-      //     ...cellColors,
-      //     ...prevColors.slice(startIndex + MAX_LETTERS_PER_ROW),
-      //   ];
-      //   return newColors;
-      // });
-
-      // // resultText 상태 업데이트
-      // setResultText((prevColorText) => prevColorText + nowColorText);
     } else {
       setNotification("5개의 글자를 입력하세요.");
       console.log("5개의 글자를 입력하세요.");
@@ -228,9 +208,9 @@ const Wordle = ({ finger }) => {
 
     for (let i = 0; i < inputColors.length; i++) {
       if (inputColors[i] === 2) {
-        colors.push("#00C853");
+        colors.push("#97ce9b");
       } else if (inputColors[i] === 1) {
-        colors.push("#FFEA00");
+        colors.push("#f6e58d");
       } else {
         colors.push("#C0C0C0");
       }
@@ -238,22 +218,6 @@ const Wordle = ({ finger }) => {
     return colors;
   };
 
-  // const calculateColors = (guess) => {
-  //   const colors = [];
-
-  //   // 정답과 사용자 입력값을 비교하여 색을 결정  // "#00C853" "#FFEA00" "#C0C0C0"
-  //   for (let i = 0; i < MAX_LETTERS_PER_ROW; i++) {
-  //     if (guess.charAt(i) === rightGuess.charAt(i)) {
-  //       colors.push("#00C853"); // 자리와 글자가 모두 일치하는 경우 (초록색)
-  //     } else if (rightGuess.includes(guess.charAt(i))) {
-  //       colors.push("#FFEA00"); // 자리는 다르지만 글자가 포함된 경우 (노란색)
-  //     } else {
-  //       colors.push("#C0C0C0"); // 아무 경우도 아닌 경우 (회색)
-  //     }
-  //   }
-
-  //   return colors;
-  // };
   const calculateColorText = (guess) => {
     console.log("guess", guess, "right guess", rightGuess);
     if (rightGuess === "") return "";
@@ -286,10 +250,6 @@ const Wordle = ({ finger }) => {
     };
 
     try {
-      // save(result).then(console.log("서버에 저장하는 게임 결과 2", result)); // 서버에 게임 결과 저장
-      // fetchResultAndShowModal(res); //.then(setShowModal(true));
-      // console.log("서버에 저장하는 게임 결과:", result);
-
       await save(result); // 서버에 게임 결과 저장
       console.log("서버에 저장하는 게임 결과:", result); // 이 부분을 수정
       await fetchResultAndShowModal(res);
@@ -299,32 +259,6 @@ const Wordle = ({ finger }) => {
       console.error("Error saving game result:", error);
     }
   };
-  // const handleGameEnd = async (res, nowColorText) => {
-  //   console.log("result ", resultText, "color text", nowColorText);
-  //   // 결과 계산 로직
-  //   const result = {
-  //     userId: userId,
-  //     trialCount: res === "win" ? currentRow : 0,
-  //     correct: res === "win",
-  //     resultText: resultText + nowColorText,
-  //   };
-
-  //   try {
-  //     await save(result); // 서버에 게임 결과 저장
-  //     console.log("서버에 저장하는 게임 결과:", result);
-  //     fetchResultAndShowModal(res, nowColorText);
-  //   } catch (error) {
-  //     console.error("Error saving game result:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   console.log("check end .........", checkEnd);
-  //   if (checkEnd) {
-  //     setShowModal(true); // 모달 표시
-  //   }
-  //   console.log(modalResult);
-  // }, [setModalResult]);
 
   const fetchResultAndShowModal = async (res) => {
     try {

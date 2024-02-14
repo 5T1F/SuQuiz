@@ -1,27 +1,28 @@
 .container {
-  width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  border: none;
   background-color: #eee;
-  padding: 10px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 1px 4px #ffb79a3d;
 }
 
 .solvedStateContainer {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 600;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ddd;
-  padding: 10px;
+  background-color: #ffffff8b;
+  padding: 8px;
   border-radius: 15px;
   background-origin: padding-box;
   margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .boardContainer {
@@ -35,6 +36,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 15px 0;
 }
 
 .notification {
@@ -43,6 +45,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 5px 0;
 }
 
 .keyboardContainer {
