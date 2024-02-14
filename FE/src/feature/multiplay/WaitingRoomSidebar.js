@@ -124,7 +124,6 @@ const WaitingRoomSidebar = ({ session, isPlaying }) => {
       )}
 
       {/* 오픈비두로 대기실 내 실시간 채팅 */}
-      {/* 채팅 메시지 UI */}
       <div className={`${isPlaying ? styles.bottombar : styles.sidebar}`}>
         <div className={styles.messageSet}>
           {chatHistory.map((message, index) => (
