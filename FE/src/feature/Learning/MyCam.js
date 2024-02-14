@@ -24,6 +24,7 @@ const MyCam = ({ categoryNumber, changeFinger, isVideoVisible }) => {
   const socketRef = useRef(null);
 
   useEffect(() => {
+    let mounted = true;
     let count = 0;
     let value = "";
 
@@ -102,15 +103,25 @@ const MyCam = ({ categoryNumber, changeFinger, isVideoVisible }) => {
     });
 
     // callback function
+    
     hands.onResults((results) => {
+      if(!hands) return;
+      if (!mounted) return;
+      if (!canvasRef.current) return;
+      if(!videoRef.current) return;
+      if(!canvasCtx) return;
       canvasCtx.save();
       canvasCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
       canvasCtx.translate(canvasRef.current.width, 0);
       canvasCtx.scale(-1, 1);
-      canvasCtx.drawImage(results.image, 0, 0, canvasRef.current.width, canvasRef.current.height);
 
-      if (results.multiHandLandmarks.length > 0) {
+       // canvasRef.current가 여전히 유효한지 확인 후에 이미지를 그립니다.
+      if (canvasRef.current) {
+        canvasCtx.drawImage(results.image, 0, 0, canvasRef.current.width, canvasRef.current.height);
+      }
+
+      if (results.multiHandLandmarks.length > 0 && canvasRef.current) {
         // drawing landmarks
         for (const landmarks of results.multiHandLandmarks) {
           // console.log(socketRef.current.CONNECTING);
@@ -142,10 +153,12 @@ const MyCam = ({ categoryNumber, changeFinger, isVideoVisible }) => {
       canvasCtx.restore();
     });
 
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    if (videoRef.current && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       // getUserMedia 지원확인
       navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-        videoRef.current.srcObject = stream;
+        if (videoRef.current) { // videoRef.current가 존재하는지 확인
+          videoRef.current.srcObject = stream;
+        }
 
         const camera = new Camera(videoRef.current, {
           onFrame: async () => {
@@ -161,11 +174,32 @@ const MyCam = ({ categoryNumber, changeFinger, isVideoVisible }) => {
     const sendMsg = (landmarks) => {
       socketRef.current.send(JSON.stringify({ message: landmarks }));
     };
-  });
+
+    return () => {
+      mounted = false;
+      
+      hands.close();
+      
+      
+      if (socketRef.current) {
+        socketRef.current.close();
+      }
+      if (videoRef.current && videoRef.current.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+      }
+    };
+  },[]);
+
+  
+  
 
   return (
     <div>
-      <video ref={videoRef} className={styles.video} style={{ display: isVideoVisible ? "block" : "none" }}></video>
+      <video
+        ref={videoRef}
+        className={styles.video}
+        style={{ display: isVideoVisible ? "block" : "none" }}
+      ></video>
       <canvas ref={canvasRef} className={styles.canvas}></canvas>
 
       {/* draw landmarks to hand
