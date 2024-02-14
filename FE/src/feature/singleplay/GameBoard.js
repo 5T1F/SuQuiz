@@ -20,8 +20,8 @@ function GameBoard({ inputString, history, colors, isExist }) {
               {Array.from({ length: 5 }, (_, colIndex) => {
                 const index = rowIndex * 5 + colIndex;
                 const style = {
-                  width: "50px", // 각 셀의 너비
-                  height: "50px", // 각 셀의 높이
+                  width: "45px", // 각 셀의 너비
+                  height: "45px", // 각 셀의 높이
                   backgroundColor: colors[index] || "white", // 셀의 배경
                   display: "flex",
                   alignItems: "center",
@@ -30,7 +30,7 @@ function GameBoard({ inputString, history, colors, isExist }) {
                   margin: "3px 2px",
                   fontWeight: "bold",
                   color: "red",
-                  fontSize: "30px",
+                  fontSize: "25px",
                 };
 
                 return <Cell key={index} char={inputString[index]} style={style}></Cell>;
@@ -43,15 +43,15 @@ function GameBoard({ inputString, history, colors, isExist }) {
               {Array.from({ length: 5 }, (_, colIndex) => {
                 const index = rowIndex * 5 + colIndex;
                 const style = {
-                  width: "50px", // 각 셀의 너비
-                  height: "50px", // 각 셀의 높이
+                  width: "45px", // 각 셀의 너비
+                  height: "45px", // 각 셀의 높이
                   backgroundColor: colors[index] || "white", // 셀의 배경
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   borderRadius: "15%",
                   margin: "3px 2px",
-                  fontSize: "30px",
+                  fontSize: "25px",
                 };
 
                 return <Cell key={index} char={inputString[index]} style={style}></Cell>;
