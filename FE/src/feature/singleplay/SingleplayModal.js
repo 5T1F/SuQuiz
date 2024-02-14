@@ -219,18 +219,11 @@ const SingleplayModal = ({ onClose }) => {
             <button onClick={handleMoreQuestion} className={styles.moreQuizBtn}>
               더 풀어보기
             </button>
-            <button
-              className={styles.copyBtn}
-              onClick={copyDummyDataToClipboard}
-              disabled={!modalResult.isSolved}
-              style={{
-                backgroundColor: modalResult.isSolved ? "#ddd" : "",
-                color: modalResult.isSolved ? "#eee" : "",
-                cursor: modalResult.isSolved ? "" : "",
-              }}
-            >
-              복사하기
-            </button>
+            {!modalResult.isSolved && (
+              <button className={styles.copyBtn} onClick={copyDummyDataToClipboard} disabled={!modalResult.isSolved}>
+                복사하기
+              </button>
+            )}
           </div>
         </div>
       </div>

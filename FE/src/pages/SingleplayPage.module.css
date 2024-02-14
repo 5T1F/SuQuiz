@@ -1,22 +1,26 @@
 .container {
   height: 90vh;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-/* .container > div {
-  margin: 0 20px;
-} */
-.mycam {
-  position: relative;
-  width: 100%;
-  border: 3px solid rgb(28, 0, 142);
-  display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.leftContainer {
+  width: 50%;
+}
+
+.mycam {
+  height: 45vh;
+  border: 3px solid rgb(0, 130, 54);
+}
+
+.tutorial {
+  height: 45vh;
+  border: 3px solid rgb(135, 129, 0);
+}
+
 .wordle {
-  width: 100%;
+  width: 40%;
+  height: 90vh;
   border: 3px solid orchid;
 }

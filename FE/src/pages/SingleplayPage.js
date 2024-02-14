@@ -3,6 +3,7 @@ import Wordle from "../feature/singleplay/Wordle";
 import MyCam from "../feature/Learning/MyCam";
 import styles from "./SingleplayPage.module.css";
 import { useState } from "react";
+import { style } from "@mui/system";
 
 export default function SingleplayPage() {
   // motion detect value
@@ -16,8 +17,11 @@ export default function SingleplayPage() {
     <>
       <Container>
         <div className={styles.container}>
-          <div className={styles.mycam}>
-            <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={true}></MyCam>
+          <div className={styles.leftContainer}>
+            <div className={styles.mycam}>
+              <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={true}></MyCam>
+            </div>
+            <div className={styles.tutorial}>워들 설명</div>
           </div>
           <div className={styles.wordle}>
             <Wordle finger={finger}></Wordle>

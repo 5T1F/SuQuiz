@@ -3,12 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 import Container from "../components/Container";
 import Players from "../feature/multiplay/Players";
-import Sidebar from "../feature/multiplay/Sidebar";
+import WaitingRoomSidebar from "../feature/multiplay/WaitingRoomSidebar";
+import GroupsIcon from "@mui/icons-material/Groups";
 import MyCam from "../feature/Learning/MyCam";
 import LemonSuquiz from "../feature/multiplay/LemonSuquiz";
 import { exitQuiz, players, quiz, start, end } from "../apis/multiplayApi";
 
-import GroupsIcon from "@mui/icons-material/Groups";
+import GroupIcon from "@mui/icons-material/Group";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import styles from "./MultiplayPage.module.css";
@@ -146,14 +147,14 @@ const MultiplayPage = () => {
   };
 
   // 현재 문제의 진행배열 변화
-  const changeResList = async (tempResCnt, tempResList, tempVisitedList) => {
+  const changeResList = async (tempResCnt, tempResList) => {
     //글자 입력 시그널
     if (session) {
       await session
         .signal({
           data: JSON.stringify({
             resList: JSON.stringify(tempResList),
-            visitedList: JSON.stringify(tempVisitedList),
+            visitedList: JSON.stringify(visitedList),
             resCnt: tempResCnt,
           }), // 퀴즈 시작 정보를 담아서,
           type: "change-resList",
@@ -176,7 +177,7 @@ const MultiplayPage = () => {
     setStage((prevStage) => prevStage + 1);
     setResCnt(0);
     setResList(["?", "?", "?", "?", "?"]);
-    setVisitedList([false, false, false, false, false]);
+    visitedList = [false, false, false, false, false];
 
     if (session) {
       await session
@@ -365,47 +366,29 @@ const MultiplayPage = () => {
     if (isPlaying && solver === userNickname) {
       let tempResCnt = resCnt;
       let isCorrect = false;
-      // let tempResList = [...resList];
-      
-      // console.log(tempResList);
-      // for (let i = 0; i < 5; i++) {
-      //   console.log(quizList[stage][0][i]);
-      //   console.log(finger);
+      console.log(tempResList);
+      for (let i = 0; i < 5; i++) {
+        console.log(quizList[stage][0][i]);
+        console.log(finger);
 
         // 입력한 적 없는 정답 - 해당 글자의 위치에 맞게 글자 체크, 이펙트 등장
-      //   if (!visitedList[i] && quizList[stage][0][i] === finger) {
-      //     console.log(tempResList);
-      //     tempResList[i] = finger;
-      //     console.log("afterChange");
-      //     console.log(tempResList);
-      //     visitedList[i] = true;
-      //     tempResCnt += 1;
-      //     isCorrect = true;
-      //   }
-      // }
-      let tempVisitedList = [...visitedList];
-      console.log(quizList[stage][0]);
-      console.log(finger);
-      console.log(visitedList);
-      console.log(resList)
-       // 새로운 resList 계산
-      const tempResList = resList.map((item, index) => {
-      if (!visitedList[index] && quizList[stage][0][index] == finger) {
-        tempVisitedList[index] = true;
-        tempResCnt += 1;
-        isCorrect = true;
-        return finger; // 현재 finger 값으로 업데이트
-       }
-        return item; // 변경 없음
-      });
-
+        if (!visitedList[i] && quizList[stage][0][i] === finger) {
+          console.log(tempResList);
+          tempResList[i] = finger;
+          console.log("afterChange");
+          console.log(tempResList);
+          visitedList[i] = true;
+          tempResCnt += 1;
+          isCorrect = true;
+        }
+      }
 
       if (isCorrect) {
         setResList(tempResList);
         setResCnt(tempResCnt);
         console.log("포함");
         console.log(resCnt);
-        changeResList(tempResCnt, tempResList, tempVisitedList);
+        changeResList(tempResCnt, tempResList);
         // 만약 모두 맞추어 낱말을 완성했다면 정답 시그널
         if (tempResCnt === 5) {
           if (solver === userNickname) {
@@ -461,7 +444,7 @@ const MultiplayPage = () => {
     const handleSetResList = (event) => {
       let newData = JSON.parse(event.data);
       setResList([...resList, JSON.parse(newData.resList)]);
-      setVisitedList(JSON.parse(newData.visitedList));
+      visitedList = JSON.parse(newData.visitedList);
       // setVisitedList(JSON.parse(newData.visitedList))
       console.log(newData.resCnt);
       setResCnt(newData.resCnt);
@@ -582,7 +565,7 @@ const MultiplayPage = () => {
           </>
         )}
         <div className={`${isPlaying ? styles.bottombar : styles.sidebar}`}>
-          <Sidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
+          <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
         </div>
       </div>
     </Container>

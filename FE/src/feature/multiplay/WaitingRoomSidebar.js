@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import FriendList from "../mypage/community/FriendList";
 
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
-import styles from "./Sidebar.module.css";
+import styles from "./WaitingRoomSidebar.module.css";
 import flag from "../../assets/images/flag.png";
 
 const WaitingRoomSidebar = ({ session, isPlaying }) => {
@@ -124,30 +124,39 @@ const WaitingRoomSidebar = ({ session, isPlaying }) => {
       <div className={styles.chat}>
         <div className={styles.messageSet}>
           {chatHistory.map((message, index) => (
-            <div key={index}>
-              {message.senderNickname !== userInfoData.nickname ? (
-                <div className={styles.receivedMessage}>
-                  {message.senderNickname} : {message.message}
-                </div>
-              ) : (
-                <div className={styles.sentMessage}>{message.message}</div>
-              )}
+            <div
+              key={index}
+              className={` ${
+                message.senderNickname !== userInfoData.nickname ? styles.receivedMessageRow : styles.sentMessageRow
+              }`}
+            >
+              <div
+                className={`${
+                  message.senderNickname !== userInfoData.nickname ? styles.receivedMessage : styles.sentMessage
+                }`}
+              >
+                {message.senderNickname !== userInfoData.nickname && (
+                  <span className={styles.senderNickname}>{message.senderNickname}</span>
+                )}
+                <span className={styles.messageContent}>{message.message}</span>
+              </div>
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-center">
+        <div className={styles.chatInputContainer}>
           <input
             className={styles.sendInput}
             type="text"
             value={chatMessage}
             onChange={(e) => setChatMessage(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === "Enter" && !e.shiftKey) {
+                // shift + Enter 키 같이 누르면 줄바꿈
                 sendMessage();
                 e.preventDefault(); // Enter 키 입력으로 인한 기본 이벤트 방지
               }
             }}
-            placeholder="Type a message..."
+            placeholder="메시지를 입력하세요."
           />
           <button className={styles.sendButton} onClick={sendMessage}>
             <SendRoundedIcon />
