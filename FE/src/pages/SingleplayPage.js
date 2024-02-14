@@ -24,7 +24,6 @@ export default function SingleplayPage() {
               </div>
             </div>
             <div className={styles.tutorial}>
-              {/* <div className={styles.rulesContainer}> */}
               <div className={styles.ruleTitle}>싱글 플레이 규칙</div>
               <div className={styles.rule}>5개의 한글 자모로 이루어진 글자를 6번 안에 맞히는 게임입니다!</div>
               <div className={styles.rule}>수어로 한글 자모를 입력한 뒤 엔터를 눌러보세요.</div>
@@ -38,7 +37,6 @@ export default function SingleplayPage() {
               <div className={styles.boldHighlight}>
                 매일 매일 문제를 풀며 수어로 자음,모음을 마스터하고, 새로운 단어를 수어로 배워봅시다.
               </div>
-              {/* </div> */}
             </div>
           </div>
           <div className={styles.wordle}>

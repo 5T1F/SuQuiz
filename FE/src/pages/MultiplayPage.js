@@ -7,19 +7,21 @@ import WaitingRoomSidebar from "../feature/multiplay/WaitingRoomSidebar";
 import MyCam from "../feature/Learning/MyCam";
 import LemonSuquiz from "../feature/multiplay/LemonSuquiz";
 import { exitQuiz, players, quiz, start, end } from "../apis/multiplayApi";
+import FriendList from "../feature/mypage/community/FriendList";
 
 import GroupsIcon from "@mui/icons-material/Groups";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import styles from "./MultiplayPage.module.css";
+import flag from "../assets/images/flag.png";
 
 const MultiplayPage = () => {
   const storedId = localStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  // const storedToken = localStorage.getItem("tokenStorage");
-  // const parsedToken = JSON.parse(storedToken);
-  // const accessToken = parsedToken.state.accessToken;
+  const storedAccessToken = localStorage.getItem("tokenStorage");
+  const parsedAccessToken = JSON.parse(storedAccessToken);
+  const accessToken = parsedAccessToken.state.accessToken;
   const storedNickname = localStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
@@ -48,6 +50,9 @@ const MultiplayPage = () => {
   const [isModerator, setIsModerator] = useState(initialIsModerator);
   const [finger, setFinger] = useState("#");
   let myScore = 0;
+  const [userInfoData, setUserInfoData] = useState([]);
+  const [chatMessage, setChatMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
 
   // 초대코드 복사
   const copyCode = () => {
@@ -506,9 +511,82 @@ const MultiplayPage = () => {
     };
   }, [session]);
 
+  const LinearProgressbar = ({ level, exp }) => {
+    const maxExp = (level - 1) * 50 + 100;
+    const percentage = Math.min(100, (exp / maxExp) * 100); // 현재 경험치를 퍼센트로 변환, 최대 100%
+
+    return (
+      <div className="w-full h-4 bg-gray-200 rounded-full">
+        <div className="h-4 rounded-full bg-coutom-yellow" style={{ width: `${percentage}%` }}></div>
+      </div>
+    );
+  };
+
+  const sendMessage = () => {
+    if (session) {
+      session
+        .signal({
+          data: JSON.stringify({
+            message: chatMessage,
+            senderNickname: userInfoData.nickname, // 보낸 사람의 닉네임 추가
+          }),
+          type: "chat-message",
+        })
+        .then(() => {
+          console.log("Message successfully sent");
+          setChatMessage(""); // Clear input field after sending message
+        })
+        .catch((error) => {
+          console.error("Error sending message:", error);
+        });
+    }
+  };
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/mypage/${userId}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("서버 응답이 실패했습니다.");
+        }
+
+        const data = await response.json();
+        setUserInfoData(data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 호출
+
+  // 채팅 메시지를 수신할 때마다 실행될 콜백 함수
+  useEffect(() => {
+    const handleChatMessage = (event) => {
+      console.log("Received chat message:", event.data);
+      setChatHistory((prevChatHistory) => [...prevChatHistory, JSON.parse(event.data)]);
+    };
+
+    if (session) {
+      session.on("signal:chat-message", handleChatMessage);
+    }
+
+    return () => {
+      if (session) {
+        session.off("signal:chat-message", handleChatMessage);
+      }
+    };
+  }, [session]);
+
   return (
     <Container>
-      <div className={styles.container}>
+      <div className={`${isPlaying ? "" : styles.container}`}>
         {!isPlaying ? (
           <>
             {/* 게임 시작 전 */}
@@ -560,37 +638,28 @@ const MultiplayPage = () => {
             )}
             {
               <>
-                <div className={styles.leftContainer}>
+                <div className="p-1 border-4 border-violet-500">
                   <div onClick={leaveSession} className={styles.leave}>
-                    나가기
+                    퇴장하기
                   </div>
-                  <div className={styles.cellList}>
-                    {resList.map((index) => (
-                      <div className={styles.cell}>{index === "?" ? "ㅤ" : index}</div>
-                    ))}
+                  <Players publisher={publisher} subscribers={subscribers} />
+                  <div className={styles.video}>
+                    <video key={quizVideoList} loop autoPlay muted>
+                      <source src={quizVideoList[stage]} type="video/mp4" />
+                      영상이 존재하지 않습니다.
+                    </video>
                   </div>
-                  <Players publisher={publisher} subscribers={subscribers} solver={solver} />
-                  {/* <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} /> */}
+                  {resCnt}
+                  {resList}
+                  <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} />
                   {isAnswer && <div>{solver}님이 정답입니다!!</div>}
                 </div>
               </>
             }
           </>
         )}
-        <div>
-          {!isPlaying ? (
-            <></>
-          ) : (
-            <div className={styles.video}>
-              <video key={quizVideoList} loop autoPlay muted style={{ borderRadius: "0.5rem" }}>
-                <source src={quizVideoList[stage]} type="video/mp4" />
-                영상이 존재하지 않습니다.
-              </video>
-            </div>
-          )}
-          <div className={styles.sidebar} style={isPlaying ? {} : { height: "83vh" }}>
-            <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
-          </div>
+        <div className={`${isPlaying ? styles.bottombar : styles.sidebar}`}>
+          <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
         </div>
       </div>
     </Container>

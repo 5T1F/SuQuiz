@@ -116,7 +116,7 @@ const RankingList = () => {
       {/* 사용자 정보 표시 부분 */}
       <div className={styles.userInfo}>
         <div className="relative w-20 h-24">
-          <img src={flag} alt="Flag" className="absolute inset-0 z-10 object-cover w-full h-full" />
+          <img src={flag} alt="Flag" className="absolute inset-0 z-10 w-full h-full px-1 py-2" />
           <div className="absolute inset-0 z-20 flex items-center justify-center pb-3">
             <div className="font-bold text-2xl text-[#f4b28e]">Lv.{getUserInfo().level}</div>
           </div>

@@ -2,7 +2,7 @@
   background-color: #f4b28e;
   border-radius: 1rem;
   padding: 1px 55px;
-  margin: 3px;
+  /* margin: 3px; */
 }
 
 .messageContainer {
@@ -14,7 +14,7 @@
   max-height: 40vh;
   overflow-y: scroll;
   scrollbar-color: #f4b28e #f1f0f0;
-  background-color: #f1f0f0;
+  background-color: #f3f3f3;
 }
 
 .myMessage {
@@ -24,7 +24,7 @@
   border-width: 2px;
   border-color: #fcd9db;
   padding: 4px 8px;
-  border-radius: 8px;
+  border-radius: 18px;
   margin-bottom: 4px;
   text-align: right;
   overflow-wrap: break-word;
@@ -35,7 +35,7 @@
   background-color: #e0e0e0;
   padding: 4px 8px;
   margin: 4px;
-  border-radius: 8px;
+  border-radius: 18px;
   margin-bottom: 4px;
   display: inline-block;
   text-align: left;
