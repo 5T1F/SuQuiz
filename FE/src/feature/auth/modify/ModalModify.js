@@ -72,6 +72,12 @@ const Modal = ({ onClose }) => {
     };
   }, [onClose]);
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleCheck();
+    }
+  };
+
   return (
     <div className={styles.modalBackground}>
       <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
@@ -84,13 +90,13 @@ const Modal = ({ onClose }) => {
         <div className={styles.modalContent}>
           <p>닉네임 수정하기</p>
           <div>
-            {" "}
             <input
               className={styles.searchInput}
               type="text"
               placeholder="15자 이하의 한글"
               value={checkValue}
               onChange={(e) => setCheckValue(e.target.value)}
+              onKeyPress={handleKeyPress}
             ></input>
             <button className={styles.cancelBtn} onClick={handleCheck}>
               중복검사
