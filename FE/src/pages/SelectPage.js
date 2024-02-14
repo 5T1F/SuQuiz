@@ -5,7 +5,9 @@ export default function SelectPage() {
   return (
     <>
       <Container>
-        <SelectCategory />
+        <div className="h-[90vh]">
+          <SelectCategory />
+        </div>
       </Container>
     </>
   );

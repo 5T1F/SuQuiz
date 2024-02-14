@@ -10,6 +10,7 @@
 .activeTab {
   background: #fefefe;
   font-weight: 600;
+  /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); */
 }
 
 /* 비활성 탭을 회색으로 처리 */
@@ -24,4 +25,5 @@
   padding: 10px 0;
   min-height: 38vh;
   max-height: 95vh;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }

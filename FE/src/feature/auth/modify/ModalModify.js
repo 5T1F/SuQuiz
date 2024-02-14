@@ -73,30 +73,39 @@ const Modal = ({ onClose }) => {
   }, [onClose]);
 
   return (
-    <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
-      <div className={styles.modalContent}>
-        <p>회원정보 수정</p>
-
-        <div>
-          <p>닉네임 수정</p>
-
-          <input
-            type="text"
-            placeholder="한글만으로 15자 이하"
-            value={checkValue}
-            onChange={(e) => setCheckValue(e.target.value)}
-          ></input>
-          <button onClick={handleCheck}>중복검사</button>
+    <div className={styles.modalBackground}>
+      <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
+        <div className={styles.modalTitle}>
+          <div>회원 정보 수정</div>
+          <span className={styles.close} onClick={onClose}>
+            &times;
+          </span>
+        </div>
+        <div className={styles.modalContent}>
+          <p>닉네임 수정하기</p>
+          <div>
+            {" "}
+            <input
+              className={styles.searchInput}
+              type="text"
+              placeholder="15자 이하의 한글"
+              value={checkValue}
+              onChange={(e) => setCheckValue(e.target.value)}
+            ></input>
+            <button className={styles.cancelBtn} onClick={handleCheck}>
+              중복검사
+            </button>
+          </div>
 
           {isConfirmed === 1 && <p style={{ color: "blue" }}>사용 가능한 닉네임입니다.</p>}
-          {isConfirmed === 0 && <p style={{ color: "red" }}>이미 사용 중인 닉네임입니다.</p>}
-          <button>탈퇴하기</button>
-          <div>
-            <button className={styles.close} onClick={onClose}>
+          {isConfirmed === 0 && <p style={{ color: "red" }}>사용 중인 닉네임입니다.</p>}
+          <p>탈퇴하기</p>
+          <div className={styles.btns}>
+            <button className={styles.cancelBtn} onClick={onClose}>
               취소
             </button>
             <form>
-              <button className={styles.close} onClick={handleSave}>
+              <button className={styles.requestBtn} onClick={handleSave}>
                 저장
               </button>
             </form>

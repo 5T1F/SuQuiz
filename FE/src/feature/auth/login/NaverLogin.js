@@ -1,5 +1,7 @@
 import React from "react";
 
+import naverIcon from "../../../assets/icons/naver-icon.png";
+
 const NaverLogin = () => {
   const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID; // 발급 받은 Client ID
   const NAVER_CALLBACK_URL = process.env.REACT_APP_NAVER_CALLBACK_URL; // 작성했던 Callback URL
@@ -11,7 +13,12 @@ const NaverLogin = () => {
     window.location.href = NAVER_AUTH_URL;
   };
 
-  return <button onClick={loginNaver}>네이버 로그인</button>;
+  return (
+    <button className="h-full w-full flex justify-center items-center" onClick={loginNaver}>
+      <img src={naverIcon} alt="Naver login" />
+      네이버 로그인
+    </button>
+  );
 };
 
 export default NaverLogin;
