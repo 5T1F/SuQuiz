@@ -7,6 +7,8 @@ import com.example.entity.multiplay.dto.ExitQuizDto;
 import com.example.entity.multiplay.dto.PlayerDto;
 import com.example.entity.multiplay.service.QuizroomService;
 import com.example.entity.ranking.dto.RankingDto;
+import com.example.entity.singleplay.dto.QuestDto;
+import com.example.entity.singleplay.service.SingleHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import java.util.List;
 @RequestMapping("/quizrooms")
 public class QuizroomController {
     private final QuizroomService quizroomService;
+    private final SingleHistoryService singleHistoryService;
 
     // 퀴즈 룸 입장 가능 여부 조회
     @GetMapping("/isJoinable/{inviteCode}")
@@ -72,16 +75,27 @@ public class QuizroomController {
         }
     }
 
-//    // 퀴즈 룸 시작, 단어 리스트 요청
-//    @PostMapping("/start/{sessionId}")
-//    public ResponseEntity<CommonResponse> startQuizroom(@PathVariable String sessionId) {
-//        List<WordDTO.WordResponseDto> wordList = quizroomService.startQuizroom(sessionId);
-//        return new ResponseEntity<>(CommonResponse.builder()
-//                .status(HttpStatus.OK.value())
-//                .message("퀴즈룸 단어리스트 응답 성공")
-//                .data(wordList)
-//                .build(), HttpStatus.OK);
-//    }
+    // 퀴즈 게임 시작
+    @PutMapping("/start/{sessionId}")
+    public ResponseEntity<CommonResponse> startQuizroom(@PathVariable String sessionId) {
+        quizroomService.startQuizroom(sessionId);
+        return new ResponseEntity<>(CommonResponse.builder()
+                .status(HttpStatus.OK.value())
+                .message("퀴즈룸 시작 성공")
+                .data("")
+                .build(), HttpStatus.OK);
+    }
+
+    // 멀티플레이 퀴즈 요청
+    @GetMapping("/multi/quest")
+    public ResponseEntity<CommonResponse<List<QuestDto.DailyListResponse>>> multiQuest() {
+
+        return new ResponseEntity<>(CommonResponse.<List<QuestDto.DailyListResponse>>builder()
+                .status(HttpStatus.OK.value())
+                .message("multi quest")
+                .data(singleHistoryService.multiQuest())
+                .build(), HttpStatus.OK);
+    }
 
     // 퀴즈룸 참가자 정보 요청
     @GetMapping("/players/{sessionId}")
@@ -96,14 +110,13 @@ public class QuizroomController {
 
 
     // 퀴즈 룸 멀티게임 종료
-
     @PutMapping("/end/{sessionId}")
-    public ResponseEntity<CommonResponse> endQuizgame(@PathVariable String sessionId, @RequestBody List<EndQuizDto.Request> requests) {
-        List<EndQuizDto.Response> resultList = quizroomService.endQuizgame(sessionId, requests);
+    public ResponseEntity<CommonResponse> endQuizgame(@PathVariable String sessionId, @RequestBody EndQuizDto.Request request) {
+        EndQuizDto.Response result = quizroomService.endQuizgame(sessionId, request);
         return new ResponseEntity<>(CommonResponse.builder()
                 .status(HttpStatus.OK.value())
                 .message("퀴즈게임 종료")
-                .data(resultList)
+                .data(result)
                 .build(), HttpStatus.OK);
     }
 
