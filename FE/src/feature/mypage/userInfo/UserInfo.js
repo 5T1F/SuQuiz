@@ -140,7 +140,7 @@ const UserInfo = () => {
         })}
       >
         {/* 중앙에 표시될 텍스트*/}
-        <div style={{ fontSize: "20px", marginTop: "-5px" }}>
+        <div style={{ fontSize: "24px", marginTop: "-5px" }}>
           <div>{`Lv.${level}`}</div>
         </div>
         <div style={{ fontSize: "16px" }}>{`Exp ${exp}%`}</div>
@@ -153,20 +153,20 @@ const UserInfo = () => {
       <div className={styles.userInfoContainer}>
         {/* 유저 닉네임, 로그아웃, 수정 */}
         <div className="h-1/6 flex flex-row justify-between items-center">
-          <div className="flex flex-row justify-center items-center">
+          <div className="flex flex-row justify-center items-center ">
             {getUserInfo().profileImage ? (
               <img src="${getUserInfo().profileImage}" alt="프로필 이미지" />
             ) : (
               <AccountCircleOutlinedIcon style={{ fontSize: 30 }} />
             )}
-            <div className="flex flex-row justify-center items-center w-full text-xl font-bold mx-2">
+            <div className="flex flex-row justify-center items-center w-full text-2xl font-bold mx-2">
               {getUserInfo().nickname}
             </div>
             <button className={styles.logoutButton} onClick={handleLogout}>
               로그아웃
             </button>
           </div>
-          <div className="flex">
+          <div className="flex pr-1">
             <button className={styles.modifyButton} onClick={handleModify}>
               <ManageAccountsRoundedIcon />
             </button>
@@ -174,11 +174,11 @@ const UserInfo = () => {
         </div>
         {/* 게임 정보 */}
         <div className="h-3/5 flex flex-row justify-between">
-          <div className="w-[110px] flex justify-center items-center">
+          <div className="w-[130px] flex justify-center items-center">
             {/* 레벨, 경험치 프로그래스바 */}
             <UserInfoProgress level={getUserInfo().level} exp={getUserInfo().exp} />
           </div>
-          <div className="w-[180px]">
+          <div className="w-[250px]">
             {/* 통계 */}
             <div className="flex mb-1">
               <RecordItem label="전체도전" value={getDailyResultData().allTrialCount} color="white" />

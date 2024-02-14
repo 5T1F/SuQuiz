@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
+
 import Keyboard from "./Keyboard";
 import Notification from "./Notification";
 import GameBoard from "./GameBoard";
 import SingleplayModal from "./SingleplayModal";
-import { isSolved, dailyQuest, additionalQuest, save, dailyResult } from "../../apis/singleplayApi";
+
 import { useWordleStore } from "../../app/store";
+
+import { isSolved, dailyQuest, additionalQuest, save, dailyResult } from "../../apis/singleplayApi";
 import { wordling } from "../../utils/wordling";
-import { async } from "q";
 import { syllablesToWord } from "../../utils/syllablesToWord";
+
+import styles from "./Wordle.module.css";
 
 /**
  *
@@ -354,17 +358,25 @@ const Wordle = ({ finger }) => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center">
-      <GameBoard inputString={inputString} history={history} colors={colors} />
-      <Notification message={notification} />
-      <Keyboard
-        handleEnter={handleEnter}
-        handleBackspace={handleBackspace}
-        keyboardMaps={keyboardMaps}
-        handleKeyPress={handleKeyPress}
-        // inputString={inputString}
-        // rightGuess={rightGuess}
-      />
+    <div className={styles.container}>
+      <div className={styles.solvedStateContainer}>{isSolvedState ? "추가 문제" : "오늘의 문제"}</div>
+      <div className={styles.boardContainer}>
+        <div className={styles.gameboardContainer}>
+          <GameBoard inputString={inputString} history={history} colors={colors} />
+        </div>
+        <div className={styles.notification}>
+          <Notification message={notification} />
+        </div>
+        <div>
+          <Keyboard
+            className={styles.keyboardContainer}
+            handleEnter={handleEnter}
+            handleBackspace={handleBackspace}
+            keyboardMaps={keyboardMaps}
+            handleKeyPress={handleKeyPress}
+          />
+        </div>
+      </div>
       {showModal && <SingleplayModal onClose={closeModal} />}
     </div>
   );

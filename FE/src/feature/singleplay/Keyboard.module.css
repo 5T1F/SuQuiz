@@ -1,0 +1,45 @@
+.keyboard {
+  height: 100%;
+  width: 100%;
+}
+
+.keyboardRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.keyboardColWhite {
+  font-size: 30px;
+  background-color: #e2e8f0;
+  border-radius: 10%;
+}
+
+.keyboardColHover {
+  font-size: 30px;
+  background-color: #e2e8f0;
+  border-radius: 10%;
+  font-weight: 900;
+}
+
+.keyboardColYellow {
+  font-size: 30px;
+  background-color: #ffea00;
+  border-radius: 10%;
+}
+
+.keyboardColGreen {
+  font-size: 30px;
+  background-color: #00c853;
+  border-radius: 10%;
+}
+
+.specialKey {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10%;
+}
