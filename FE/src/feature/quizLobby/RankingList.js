@@ -106,7 +106,7 @@ const RankingList = () => {
 
     return (
       <div className="w-full h-4 bg-[#e8ebed] rounded-full">
-        <div className="h-4 rounded-full bg-coutom-yellow" style={{ width: `${percentage}%` }}></div>
+        <div className={styles.progress} style={{ width: `${percentage}%` }}></div>
       </div>
     );
   };
