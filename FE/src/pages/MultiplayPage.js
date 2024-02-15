@@ -223,6 +223,13 @@ const MultiplayPage = () => {
     console.log("엔드게임 호출");
     console.log(quizVideoList);
     console.log(quizWordList);
+
+    // for (let i = 0; i < playersList.length; i++) {
+    //   if (playersList[i].playerNickname === userNickname) {
+    //     scoreList[i] = myScore;
+    //   }
+    // }
+
     // BE에 결과 종료 요청
     const result = await end(sessionId, userId, myScore);
     // 결과가 제대로 반환 되었다면
@@ -238,7 +245,7 @@ const MultiplayPage = () => {
       if (session) {
         await session
           .signal({
-            data: JSON.stringify({}),
+            data: JSON.stringify(),
             type: "quiz-end",
           })
           .then(() => {
@@ -256,7 +263,7 @@ const MultiplayPage = () => {
     setStage(0);
     setIsPlaying(false);
     // setQuizList([]);
-    // setQuizWordList([]);
+    // setQuizWordList([]
     // setQuizVideoList([]);
   };
 
@@ -364,7 +371,7 @@ const MultiplayPage = () => {
         const playerResponse = await players(sessionId);
         setPlayersList(playerResponse.data);
         // 참가 인원 배포 전에 4로 수정하기 ***************************************
-        if (playerResponse.data.length <= 4) {
+        if (playerResponse.data.length <= 4 && playerResponse.data.length > 1) {
           setIsFour(true);
         }
       } catch (error) {
@@ -669,11 +676,7 @@ const MultiplayPage = () => {
                 )}
               </div>
             </div>
-            <div>
-              {/* <div className={styles.sidebar}>
-              <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
-            </div> */}
-            </div>
+            <div></div>
           </>
         ) : (
           <>
@@ -693,9 +696,6 @@ const MultiplayPage = () => {
                   <div onClick={leaveSession} className={styles.leave}>
                     나가기
                   </div>
-                  <div onClick={endGame} className={styles.leave}>
-                    게임 종료
-                  </div>
                 </div>
                 <div className={styles.cellList}>
                   {resList.map((index) => (
@@ -705,7 +705,6 @@ const MultiplayPage = () => {
                 <div></div>
               </div>
               <Players publisher={publisher} subscribers={subscribers} solver={solver} isPlaying={isPlaying} />
-              {/* <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} /> */}
             </div>
           </>
         )}
