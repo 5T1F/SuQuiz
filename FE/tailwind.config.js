@@ -13,6 +13,9 @@ module.exports = {
         "custom-yellow": "#f6cf8d",
         "custom-green": "#97ce9b",
       },
+      fontFamily: {
+        GmarketSans: ["var(--gmarket-sans)"],
+      },
     },
   },
   plugins: [],

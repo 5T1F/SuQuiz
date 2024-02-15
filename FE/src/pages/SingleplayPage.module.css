@@ -44,7 +44,7 @@
 
 .tutorial {
   height: 40vh;
-  width: 100%;
+  width: 40vw;
   border-radius: 15px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -61,28 +61,42 @@
   align-items: center;
 }
 
-.rulesContainer {
-  font-family: "Noto Sans KR", sans-serif;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 20px auto;
-  width: 80%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 .ruleTitle {
   font-size: 24px;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 15px;
+
+  margin-bottom: 10px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ruleContents {
+  width: 400px;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 .rule {
-  margin-bottom: 10px;
+  margin: 10px 0;
   line-height: 1.6;
   color: #666;
+}
+
+.rule1 {
+  margin: 10px 0;
+  line-height: 1.6;
+
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.ruleImageContainer {
+  display: flex;
+  justify-content: center; /* 가로 방향으로 중앙 정렬 */
+  align-items: center; /* 세로 방향으로 중앙 정렬 */
+  margin: 3px 0;
 }
 
 .highlight {
@@ -96,6 +110,7 @@
 }
 
 .boldHighlight {
-  font-weight: bold;
+  margin: 10px 0;
   line-height: 1.6;
+  color: #e99e76;
 }

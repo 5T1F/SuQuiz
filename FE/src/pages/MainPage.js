@@ -53,6 +53,14 @@ export default function MainPage() {
               학습 시작
             </button>
           </div>
+
+          <div className={styles.descriptionContainer}>
+            <div className={styles.description1}>Easy Peasy,</div>
+            <div className={styles.description1}>Lemon SuQuiz !</div>
+            <div className={styles.description2}>SuQuiz와 함께라면</div>
+            <div className={styles.description2}>수어 학습도</div>
+            <div className={styles.description2}>식은 죽 먹기</div>
+          </div>
           {/* <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

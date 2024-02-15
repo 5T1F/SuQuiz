@@ -135,9 +135,9 @@ const RankingList = () => {
         <thead className={styles.tableHeader}>
           <tr>
             <th className="w-[70px]">나의 순위</th>
-            <th>닉네임</th>
+            <th className="w-[180px]">닉네임</th>
             <th>레벨</th>
-            <th className="w-[70px]">경험치</th>
+            <th>경험치</th>
           </tr>
         </thead>
         <tbody>
@@ -148,9 +148,9 @@ const RankingList = () => {
                 <motion.tr
                   key={user.nickname}
                   className={`${user.nickname === userNickname ? styles.highlight : ""} ${styles.tableRow}`}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.2 }}
                 >
                   <td className="flex items-center justify-center">
                     {rankingData.myRank === 1 ? (
@@ -189,9 +189,9 @@ const RankingList = () => {
         <thead className={styles.tableHeader}>
           <tr>
             <th className="w-[70px]">전체 순위</th>
-            <th>닉네임</th>
+            <th className="w-[180px]">닉네임</th>
             <th>레벨</th>
-            <th className="w-[70px]">경험치</th>
+            <th>경험치</th>
           </tr>
         </thead>
         <tbody>
