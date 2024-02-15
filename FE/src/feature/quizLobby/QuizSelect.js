@@ -217,7 +217,9 @@ const QuizSelect = () => {
           onMouseLeave={() => setIsHoveredSingle(false)}
           className="flex flex-col items-center h-auto p-20 m-5 transition bg-white shadow cursor-pointer w-80 rounded-2xl"
         >
-          <div className="font-semibold text-[44px] leading-[61px] rounded-t-lg text-custom-orange">싱글플레이</div>
+          <div className="font-GmarketSans font-semibold text-[44px] leading-[61px] rounded-t-lg text-custom-orange">
+            싱글플레이
+          </div>
           <div className="flex items-start justify-center overflow:hidden">
             <div className="flex items-center justify-center h-60">
               <Lottie options={orangeJuiceOptions} height={400} isStopped={!isHoveredSingle} />
@@ -234,22 +236,24 @@ const QuizSelect = () => {
           onMouseLeave={() => setIsHoveredMulti(false)}
           className="flex flex-col items-center h-auto p-20 m-5 transition bg-white shadow cursor-pointer w-126 rounded-2xl"
         >
-          <div className="font-semibold text-[44px] leading-[61px] rounded-t-lg text-custom-green">멀티플레이</div>
+          <div className="font-GmarketSans font-semibold text-[44px] leading-[61px] rounded-t-lg text-custom-green">
+            멀티플레이
+          </div>
           {/* 멀티플레이 세부 요소들 */}
           <AnimatePresence>
             {isHoveredMulti && (
               <>
                 <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit">
                   <div
-                    className={`w-full h-12 p-1 mt-5 mb-2 rounded-xl shadow transition bg-custom-green flex flex-col items-center justify-center`}
+                    className={`w-full h-12 p-1 mt-5 mb-2 rounded-xl shadow transition bg-custom-green flex flex-col items-center justify-center text-lg font-bold`}
                     onClick={createSession}
                   >
                     방 만들기
                   </div>
                   <div
-                    className={`w-full h-24 p-1 rounded-xl shadow transition bg-white hover:bg-[#97ce9b] hover:text-white flex flex-col items-center justify-center`}
+                    className={`w-full h-24 p-1 rounded-xl shadow-lg border-2 border-gray-100 transition bg-white hover:bg-[#97ce9b] focus:bg-[#97ce9b]  flex flex-col items-center justify-center`}
                   >
-                    <div onClick={joinSession} className="flex items-center justify-center mb-2 ">
+                    <div onClick={joinSession} className="flex items-center justify-center mb-2 text-lg font-bold">
                       코드로 입장하기
                     </div>
                     <input
@@ -258,7 +262,7 @@ const QuizSelect = () => {
                       value={codeValue}
                       onChange={(e) => setCodeValue(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      className="z-50 mx-1 text-center placeholder-gray-400 border-2 rounded-md border-custom-green h-9 cursor-text placeholder-opacity-80 p-6"
+                      className="z-50 mx-1 text-center placeholder-gray-400 border-2 rounded-md border-custom-green h-9 cursor-text placeholder-opacity-80 px-6"
                     />
                   </div>
                 </motion.div>

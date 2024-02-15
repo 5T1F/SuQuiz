@@ -36,6 +36,8 @@
   border-radius: 15px 15px 0px 0px;
   background: #ffffff;
   color: #f4b28e;
+  font-family: var(--gmarket-sans);
+  padding-top: 15px;
 }
 
 .quizStart:hover {
@@ -45,12 +47,14 @@
 .learningStart {
   /* border: 5px solid violet; */
   height: 75px;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 24px;
   line-height: 29px;
   border-radius: 0px 0px 15px 15px;
-  background: #f17b3c;
+  background: #ff8c4f;
   color: #ffffff;
+  font-family: var(--gmarket-sans);
+  padding-top: 10px;
 }
 
 .learningStart:hover {
@@ -63,6 +67,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.descriptionContainer {
+  position: absolute;
+  right: 10vw;
+  top: 10vh;
+  width: auto;
+}
+
+.description1 {
+  font-size: 5rem;
+  font-weight: 700;
+  text-align: right;
+  color: #fefefe;
+  text-shadow: 0 5px 50px rgba(216, 191, 191, 0.8);
+  cursor: default;
+  font-family: var(--gmarket-sans);
+}
+
+.description2 {
+  font-size: 3rem;
+  font-weight: 400;
+  text-align: right;
+  color: #fefefe;
+  text-shadow: 0 5px 20px rgba(216, 208, 208, 0.8);
+  cursor: default;
+  font-family: var(--gmarket-sans);
 }
 
 .videoContainter {
