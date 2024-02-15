@@ -84,8 +84,8 @@
   text-shadow: 0 5px 50px rgba(67, 51, 9, 0.927);
   cursor: default;
   font-family: var(--gmarket-sans);
-  margin-bottom: 10px;
-  backdrop-filter: blur(4px);
+  /* margin-bottom: 10px; */
+  /* backdrop-filter: blur(4px); */
 }
 
 .description2 {
@@ -96,8 +96,8 @@
   text-shadow: 0 5px 30px rgba(125, 92, 3, 0.9);
   cursor: default;
   font-family: var(--gmarket-sans);
-  margin-bottom: 7px;
-  backdrop-filter: blur(2px);
+  /* margin-bottom: 7px; */
+  /* backdrop-filter: blur(2px); */
 }
 
 .videoContainter {

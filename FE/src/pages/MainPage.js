@@ -55,10 +55,11 @@ export default function MainPage() {
           </div>
 
           <div className={styles.descriptionContainer}>
-            <div className={styles.description1}>하루 한 퀴즈, 수퀴즈</div>
-            <div className={styles.description2}>재미로 시작해</div>
-            <div className={styles.description2}>꾸준함으로 완성하는</div>
-            <div className={styles.description2}>수어 여정</div>
+            <div className={styles.description1}>Easy Peasy,</div>
+            <div className={styles.description1}>Lemon SuQuiz !</div>
+            <div className={styles.description2}>SuQuiz와 함께라면</div>
+            <div className={styles.description2}>수어 학습도</div>
+            <div className={styles.description2}>식은 죽 먹기</div>
           </div>
           {/* <motion.div
             initial={{ opacity: 0 }}
