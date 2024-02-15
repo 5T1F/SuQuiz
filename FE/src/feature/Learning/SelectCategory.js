@@ -54,9 +54,9 @@ export default function SelectCategory() {
 
   const CategoryButton = ({ category, onClick, isSelected }) => (
     <button
-      className={`mx-1 my-2 px-4 py-1.5 border-2 ${
-        isSelected ? "bg-orange-100 text-white  ring-1 ring-custom-orange" : "bg-white text-orange-100 "
-      } font-medium rounded-lg border-none shadow-md hover:bg-orange-200 hover:text-white  focus:ring-1 focus:ring-custom-orange focus:ring-opacity-75 transition-colors duration-500`}
+      className={`mx-1 my-2 px-8 py-4 border-2 text-2xl font-bold ${
+        isSelected ? "bg-orange-300 text-white ring-1 ring-custom-orange" : "bg-white text-orange-100 "
+      } font-medium rounded-lg border-none shadow-md hover:bg-orange-300 hover:text-white  focus:ring-1 focus:ring-custom-orange focus:ring-opacity-75 transition-colors duration-500`}
       onClick={() => onClick(category)}
     >
       <div>{category}</div>
@@ -138,7 +138,7 @@ export default function SelectCategory() {
             SuQuiz와 함께 수어 학습을 시작해 볼까요?
             <motion.div
               variants={itemVariants}
-              className="font-medium text-lg shadow bg-orange-200 rounded-lg mt-2 p-1 px-2"
+              className="font-medium text-2xl shadow bg-orange-200 rounded-lg mt-2 py-3 px-14"
             >
               선택한 학습 분야는 '{selectedMain}
               {selectedSub ? `' 이고, 주제는 '` : null}
@@ -147,7 +147,7 @@ export default function SelectCategory() {
           </motion.div>
           <motion.div
             onClick={handleStart}
-            className="px-6 py-2 border-[#d19372] bg-white rounded-lg shadow-md border-1 hover:text-white hover:bg-[#d19372]  transition duration-300"
+            className="px-6 py-4 font-bold text-2xl border-[#d19372] bg-white rounded-lg shadow-md border-1 hover:text-white hover:bg-[#d19372]  transition duration-300"
           >
             학습 시작하기
           </motion.div>
