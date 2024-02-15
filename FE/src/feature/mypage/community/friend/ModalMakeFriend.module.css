@@ -1,5 +1,5 @@
 .modalBackground {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -41,7 +41,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+  font-size: 20px;
   color: #ffffff;
   margin: 0 8%;
   text-shadow: 0px 0px 5px rgba(188, 243, 187, 0.5);
@@ -62,12 +62,12 @@
 
 .modalContent {
   width: 100%;
-  padding: 3%;
+  padding: 15px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .searchInput {
@@ -82,7 +82,10 @@
 .searchInput:focus {
   border-color: #bca79d; /* 포커스 시 테두리 색상 변경 */
 }
+
 .btns {
+  position: fixed;
+  bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -105,7 +108,7 @@
 }
 
 .requestBtn {
-  padding: 3px 10px;
+  padding: 4px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
