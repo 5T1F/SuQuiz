@@ -47,3 +47,40 @@
 .myNickname {
   background-color: #dcf8c6e2; /* 사용자 닉네임에 다른 배경색 적용 */
 }
+
+.onSet {
+  font-size: 16px;
+  margin: 0 10% 10% 0;
+}
+
+.onSolverSet {
+  font-size: 16px;
+  margin: 0 10% 10% 0;
+  height: auto;
+  background-color: #dcf8c6;
+  border-radius: 0.5rem;
+  padding: 5px;
+}
+
+.onVideo {
+  transform: scaleX(-1);
+  height: auto;
+  border-radius: 0.5rem;
+  margin-bottom: 2%;
+}
+
+.onNickname {
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.onMyNickname {
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #dcf8c6;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}

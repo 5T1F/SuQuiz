@@ -9,6 +9,16 @@
   justify-content: space-between;
 }
 
+.leftContainer {
+  position: relative;
+  width: 60vw;
+  height: 90vh;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
 .topContainer {
   height: 90vh;
   max-height: 90vh;
@@ -152,8 +162,15 @@
   height: 90vh;
 }
 
+.onSidebar {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
 .video {
-  margin: 10% auto;
+  margin: 4% auto;
   width: 50%;
   display: flex;
   align-items: center;

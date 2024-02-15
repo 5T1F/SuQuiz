@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import styles from "./UserVideoComponent.module.css";
 
-const UserVideoComponent = ({ nickname, streamManager, solver }) => {
+const UserVideoComponent = ({ nickname, streamManager, solver, isPlaying }) => {
   const storedNickname = localStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
@@ -17,12 +17,22 @@ const UserVideoComponent = ({ nickname, streamManager, solver }) => {
   }, [streamManager]);
 
   return (
-    <div className={` ${solver === videoUserNickname ? styles.solverSet : styles.set}`}>
-      <video autoPlay={true} ref={videoRef} className={styles.video} />
+    <div
+      className={` ${
+        isPlaying
+          ? solver === videoUserNickname
+            ? styles.onSolverSet
+            : styles.onSet
+          : solver === videoUserNickname
+          ? styles.solverSet
+          : styles.set
+      }`}
+    >
+      <video autoPlay={true} ref={videoRef} className={` ${isPlaying ? styles.onVideo : styles.video}`} />
       {userNickname === videoUserNickname ? (
-        <div className={styles.myNickname}>{videoUserNickname}</div>
+        <div className={` ${isPlaying ? styles.onMyNickname : styles.myNickname}`}>{videoUserNickname}</div>
       ) : (
-        <div className={styles.nickname}>{videoUserNickname}</div>
+        <div className={` ${isPlaying ? styles.onNickname : styles.nickname}`}>{videoUserNickname}</div>
       )}
     </div>
   );
