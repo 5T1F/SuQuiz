@@ -1,20 +1,13 @@
-.players {
+.waiters {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 20px; /* 행 사이의 간격 */
   grid-column-gap: 20px; /* 열 사이의 간격 */
 }
 
-.multiplay {
+.players {
   display: grid;
-  grid-template-areas:
-    "a b c"
-    "d e f";
-}
-
-.lemonSuquiz {
-  /* 1번 라인에서 2칸 */
-  grid-column: 1 / span 2;
-  /* 1번 라인에서 3칸 */
-  grid-row: 2 / span 1;
+  place-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  grid-row-gap: 10px; /* 열 사이의 간격 */
 }

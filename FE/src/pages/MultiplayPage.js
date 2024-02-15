@@ -688,16 +688,21 @@ const MultiplayPage = () => {
               ) : (
                 <></>
               )}
-              <div onClick={leaveSession} className={styles.leave}>
-                나가기
-              </div>
-              <div onClick={endGame} className={styles.leave}>
-                게임 종료
-              </div>
-              <div className={styles.cellList}>
-                {resList.map((index) => (
-                  <div className={styles.cell}>{index === "?" ? "ㅤ" : index}</div>
-                ))}
+              <div className={styles.topButton}>
+                <div>
+                  <div onClick={leaveSession} className={styles.leave}>
+                    나가기
+                  </div>
+                  <div onClick={endGame} className={styles.leave}>
+                    게임 종료
+                  </div>
+                </div>
+                <div className={styles.cellList}>
+                  {resList.map((index) => (
+                    <div className={styles.cell}>{index === "?" ? "ㅤ" : index}</div>
+                  ))}
+                </div>
+                <div></div>
               </div>
               <Players publisher={publisher} subscribers={subscribers} solver={solver} isPlaying={isPlaying} />
               {/* <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} /> */}

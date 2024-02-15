@@ -13,21 +13,19 @@ const Players = ({ publisher, subscribers, solver, isPlaying }) => {
   }, [subscribers]);
 
   return (
-    <div className={styles.players}>
-      <div>
+    <>
+      <div className={isPlaying ? styles.players : styles.waiters}>
         <UserVideoComponent nickname={userNickname} streamManager={publisher} solver={solver} isPlaying={isPlaying} />
-      </div>
-      {playerSubscribers.map((subscriber, index) => (
-        <div key={index}>
+        {playerSubscribers.map((subscriber, index) => (
           <UserVideoComponent
             nickname={subscriber.nickname}
             streamManager={subscriber.streamManager}
             solver={solver}
             isPlaying={isPlaying}
           />
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 };
 

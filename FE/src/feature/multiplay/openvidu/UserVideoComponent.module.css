@@ -8,6 +8,14 @@
   border-radius: 0.5rem;
 }
 
+/* .onSet {
+  width: 80%;
+  height: 55%;
+  position: relative;
+  font-size: 16px;
+  margin: 0 2% 2% 0;
+} */
+
 .solverSet {
   font-size: 16px;
   margin: 0 10% 10% 0;
@@ -17,6 +25,23 @@
   padding: 5px;
 }
 
+.onSolverSet,
+.onSet {
+  font-size: 16px;
+  border-radius: 1rem;
+  padding: 20px;
+  width: 80%;
+  position: relative;
+}
+
+.onSet {
+  border: 2px solid #bcf3bb;
+}
+
+.onSolverSet {
+  background-color: #bcf3bb;
+}
+
 .video {
   position: absolute;
   top: 0;
@@ -24,6 +49,16 @@
   width: 100%;
   transform: scaleX(-1);
   border-radius: 0.5rem;
+}
+
+.onVideo {
+  transform: scaleX(-1);
+  height: auto;
+  border-radius: 0.5rem;
+  position: inherit;
+  object-fit: fill;
+  width: 30rem;
+  height: 16rem;
 }
 
 .nickname,
@@ -45,44 +80,25 @@
 }
 
 .myNickname {
-  background-color: #dcf8c6e2; /* 사용자 닉네임에 다른 배경색 적용 */
-}
-
-.onSet {
-  width: 50%;
-  font-size: 16px;
-  margin: 0 10% 10% 0;
-}
-
-.onSolverSet {
-  font-size: 16px;
-  margin: 0 10% 10% 0;
-  height: auto;
-  background-color: #dcf8c6;
-  border-radius: 0.5rem;
-  padding: 5px;
-  width: 50%;
-}
-
-.onVideo {
-  transform: scaleX(-1);
-  height: auto;
-  border-radius: 0.5rem;
-  margin-bottom: 2%;
+  background-color: #f6cf8d; /* 사용자 닉네임에 다른 배경색 적용 */
 }
 
 .onNickname {
+  padding: 4px;
   display: flex;
   justify-content: center;
   border-radius: 5px;
+  font-size: large;
   background-color: #ffffff;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .onMyNickname {
+  padding: 4px;
   display: flex;
   justify-content: center;
   border-radius: 5px;
-  background-color: #dcf8c6;
+  font-size: large;
+  background-color: #a0afa0;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
