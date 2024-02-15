@@ -11,12 +11,8 @@
 
 .leftContainer {
   position: relative;
-  width: 70vw;
-  height: 90vh;
   padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
   padding-left: 2.5rem;
-  padding-right: 2.5rem;
 }
 
 .topContainer {
@@ -75,6 +71,7 @@
 .topButton {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   margin-bottom: 10px;
 }
 
@@ -175,7 +172,6 @@
   padding-left: 2.5rem;
   padding-right: 2.5rem;
   width: 30%;
-  height: 100%;
 }
 
 .video {
@@ -189,10 +185,16 @@
 .cellList {
   display: flex;
   justify-content: center;
+  background-color: #bcf3bb;
+  width: 30%;
+  border-radius: 5px;
 }
 
 .cell {
-  margin: 2%;
+  position: relative;
+  margin: 3%;
   font-size: 32px;
-  border-bottom: solid #97ce9b;
+  background-color: #fff;
+  border-radius: 5px;
+  height: 35px;
 }
