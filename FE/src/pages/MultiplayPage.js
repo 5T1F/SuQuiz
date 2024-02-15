@@ -538,7 +538,7 @@ const MultiplayPage = () => {
 
     return (
       <div className="w-full h-4 bg-gray-200 rounded-full">
-        <div className="h-4 rounded-full bg-coutom-yellow" style={{ width: `${percentage}%` }}></div>
+        <div className={styles.progress} style={{ width: `${percentage}%` }}></div>
       </div>
     );
   };

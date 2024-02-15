@@ -54,6 +54,13 @@
   width: 200px;
 }
 
+.progress {
+  height: 1rem;
+  border-radius: 9999px 0 0 9999px;
+  background-color: #f8cab1;
+  z-index: 10;
+}
+
 .middleContainer {
   position: relative;
   width: 60vw;
