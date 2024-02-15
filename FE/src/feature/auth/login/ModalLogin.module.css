@@ -9,8 +9,8 @@
 
 .modal {
   /* 모달창 크기 */
-  width: 20%;
-  height: 40%;
+  width: 360px;
+  height: 320px;
 
   /* 최상단 위치 */
   z-index: 999;
@@ -28,9 +28,9 @@
 }
 
 .modalTitle {
-  position: absolute;
+  position: fixed;
   width: 100%;
-  height: 25%;
+  height: 70px;
   background: #bca79d;
   border-radius: 15px 15px 0px 0px;
   display: flex;
@@ -62,7 +62,7 @@
 }
 
 .modalContent {
-  position: relative;
+  position: fixed;
   width: 100%;
   height: 240px;
   top: 60px;

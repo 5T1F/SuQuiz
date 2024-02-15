@@ -10,7 +10,6 @@ import {
 } from "../../../app/store";
 
 import styles from "./ModalSignup.module.css";
-import { bottom } from "@popperjs/core";
 
 const Modal = ({ onClose, email }) => {
   const modalRef = useRef();
