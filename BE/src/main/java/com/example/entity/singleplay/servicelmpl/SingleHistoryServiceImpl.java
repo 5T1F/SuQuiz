@@ -238,8 +238,10 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
             while(true) {
                 Random random = new Random();
-                int index = random.nextInt(words.size());
-                Word word = words.get(index);
+                //시연 시 단어 "인사"로 고정
+                Word word = wordRepository.findByWordName("인사");
+//                int index = random.nextInt(words.size());
+//                Word word = words.get(index);
 
                 System.out.println(word.getWordName());
 
@@ -280,8 +282,8 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
             while(true) {
                 Random random = new Random();
-                //시연 시 단어 "친구"로 고정
-                Word word = wordRepository.findByWordName("친구");
+                //시연 시 단어 "단비"로 고정
+                Word word = wordRepository.findByWordName("단비");
 //                int index = random.nextInt(words.size());
 //                Word word = words.get(index);
 
@@ -318,4 +320,5 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
         return threeQuest;
     }
+    
 }

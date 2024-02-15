@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /api
+    context-path: /api2
   port: 5000
 
 
