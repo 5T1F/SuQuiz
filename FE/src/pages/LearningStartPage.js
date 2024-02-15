@@ -70,7 +70,7 @@ export default function LearningStartPage() {
           />
         </div>
         <Container>
-          <div className="flex flex-row justify-center items-end mt-36 mb-10">
+          <div className="flex flex-row justify-center items-end mt-44 mb-10">
             {/* 플래시 카드 */}
             {currentWord && <Flashcard currentWord={currentWord} setCurrentWord={handleSetCurrentWord} />}
             {/* 유저 실시간 화면 */}
