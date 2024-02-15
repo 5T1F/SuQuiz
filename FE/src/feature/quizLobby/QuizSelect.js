@@ -222,7 +222,7 @@ const QuizSelect = () => {
           </div>
           <div className="flex items-start justify-center overflow:hidden">
             <div className="flex items-center justify-center h-60">
-              <Lottie options={orangeJuiceOptions} height={400} isStopped={!isHoveredSingle} />
+              <Lottie options={orangeJuiceOptions} height={350} isStopped={!isHoveredSingle} />
             </div>
           </div>
         </motion.div>
@@ -271,10 +271,10 @@ const QuizSelect = () => {
           </AnimatePresence>
           <div className="flex items-start justify-center overflow:hidden">
             <div className="flex items-center justify-center h-60">
-              <Lottie options={limeJuiceOptions} height={400} isStopped={!isHoveredMulti} />
+              <Lottie options={limeJuiceOptions} height={350} isStopped={!isHoveredMulti} />
             </div>
             <div className="flex items-center justify-center h-60">
-              <Lottie options={limeJuiceOptions} height={400} isStopped={!isHoveredMulti || !isDelayedPlay} />
+              <Lottie options={limeJuiceOptions} height={350} isStopped={!isHoveredMulti || !isDelayedPlay} />
             </div>
           </div>
         </motion.div>
