@@ -1,5 +1,3 @@
-// SingleplayModal.js 파일
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
@@ -221,7 +219,7 @@ const SingleplayModal = ({ onClose }) => {
             </button>
             {!modalResult.isSolved && (
               <button className={styles.copyBtn} onClick={copyDummyDataToClipboard} disabled={!modalResult.isSolved}>
-                복사하기
+                공유하기
               </button>
             )}
           </div>
