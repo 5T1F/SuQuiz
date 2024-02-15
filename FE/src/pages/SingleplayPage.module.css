@@ -40,8 +40,9 @@
 .canvas {
   transform: scaleX(-1);
   display: none;
-  width: 100%;
+  width: 70%;
   height: auto;
+  border-radius: 0.5rem;
 }
 
 .tutorial {
@@ -70,6 +71,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #e99e76;
+  margin-bottom: 10px;
 }
 
 .ruleContents {
@@ -78,24 +81,24 @@
   margin-bottom: 20px;
 }
 
-.rule {
-  line-height: 1.6;
-  color: #666;
+.rules {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
 }
 
-.rule1 {
+.rule {
   margin: 10px 0;
   line-height: 1.6;
-
-  font-weight: bold;
-  margin-bottom: 10px;
+  color: #666;
 }
 
 .ruleImageContainer {
   display: flex;
   justify-content: center; /* 가로 방향으로 중앙 정렬 */
   align-items: center; /* 세로 방향으로 중앙 정렬 */
-  margin: 3px 0;
+  margin-bottom: 3px;
 }
 
 .highlight {

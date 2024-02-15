@@ -47,39 +47,43 @@ export default function SingleplayPage() {
               </div>
               <div className={styles.ruleContents}>
                 <Slider {...settings}>
-                  <div key="slide2" className={styles.rule}>
-                    수어로 한글 자모를 입력한 뒤 엔터를 눌러보세요.
+                  <div key="slide2" className={styles.rules}>
+                    <div className={styles.rule}>수어로 한글 자모를 입력한 뒤 엔터를 눌러보세요.</div>
                   </div>
-                  <div key="slide3" className={styles.rule}>
-                    자모가 올바른 자리에 있다면 칸이 <span className={styles.highlight}>초록색</span>으로 변합니다.
+                  <div key="slide3" className={styles.rules}>
+                    <div className={styles.rule}>
+                      자모가 올바른 자리에 있다면 칸이 <span className={styles.highlight}>초록색</span>으로 변합니다.
+                    </div>
                     <div className={styles.ruleImageContainer}>
                       <img src={tutorialGreen} alt="올바른 자리" />
                     </div>
                   </div>
-                  <div key="slide4" className={styles.rule}>
-                    자모가 잘못된 자리에 있다면 칸이 <span className={styles.yellowHighlight}>노란색</span>으로
-                    변합니다.
+                  <div key="slide4" className={styles.rules}>
+                    <div className={styles.rule}>
+                      자모가 잘못된 자리에 있다면 칸이 <span className={styles.yellowHighlight}>노란색</span>으로
+                      변합니다.
+                    </div>
                     <div className={styles.ruleImageContainer}>
                       <img src={tutorialYellow} alt="잘못된 자리" />
                     </div>
                   </div>
-                  <div key="slide5" className={styles.rule}>
-                    자모가 모두 올바른 자리에 있다면 정답입니다.
+                  <div key="slide5" className={styles.rules}>
+                    <div className={styles.rule}>자모가 모두 올바른 자리에 있다면 정답입니다.</div>
                     <div className={styles.ruleImageContainer}>
                       <img src={tutorialCorrect} alt="정답" />
                     </div>
                   </div>
-                  <div key="slide9" className={styles.boldHighlight}>
-                    <div className={styles.boldHighlight}>매일 매일 문제를 풀며 수어로 자음,모음을 마스터하고,</div>
-                    <div className={styles.boldHighlight}> 새로운 단어를 수어로 배워봅시다.</div>
+                  <div key="slide9" className={styles.rules}>
+                    <div className={styles.rule}>매일 매일 문제를 풀며 수어로 자음,모음을 마스터하고,</div>
+                    <div className={styles.rule}> 새로운 단어를 수어로 배워봅시다.</div>
                   </div>
-                  <div key="slide6" className={styles.rule}>
+                  <div key="slide6" className={styles.rules}>
                     <div className={styles.rule}>사전에 있는 단어만 입력 가능합니다.</div>
                   </div>
-                  <div key="slide7" className={styles.rule}>
+                  <div key="slide7" className={styles.rules}>
                     <div className={styles.rule}>오늘의 문제는 매일 새벽 6시에 갱신됩니다.</div>
                   </div>
-                  <div key="slide7" className={styles.rule}>
+                  <div key="slide7" className={styles.rules}>
                     <div className={styles.rule}>스트릭의 기준 시는 새벽 6시입니다.</div>
                   </div>
                 </Slider>
