@@ -17,7 +17,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.76);
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.88);
   border-radius: 15px;
 }
 
@@ -34,7 +34,7 @@
   font-size: 50px;
   line-height: 61px;
   border-radius: 15px 15px 0px 0px;
-  background: #ffffff;
+  background: #fffdfd;
   color: #f4b28e;
   font-family: var(--gmarket-sans);
   padding-top: 15px;
@@ -52,7 +52,7 @@
   line-height: 29px;
   border-radius: 0px 0px 15px 15px;
   background: #ff8c4f;
-  color: #ffffff;
+  color: #fffdfd;
   font-family: var(--gmarket-sans);
   padding-top: 10px;
 }
@@ -81,7 +81,7 @@
   font-weight: 700;
   text-align: right;
   color: #fefefe;
-  text-shadow: 0 5px 50px rgba(216, 191, 191, 0.8);
+  text-shadow: 0 5px 50px rgba(141, 111, 29, 0.888);
   cursor: default;
   font-family: var(--gmarket-sans);
 }
@@ -91,7 +91,7 @@
   font-weight: 400;
   text-align: right;
   color: #fefefe;
-  text-shadow: 0 5px 20px rgba(216, 208, 208, 0.8);
+  text-shadow: 0 5px 20px rgba(122, 95, 21, 0.888);
   cursor: default;
   font-family: var(--gmarket-sans);
 }

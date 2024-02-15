@@ -9,8 +9,8 @@
   z-index: 1000; /* 네비게이션 바의 z-index 설정 */
   display: flex;
   justify-content: center;
-  background: #ffffff;
-  box-shadow: 0 1px 3px #ffffff;
+  background: #fffdfd;
+  box-shadow: 0 1px 3px #fffdfd;
 }
 
 .navContainer > div {

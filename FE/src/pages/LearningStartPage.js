@@ -70,7 +70,7 @@ export default function LearningStartPage() {
           />
         </div>
         <Container>
-          <div className="flex flex-row justify-center items-end my-36">
+          <div className="flex flex-row justify-center items-end mt-44 mb-10">
             {/* 플래시 카드 */}
             {currentWord && <Flashcard currentWord={currentWord} setCurrentWord={handleSetCurrentWord} />}
             {/* 유저 실시간 화면 */}
@@ -82,15 +82,15 @@ export default function LearningStartPage() {
                 {finger}' 입니다
               </div>
             </div>
-            {/* 학습종료 버튼 */}
-            <div className={styles.buttonContainer}>
-              <button
-                onClick={handleEnd}
-                className="px-6 py-1 border-custom-yellow rounded-lg shadow border-2  hover:bg-amber-100 transition duration-300"
-              >
-                학습 종료
-              </button>
-            </div>
+          </div>
+          {/* 학습종료 버튼 */}
+          <div className={styles.buttonContainer}>
+            <button
+              onClick={handleEnd}
+              className="px-6 py-2 mr-6 border-custom-orange bg-white rounded-lg shadow border-2  hover:bg-orange-300 transition duration-300"
+            >
+              학습 종료
+            </button>
           </div>
         </Container>
       </div>

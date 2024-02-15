@@ -51,11 +51,11 @@ const Slidebar = ({ onClose, isSlidebarOpen }) => {
         <button className={styles.close} onClick={handleCloseSlidebar}>
           <ArrowForwardIosRoundedIcon />
         </button>
-        <div>
-          <div className="h-[45vh] mb-3">
+        <div className="h-[90vh] flex flex-col justify-center gap-4">
+          <div className="h-[45vh]">
             <UserInfo />
           </div>
-          <div className="h-full">
+          <div className="h-[45vh]">
             <Community />
           </div>
         </div>
