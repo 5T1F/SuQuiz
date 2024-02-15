@@ -97,7 +97,7 @@ const FriendList = ({ isMultiplay }) => {
             ) : (
               <>
                 <div className="flex items-center justify-center">
-                  <div className="flex items-center justify-center mt-2">
+                  <div className="flex items-center justify-around gap  mt-2">
                     <button className={styles.addButton} onClick={openMakeModal}>
                       <PersonAddRoundedIcon />
                     </button>

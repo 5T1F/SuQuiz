@@ -1,4 +1,5 @@
 .addButton {
+  position: relative;
   background: #bca79d;
   border-radius: 1rem;
   color: white;
@@ -51,6 +52,7 @@
 }
 
 .searchButton {
+  position: relative;
   background-color: #ccc;
   color: white;
   padding: 3px 10px;
@@ -63,6 +65,28 @@
 
 .searchButton:hover {
   background-color: #f4b28e;
+}
+
+.searchButton::after {
+  content: "검색"; /* 툴팁 텍스트 */
+  position: absolute;
+  top: -30%;
+  left: 70%;
+  transform: translateX(-50%); /* 정확한 중앙 정렬을 위해 */
+  background-color: rgba(128, 128, 128, 0.7); /* 툴팁 배경색 */
+  color: white; /* 텍스트 색상 */
+  padding: 0 2px; /* 패딩 */
+  border-radius: 3px; /* 모서리 둥글게 */
+  font-size: 10px; /* 툴팁 텍스트 크기 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  opacity: 0; /* 기본적으로 툴팁을 숨김 */
+  visibility: hidden; /* 접근성을 위해 visibility 속성도 조절 */
+  transition: opacity 0.3s, visibility 0.3s; /* 부드러운 효과 */
+}
+
+.searchButton:hover::after {
+  opacity: 1; /* 호버 시 툴팁 표시 */
+  visibility: visible; /* 호버 시 보이게 함 */
 }
 
 .friendItem {
@@ -118,7 +142,7 @@
   content: "친구 삭제"; /* 툴팁 텍스트 */
   position: absolute;
   top: -30%;
-  left: 180%;
+  left: 130%;
   transform: translateX(-50%); /* 정확한 중앙 정렬을 위해 */
   background-color: rgba(128, 128, 128, 0.7); /* 툴팁 배경색 */
   color: white; /* 텍스트 색상 */
