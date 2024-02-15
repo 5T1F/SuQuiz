@@ -614,15 +614,15 @@ const MultiplayPage = () => {
               <div className={styles.beforePlaying}>
                 {/* 사용자 정보 표시 부분 */}
                 <div className={styles.userInfo}>
-                  <div className="relative w-20 h-24">
+                  <div className="relative w-20 h-20">
                     <img src={flag} alt="Flag" className="absolute inset-0 z-10 w-full h-full py-2" />
                     <div className="absolute inset-0 z-20 flex items-center justify-center pb-3">
-                      <div className="font-bold text-2xl text-[#f4b28e]">Lv.{userInfoData.level}</div>
+                      <div className="font-bold text-xl text-[#f4b28e]">Lv.{userInfoData.level}</div>
                     </div>
                   </div>
                   {/* <img src={getUserInfo().profileImage} alt="프로필 이미지" className={styles.profileImage} /> */}
                   <div className="w-64 ml-3">
-                    <div className="w-full mb-1 text-2xl font-bold">{userInfoData.nickname}</div>
+                    <div className="w-full text-xl font-bold">{userInfoData.nickname}</div>
                     <div className="text-gray-500">EXP.{userInfoData.exp}</div>
                     <div className={styles.progressBar}>
                       <LinearProgressbar level={userInfoData.level} exp={userInfoData.exp} />

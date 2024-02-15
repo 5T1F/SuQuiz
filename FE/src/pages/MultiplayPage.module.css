@@ -9,6 +9,19 @@
   justify-content: space-between;
 }
 
+.topContainer {
+  height: 90vh;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
 .leftContainer {
   position: relative;
   width: 70vw;
@@ -19,19 +32,10 @@
   padding-right: 2.5rem;
 }
 
-.topContainer {
-  height: 90vh;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
 .beforePlaying {
-  gap: 10px;
+  gap: 30px;
   background-color: #f3f3f3;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   height: 100%; /* 컴포넌트의 전체 높이를 설정 */
   width: 320px;
@@ -106,8 +110,8 @@
 .bottomButton {
   display: flex;
   justify-content: center;
-  margin: 3%;
-  width: 80%;
+  margin: 5%;
+  width: 100%;
   bottom: 0px;
   position: absolute;
   text-align: center;
@@ -120,6 +124,7 @@
   border-radius: 5px;
   border: 1px solid #bcf3bb;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  padding: 4px 20px;
 
   &:hover {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
@@ -151,6 +156,7 @@
   border-radius: 5px;
   margin-left: 3%;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  padding: 4px 20px;
 
   &:hover {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
