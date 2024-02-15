@@ -13,7 +13,7 @@ axios.interceptors.request.use((config) => {
   const accessToken = null;
 
   useEffect(async () => {
-    const storedAccessToken = localStorage.getItem("accessTokenStorage");
+    const storedAccessToken = sessionStorage.getItem("accessTokenStorage");
     const parsedAccessToken = JSON.parse(storedAccessToken);
     accessToken = await parsedAccessToken.state.accessToken;
   }, []);

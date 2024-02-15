@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./UserVideoComponent.module.css";
 
 const UserVideoComponent = ({ nickname, streamManager, solver, isPlaying }) => {
-  const storedNickname = localStorage.getItem("nicknameStorage");
+  const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
   const videoRef = useRef();

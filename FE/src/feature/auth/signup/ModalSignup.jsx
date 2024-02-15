@@ -66,7 +66,7 @@ const Modal = ({ onClose, email }) => {
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
       if (data.data) {
         setUserNickname(checkValue);
-        localStorage.setItem("emailStorage", null);
+        sessionStorage.setItem("emailStorage", null);
         onClose();
         navigate("/");
         alert("회원가입 완료");

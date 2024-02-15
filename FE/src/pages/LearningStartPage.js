@@ -16,7 +16,7 @@ export default function LearningStartPage() {
   const [currentWord, setCurrentWord] = useState(null);
   const [wordList, setWordList] = useState([]);
   const navigate = useNavigate();
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
   const handleSetCurrentWord = (updatedWord) => {
@@ -78,8 +78,8 @@ export default function LearningStartPage() {
               <div className={styles.description}>왼쪽에서 학습하고 싶은 단어를 골라 따라해보세요</div>
               <MyCam className={styles.video} categoryNumber={3} changeFinger={changeFinger} />
               <div className={styles.description2}>
-                '{JSON.parse(localStorage.getItem("nicknameStorage")).state.userNickname}' 님이 동작한 수어는 '{finger}'
-                입니다
+                '{JSON.parse(sessionStorage.getItem("nicknameStorage")).state.userNickname}' 님이 동작한 수어는 '
+                {finger}' 입니다
               </div>
             </div>
             {/* 학습종료 버튼 */}

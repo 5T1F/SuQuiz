@@ -12,13 +12,13 @@ import flag from "../../assets/images/flag.png";
 import { flatMapDeep } from "lodash";
 
 const RankingList = () => {
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const storedNickname = localStorage.getItem("nicknameStorage");
+  const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken);
   const accessToken = parsedToken.state.accessToken;
 

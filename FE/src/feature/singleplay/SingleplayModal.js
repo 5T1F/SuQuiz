@@ -18,7 +18,7 @@ import "react-calendar/dist/Calendar.css";
 import congratulation from "../../assets/lottie/congratulation.json";
 
 const SingleplayModal = ({ onClose }) => {
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
   const [solved, setSolved] = useState(true);

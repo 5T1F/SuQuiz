@@ -19,10 +19,10 @@ export default function Nav() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedId = localStorage.getItem("idStorage");
-    const storedNickname = localStorage.getItem("nicknameStorage");
-    const storedProvider = localStorage.getItem("providerStorage");
-    const storedToken = localStorage.getItem("tokenStorage");
+    const storedId = sessionStorage.getItem("idStorage");
+    const storedNickname = sessionStorage.getItem("nicknameStorage");
+    const storedProvider = sessionStorage.getItem("providerStorage");
+    const storedToken = sessionStorage.getItem("tokenStorage");
     try {
       const parsedId = JSON.parse(storedId);
       const parsedNickname = JSON.parse(storedNickname);

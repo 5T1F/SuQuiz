@@ -1,4 +1,4 @@
-const storedToken = localStorage.getItem("tokenStorage");
+const storedToken = sessionStorage.getItem("tokenStorage");
 const parsedToken = JSON.parse(storedToken);
 const accessToken = parsedToken.state.accessToken;
 

@@ -50,7 +50,7 @@ const BookmarkButton = ({ isBookmarked, toggleBookmark }) => {
 
 const Flashcard = ({ currentWord, setCurrentWord }) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
 

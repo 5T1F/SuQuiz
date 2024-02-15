@@ -13,10 +13,10 @@ import ManageAccountsRoundedIcon from "@mui/icons-material/ManageAccountsRounded
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 const UserInfo = () => {
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const storedAccessToken = localStorage.getItem("tokenStorage");
+  const storedAccessToken = sessionStorage.getItem("tokenStorage");
   const parsedAccessToken = JSON.parse(storedAccessToken);
   const accessToken = parsedAccessToken.state.accessToken;
   const [userInfoData, setUserInfoData] = useState(null);
@@ -101,11 +101,11 @@ const UserInfo = () => {
 
   const handleLogout = () => {
     try {
-      localStorage.setItem("idStorage", 0);
-      localStorage.setItem("tokenStorage", null);
-      localStorage.setItem("emailStorage", null);
-      localStorage.setItem("nicknameStorage", null);
-      localStorage.setItem("providerStorage", null);
+      sessionStorage.setItem("idStorage", 0);
+      sessionStorage.setItem("tokenStorage", null);
+      sessionStorage.setItem("emailStorage", null);
+      sessionStorage.setItem("nicknameStorage", null);
+      sessionStorage.setItem("providerStorage", null);
       window.location.replace("/");
 
       alert("로그아웃 완료");

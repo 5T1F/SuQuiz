@@ -11,6 +11,7 @@ export const useAuthStore = create(
     }),
     {
       name: "idStorage",
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
@@ -25,6 +26,7 @@ export const useTokenStore = create(
     }),
     {
       name: "tokenStorage",
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
@@ -39,6 +41,7 @@ export const useUserEmailStore = create(
     }),
     {
       name: "emailStorage",
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
@@ -53,6 +56,7 @@ export const useUserNicknameStore = create(
     }),
     {
       name: "nicknameStorage",
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
@@ -67,6 +71,7 @@ export const useProviderStore = create(
     }),
     {
       name: "providerStorage",
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
@@ -81,6 +86,7 @@ export const useMultiplayStore = create(
     }),
     {
       name: "multiplayStorage",
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
@@ -101,4 +107,5 @@ export const useWordleStore = create((set) => ({
     correctRate: 0,
   },
   setModalResult: (modalResult) => set({ modalResult }),
+  storage: createJSONStorage(() => sessionStorage),
 }));

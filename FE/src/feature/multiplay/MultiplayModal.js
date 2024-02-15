@@ -15,10 +15,10 @@ import flag from "../../assets/images/flag.png";
 import congratulation from "../../assets/lottie/congratulation.json";
 
 const MultiplayModal = ({ playersList, sessionId, myScore, onClose, solver, quizVideo, quizWord }) => {
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const storedNickname = localStorage.getItem("nicknameStorage");
+  const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
   const navigate = useNavigate();

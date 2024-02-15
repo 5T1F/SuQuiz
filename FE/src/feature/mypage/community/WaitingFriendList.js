@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 import styles from "./WaitingFriendList.module.css";
 
 const WaitingFriendList = () => {
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const storedNickname = localStorage.getItem("nicknameStorage");
+  const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken);
   const accessToken = parsedToken.state.accessToken;
   const [requestList, setRequestList] = useState([]);

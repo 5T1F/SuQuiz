@@ -3,7 +3,7 @@ import UserVideoComponent from "./openvidu/UserVideoComponent";
 import styles from "./Players.module.css";
 
 const Players = ({ publisher, subscribers, solver, isPlaying }) => {
-  const storedNickname = localStorage.getItem("nicknameStorage");
+  const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
   const [playerSubscribers, setPlayerSubscribers] = useState(subscribers);

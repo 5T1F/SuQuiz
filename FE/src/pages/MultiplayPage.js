@@ -17,13 +17,13 @@ import styles from "./MultiplayPage.module.css";
 import flag from "../assets/images/flag.png";
 
 const MultiplayPage = () => {
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const storedAccessToken = localStorage.getItem("tokenStorage");
+  const storedAccessToken = sessionStorage.getItem("tokenStorage");
   const parsedAccessToken = JSON.parse(storedAccessToken);
   const accessToken = parsedAccessToken.state.accessToken;
-  const storedNickname = localStorage.getItem("nicknameStorage");
+  const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
   const navigate = useNavigate();

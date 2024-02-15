@@ -24,7 +24,7 @@ const Wordle = ({ finger }) => {
   const [history, setHistory] = useState([]); // 이전 입력 기록을 저장할 배열
   const [currentRow, setCurrentRow] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
   const { modalResult, setModalResult } = useWordleStore();

@@ -4,10 +4,10 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import styles from "./WaitingRoomSidebar.module.css";
 
 const WaitingRoomSidebar = ({ session, isPlaying }) => {
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const storedAccessToken = localStorage.getItem("tokenStorage");
+  const storedAccessToken = sessionStorage.getItem("tokenStorage");
   const parsedAccessToken = JSON.parse(storedAccessToken);
   const accessToken = parsedAccessToken.state.accessToken;
 

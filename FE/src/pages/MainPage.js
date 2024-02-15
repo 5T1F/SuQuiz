@@ -8,7 +8,7 @@ import ModalLogin from "../feature/auth/login/ModalLogin";
 import EasterEgg from "../assets/baseball.png";
 
 export default function MainPage() {
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
   const navigate = useNavigate();

@@ -1,11 +1,11 @@
 const BASE_URL = process.env.REACT_APP_API_ROOT;
-const storedToken = localStorage.getItem("tokenStorage");
+const storedToken = sessionStorage.getItem("tokenStorage");
 const parsedToken = JSON.parse(storedToken || "{}");
 const accessToken = parsedToken?.state?.accessToken;
 
 // 전체 주제명 조회 (1 일상 2 관계 3 감정 ...등)
 export async function AllSubject() {
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken || "{}");
   const accessToken = parsedToken?.state?.accessToken;
 
@@ -35,7 +35,7 @@ export async function AllSubject() {
 
 // 주제별 단어 목록 조회
 export async function AllWordWithSubject(userId, subjectName) {
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken || "{}");
   const accessToken = parsedToken?.state?.accessToken;
 
@@ -65,7 +65,7 @@ export async function AllWordWithSubject(userId, subjectName) {
 
 // 단어 조회
 export async function allWords() {
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken || "{}");
   const accessToken = parsedToken?.state?.accessToken;
 
@@ -95,7 +95,7 @@ export async function allWords() {
 
 // 카테고리별 단어 조회
 export async function wordsfromCategory(userId, category) {
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken || "{}");
   const accessToken = parsedToken?.state?.accessToken;
 
@@ -125,7 +125,7 @@ export async function wordsfromCategory(userId, category) {
 
 // 단어장에 저장한 모든 단어 목록 조회
 export async function allWordsByUser(userId) {
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken || "{}");
   const accessToken = parsedToken?.state?.accessToken;
 
@@ -155,7 +155,7 @@ export async function allWordsByUser(userId) {
 
 // 단어장에 단어 추가
 export async function addWordsByUser(userId, wordName) {
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken || "{}");
   const accessToken = parsedToken?.state?.accessToken;
 
@@ -184,7 +184,7 @@ export async function addWordsByUser(userId, wordName) {
 
 // 단어장에서 단어 삭제
 export async function deleteWordsByUser(userId, wordName) {
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken || "{}");
   const accessToken = parsedToken?.state?.accessToken;
 

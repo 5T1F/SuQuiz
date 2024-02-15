@@ -1,4 +1,4 @@
-const storedToken = localStorage.getItem("tokenStorage");
+const storedToken = sessionStorage.getItem("tokenStorage");
 const parsedToken = JSON.parse(storedToken);
 const accessToken = parsedToken.state.accessToken;
 
@@ -85,7 +85,6 @@ export async function exitQuiz() {
   }
 }
 
-
 // 멀티플레이 종료
 export async function end(sessionId, userId, myScore) {
   const request = {
@@ -99,7 +98,7 @@ export async function end(sessionId, userId, myScore) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      body : JSON.stringify(request),
+      body: JSON.stringify(request),
     });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

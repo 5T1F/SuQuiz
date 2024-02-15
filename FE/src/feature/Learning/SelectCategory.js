@@ -133,7 +133,7 @@ export default function SelectCategory() {
           <motion.div variants={itemVariants} className="font-semibold text-2xl  text-center">
             그럼,{" "}
             <span className="text-[#d19372]">
-              {JSON.parse(localStorage.getItem("nicknameStorage")).state.userNickname}님!
+              {JSON.parse(sessionStorage.getItem("nicknameStorage")).state.userNickname}님!
             </span>{" "}
             SuQuiz와 함께 수어 학습을 시작해 볼까요?
             <motion.div

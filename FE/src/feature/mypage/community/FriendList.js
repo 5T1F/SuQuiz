@@ -10,10 +10,10 @@ import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const FriendList = ({ isMultiplay }) => {
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken);
   const accessToken = parsedToken.state.accessToken;
   const [friends, setFriends] = useState([]);

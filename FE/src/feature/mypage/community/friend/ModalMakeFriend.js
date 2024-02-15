@@ -3,10 +3,10 @@ import React, { useRef, useState, useEffect } from "react";
 import styles from "./ModalMakeFriend.module.css";
 
 const Modal = ({ onClose }) => {
-  const storedNickname = localStorage.getItem("nicknameStorage");
+  const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
-  const storedToken = localStorage.getItem("tokenStorage");
+  const storedToken = sessionStorage.getItem("tokenStorage");
   const parsedToken = JSON.parse(storedToken);
   const accessToken = parsedToken.state.accessToken;
   const modalRef = useRef();

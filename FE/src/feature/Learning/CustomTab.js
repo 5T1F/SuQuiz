@@ -9,7 +9,7 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
   const [activeTab, setActiveTab] = useState(selectedMain || "자음");
   const [activeSubCategory, setActiveSubCategory] = useState(selectedSub || "");
   const [wordsProp, setWordsProp] = useState([]);
-  const storedId = localStorage.getItem("idStorage");
+  const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
 
