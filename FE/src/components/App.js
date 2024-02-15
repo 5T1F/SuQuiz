@@ -1,8 +1,7 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 
 import Nav from "./Nav";
-import Footer from "./Footer";
 
 import styles from "./App.module.css";
 import "./App.font.css";
@@ -12,10 +11,11 @@ export default function App() {
     <>
       <Nav className={styles.nav} />
       <div className={styles.bodyAndFooter}>
-        <body className={styles.body}>
-          <Outlet />
-        </body>
-        <Footer className={styles.footer} />
+        <div className={styles.body}>
+          <div>
+            <Outlet />
+          </div>
+        </div>
       </div>
     </>
   );

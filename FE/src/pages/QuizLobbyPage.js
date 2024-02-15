@@ -9,12 +9,11 @@ import styles from "./QuizLobbyPage.module.css";
 export default function QuizLobbyPage() {
   return (
     <Container>
-      <h1>퀴즈 로비</h1>
-      <div className="flex">
-        <div className="w-2/6 h-[90vh] p-1 border-4 border-red-500">
+      <div className="flex gap-10">
+        <div className="w-2/6 py-6 h-[90vh]">
           <RankingList />
         </div>
-        <div className="w-4/6 h-[90vh] p-1 border-4 border-violet-500">
+        <div className="w-4/6 h-[90vh]">
           <QuizSelect />
         </div>
       </div>

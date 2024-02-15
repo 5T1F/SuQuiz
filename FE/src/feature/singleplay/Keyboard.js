@@ -1,61 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const Keyboard = ({ handleKeyPress, handleBackspace, handleEnter }) => {
-  const handleClick = (letter) => {
+import styles from "./Keyboard.module.css";
+import SubdirectoryArrowLeftRoundedIcon from "@mui/icons-material/SubdirectoryArrowLeftRounded";
+import BackspaceRoundedIcon from "@mui/icons-material/BackspaceRounded";
+
+const Keyboard = ({ handleEnter, handleBackspace, keyboardMaps, handleKeyPress }) => {
+  const [keyboardArrays, setKeyboardArrays] = useState([
+    ["ㅂ", "ㅈ", "ㄷ", "ㄱ", "ㅅ", "ㅛ", "ㅕ", "ㅑ", "ㅐ", "ㅒ", "ㅔ", "ㅖ"],
+    ["ㅁ", "ㄴ", "ㅇ", "ㄹ", "ㅎ", "ㅗ", "ㅓ", "ㅏ", "ㅣ", "ㅢ"],
+    ["ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ", "ㅟ", "ㅚ"],
+  ]);
+
+  // 마운트 시 실행
+  useEffect(() => {
+    console.log("maps ....", keyboardMaps);
+  }, []);
+
+  const renderButtons = (num) => {
+    const buttons = [];
+    keyboardMaps.forEach((value, key) => {
+      if (keyboardArrays[num].includes(key)) {
+        buttons.push(
+          <button key={key} className={styles[getKeyCSS(value)]} onClick={() => keyClick(key)}>
+            {key}
+          </button>
+        );
+      }
+    });
+    return buttons;
+  };
+
+  const getKeyCSS = (status) => {
+    if (status === 2) return "keyboardColGreen";
+    else if (status === 1) return "keyboardColYellow";
+    else return "keyboardColWhite";
+  };
+
+  // 버튼 클릭 이벤트 핸들러
+  const keyClick = (letter) => {
     handleKeyPress(letter);
   };
 
+  // 엔터를 눌렀을 때 버튼 색상 업데이트 및 이벤트 핸들링
+  const clickEnter = () => {
+    console.log("enter ...");
+    handleEnter();
+  };
+
   return (
-    <div className="keyboard">
-      {/* 한글 자음 버튼들 */}
-      <button onClick={() => handleClick("ㄱ")}>ㄱ</button>
-      <button onClick={() => handleClick("ㄲ")}>ㄲ</button>
-      <button onClick={() => handleClick("ㄴ")}>ㄴ</button>
-      <button onClick={() => handleClick("ㄷ")}>ㄷ</button>
-      <button onClick={() => handleClick("ㄸ")}>ㄸ</button>
-      <button onClick={() => handleClick("ㄹ")}>ㄹ</button>
-      <button onClick={() => handleClick("ㅁ")}>ㅁ</button>
-      <button onClick={() => handleClick("ㅂ")}>ㅂ</button>
-      <button onClick={() => handleClick("ㅃ")}>ㅃ</button>
-      <button onClick={() => handleClick("ㅅ")}>ㅅ</button>
-      <button onClick={() => handleClick("ㅆ")}>ㅆ</button>
-      <button onClick={() => handleClick("ㅇ")}>ㅇ</button>
-      <button onClick={() => handleClick("ㅈ")}>ㅈ</button>
-      <button onClick={() => handleClick("ㅉ")}>ㅉ</button>
-      <button onClick={() => handleClick("ㅊ")}>ㅊ</button>
-      <button onClick={() => handleClick("ㅋ")}>ㅋ</button>
-      <button onClick={() => handleClick("ㅌ")}>ㅌ</button>
-      <button onClick={() => handleClick("ㅍ")}>ㅍ</button>
-      <button onClick={() => handleClick("ㅎ")}>ㅎ</button>
+    <div className={styles.keyboard}>
+      <div className={styles.keyboardRow}>{renderButtons(0)}</div>
 
-      {/* 한글 모음 버튼들 */}
-      <button onClick={() => handleClick("ㅏ")}>ㅏ</button>
-      <button onClick={() => handleClick("ㅐ")}>ㅐ</button>
-      <button onClick={() => handleClick("ㅑ")}>ㅑ</button>
-      <button onClick={() => handleClick("ㅒ")}>ㅒ</button>
-      <button onClick={() => handleClick("ㅓ")}>ㅓ</button>
-      <button onClick={() => handleClick("ㅔ")}>ㅔ</button>
-      <button onClick={() => handleClick("ㅕ")}>ㅕ</button>
-      <button onClick={() => handleClick("ㅖ")}>ㅖ</button>
-      <button onClick={() => handleClick("ㅗ")}>ㅗ</button>
-      <button onClick={() => handleClick("ㅘ")}>ㅘ</button>
-      <button onClick={() => handleClick("ㅙ")}>ㅙ</button>
-      <button onClick={() => handleClick("ㅚ")}>ㅚ</button>
-      <button onClick={() => handleClick("ㅛ")}>ㅛ</button>
-      <button onClick={() => handleClick("ㅜ")}>ㅜ</button>
-      <button onClick={() => handleClick("ㅝ")}>ㅝ</button>
-      <button onClick={() => handleClick("ㅞ")}>ㅞ</button>
-      <button onClick={() => handleClick("ㅟ")}>ㅟ</button>
-      <button onClick={() => handleClick("ㅠ")}>ㅠ</button>
-      <button onClick={() => handleClick("ㅡ")}>ㅡ</button>
-      <button onClick={() => handleClick("ㅢ")}>ㅢ</button>
-      <button onClick={() => handleClick("ㅣ")}>ㅣ</button>
+      <div className={styles.keyboardRow}>
+        {renderButtons(1)}
+        <button className={styles.specialKey} onClick={handleBackspace}>
+          <BackspaceRoundedIcon />
+        </button>
+      </div>
 
-      {/* 백스페이스 버튼 */}
-      <button onClick={handleBackspace}>⌫</button>
-
-      {/* Enter 버튼 */}
-      <button onClick={handleEnter}>Enter</button>
+      <div className={styles.keyboardRow}>
+        {renderButtons(2)}{" "}
+        <button className={styles.specialKey} onClick={clickEnter}>
+          <SubdirectoryArrowLeftRoundedIcon color="primary" />
+        </button>
+      </div>
     </div>
   );
 };

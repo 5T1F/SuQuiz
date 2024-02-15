@@ -1,4 +1,26 @@
-/* 전체 */
+.container {
+  height: 90vh;
+}
+
+.easterEgg {
+  position: absolute;
+  right: 6px;
+  top: 260px;
+}
+
+.startbuttons {
+  position: absolute;
+  left: 10vw;
+  bottom: 15vh;
+  display: flex;
+  width: 350px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.88);
+  border-radius: 15px;
+}
+
 .FlexColumn {
   margin: 50px 0px;
   display: flex;
@@ -7,11 +29,90 @@
 }
 
 .quizStart {
-  border: 5px solid red;
-  width: 100%;
+  height: 150px;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 61px;
+  border-radius: 15px 15px 0px 0px;
+  background: #fffdfd;
+  color: #f4b28e;
+  font-family: var(--gmarket-sans);
+  padding-top: 15px;
+}
+
+.quizStart:hover {
+  background: #efefef;
 }
 
 .learningStart {
-  border: 5px solid violet;
+  /* border: 5px solid violet; */
+  height: 75px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  border-radius: 0px 0px 15px 15px;
+  background: #ff8c4f;
+  color: #fffdfd;
+  font-family: var(--gmarket-sans);
+  padding-top: 10px;
+}
+
+.learningStart:hover {
+  background: #d16c36;
+}
+
+.quizStart,
+.learningStart {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.descriptionContainer {
+  position: absolute;
+  right: 10vw;
+  top: 10vh;
+  width: auto;
+}
+
+.description1 {
+  font-size: 5rem;
+  font-weight: 700;
+  text-align: right;
+  color: #fefefe;
+  text-shadow: 0 5px 50px rgba(67, 51, 9, 0.927);
+  cursor: default;
+  font-family: var(--gmarket-sans);
+  /* margin-bottom: 10px; */
+  /* backdrop-filter: blur(4px); */
+}
+
+.description2 {
+  font-size: 3rem;
+  font-weight: 600;
+  text-align: right;
+  color: #fefefe;
+  text-shadow: 0 5px 30px rgba(125, 92, 3, 0.9);
+  cursor: default;
+  font-family: var(--gmarket-sans);
+  /* margin-bottom: 7px; */
+  /* backdrop-filter: blur(2px); */
+}
+
+.videoContainter {
+  position: relative;
+  overflow: hidden;
+  width: 100%; /* 원하는 너비 */
+  height: 100%; /* 원하는 높이 */
+}
+
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  object-fit: cover;
 }

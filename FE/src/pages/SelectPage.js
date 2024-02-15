@@ -5,8 +5,9 @@ export default function SelectPage() {
   return (
     <>
       <Container>
-        <h1>학습 분야 선택 페이지</h1>
-        <SelectCategory />
+        <div className="h-[90vh]">
+          <SelectCategory />
+        </div>
       </Container>
     </>
   );

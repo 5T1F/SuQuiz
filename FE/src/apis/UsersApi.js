@@ -1,23 +1,11 @@
-// 컨트롤러 별로 api.js 파일 나눠서 생성할 것
-// (예시) 로그인 로그아웃 회원가입
+import axios from "./https";
 
-const BASE_URL = process.env.REACT_APP_API_ROOT;
-
-// 카카오 로그인
-export async function loginUser(authorizationCode) {
+// 카카오 로그인 인가 코드 발급
+export async function oauthKakao(code) {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/kakao`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(authorizationCode),
+    const response = await axios.post(`${process.env.REACT_APP_API_ROOT}/users/login/kakao`, {
+      authorizationCode: code,
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
     const data = await response.json();
     return data;
   } catch (error) {
@@ -26,21 +14,13 @@ export async function loginUser(authorizationCode) {
   }
 }
 
-// 네이버 로그인
-export async function loginUser(authorizationCode, state) {
+// 네이버 로그인 인가 코드 발급
+export async function oauthNaver(code, state) {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/kakao`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(authorizationCode, state),
+    const response = await axios.post(`${process.env.REACT_APP_API_ROOT}/users/login/naver`, {
+      authorizationCode: code,
+      state: state,
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
     const data = await response.json();
     return data;
   } catch (error) {
@@ -49,47 +29,68 @@ export async function loginUser(authorizationCode, state) {
   }
 }
 
-// 여기서부터 다시 작성!!!!!!!!!!!!
-
-// 로그아웃
-export async function logoutUser(user) {
+// 기존 회원인지 확인
+export async function checkIsMember(email, provider) {
   try {
-    const response = await fetch(BASE_URL + "/users/logout", {
-      method: "POST",
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_ROOT}/users/login/checkNickname/${email}/${provider}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+// 닉네임 중복 검사
+export async function checkNickname(checkValue) {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API_ROOT}/users/login/validate/${checkValue}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+// 회원정보 수정
+export async function modifyNickname(userId, checkValue) {
+  try {
+    const response = await axios.put(`${process.env.REACT_APP_API_ROOT}/mypage/modify`, {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+      body: JSON.stringify({
+        userId: userId,
+        modifiedName: checkValue,
+      }),
+    }); // API 경로
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error("Error fetching data:", error);
-    throw error;
   }
 }
 
 // 회원가입
-export async function signupUser(user) {
-  try {
-    const response = await fetch(BASE_URL + "/users/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
+// export async function signupUser(user) {
+//   try {
+//     const response = await fetch(BASE_URL + "/users/signup", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(user),
+//     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  }
-}
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//     throw error;
+//   }
+// }

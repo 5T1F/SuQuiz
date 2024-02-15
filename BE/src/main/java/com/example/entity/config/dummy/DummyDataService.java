@@ -306,7 +306,6 @@ public class DummyDataService {
 
 
 
-
     private Word insertWord(Category category, Subject subject, String name, String videoUrl) {
         Word word = Word.builder()
                 .category(category)

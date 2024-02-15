@@ -1,0 +1,118 @@
+.container {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  gap: 20px;
+  scrollbar-width: none;
+  overflow: hidden;
+}
+
+.leftContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.mycam {
+  height: 40vh;
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+}
+
+.video {
+  transform: scaleX(-1);
+  /* display: none; */
+  width: 70%; /* 여기서 크기 조절 */
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.canvas {
+  transform: scaleX(-1);
+  display: none;
+  width: 70%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.tutorial {
+  height: 40vh;
+  width: 40vw;
+  border-radius: 15px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f9f9f9;
+}
+
+.wordle {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ruleTitle {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e99e76;
+  margin-bottom: 10px;
+}
+
+.ruleContents {
+  width: 400px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.rules {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+}
+
+.rule {
+  margin: 10px 0;
+  line-height: 1.6;
+  color: #666;
+}
+
+.ruleImageContainer {
+  display: flex;
+  justify-content: center; /* 가로 방향으로 중앙 정렬 */
+  align-items: center; /* 세로 방향으로 중앙 정렬 */
+  margin-bottom: 3px;
+}
+
+.highlight {
+  font-weight: bold;
+  color: #2a9d8f; /* 초록색 */
+}
+
+.yellowHighlight {
+  font-weight: bold;
+  color: #e9c46a; /* 노란색 */
+}
+
+.boldHighlight {
+  margin: 10px 0;
+  line-height: 1.6;
+  color: #e99e76;
+}

@@ -1,95 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "../components/Container";
 import Flashcard from "../feature/Learning/Flashcard";
 import SideMenu from "../feature/Learning/SideMenu";
-import { useLocation } from "react-router-dom";
-import UserView from "../feature/Learning/UserView";
-
-const wordList = [
-  {
-    word: "ㄱ",
-    videoUrl: "https://example.com/video-ㄱ.mp4",
-    category: "자음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "ㄴ",
-    videoUrl: "https://example.com/video-ㄱ.mp4",
-    category: "자음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "ㄷ",
-    videoUrl: "https://example.com/video-ㄱ.mp4",
-    category: "자음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "ㅏ",
-    videoUrl: "https://example.com/video-ㅏ.mp4",
-    category: "모음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "ㅑ",
-    videoUrl: "https://example.com/video-ㅏ.mp4",
-    category: "모음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "ㅓ",
-    videoUrl: "https://example.com/video-ㅏ.mp4",
-    category: "모음",
-    isBookmarked: false,
-    status: "before",
-  },
-  {
-    word: "1",
-    videoUrl: "https://example.com/video-1.mp4",
-    category: "숫자",
-    isBookmarked: true,
-    status: "before",
-  },
-  {
-    word: "2",
-    videoUrl: "https://example.com/video-1.mp4",
-    category: "숫자",
-    isBookmarked: true,
-    status: "before",
-  },
-  {
-    word: "3",
-    videoUrl: "https://example.com/video-1.mp4",
-    category: "숫자",
-    isBookmarked: true,
-    status: "before",
-  },
-  {
-    word: "사과",
-    videoUrl: "https://example.com/video-사과.mp4",
-    category: "낱말",
-    isBookmarked: true,
-    status: "before",
-  },
-  // 여기에 추가적인 단어들을 포함시킬 수 있습니다.
-];
+import { useLocation, useNavigate } from "react-router-dom";
+import { wordsfromCategory, AllWordWithSubject } from "../apis/learningApi";
+import MyCam from "../feature/Learning/MyCam";
+import styles from "./LearningStartPage.module.css";
 
 export default function LearningStartPage() {
   const location = useLocation();
-  const { selectedMain, selectedSub } = location.state || { selectedMain: null, selectedSub: null };
+  const { selectedMain, selectedSub } = location.state || {
+    selectedMain: null,
+    selectedSub: null,
+  };
   const [currentWord, setCurrentWord] = useState(null);
+  const [wordList, setWordList] = useState([]);
+  const navigate = useNavigate();
+  const storedId = sessionStorage.getItem("idStorage");
+  const parsedId = JSON.parse(storedId);
+  const userId = parsedId.state.userId;
+  const handleSetCurrentWord = (updatedWord) => {
+    setCurrentWord(updatedWord);
+  };
+
+  // motion detect value
+  const [finger, setFinger] = useState("");
+  const changeFinger = (value) => {
+    setFinger(value);
+  };
+
+  // const []
+
+  console.log(selectedMain, selectedSub);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await wordsfromCategory(userId, selectedMain);
+        setWordList(data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [selectedMain, selectedSub]);
+
+  const handleEnd = () => {
+    const userConfirmed = window.confirm("학습을 종료하고 메인 페이지로 이동하시겠습니까?");
+    if (userConfirmed) {
+      alert("확인되었습니다. 메인 페이지로 이동합니다.");
+      navigate("/"); // 메인 페이지 경로로 이동
+    } else {
+      alert("취소되었습니다. 계속 학습을 진행합니다.");
+    }
+  };
 
   return (
-    <Container>
-      <h1 className="text-3xl font-bold underline">학습 시작 페이지</h1>
-      <div className="flex">
+    <>
+      <div className="flex h-[90vh] overflow-hidden">
+        {/* 학습 화면 */}
         {/* 사이드메뉴 */}
-        <div className="w-[270px] h-[90vh] p-1 border-4 border-red-500">
+        <div className="px-10 py-6 bg-[#f3f3f3] ">
           <SideMenu
             selectedMain={selectedMain}
             selectedSub={selectedSub}
@@ -97,25 +69,33 @@ export default function LearningStartPage() {
             setCurrentWord={setCurrentWord}
           />
         </div>
-        {/* 학습 화면 */}
-        <div className="px-40 border-4 border-violet-500 w-full">
-          {/* 플래시 카드 */}
-          <div className="border-4 border-yellow-500 w-full">
-            플래시카드
-            {currentWord && <Flashcard currentWord={currentWord} />}
+        <Container>
+          <div className="flex flex-row justify-center items-end mt-44 mb-10">
+            {/* 플래시 카드 */}
+            {currentWord && <Flashcard currentWord={currentWord} setCurrentWord={handleSetCurrentWord} />}
+            {/* 유저 실시간 화면 */}
+            <div className={styles.myCamContainer}>
+              <div className={styles.description}>왼쪽에서 학습하고 싶은 단어를 골라 따라해보세요</div>
+              <MyCam className={styles.video} categoryNumber={3} changeFinger={changeFinger} />
+              <div className={styles.description2}>
+                <span className={styles.highlight}>
+                  '{JSON.parse(sessionStorage.getItem("nicknameStorage")).state.userNickname}' 님
+                </span>
+                이 동작한 수어는 <span className={styles.highlight}>'{finger}'</span> 입니다
+              </div>
+            </div>
           </div>
-          {/* 유저 실시간 화면 */}
-          <div className="border-4 border-orange-500 w-full">
-            유저 실시간 화면
-            <UserView />
-          </div>
-          <div className="flex justify-between">
-            <button class="ml-auto h-8 px-5 font-medium rounded-lg outline-none ring-2 ring-yellow-600 ring-inset text-gray-800 hover:text-yellow-600">
+          {/* 학습종료 버튼 */}
+          <div className={styles.buttonContainer}>
+            <button
+              onClick={handleEnd}
+              className="px-6 py-2 mr-6 border-custom-orange bg-white rounded-lg shadow border-2  hover:bg-orange-300 transition duration-300"
+            >
               학습 종료
             </button>
           </div>
-        </div>
+        </Container>
       </div>
-    </Container>
+    </>
   );
 }

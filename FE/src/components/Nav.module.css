@@ -5,15 +5,69 @@
   top: 0;
   left: 0;
   width: 100%;
+  height: 10vh;
   z-index: 1000; /* 네비게이션 바의 z-index 설정 */
+  display: flex;
+  justify-content: center;
+  background: #fffdfd;
+  box-shadow: 0 1px 3px #fffdfd;
+}
+
+.navContainer > div {
+  width: 80%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background: #fff; /* 예시로 배경 추가 */
+}
+
+.navLogo {
+  display: block;
+  float: left;
+  flex-shrink: 0;
 }
 
 .navItem {
-  margin-right: 20px;
+  float: right;
+  display: flex;
+  align-items: center;
+}
+
+.navItem > div {
+  float: left;
+  padding-left: 30px;
+}
+
+.accountCircleIcon {
+  position: relative;
+}
+
+.accountCircleIcon:hover {
+  /* background-color: #ccc;
+  border: none; 
+  border-radius: 5px;  */
+  cursor: pointer;
+}
+
+.accountCircleIcon::after {
+  content: "마이페이지"; /* 툴팁 텍스트 */
+  position: absolute;
+  top: -30%;
+  left: 200%;
+  transform: translateX(-50%); /* 정확한 중앙 정렬을 위해 */
+  background-color: rgba(253, 213, 156, 0.7); /* 툴팁 배경색 */
+  color: rgb(31, 29, 29); /* 텍스트 색상 */
+  padding: 0 2px; /* 패딩 */
+  border-radius: 3px; /* 모서리 둥글게 */
+  font-size: 10px; /* 툴팁 텍스트 크기 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  opacity: 0; /* 기본적으로 툴팁을 숨김 */
+  visibility: hidden; /* 접근성을 위해 visibility 속성도 조절 */
+  transition: opacity 0.3s, visibility 0.3s; /* 부드러운 효과 */
+  z-index: 1000;
+}
+
+.accountCircleIcon:hover::after {
+  opacity: 1; /* 호버 시 툴팁 표시 */
+  visibility: visible; /* 호버 시 보이게 함 */
 }

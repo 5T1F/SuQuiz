@@ -1,0 +1,204 @@
+* {
+  color: #616961;
+}
+
+.container {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.topContainer {
+  height: 90vh;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.leftContainer {
+  position: relative;
+  width: 70vw;
+  height: 90vh;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.beforePlaying {
+  gap: 30px;
+  background-color: #f3f3f3;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  height: 100%; /* 컴포넌트의 전체 높이를 설정 */
+  width: 320px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3%;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 10px;
+}
+
+.progressBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+  width: 200px;
+}
+
+.progress {
+  height: 1rem;
+  border-radius: 9999px 0 0 9999px;
+  background-color: #f8cab1;
+  z-index: 10;
+}
+
+.middleContainer {
+  position: relative;
+  width: 60vw;
+  height: 90vh;
+  width: 100%;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.topButton {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.member {
+}
+
+.leave {
+  display: inline-block;
+  padding: 3px 10px;
+  border: none;
+  border-radius: 5px;
+  border: 1px solid #bcf3bb;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: #d3d3d3;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 클릭시 음각이 되는 효과 */
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.bottomButton {
+  display: flex;
+  justify-content: center;
+  margin: 5%;
+  width: 100%;
+  bottom: 0px;
+  position: absolute;
+  text-align: center;
+}
+
+.code {
+  display: flex inline-block;
+  text-align: center;
+  width: 33%;
+  border-radius: 5px;
+  border: 1px solid #bcf3bb;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  padding: 4px 20px;
+
+  &:hover {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 클릭시 음각이 되는 효과 */
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.unactive {
+  display: inline-block;
+  text-align: center;
+  background-color: ddd;
+  color: #eee;
+  width: 15%;
+  border-radius: 5px;
+  margin-left: 3%;
+}
+
+.start {
+  display: inline-block;
+  text-align: center;
+  background-color: #97ce9b;
+  color: #ffffff;
+  width: 15%;
+  border-radius: 5px;
+  margin-left: 3%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  padding: 4px 20px;
+
+  &:hover {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 클릭시 음각이 되는 효과 */
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.sidebar {
+  position: relative;
+  right: 0px;
+  height: 90vh;
+}
+
+.onSidebar {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  width: 30%;
+  height: 100%;
+}
+
+.video {
+  margin: 4% auto;
+  display: flex;
+  align-items: center;
+  transform: scaleX(-1);
+  /* display: none; */
+}
+
+.cellList {
+  display: flex;
+  justify-content: center;
+}
+
+.cell {
+  margin: 2%;
+  font-size: 32px;
+  border-bottom: solid #97ce9b;
+}

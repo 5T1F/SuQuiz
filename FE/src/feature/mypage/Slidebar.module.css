@@ -1,22 +1,27 @@
-/* Sidebar.module.css */
-
 .slidebar {
   position: fixed;
   top: 0;
   right: 0;
   height: 100%;
   width: 30%;
-  background: #eee;
+  background: #fdefe5b4;
   z-index: 950; /* overlay의 z-index 설정 (Nav보다 낮은 값으로 설정) */
+  padding: 0 1rem;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+  border-radius: 20px 0 0 20px;
 }
 
 .close {
-  color: #aaa;
-  font-size: 28px;
+  color: #bca79d;
+  font-size: 30px;
   font-weight: bold;
   cursor: pointer;
+  margin: 1% 0;
 }
 
 .close:hover {
-  color: black;
+  color: #f4b28e;
 }
