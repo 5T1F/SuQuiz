@@ -264,7 +264,9 @@ public class DummyDataService {
         insertWord(Category.낱말, 일상, "아니다", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191101/633271/MOV000260442_700X466.mp4");
         insertWord(Category.낱말, 일상, "하지 마", "https://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631969/MOV000246778_700X466.mp4");
         insertWord(Category.낱말, 일상, "맞다", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631894/MOV000241295_700X466.mp4");
-
+        insertWord(Category.낱말, 일상, "인사", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191021/629456/MOV000257117_700X466.mp4");
+        insertWord(Category.낱말, 일상, "문제", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191016/628090/MOV000250701_700X466.mp4");
+        insertWord(Category.낱말, 일상, "코딩", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/271794/MOV000273323_700X466.mp4");
 
 
         // 관계

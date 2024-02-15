@@ -283,7 +283,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
             while(true) {
                 Random random = new Random();
                 //시연 시 단어 "단비"로 고정
-                Word word = wordRepository.findByWordName("단비");
+                Word word = wordRepository.findByWordName("코딩");
 //                int index = random.nextInt(words.size());
 //                Word word = words.get(index);
 
