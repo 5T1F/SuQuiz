@@ -4,13 +4,14 @@
   right: 0;
   height: 100%;
   width: 30%;
-  background: #fdefe5cf;
+  background: #fdefe5b4;
   z-index: 950; /* overlay의 z-index 설정 (Nav보다 낮은 값으로 설정) */
   padding: 0 1rem;
-  overflow-y: scroll;
   overflow-x: hidden;
-  scrollbar-color: #f4b28e #fff9f000; /* 스크롤바 색상 설정 (핸들색, 트랙색) */
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  scrollbar-width: none;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+  border-radius: 20px 0 0 20px;
 }
 
 .close {

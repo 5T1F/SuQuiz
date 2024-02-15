@@ -2,13 +2,14 @@
   box-sizing: border-box;
   word-break: keep-all;
   color: #3e3300;
-  scrollbar-width: none;
-  /* scrollbar-color: #f4b28e #fff9f000; */
+  /* scrollbar-width: none; */
+  scrollbar-color: #f4b28e #fff9f000;
 }
 
 html {
   overflow-y: scroll;
   background-color: #f9f8f7;
+  scrollbar-width: none;
 }
 
 body {
