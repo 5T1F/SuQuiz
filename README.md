@@ -1034,5 +1034,7 @@ function getResult() {
 
 [화면 정의서](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%ED%99%94%EB%A9%B4_%EC%A0%95%EC%9D%98%EC%84%9C.pdf?ref_type=heads)
 
+[포팅 매뉴얼](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/exec/SuQuiz_%ED%8F%AC%ED%8C%85_%EB%A7%A4%EB%89%B4%EC%96%BC.pdf?ref_type=heads)
+
 &nbsp;
 &nbsp;
