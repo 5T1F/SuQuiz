@@ -49,6 +49,7 @@
 }
 
 .onSet {
+  width: 50%;
   font-size: 16px;
   margin: 0 10% 10% 0;
 }
@@ -60,6 +61,7 @@
   background-color: #dcf8c6;
   border-radius: 0.5rem;
   padding: 5px;
+  width: 50%;
 }
 
 .onVideo {

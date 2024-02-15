@@ -11,7 +11,7 @@
 
 .leftContainer {
   position: relative;
-  width: 60vw;
+  width: 70vw;
   height: 90vh;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -167,11 +167,12 @@
   padding-bottom: 1.5rem;
   padding-left: 2.5rem;
   padding-right: 2.5rem;
+  width: 30%;
+  height: 100%;
 }
 
 .video {
   margin: 4% auto;
-  width: 50%;
   display: flex;
   align-items: center;
   transform: scaleX(-1);
