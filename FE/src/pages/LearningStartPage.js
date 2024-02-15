@@ -78,8 +78,10 @@ export default function LearningStartPage() {
               <div className={styles.description}>왼쪽에서 학습하고 싶은 단어를 골라 따라해보세요</div>
               <MyCam className={styles.video} categoryNumber={3} changeFinger={changeFinger} />
               <div className={styles.description2}>
-                '{JSON.parse(sessionStorage.getItem("nicknameStorage")).state.userNickname}' 님이 동작한 수어는 '
-                {finger}' 입니다
+                <span className={styles.highlight}>
+                  '{JSON.parse(sessionStorage.getItem("nicknameStorage")).state.userNickname}' 님
+                </span>
+                이 동작한 수어는 <span className={styles.highlight}>'{finger}'</span> 입니다
               </div>
             </div>
           </div>
