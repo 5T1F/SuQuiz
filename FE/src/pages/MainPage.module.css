@@ -84,16 +84,18 @@
   text-shadow: 0 5px 50px rgba(141, 111, 29, 0.888);
   cursor: default;
   font-family: var(--gmarket-sans);
+  margin-bottom: 10px;
 }
 
 .description2 {
   font-size: 3rem;
-  font-weight: 400;
+  font-weight: 600;
   text-align: right;
   color: #fefefe;
   text-shadow: 0 5px 20px rgba(122, 95, 21, 0.888);
   cursor: default;
   font-family: var(--gmarket-sans);
+  margin-bottom: 7px;
 }
 
 .videoContainter {
