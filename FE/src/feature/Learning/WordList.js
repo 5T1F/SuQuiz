@@ -40,11 +40,11 @@ export default function WordList({ wordsProp, setCurrentWord }) {
           <div
             key={index}
             onClick={() => handleWordClick(word)}
-            className={`flex items-center justify-center h-16 rounded-lg ${
+            className={`flex items-center justify-center h-16 rounded-lg text-xl ${
               word.status === "after"
                 ? "bg-gray-200 shadow-inner"
                 : word.status === "now"
-                ? "bg-custom-orange shadow"
+                ? "bg-custom-orange shadow text-white"
                 : "bg-white shadow"
             }`}
           >

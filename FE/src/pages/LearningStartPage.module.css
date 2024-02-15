@@ -19,6 +19,7 @@
   align-items: center;
   width: 100%;
   height: 32px;
+  font-size: large;
 }
 
 .description2 {
@@ -28,9 +29,11 @@
   width: 100%;
   height: 32px;
   margin-top: 8px;
-  background-color: #f6cf8d;
+  color: #ffffff;
+  background-color: #f4b28e;
   box-shadow: 0 0 6px -1px rgba(206, 73, 73, 0.1), 0 0 4px -1px rgba(0, 0, 0, 0.06);
   border-radius: 0.325rem;
+  font-size: large;
 }
 
 .video {
