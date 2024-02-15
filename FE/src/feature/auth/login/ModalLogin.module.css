@@ -9,8 +9,8 @@
 
 .modal {
   /* 모달창 크기 */
-  width: 23%;
-  height: 50%;
+  width: 20%;
+  height: 40%;
 
   /* 최상단 위치 */
   z-index: 999;
@@ -30,13 +30,13 @@
 .modalTitle {
   position: absolute;
   width: 100%;
-  height: 20%;
+  height: 25%;
   background: #bca79d;
   border-radius: 15px 15px 0px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 32px;
+  font-size: 24px;
 }
 
 .modalTitle div {
@@ -68,15 +68,14 @@
   top: 60px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding-top: 60px;
-  padding-left: 50px;
-  padding-right: 50px;
-  font-size: 24px;
+  gap: 15%;
+  padding-top: 15%;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .naverContainer {
-  height: 50%;
+  height: 25%;
   background: #ffffff;
   border: 2px solid #1ec800;
   color: #1ec800;
@@ -96,7 +95,7 @@
 }
 
 .kakaoContainer {
-  height: 50%;
+  height: 25%;
   background: #ffffff;
   border: 2px solid #fee500;
   color: #f5df16;

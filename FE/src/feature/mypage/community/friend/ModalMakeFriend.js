@@ -108,7 +108,7 @@ const Modal = ({ onClose }) => {
                 onChange={(e) => setSearchValue(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
-              {isConfirmed === 3 && <p style={{ color: "red", fontSize: "xx-small" }}>존재하지 않는 유저입니다.</p>}
+              {isConfirmed === 3 && <p style={{ color: "red", fontSize: "12px" }}>존재하지 않는 유저입니다.</p>}
             </div>
             <div className={styles.btns}>
               <button className={styles.cancelBtn} onClick={onClose}>

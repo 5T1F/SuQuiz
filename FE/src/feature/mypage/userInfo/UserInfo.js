@@ -143,7 +143,7 @@ const UserInfo = () => {
         <div style={{ fontSize: "24px", marginTop: "-5px" }}>
           <div>{`Lv.${level}`}</div>
         </div>
-        <div style={{ fontSize: "16px" }}>{`Exp ${exp}%`}</div>
+        <div>{`Exp ${exp}%`}</div>
       </CircularProgressbarWithChildren>
     );
   };
@@ -152,14 +152,14 @@ const UserInfo = () => {
     <>
       <div className={styles.userInfoContainer}>
         {/* 유저 닉네임, 로그아웃, 수정 */}
-        <div className="h-1/6 flex flex-row justify-between items-center">
-          <div className="flex flex-row justify-center items-center ">
+        <div className="flex flex-row items-center justify-between h-1/6">
+          <div className="flex flex-row items-center justify-center ">
             {getUserInfo().profileImage ? (
               <img src="${getUserInfo().profileImage}" alt="프로필 이미지" />
             ) : (
               <AccountCircleOutlinedIcon style={{ fontSize: 30 }} />
             )}
-            <div className="flex flex-row justify-center items-center w-full text-2xl font-bold mx-2">
+            <div className="flex flex-row items-center justify-center w-full mx-2 text-xl font-bold">
               {getUserInfo().nickname}
             </div>
             <button className={styles.logoutButton} onClick={handleLogout}>
@@ -168,12 +168,12 @@ const UserInfo = () => {
           </div>
           <div className="flex pr-1">
             <button className={styles.modifyButton} onClick={handleModify}>
-              <ManageAccountsRoundedIcon />
+              <ManageAccountsRoundedIcon style={{ fontSize: 30 }} />
             </button>
           </div>
         </div>
         {/* 게임 정보 */}
-        <div className="h-3/5 flex flex-row justify-center items-center gap-2">
+        <div className="flex flex-row items-center justify-center gap-2 h-3/5">
           <div className="w-[160px] flex justify-center items-center">
             {/* 레벨, 경험치 프로그래스바 */}
             <UserInfoProgress level={getUserInfo().level} exp={getUserInfo().exp} />

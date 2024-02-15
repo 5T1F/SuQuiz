@@ -9,7 +9,7 @@
 
 .modal {
   /* 모달창 크기 */
-  width: 25%;
+  width: 23%;
   height: 50%;
 
   /* 최상단 위치 */
@@ -35,7 +35,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 32px;
+  font-size: 24px;
 }
 
 .modalTitle div {
@@ -61,15 +61,14 @@
 }
 
 .modalContent {
-  font-size: 16px;
   width: 100%;
   height: 75%;
-  padding: 30px 50px;
+  padding: 10%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: baseline;
-  gap: 10px;
+  gap: 30%;
 }
 
 .bottomBox {
