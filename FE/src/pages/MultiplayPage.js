@@ -126,10 +126,12 @@ const MultiplayPage = () => {
 
       // 정답 단어를 리스트에 저장
       const extractedWordNames = wordle.data.map((item) => item.wordName);
-      setQuizWordList(extractedWordNames);
+      setQuizWordList([...quizWordList, extractedWordNames]);
       // 정답 수어 영상을 리스트에 저장
       const extractedVideoUrls = wordle.data.map((item) => item.videoUrl);
-      setQuizVideoList(extractedVideoUrls);
+      console.log("퀴즈시작!!!");
+      console.log(extractedVideoUrls);
+      setQuizVideoList([...quizVideoList, extractedVideoUrls]);
       // 데이터에서 현재 문제의 syllables만 추출하여 quizList에 저장
       const extractedSyllables = wordle.data.map((item) => item.syllables);
       console.log(extractedSyllables);
@@ -218,37 +220,44 @@ const MultiplayPage = () => {
   };
 
   const endGame = async () => {
+    console.log("엔드게임 호출");
+    console.log(quizVideoList);
+    console.log(quizWordList);
     // BE에 결과 종료 요청
     const result = await end(sessionId, userId, myScore);
     // 결과가 제대로 반환 되었다면
+
     if (result.data) {
+      console.log("모달오픈 호출");
       // setQuizResultList(result.data); //세팅하자
       // result 이용하여 필요한 정보 갖고 결과 모달 띄우기 - 나가기는 leaveSession() 호출, 다시하기는 모달 닫기
       setModalOpen(true);
     }
-
-    //다른 사용자도 게임 끝내기
-    if (session) {
-      await session
-        .signal({
-          data: JSON.stringify({}),
-          type: "quiz-end",
-        })
-        .then(() => {
-          console.log("quiz successfully finished");
-        })
-        .catch((error) => {
-          console.error("Error finishing quiz:", error);
-        });
+    if (solver != null) {
+      //다른 사용자도 게임 끝내기
+      if (session) {
+        await session
+          .signal({
+            data: JSON.stringify({}),
+            type: "quiz-end",
+          })
+          .then(() => {
+            console.log("quiz successfully finished");
+          })
+          .catch((error) => {
+            console.error("Error finishing quiz:", error);
+          });
+      }
     }
+
     // solver, stage, isPlaying, 퀴즈 리스트초기화
     myScore = 0;
     setSolver(null);
     setStage(0);
     setIsPlaying(false);
-    setQuizList([]);
-    setQuizWordList([]);
-    setQuizVideoList([]);
+    // setQuizList([]);
+    // setQuizWordList([]);
+    // setQuizVideoList([]);
   };
 
   const leaveSession = async () => {
@@ -499,7 +508,7 @@ const MultiplayPage = () => {
     };
 
     const handleEndQuiz = (event) => {
-      if (solver != null) endGame();
+      endGame();
     };
 
     if (session) {
@@ -598,114 +607,130 @@ const MultiplayPage = () => {
 
   return (
     <>
-      {!isPlaying ? (
-        <div className={`${isPlaying ? "" : styles.container}`}>
-          <div className={styles.topContainer}>
-            <div className={styles.beforePlaying}>
-              {/* 사용자 정보 표시 부분 */}
-              <div className={styles.userInfo}>
-                <div className="relative w-20 h-24">
-                  <img src={flag} alt="Flag" className="absolute inset-0 z-10 w-full h-full py-2" />
-                  <div className="absolute inset-0 z-20 flex items-center justify-center pb-3">
-                    <div className="font-bold text-2xl text-[#f4b28e]">Lv.{userInfoData.level}</div>
-                  </div>
-                </div>
-                {/* <img src={getUserInfo().profileImage} alt="프로필 이미지" className={styles.profileImage} /> */}
-                <div className="w-64 ml-3">
-                  <div className="w-full mb-1 text-2xl font-bold">{userInfoData.nickname}</div>
-                  <div className="text-gray-500">EXP.{userInfoData.exp}</div>
-                  <div className={styles.progressBar}>
-                    <LinearProgressbar level={userInfoData.level} exp={userInfoData.exp} />
-                  </div>
-                </div>
-              </div>
-              {/* 친구한테 초대코드 보내기 위한 컴포넌트 */}
-              <div className={styles.friendList}>
-                <FriendList isMultiplay={true} />
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.middleContainer}>
-            <div className={styles.topButton}>
-              <div className={styles.member}>
-                <GroupsIcon fontSize="large" /> &nbsp;
-                {subscribers.length + 1} / 4
-              </div>
-              <button onClick={leaveSession} className={styles.leave}>
-                나가기
-              </button>
-            </div>
-            <Players publisher={publisher} subscribers={subscribers} isPlaying={isPlaying} />
-            <div className={styles.bottomButton}>
-              <div className={styles.code} onClick={copyCode}>
-                입장 코드 : {inviteCode} &nbsp;
-                <ContentCopyIcon fontSize="x-small" />
-              </div>
-              {isModerator ? (
-                <>
-                  {/* 방장 */}
-                  {/* 4명이 모이기 전/후 */}
-                  {isFour ? (
-                    <div onClick={startQuiz} className={styles.start}>
-                      시작하기
+      <div className={styles.container}>
+        {!isPlaying ? (
+          <>
+            <div className={styles.topContainer}>
+              <div className={styles.beforePlaying}>
+                {/* 사용자 정보 표시 부분 */}
+                <div className={styles.userInfo}>
+                  <div className="relative w-20 h-24">
+                    <img src={flag} alt="Flag" className="absolute inset-0 z-10 w-full h-full py-2" />
+                    <div className="absolute inset-0 z-20 flex items-center justify-center pb-3">
+                      <div className="font-bold text-2xl text-[#f4b28e]">Lv.{userInfoData.level}</div>
                     </div>
-                  ) : (
-                    <div className={styles.unactive}>시작하기</div>
-                  )}
+                  </div>
+                  {/* <img src={getUserInfo().profileImage} alt="프로필 이미지" className={styles.profileImage} /> */}
+                  <div className="w-64 ml-3">
+                    <div className="w-full mb-1 text-2xl font-bold">{userInfoData.nickname}</div>
+                    <div className="text-gray-500">EXP.{userInfoData.exp}</div>
+                    <div className={styles.progressBar}>
+                      <LinearProgressbar level={userInfoData.level} exp={userInfoData.exp} />
+                    </div>
+                  </div>
+                </div>
+                {/* 친구한테 초대코드 보내기 위한 컴포넌트 */}
+                <div className={styles.friendList}>
+                  <FriendList isMultiplay={true} />
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.middleContainer}>
+              <div className={styles.topButton}>
+                <div className={styles.member}>
+                  <GroupsIcon fontSize="large" /> &nbsp;
+                  {subscribers.length + 1} / 4
+                </div>
+                <button onClick={leaveSession} className={styles.leave}>
+                  나가기
+                </button>
+              </div>
+              <Players publisher={publisher} subscribers={subscribers} isPlaying={isPlaying} />
+              <div className={styles.bottomButton}>
+                <div className={styles.code} onClick={copyCode}>
+                  입장 코드 : {inviteCode} &nbsp;
+                  <ContentCopyIcon fontSize="x-small" />
+                </div>
+                {isModerator ? (
+                  <>
+                    {/* 방장 */}
+                    {/* 4명이 모이기 전/후 */}
+                    {isFour ? (
+                      <div onClick={startQuiz} className={styles.start}>
+                        시작하기
+                      </div>
+                    ) : (
+                      <div className={styles.unactive}>시작하기</div>
+                    )}
+                  </>
+                ) : (
+                  <>{/* 참가자라서 시작하기 버튼 X */}</>
+                )}
+              </div>
+            </div>
+            <div>
+              {/* <div className={styles.sidebar}>
+              <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
+            </div> */}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.leftContainer}>
+              {/* 게임 시작 후 */}
+              {solver === userNickname ? (
+                <>
+                  <div className={styles.mycam}>
+                    <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={false}></MyCam>
+                  </div>
                 </>
               ) : (
-                <>{/* 참가자라서 시작하기 버튼 X */}</>
+                <></>
               )}
-            </div>
-          </div>
-
-          <div className={`${isPlaying ? styles.bottombar : styles.sidebar}`}>
-            <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
-          </div>
-        </div>
-      ) : (
-        <div className={styles.container}>
-          {/* 게임 시작 후 */}
-          {solver === userNickname ? (
-            <>
-              <div className={styles.mycam}>
-                <MyCam categoryNumber={4} changeFinger={changeFinger} isVideoVisible={false}></MyCam>
+              <div onClick={leaveSession} className={styles.leave}>
+                나가기
               </div>
-            </>
-          ) : (
+              <div onClick={endGame} className={styles.leave}>
+                게임 종료
+              </div>
+              <div className={styles.cellList}>
+                {resList.map((index) => (
+                  <div className={styles.cell}>{index === "?" ? "ㅤ" : index}</div>
+                ))}
+              </div>
+              <Players publisher={publisher} subscribers={subscribers} solver={solver} isPlaying={isPlaying} />
+              {/* <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} /> */}
+            </div>
+          </>
+        )}
+        <div className={styles.onSidebar}>
+          {!isPlaying ? (
             <></>
-          )}
-          {
+          ) : (
             <>
-              <div className={styles.leftContainer}>
-                <div onClick={leaveSession} className={styles.leave}>
-                  나가기
-                </div>
-                <div className={styles.cellList}>
-                  {resList.map((index) => (
-                    <div className={styles.cell}>{index === "?" ? "ㅤ" : index}</div>
-                  ))}
-                </div>
-                <Players publisher={publisher} subscribers={subscribers} solver={solver} isPlaying={isPlaying} />
-                {/* <LemonSuquiz resCnt={resCnt} resList={resList} stage={stage} /> */}
+              <div className={styles.video}>
+                <video key={quizVideoList} loop autoPlay muted style={{ borderRadius: "0.5rem" }}>
+                  <source src={quizVideoList[stage]} type="video/mp4" />
+                  영상이 존재하지 않습니다.
+                </video>
               </div>
             </>
-          }
-          <div>
-            <div className={styles.video}>
-              <video key={quizVideoList} loop autoPlay muted style={{ borderRadius: "0.5rem" }}>
-                <source src={quizVideoList[stage]} type="video/mp4" />
-                영상이 존재하지 않습니다.
-              </video>
-            </div>
-            <div className={styles.onSidebar} style={isPlaying ? {} : { height: "83vh" }}>
-              <WaitingRoomSidebar isManager={isModerator} session={session} isPlaying={isPlaying} />
-            </div>
-          </div>
+          )}
+          <WaitingRoomSidebar session={session} isPlaying={isPlaying} />
         </div>
+      </div>
+      {modalOpen && (
+        <MultiplayModal
+          sessionId={sessionId}
+          myScore={myScore}
+          onClose={handleCloseModal}
+          solver={solver}
+          playersList={playersList}
+          quizWord={quizWordList}
+          quizVideo={quizVideoList}
+        />
       )}
-      {modalOpen && <MultiplayModal sessionId={sessionId} myScore={myScore} onClose={handleCloseModal} />}
     </>
   );
 };

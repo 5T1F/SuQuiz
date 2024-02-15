@@ -6,6 +6,7 @@
   height: 100%;
   backdrop-filter: blur(4px);
   /* background-color: #bdbdbd87; */
+  z-index: 21;
 }
 
 .modalContent {
@@ -19,10 +20,10 @@
   /* max-width: 1000px; */
   width: 1080px;
   border-radius: 10px;
-  padding: 20px 0;
+  padding: 20px;
   z-index: 1050;
   background: #ffffff;
-  box-shadow: 0px 0px 20px rgba(244, 178, 142, 0.5);
+  box-shadow: 0px 0px 20px #a0afa0;
 
   border-radius: 15px;
 }
@@ -34,7 +35,7 @@
   padding: 0 10px 1px 10px;
   font-size: 16px;
   height: 26px;
-  background: #f4b28e;
+  background: #97ce9b;
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -52,7 +53,7 @@
 }
 
 .close:hover {
-  color: #9c8a82;
+  color: rgb(113, 138, 115);
 }
 
 .wordContent {
@@ -67,6 +68,31 @@
 .wordContent p {
   display: flex;
   justify-content: center;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progressBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.highlight {
+  padding: 2px;
+  border-radius: 5px;
+  color: #9fd0a3; /* 글씨 색상 */
+  font-weight: bold;
 }
 
 .video {
@@ -88,84 +114,71 @@
   z-index: 1000;
 }
 
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tableHeader {
+  background-color: #9fd0a3;
+  color: #5c5c5c;
+  text-align: left;
+  padding: 8px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.tableHeader th {
+  height: 30px; /* 원하는 높이 값 */
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle; /* 셀 내용을 수직 중앙 정렬 */
+}
+
+.tableRow {
+  transition: all 0.3s ease;
+  padding: 8px;
+  border-bottom: 2px dashed #efefef;
+  text-align: center;
+}
+
+.tableRow td {
+  height: 40px; /* 원하는 높이 값 */
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle; /* 셀 내용을 수직 중앙 정렬 */
+  overflow: hidden;
+}
+
+.tableRow img {
+  height: 100%; /* 또는 적절한 크기로 조정 */
+  object-fit: cover; /* 이미지 비율을 유지하면서 요소에 맞게 조정 */
+}
+
+.tableRow:hover {
+  background-color: #abd1ae;
+}
+
+/* 애니메이션 효과를 위한 기본 CSS */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .resultContent {
   width: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.trialContainer {
-  display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
-  width: 100%;
-  height: auto;
-  margin-top: 10px;
-}
-
-.streakContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.memo {
-  font-size: 16px;
-  margin-left: auto;
-  margin-right: 10px;
-}
-
-.highlight {
-  color: #ec9363;
-}
-
-.dotContainer {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  bottom: 17px;
-}
-
-.dot1 {
-  position: absolute;
-  height: 15px;
-  width: 15px;
-  background-color: rgba(106, 230, 168, 0.3);
-  border-radius: 50%;
-  font-size: 12px;
-}
-
-.dot2 {
-  position: absolute;
-  height: 15px;
-  width: 15px;
-  background-color: rgba(229, 123, 123, 0.3);
-  border-radius: 50%;
-}
-
-.unicode {
-  position: relative;
-  bottom: 8px;
-  font-size: 10px;
-}
-
-.react-calendar {
-  /* width: 42rem; */
-  background-color: #ffffff;
-  color: #222;
-  border-radius: 8px;
-  /* box-shadow: 0 12px 24px rgba(83, 83, 83, 0.2); */
-  /* line-height: 1.125em; */
-}
-
-.react-calendar__tile {
-  color: #222;
-  background: 222;
-  text-align: 222;
 }
 
 .btns {
@@ -182,26 +195,11 @@
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  color: #bca79d;
-  border: 1px solid #bca79d;
+  color: #abd1ae;
+  border: 1px solid #abd1ae;
 }
 
 .moreQuizBtn:hover {
   color: #fefefe;
-  background-color: #9c8a82;
-}
-
-.copyBtn {
-  padding: 3px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  color: #fefefe;
-  background-color: #bca79d;
-}
-
-.copyBtn:hover {
-  color: #fefefe;
-  background-color: #9c8a82;
+  background-color: rgb(113, 138, 115);
 }
