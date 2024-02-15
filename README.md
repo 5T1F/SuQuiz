@@ -47,7 +47,7 @@
 |<img src="/uploads/560a424f6f5b2104f64942a2706b2e8c/담현로두마니.png" height="120"/>|<img src="/uploads/9c66b9a77e3391966612f7dc5c593f41/현준다오.png" height="120"/>|<img src="/uploads/440be7d76a7fab44bc0cd0b841264e0b/모스윤철.png"  height="120"/>|<img src="/uploads/11749ef346a4a833a4c96f9252a4a258/은희우니.png" height="120"/>|<img src="/uploads/a8e77996b9e2aa7daafa2814141f6764/마리드혜진.png" height="120"/>
 |**👑팀장**|🖥️**개발 팀장**|👨‍💻**BE 리더**|👩‍💻**FE 리더**|📝**형상 관리자**|
 |백엔드|백엔드|백엔드|프론트엔드|프론트엔드|
-| PM, 영상, 발표 |  개발 총괄, git 관리 | 모션인식, DB | UI/UX 디자인 | 형상 관리, webRTC |
+| PM, 영상, 발표 |  개발 총괄, DevOps | 모션인식, AI | webRTC, socialLogin | 형상 관리, webRTC |
 |[![Github](https://img.shields.io/badge/soberdam-434343?style=for-the-badge&logo=github&logoColor=white)](https://github.com/soberdam)|[![Github](https://img.shields.io/badge/HyunEnn-59CAEF?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HyunEnn)|[![Github](https://img.shields.io/badge/yuncheol%20AHN-FFC605?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yuncheol-AHN)|[![Github](https://img.shields.io/badge/gilukji226-7DF475?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gilukji226) |[![Github](https://img.shields.io/badge/pado7sea-EB3A9D?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pado7sea)|
 
 
