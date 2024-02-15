@@ -58,7 +58,7 @@ export default function LearningStartPage() {
 
   return (
     <>
-      <div className="flex h-[90vh]">
+      <div className="flex h-[90vh] overflow-hidden">
         {/* 학습 화면 */}
         {/* 사이드메뉴 */}
         <div className="px-10 py-6 bg-[#f3f3f3] ">
