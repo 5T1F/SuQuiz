@@ -97,7 +97,7 @@ const Modal = ({ onClose }) => {
           </span>
         </div>
         <div className={styles.modalContent}>
-          <p>닉네임 수정하기</p>
+          <p className={styles.subtitle}>닉네임 수정하기</p>
           <div style={{ height: "7vh" }}>
             {" "}
             <input
@@ -115,7 +115,7 @@ const Modal = ({ onClose }) => {
             {isConfirmed === 1 && <p style={{ color: "red", fontSize: "xx-small" }}>이미 사용 중인 닉네임입니다.</p>}
             {isConfirmed === 3 && <p style={{ color: "red", fontSize: "xx-small" }}>부적합한 닉네임입니다.</p>}
           </div>
-          <p>탈퇴하기</p>
+          <p className={styles.subtitle}>탈퇴하기</p>
           <div className={styles.btns}>
             <button className={styles.cancelBtn} onClick={onClose}>
               취소
