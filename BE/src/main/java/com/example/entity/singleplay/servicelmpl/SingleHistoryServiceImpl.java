@@ -286,6 +286,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
                 Word word = wordRepository.findByWordName("문제");
 //                int index = random.nextInt(words.size());
 //                Word word = words.get(index);
+                //
 
                 System.out.println(word.getWordName());
 
