@@ -92,13 +92,8 @@ const Modal = ({ onClose }) => {
     <>
       <div className={styles.modalBackground}>
         <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
-          <div className={styles.modalTitle}>
-            <div>친구 추가</div>
-            <span className={styles.close} onClick={onClose}>
-              &times;
-            </span>
-          </div>
           <div className={styles.modalContent}>
+            <div className={styles.title}>친구 추가</div>
             <div style={{ height: "7vh" }}>
               <input
                 className={styles.searchInput}
