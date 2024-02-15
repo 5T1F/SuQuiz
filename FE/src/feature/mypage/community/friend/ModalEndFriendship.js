@@ -63,17 +63,19 @@ const ModalEndFriendship = ({ onClose, friendNickname }) => {
 
   return (
     <>
-      <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
-        <div className={styles.modalContent}>
-          <p className={styles.title}>친구 삭제</p>
-          <p>정말 삭제하시겠습니까?</p>
-          <div className={styles.btns}>
-            <button className={styles.yesButton} onClick={handleEndFriendship}>
-              예
-            </button>
-            <button className={styles.noButton} onClick={onClose}>
-              아니오
-            </button>
+      <div className={styles.modalBackground}>
+        <div ref={modalRef} className={styles.modal} onClick={handleClickInside}>
+          <div className={styles.modalContent}>
+            <p className={styles.title}>친구 삭제</p>
+            <p>정말 삭제하시겠습니까?</p>
+            <div className={styles.btns}>
+              <button className={styles.yesButton} onClick={handleEndFriendship}>
+                예
+              </button>
+              <button className={styles.noButton} onClick={onClose}>
+                아니오
+              </button>
+            </div>
           </div>
         </div>
       </div>
