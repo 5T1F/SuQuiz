@@ -17,8 +17,8 @@ public interface WordRepository extends JpaRepository<Word, Long> {
     List<Word> findAll();
 
 
-
     @Query(" select w from Word w where w.category = :category")
     List<Word> findByCategory(@Param("category") Category category);
+
     List<Word> findBySubject(Subject subject);
 }

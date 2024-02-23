@@ -9,10 +9,10 @@ import java.util.UUID;
 @Getter
 @Builder
 public class CommonResponse<T> {
-    @Builder.Default // Builder default 지정
-    private String id = UUID.randomUUID().toString(); // uuid
     @Builder.Default
-    private Date dateTime = new Date(); // date
+    private String id = UUID.randomUUID().toString();
+    @Builder.Default
+    private Date dateTime = new Date();
     private int status;
     private String message;
     private Object data;

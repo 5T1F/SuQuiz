@@ -18,10 +18,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u where u.email = :email")
     Optional<User> findByEmail(@Param("email") String email);
+
     Optional<User> findByNickname(String nickname);
 
     @Query("select u from User u where u.email = :email and u.oAuthProvider = :oauthProvider")
     User findByEmailAndOAuthProvider(@Param("email") String email, @Param("oauthProvider") OAuthProvider oAuthProvider);
+
     boolean existsByEmail(String email);
 
     @Query("select u from User u where u.nickname like %:nickname%")

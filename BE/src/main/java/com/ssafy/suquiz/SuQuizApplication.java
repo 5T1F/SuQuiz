@@ -9,11 +9,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @OpenAPIDefinition(
-		servers = {
-				@Server(url = "https://suquiz.shop/api", description = "Suquiz Shop Server"),
-				@Server(url = "http://i10b302.p.ssafy.io/api", description = "Another Server"),
-				@Server(url = "http://localhost:5000/api", description = "Develop Server")
-		}
+        servers = {
+                @Server(url = "https://suquiz.shop/api", description = "Suquiz Shop Server"),
+                @Server(url = "http://i10b302.p.ssafy.io/api", description = "Another Server"),
+                @Server(url = "http://localhost:5000/api", description = "Develop Server")
+        }
 )
 
 @SpringBootApplication
@@ -21,9 +21,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableConfigurationProperties(JwtProperties.class)
 public class SuQuizApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SuQuizApplication.class, args);
+    public static void main(String[] args) {
+        SpringApplication.run(SuQuizApplication.class, args);
 
-	}
+    }
 
 }

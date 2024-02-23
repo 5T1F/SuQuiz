@@ -32,6 +32,7 @@ public class WordServiceImpl implements WordService {
         return responseDtos;
     }
 
+
     @Override
     public List<WordDTO.WordResponseDto> findWordsByCategory(Category category) {
         List<Word> findWords = wordRepository.findByCategory(category);
