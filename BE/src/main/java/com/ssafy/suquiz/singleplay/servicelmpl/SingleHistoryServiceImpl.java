@@ -75,10 +75,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
         return findFivePhoneme();
     }
 
-    @Override
-    public List<QuestDto.DailyListResponse> multiQuest() {
-        return findFivePhonemeList();
-    }
+
 
     @Transactional
     @Override
@@ -271,55 +268,6 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
     }
 
 
-    private List<QuestDto.DailyListResponse> findFivePhonemeList() {
 
-        List<QuestDto.DailyListResponse> threeQuest = new ArrayList<>();
-
-        List<Word> words = wordRepository.findByCategory(Category.낱말);
-
-        // 랜덤으로 하나 선택
-        if (!words.isEmpty()) {
-
-            while(true) {
-                Random random = new Random();
-                //시연 시 단어 "단비"로 고정
-                Word word = wordRepository.findByWordName("문제");
-//                int index = random.nextInt(words.size());
-//                Word word = words.get(index);
-                //
-
-                System.out.println(word.getWordName());
-
-                char[] syllables = WordToSyllables.wordToSyllables(word.getWordName());
-                if (syllables.length != 5) continue;
-
-                List<Character> list = new ArrayList<>();
-                for (char c: syllables) {
-                    list.add(c);
-                }
-
-                boolean flag = true;
-                for (QuestDto.DailyListResponse entity: threeQuest) {
-                    if (entity.getWordName().equals(word.getWordName())) {
-                        flag = false;
-                    }
-                }
-
-                if (flag) {
-                    threeQuest.add(QuestDto.DailyListResponse.builder()
-                            .category(word.getCategory())
-                            .subject(word.getSubject().getSubjectName())
-                            .wordName(word.getWordName())
-                            .videoUrl(word.getVideoUrl())
-                            .syllables(list)
-                            .build());
-                }
-                // 시연 시 단어개수 1로 고정
-                if (threeQuest.size() == 1) break;
-            }
-        }
-
-        return threeQuest;
-    }
     
 }

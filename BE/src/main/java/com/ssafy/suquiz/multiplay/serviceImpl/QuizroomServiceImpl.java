@@ -7,10 +7,14 @@ import com.ssafy.suquiz.multiplay.dto.ExitQuizDto;
 import com.ssafy.suquiz.multiplay.dto.PlayerDto;
 import com.ssafy.suquiz.multiplay.repository.QuizroomRepository;
 import com.ssafy.suquiz.multiplay.service.QuizroomService;
+import com.ssafy.suquiz.singleplay.dto.QuestDto;
 import com.ssafy.suquiz.user.domain.Level;
 import com.ssafy.suquiz.user.domain.User;
 import com.ssafy.suquiz.user.repository.LevelRepository;
 import com.ssafy.suquiz.user.repository.UserRepository;
+import com.ssafy.suquiz.word.domain.Category;
+import com.ssafy.suquiz.word.domain.Word;
+import com.ssafy.suquiz.word.function.WordToSyllables;
 import com.ssafy.suquiz.word.repository.WordRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -196,5 +201,58 @@ public class QuizroomServiceImpl implements QuizroomService {
         return playerList;
     }
 
+    @Override
+    public List<QuestDto.DailyListResponse> multiQuest() {
+        return findFivePhonemeList();
+    }
+    private List<QuestDto.DailyListResponse> findFivePhonemeList() {
 
+        List<QuestDto.DailyListResponse> threeQuest = new ArrayList<>();
+
+        List<Word> words = wordRepository.findByCategory(Category.낱말);
+
+        // 랜덤으로 하나 선택
+        if (!words.isEmpty()) {
+
+            while(true) {
+                Random random = new Random();
+                //시연 시 단어 "단비"로 고정
+                Word word = wordRepository.findByWordName("문제");
+//                int index = random.nextInt(words.size());
+//                Word word = words.get(index);
+                //
+
+                System.out.println(word.getWordName());
+
+                char[] syllables = WordToSyllables.wordToSyllables(word.getWordName());
+                if (syllables.length != 5) continue;
+
+                List<Character> list = new ArrayList<>();
+                for (char c: syllables) {
+                    list.add(c);
+                }
+
+                boolean flag = true;
+                for (QuestDto.DailyListResponse entity: threeQuest) {
+                    if (entity.getWordName().equals(word.getWordName())) {
+                        flag = false;
+                    }
+                }
+
+                if (flag) {
+                    threeQuest.add(QuestDto.DailyListResponse.builder()
+                            .category(word.getCategory())
+                            .subject(word.getSubject().getSubjectName())
+                            .wordName(word.getWordName())
+                            .videoUrl(word.getVideoUrl())
+                            .syllables(list)
+                            .build());
+                }
+                // 시연 시 단어개수 1로 고정
+                if (threeQuest.size() == 1) break;
+            }
+        }
+
+        return threeQuest;
+    }
 }

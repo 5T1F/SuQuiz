@@ -19,7 +19,6 @@ import java.util.List;
 @RequestMapping("/quizrooms")
 public class QuizroomController {
     private final QuizroomService quizroomService;
-    private final SingleHistoryService singleHistoryService;
 
     // 퀴즈 룸 입장 가능 여부 조회
     @GetMapping("/isJoinable/{inviteCode}")
@@ -91,7 +90,7 @@ public class QuizroomController {
         return new ResponseEntity<>(CommonResponse.<List<QuestDto.DailyListResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .message("multi quest")
-                .data(singleHistoryService.multiQuest())
+                .data(quizroomService.multiQuest())
                 .build(), HttpStatus.OK);
     }
 

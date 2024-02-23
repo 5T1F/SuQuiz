@@ -15,8 +15,6 @@ public interface SingleHistoryService {
     QuestDto.DailyStringResponse dailyQuest();
     // 데일리 추가 문제
     QuestDto.DailyStringResponse additionalQuest();
-
-    List<QuestDto.DailyListResponse> multiQuest();
     // 입력
     SingleHistoryDto.SaveResponse end(SingleHistoryDto.SaveRequest singleHistoryRequestDto);
     // SNS 오늘의 결과
