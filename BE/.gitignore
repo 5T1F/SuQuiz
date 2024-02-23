@@ -20,7 +20,6 @@ bin/
 ### IntelliJ IDEA ###
 .idea
 application-*.yml
-**/application.yml
 workspace.xml
 vcs.xml
 *.iws

@@ -1,0 +1,22 @@
+server:
+  servlet:
+    context-path: /api2
+  port: 5000
+
+
+# DB와 secret key 세팅 값
+spring:
+  profiles:
+    include: h2
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+# openVidu Environmental Variables
+OPENVIDU_URL: https://suquiz.shop:8443/
+OPENVIDU_SECRET : MY_SECRET
