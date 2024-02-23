@@ -24,12 +24,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    // unique key
     private String email;
-
-//    @OneToMany(mappedBy = "user")
-//    @Builder.Default
-//    private List<Bookmark> bookmarkList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @Builder.Default
@@ -49,9 +44,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private OAuthProvider oAuthProvider;
 
-    // provider
-    // refresh token
-
     @Builder.Default
     private boolean isPlaying = false;
     @Builder.Default
@@ -62,12 +54,6 @@ public class User {
     private int maxCorrectCount = 0;// 최다 연속 정답
 
     private String imageUrl;
-
-//    @Builder(toBuilder = true)
-//    public User(String email, OAuthProvider oAuthProvider) {
-//        this.email = email;
-//        this.oAuthProvider = oAuthProvider;
-//    }
 
     public void changeNickname(String modifiedName) {
         this.nickname = modifiedName;

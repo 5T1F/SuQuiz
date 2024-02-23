@@ -17,7 +17,7 @@ import java.util.List;
 public class FriendController {
 
     private final FriendRelationshipService friendRelationshipService;
-    private final UserService userService;
+
 
     // 친구 목록
     @GetMapping("/{userId}")
