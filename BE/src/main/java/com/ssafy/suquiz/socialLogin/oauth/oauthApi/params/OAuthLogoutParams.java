@@ -6,6 +6,7 @@ import org.springframework.util.MultiValueMap;
 public interface OAuthLogoutParams {
 
     OAuthProvider oAuthProvider();
+
     MultiValueMap<String, String> makebody();
 
 }

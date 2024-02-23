@@ -16,6 +16,7 @@ public interface QuizroomService {
     boolean checkIsRoomPlaying(String inviteCode);
 
     List<QuestDto.DailyListResponse> multiQuest();
+
     void startQuizroom(String sessionId);
 
     EndQuizDto.Response endQuizgame(String sessionId, EndQuizDto.Request request);

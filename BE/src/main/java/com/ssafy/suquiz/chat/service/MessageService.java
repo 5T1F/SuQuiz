@@ -56,7 +56,6 @@ public class MessageService {
     }
 
     private MessageDTO convertToMessageDTO(Message message) {
-        // 실제 변환 로직 구현, 예시:
         return new MessageDTO(
                 message.getSender().getId(),
                 message.getReceiver().getId(),

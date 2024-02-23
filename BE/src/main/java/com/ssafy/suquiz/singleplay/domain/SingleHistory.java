@@ -17,17 +17,18 @@ import java.time.LocalDate;
 @Getter
 public class SingleHistory {
 
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "single_history_id")
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "single_history_id")
+    private Long id;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "user_id")
-        private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-        private LocalDate createDate;
+    private LocalDate createDate;
 
-        private int trialCount;
-        private String resultText;
-        private boolean isCorrect;
+    private int trialCount;
+    private String resultText;
+    private boolean isCorrect;
 }

@@ -19,5 +19,5 @@ public interface QuizroomRepository extends JpaRepository<Quizroom, Long> {
 
 
     @EntityGraph(attributePaths = {"userList"})
-    Optional<Quizroom>findBySessionId(String sessionId);
+    Optional<Quizroom> findBySessionId(String sessionId);
 }

@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @RequiredArgsConstructor
-public class NaverApiClient implements OAuthApiClient{
+public class NaverApiClient implements OAuthApiClient {
     private static final String GRANT_TYPE = "authorization_code";
     private static final String DELETE_GRANT = "delete"; // 토큰 삭제용 grant
 

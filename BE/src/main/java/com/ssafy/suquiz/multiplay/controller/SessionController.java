@@ -24,7 +24,7 @@ public class SessionController {
 
     //세션 생성하기
     @PostMapping("/sessions/{userId}")
-    public ResponseEntity<?> createSession(@PathVariable(name="userId") Long userId) {
+    public ResponseEntity<?> createSession(@PathVariable(name = "userId") Long userId) {
         try {
             Map<String, String> sessionInfo = sessionService.createSessionWithToken(userId);
             return ResponseEntity.ok(sessionInfo);
@@ -35,14 +35,13 @@ public class SessionController {
 
     //세션 참가하기
     @PostMapping("/sessions/{codeValue}/token/{userId}")
-    public ResponseEntity<?> generateToken(@PathVariable(name="codeValue") String inviteCode, @PathVariable(name="userId") long userId) {
+    public ResponseEntity<?> generateToken(@PathVariable(name = "codeValue") String inviteCode, @PathVariable(name = "userId") long userId) {
         try {
             String sessionId = sessionService.getSessionIdByInviteCode(inviteCode);
             String token = sessionService.generateToken(sessionId, userId);
             quizroomService.joinQuizroom(sessionId, userId);
             return ResponseEntity.ok(Map.of("sessionId", sessionId, "token", token));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body("Error generating token: " + e.getMessage());
         }
     }

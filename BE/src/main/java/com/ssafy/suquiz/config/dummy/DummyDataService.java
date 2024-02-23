@@ -24,6 +24,7 @@ public class DummyDataService {
     private final SubjectRepository subjectRepository;
     private final UserRepository userRepository;
     private final LevelRepository levelRepository;
+
     @Transactional
     public void insertDummyData() {
 
@@ -185,11 +186,10 @@ public class DummyDataService {
         userRepository.save(user11);
         userRepository.save(user12);
 
-        for(int i=2; i<=100; i++) {
-            Level newLv = Level.builder().level(i).xp(10+(50*(i-2))).build();
+        for (int i = 2; i <= 100; i++) {
+            Level newLv = Level.builder().level(i).xp(10 + (50 * (i - 2))).build();
             levelRepository.save(newLv);
         }
-
 
 
         Subject none = insertSubject("none");
@@ -200,20 +200,20 @@ public class DummyDataService {
         em.flush();
 
         // 자음
-        insertWord(Category.자음,none,"ㄱ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/251751/MOV000264210_700X466.webm");
-        insertWord(Category.자음,none,"ㄴ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20170313/443678/MOV000285079_700X466.webm");
-        insertWord(Category.자음,none,"ㄷ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290083/MOV000285204_700X466.webm");
-        insertWord(Category.자음,none,"ㄹ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/285677/MOV000285454_700X466.webm");
-        insertWord(Category.자음,none,"ㅁ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290119/MOV000285550_700X466.webm");
-        insertWord(Category.자음,none,"ㅂ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290132/MOV000285882_700X466.webm");
-        insertWord(Category.자음,none,"ㅅ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290153/MOV000286310_700X466.webm");
-        insertWord(Category.자음,none,"ㅇ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290182/MOV000286771_700X466.webm");
-        insertWord(Category.자음,none,"ㅈ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290309/MOV000287815_700X466.webm");
-        insertWord(Category.자음,none,"ㅊ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290334/MOV000288394_700X466.webm");
-        insertWord(Category.자음,none,"ㅋ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290343/MOV000288507_700X466.webm");
-        insertWord(Category.자음,none,"ㅌ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290351/MOV000288535_700X466.webm");
-        insertWord(Category.자음,none,"ㅍ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290354/MOV000288592_700X466.webm");
-        insertWord(Category.자음,none,"ㅎ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290361/MOV000288825_700X466.webm");
+        insertWord(Category.자음, none, "ㄱ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/251751/MOV000264210_700X466.webm");
+        insertWord(Category.자음, none, "ㄴ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20170313/443678/MOV000285079_700X466.webm");
+        insertWord(Category.자음, none, "ㄷ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290083/MOV000285204_700X466.webm");
+        insertWord(Category.자음, none, "ㄹ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/285677/MOV000285454_700X466.webm");
+        insertWord(Category.자음, none, "ㅁ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290119/MOV000285550_700X466.webm");
+        insertWord(Category.자음, none, "ㅂ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290132/MOV000285882_700X466.webm");
+        insertWord(Category.자음, none, "ㅅ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290153/MOV000286310_700X466.webm");
+        insertWord(Category.자음, none, "ㅇ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290182/MOV000286771_700X466.webm");
+        insertWord(Category.자음, none, "ㅈ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290309/MOV000287815_700X466.webm");
+        insertWord(Category.자음, none, "ㅊ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290334/MOV000288394_700X466.webm");
+        insertWord(Category.자음, none, "ㅋ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290343/MOV000288507_700X466.webm");
+        insertWord(Category.자음, none, "ㅌ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290351/MOV000288535_700X466.webm");
+        insertWord(Category.자음, none, "ㅍ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290354/MOV000288592_700X466.webm");
+        insertWord(Category.자음, none, "ㅎ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/290361/MOV000288825_700X466.webm");
 
         // 모음
         insertWord(Category.모음, none, "ㅏ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005855/MOV000359857_700X466.webm");
@@ -235,22 +235,22 @@ public class DummyDataService {
         insertWord(Category.모음, none, "ㅟ", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20240118/1261087/MOV000361352_700X466.webm");
 
         // 숫자
-        insertWord(Category.숫자,none,  "영, 0", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220727/1001978/MOV000359555_700X466.webm");
-        insertWord(Category.숫자,none,  "하나, 1", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009715/MOV000360025_700X466.webm");
-        insertWord(Category.숫자,none,  "둘, 2", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009765/MOV000360062_700X466.webm");
-        insertWord(Category.숫자,none,  "셋, 3", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009785/MOV000360082_700X466.webm");
-        insertWord(Category.숫자,none,  "넷, 4", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009763/MOV000360060_700X466.webm");
-        insertWord(Category.숫자,none,  "다섯, 5", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005874/MOV000359876_700X466.webm");
-        insertWord(Category.숫자,none,  "여섯, 6", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009786/MOV000360083_700X466.webm");
-        insertWord(Category.숫자,none,  "일곱, 7", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009775/MOV000360072_700X466.webm");
-        insertWord(Category.숫자,none,  "여덟, 8", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009769/MOV000360066_700X466.webm");
-        insertWord(Category.숫자,none,  "아홉, 9", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009766/MOV000360063_700X466.webm");
-        insertWord(Category.숫자,none,  "열, 10", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009774/MOV000360071_700X466.webm");
-        insertWord(Category.숫자,none,  "백, 100", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009609/MOV000359943_700X466.webm");
-        insertWord(Category.숫자,none,  "천, 1000", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009776/MOV000360073_700X466.webm");
-        insertWord(Category.숫자,none,  "만", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005859/MOV000359861_700X466.webm");
-        insertWord(Category.숫자,none,  "십만", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009743/MOV000360040_700X466.webm");
-        insertWord(Category.숫자,none,  "백만", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220801/1004604/MOV000359684_700X466.webm");
+        insertWord(Category.숫자, none, "영, 0", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220727/1001978/MOV000359555_700X466.webm");
+        insertWord(Category.숫자, none, "하나, 1", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009715/MOV000360025_700X466.webm");
+        insertWord(Category.숫자, none, "둘, 2", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009765/MOV000360062_700X466.webm");
+        insertWord(Category.숫자, none, "셋, 3", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009785/MOV000360082_700X466.webm");
+        insertWord(Category.숫자, none, "넷, 4", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009763/MOV000360060_700X466.webm");
+        insertWord(Category.숫자, none, "다섯, 5", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005874/MOV000359876_700X466.webm");
+        insertWord(Category.숫자, none, "여섯, 6", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009786/MOV000360083_700X466.webm");
+        insertWord(Category.숫자, none, "일곱, 7", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009775/MOV000360072_700X466.webm");
+        insertWord(Category.숫자, none, "여덟, 8", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009769/MOV000360066_700X466.webm");
+        insertWord(Category.숫자, none, "아홉, 9", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009766/MOV000360063_700X466.webm");
+        insertWord(Category.숫자, none, "열, 10", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009774/MOV000360071_700X466.webm");
+        insertWord(Category.숫자, none, "백, 100", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009609/MOV000359943_700X466.webm");
+        insertWord(Category.숫자, none, "천, 1000", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009776/MOV000360073_700X466.webm");
+        insertWord(Category.숫자, none, "만", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220802/1005859/MOV000359861_700X466.webm");
+        insertWord(Category.숫자, none, "십만", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220811/1009743/MOV000360040_700X466.webm");
+        insertWord(Category.숫자, none, "백만", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20220801/1004604/MOV000359684_700X466.webm");
 
         // 일상
         insertWord(Category.낱말, 일상, "안녕하세요", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191004/624421/MOV000244910_700X466.mp4");
@@ -298,12 +298,7 @@ public class DummyDataService {
         insertWord(Category.낱말, 감정, "가능", "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200821/732879/MOV000249484_700X466.mp4");
 
 
-
     }
-
-
-
-
 
 
     private Word insertWord(Category category, Subject subject, String name, String videoUrl) {
@@ -335,8 +330,6 @@ public class DummyDataService {
     public void insertQuizroom() {
 
     }
-
-
 
 
 }

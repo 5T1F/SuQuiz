@@ -5,7 +5,8 @@ import com.ssafy.suquiz.user.domain.OAuthProvider;
 
 public interface OAuthInfoResponse {
     String getEmail();
-//    String getNickname();
+
+    //    String getNickname();
     OAuthProvider getOAuthProvider();
 //    String getAccessToken();
 //    String getRefreshToken();

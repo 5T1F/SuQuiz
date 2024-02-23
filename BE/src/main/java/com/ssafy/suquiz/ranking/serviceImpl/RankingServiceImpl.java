@@ -23,13 +23,13 @@ public class RankingServiceImpl implements RankingService {
         List<User> orderedUserList = userRepository.findAllOrderByExp();
         List<RankingDto.RankDto> ranking = new ArrayList<>();
         int myRank = 0;
-        for(int i=0; i<orderedUserList.size(); i++) {
-            if(i<10) {
+        for (int i = 0; i < orderedUserList.size(); i++) {
+            if (i < 10) {
                 ranking.add(entityAndDtoConversionService.userEntityToRankDto(orderedUserList.get(i)));
             }
-            if(orderedUserList.get(i).getId() == userId) {
-                myRank = i+1;
-                if(i>=10) break;
+            if (orderedUserList.get(i).getId() == userId) {
+                myRank = i + 1;
+                if (i >= 10) break;
             }
         }
 
