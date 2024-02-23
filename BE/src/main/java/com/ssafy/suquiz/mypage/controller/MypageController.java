@@ -42,7 +42,6 @@ public class MypageController {
         /**
          * modified nickname
          */
-//        String response = mypageService.modify(request);
 
         return new ResponseEntity<>(CommonResponse.<MypageDto.NicknameModifyResoponse>builder()
                 .status(HttpStatus.OK.value())
