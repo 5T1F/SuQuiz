@@ -20,7 +20,7 @@
 
 [8. 개발 산출물](#개발-산출물)
 
-[9. 서비스 시연 영상)(#서비스-시연-영상)
+[9. 서비스 시연 영상](#서비스-시연-영상)
 
 [10. 제작 기간 및 참여 인원](#제작-기간-및-참여-인원)
 
@@ -55,10 +55,6 @@
 <br>
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
 <br>
-<img src="https://img.shields.io/badge/openVidu-000000?style=for-the-badge&logo=openVidu&logoColor=white">
-<br>
-<img src="https://img.shields.io/badge/Recoil-3578E5?style=for-the-badge&logo=Recoil&logoColor=white"> <img src="https://img.shields.io/badge/React Query-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white">
-<br>
 <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=for-the-badge&logo=TailwindCSS&logoColor=white"> 
 
 #### BE #### 
@@ -72,7 +68,10 @@
 <br>
 <img src="https://img.shields.io/badge/Mediapipe-000000?style=for-the-badge&logo=Mediapipe&logoColor=white">   
 
-#### Infra
+#### WebRTC ####
+<img src="https://img.shields.io/badge/openVidu-000000?style=for-the-badge&logo=openVidu&logoColor=white">
+
+#### Infra ####
 <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonAWS&logoColor=white">  
 <img src="https://img.shields.io/badge/EC2-FF9900?style=for-the-badge&logo=amazonEC2&logoColor=white">  
 <img src="https://img.shields.io/badge/Docker-000000?style=for-the-badge&logo=Docker&logoColor=white">  
@@ -189,8 +188,10 @@
 
 ## 기술적 특징
 
+
+&nbsp;
 ## ERD
-<img src="[https://github.com/5T1F/SuQuiz/assets/106129404/e646b453-d6e3-40d2-bbfb-09a29efa52da">
+<img src="https://github.com/5T1F/SuQuiz/assets/106129404/e646b453-d6e3-40d2-bbfb-09a29efa52da">
 
 &nbsp;
 
@@ -243,7 +244,3 @@
 |[![Github](https://img.shields.io/badge/soberdam-434343?style=for-the-badge&logo=github&logoColor=white)](https://github.com/soberdam)|[![Github](https://img.shields.io/badge/HyunEnn-59CAEF?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HyunEnn)|[![Github](https://img.shields.io/badge/yuncheol%20AHN-FFC605?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yuncheol-AHN)|[![Github](https://img.shields.io/badge/gilukji226-7DF475?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gilukji226) |[![Github](https://img.shields.io/badge/pado7sea-EB3A9D?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pado7sea)|
 
 
-[화면 정의서](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%ED%99%94%EB%A9%B4_%EC%A0%95%EC%9D%98%EC%84%9C.pdf?ref_type=heads)
-&nbsp;
-[포팅 매뉴얼](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/exec/SuQuiz_%ED%8F%AC%ED%8C%85_%EB%A7%A4%EB%89%B4%EC%96%BC.pdf?ref_type=heads)
-&nbsp;
