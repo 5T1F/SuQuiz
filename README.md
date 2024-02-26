@@ -206,7 +206,7 @@
 
 [기능 명세서](https://github.com/5T1F/SuQuiz/blob/master/docs/SuQuiz_%EA%B8%B0%EB%8A%A5_%EB%AA%85%EC%84%B8%EC%84%9C.pdf)
 
-[api 명세서]()
+[api 명세서](https://github.com/5T1F/SuQuiz/blob/docs/docs/SuQuiz_API_%EB%AA%85%EC%84%B8%EC%84%9C.pdf)
 
 [ERD](https://github.com/5T1F/SuQuiz/blob/master/docs/SuQuiz_ERD.png)
 
@@ -216,19 +216,17 @@
 
 [와이어프레임](https://github.com/5T1F/SuQuiz/blob/master/docs/SuQuiz_%EC%99%80%EC%9D%B4%EC%96%B4_%ED%94%84%EB%A0%88%EC%9E%84.pdf)
 
-[화면 정의서]()
+[화면 정의서](https://github.com/5T1F/SuQuiz/blob/docs/docs/SuQuiz_%ED%99%94%EB%A9%B4%20%EC%A0%95%EC%9D%98%EC%84%9C.pdf)
 
 [포팅 매뉴얼](https://github.com/5T1F/SuQuiz/blob/master/exec/SuQuiz_%ED%8F%AC%ED%8C%85_%EB%A7%A4%EB%89%B4%EC%96%BC.pdf)
 
-[중간 프레젠테이션]()
+[중간 프레젠테이션](https://github.com/5T1F/SuQuiz/blob/docs/docs/SuQuiz_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pdf)
 
-[최종 프레젠테이션]()
+[최종 프레젠테이션](https://github.com/5T1F/SuQuiz/blob/docs/docs/SuQuiz_%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C.pdf)
 
 ## 서비스 시연 영상
 
-
 ## 제작 기간 및 참여 인원
-
 
 ### 제작 기간
 
@@ -241,10 +239,8 @@
 |<img src="https://github.com/5T1F/SuQuiz/assets/106129404/858bc88d-865b-4eda-87f2-093af550aedc" height="120"/>|<img src="https://github.com/5T1F/SuQuiz/assets/106129404/794ca586-edbc-4d13-93a1-123dfd84d5ce" height="120"/>|<img src="https://github.com/5T1F/SuQuiz/assets/106129404/19a8c2a8-ad9e-4af7-aaed-6ad082adf55e"  height="120"/>|<img src="https://github.com/5T1F/SuQuiz/assets/106129404/b41460bd-b02d-4803-b3eb-9e2455cb04be" height="120"/>|<img src="https://github.com/5T1F/SuQuiz/assets/106129404/0ab5b2cf-9d03-4bb8-aa2e-94afb14e837f" height="120"/>
 |**👑팀장**|🖥️**개발 팀장**|👨‍💻**BE 리더**|👩‍💻**FE 리더**|📝**형상 관리자**|
 |백엔드|백엔드|백엔드|프론트엔드|프론트엔드|
-| PM, 발표, WebRTC, WebSocket, API | 아키텍처 설계, CI/CD 구축, 소셜로그인, API | 수어 모션인식, AI 학습, API | WebRTC, 소셜로그인 | 형상 관리, 워들 알고리즘, UI/UX |
+| PM, 발표, API, WebRTC, WebSocket | API, 아키텍처 설계, CI/CD 구축, 소셜로그인 | API, 수어 모션인식, AI 학습 | WebRTC, 소셜로그인 | 형상 관리, 워들 알고리즘, UI/UX |
 |[![Github](https://img.shields.io/badge/soberdam-434343?style=for-the-badge&logo=github&logoColor=white)](https://github.com/soberdam)|[![Github](https://img.shields.io/badge/HyunEnn-59CAEF?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HyunEnn)|[![Github](https://img.shields.io/badge/yuncheol%20AHN-FFC605?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yuncheol-AHN)|[![Github](https://img.shields.io/badge/gilukji226-7DF475?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gilukji226) |[![Github](https://img.shields.io/badge/pado7sea-EB3A9D?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pado7sea)|
-
-
 
 
 [화면 정의서](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%ED%99%94%EB%A9%B4_%EC%A0%95%EC%9D%98%EC%84%9C.pdf?ref_type=heads)
