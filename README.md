@@ -116,7 +116,7 @@
 
 [기사4. 법만 만들고 공식 수어 교육기관은 '0'](https://news.sbs.co.kr/news/endPage.do?news_id=N1006682335)
 
-<img src="/uploads/2c495201a840203d8417384b4c92f428/캡처.PNG" width="500"/>
+<img src="https://github.com/5T1F/SuQuiz/assets/106129404/44046dab-f42c-49aa-b6de-734b762114cb" width="500"/>
 
 [그림1. 차시가 늘어날수록 반비례하는 조회수.
 출처 : 경기도평생학습포털](https://www.gseek.kr/member/rl/courseInfo/onCourseCsInfo.do?p=pMenuId=OTOP&courseSeq=1424&courseCsSeq=1&courseCateCode=E540) </details>
@@ -124,7 +124,8 @@
 &nbsp;
 ### 페르소나
 <div align="center">
-<img src="/uploads/9dfbf7187b1b983455aacde3078175df/persona1.png" width = 550> <img src="/uploads/c495dd49711e56c2de2b03d36fd7f4d4/persona2.png" width = 550>
+<img src="https://github.com/5T1F/SuQuiz/assets/106129404/ca89c4ba-a285-43a4-afe8-a65d5973fb6d" width = 550> 
+<img src="https://github.com/5T1F/SuQuiz/assets/106129404/d1946247-2365-4027-b20a-1ab413f9eff8" width = 550>
 </div>
 
 - 후천적으로 장애를 얻게 된 장애인
@@ -184,9 +185,9 @@
 
 &nbsp;
 
- ## 기술적 특징
+## 기술적 특징
 
- ## ERD
+## ERD
 <img src="[https://github.com/5T1F/SuQuiz/assets/106129404/e646b453-d6e3-40d2-bbfb-09a29efa52da">
 
 &nbsp;
@@ -207,7 +208,6 @@
 
 [와이어프레임](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EC%99%80%EC%9D%B4%EC%96%B4_%ED%94%84%EB%A0%88%EC%9E%84.png?ref_type=heads)
 
-
 [시스템 아키텍처](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EC%8B%9C%EC%8A%A4%ED%85%9C_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png)
 
 [시퀀스 다이어그램](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EC%8B%9C%ED%80%80%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.png)
@@ -221,14 +221,12 @@
 
 ### 참여 인원
 
-
-
 | 📌 **조담현** | 📌 **김현준** | 📌 **안윤철** | 📌 **최은희** | 📌 **정혜진** |
 | :------: | :------: | :------: | :------: | :------: |
 |<img src="/uploads/560a424f6f5b2104f64942a2706b2e8c/담현로두마니.png" height="120"/>|<img src="/uploads/9c66b9a77e3391966612f7dc5c593f41/현준다오.png" height="120"/>|<img src="/uploads/440be7d76a7fab44bc0cd0b841264e0b/모스윤철.png"  height="120"/>|<img src="/uploads/11749ef346a4a833a4c96f9252a4a258/은희우니.png" height="120"/>|<img src="/uploads/a8e77996b9e2aa7daafa2814141f6764/마리드혜진.png" height="120"/>
 |**👑팀장**|🖥️**개발 팀장**|👨‍💻**BE 리더**|👩‍💻**FE 리더**|📝**형상 관리자**|
 |백엔드|백엔드|백엔드|프론트엔드|프론트엔드|
-| PM, 영상, 발표 |  개발 총괄, DevOps | 모션인식, AI | webRTC, socialLogin | 형상 관리, webRTC |
+| PM, 발표, WebRTC | 개발 총괄, DevOps | 모션인식, AI | WebRTC, SocialLogin | 형상 관리,  |
 |[![Github](https://img.shields.io/badge/soberdam-434343?style=for-the-badge&logo=github&logoColor=white)](https://github.com/soberdam)|[![Github](https://img.shields.io/badge/HyunEnn-59CAEF?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HyunEnn)|[![Github](https://img.shields.io/badge/yuncheol%20AHN-FFC605?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yuncheol-AHN)|[![Github](https://img.shields.io/badge/gilukji226-7DF475?style=for-the-badge&logo=github&logoColor=white)](https://github.com/gilukji226) |[![Github](https://img.shields.io/badge/pado7sea-EB3A9D?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pado7sea)|
 
 
