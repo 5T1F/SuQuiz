@@ -5,14 +5,23 @@
 # SuQuiz(수퀴즈) : 수어 학습 서비스
 ### 목차
 [1. 서비스 소개](#서비스-소개)
+
 [2. 기술 스택](#기술-스택)
-[3. 기획 배경](#기획-배경)   
+
+[3. 기획 배경](#기획-배경)  
+
 [4. 핵심 기능](#핵심-기능)
+
 [5. 기술적 특징](#기술적-특징)
+
 [6. ERD](#erd)          
+
 [7. 시스템 아키텍처](#시스템-아키텍처)   
+
 [8. 개발 산출물](#개발-산출물)
+
 [9. 제작 기간 및 참여 인원](#제작-기간-및-참여-인원)
+
 
 &nbsp;
 
@@ -175,7 +184,9 @@
 
 &nbsp;
 
-## ERD
+ ## 기술적 특징
+
+ ## ERD
 <img src="[https://github.com/5T1F/SuQuiz/assets/106129404/e646b453-d6e3-40d2-bbfb-09a29efa52da">
 
 &nbsp;
@@ -188,16 +199,7 @@
 
 
 
-### 컨벤션 참고 자료
-
-[캠퍼스 핵데이 Java 코딩 컨벤션](https://naver.github.io/hackday-conventions-java/)
-
-[네이버 JavaScript 코딩 컨벤션](https://github.com/naver/eslint-config-naver/blob/master/STYLE_GUIDE.md)
-
-
-&nbsp;
-
-## 프로젝트 산출물
+## 개발 산출물
 
 [기능 명세서](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12B302/-/blob/master/docs/SuQuiz_%EA%B8%B0%EB%8A%A5_%EB%AA%85%EC%84%B8%EC%84%9C.pdf)
 
