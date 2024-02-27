@@ -6,7 +6,6 @@ import styles from "./Chatting.module.css";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 
-// Chatting 컴포넌트 정의
 const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
   const [messages, setMessages] = useState([]); // 메시지 목록 상태
   const [newMessage, setNewMessage] = useState(""); // 새 메시지 입력 상태
@@ -75,8 +74,8 @@ const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
         isRead: false,
       };
       stompClient.send(`/app/chat/send/${userId}/${friendId}`, {}, JSON.stringify(message));
-      setMessages((prevMessages) => [...prevMessages, message]); // 보낸 메시지를 즉시 화면에 표시
-      setNewMessage(""); // 입력 필드 초기화
+      setMessages((prevMessages) => [...prevMessages, message]);
+      setNewMessage("");
     }
   };
 
@@ -115,7 +114,7 @@ const Chatting = ({ userId, friendId, friendNickname, onClose }) => {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 sendMessage();
-                e.preventDefault(); // Enter 키 입력으로 인한 기본 이벤트 방지
+                e.preventDefault();
               }
             }}
             placeholder="메시지를 입력하세요"

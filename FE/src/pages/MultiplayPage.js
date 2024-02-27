@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
-import Container from "../components/Container";
 import Players from "../feature/multiplay/Players";
 import WaitingRoomSidebar from "../feature/multiplay/WaitingRoomSidebar";
-import MyCam from "../feature/Learning/MyCam";
-import LemonSuquiz from "../feature/multiplay/LemonSuquiz";
+import MyCam from "../feature/learning/MyCam";
 import MultiplayModal from "../feature/multiplay/MultiplayModal";
 import { exitQuiz, players, quiz, start, end } from "../apis/multiplayApi";
+import { userInfo } from "../apis/mypageApi";
 import FriendList from "../feature/mypage/community/FriendList";
 
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -29,7 +28,7 @@ const MultiplayPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { sessionId, inviteCode, token, isModerator: initialIsModerator } = location.state;
-  const [OV, setOV] = useState(null);
+  const [setOV] = useState(null);
   const [session, setSession] = useState(null);
   const [publisher, setPublisher] = useState(null);
   const [subscribers, setSubscribers] = useState([]);
@@ -38,26 +37,21 @@ const MultiplayPage = () => {
   const [isFour, setIsFour] = useState(false);
   const [solver, setSolver] = useState(null);
   const [stage, setStage] = useState(0);
-  const order = 0;
-  const [nowQuiz, setNowQuiz] = useState({});
   const [quizList, setQuizList] = useState([]);
   const [quizWordList, setQuizWordList] = useState([]);
   const [quizVideoList, setQuizVideoList] = useState([]);
   const [resCnt, setResCnt] = useState(0);
   const [resList, setResList] = useState([]);
   const [visitedList, setVisitedList] = useState([false, false, false, false, false]);
-  const [isAnswer, setIsAnswer] = useState(false);
-  const [isStartStage, setIsStartStage] = useState(true);
+  const [setIsAnswer] = useState(false);
   const [isModerator, setIsModerator] = useState(initialIsModerator);
   const [finger, setFinger] = useState("#");
   let myScore = 0;
   const [userInfoData, setUserInfoData] = useState([]);
   const [chatMessage, setChatMessage] = useState("");
-  const [chatHistory, setChatHistory] = useState([]);
-  // 모달창 노출 여부 state
+  const [setChatHistory] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // 함수를 전달하여 모달 닫기
   const handleCloseModal = () => {
     setModalOpen(false);
   };
@@ -262,9 +256,6 @@ const MultiplayPage = () => {
     setSolver(null);
     setStage(0);
     setIsPlaying(false);
-    // setQuizList([]);
-    // setQuizWordList([]
-    // setQuizVideoList([]);
   };
 
   const leaveSession = async () => {
@@ -573,18 +564,7 @@ const MultiplayPage = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/mypage/${userId}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("서버 응답이 실패했습니다.");
-        }
-
-        const data = await response.json();
+        const data = await userInfo(userId);
         setUserInfoData(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);

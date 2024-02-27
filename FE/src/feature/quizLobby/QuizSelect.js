@@ -4,9 +4,9 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import Lottie from "react-lottie";
 
+import { makeMultiplaySession, joinMultiplaySession, isPlayingSession, enterSession } from "../../apis/quizLobbyApi";
 import ModalNoMatchingRoom from "./ModalNoMatchingRoom";
 
-import styles from "./QuizSelect.module.css";
 import orange_juice_animation from "../../assets/lottie/orange_juice_animation.json";
 import lime_juice_animation from "../../assets/lottie/lime_juice_animation.json";
 
@@ -14,9 +14,6 @@ const QuizSelect = () => {
   const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const storedToken = sessionStorage.getItem("tokenStorage");
-  const parsedToken = JSON.parse(storedToken);
-  const accessToken = parsedToken.state.accessToken;
   const [codeValue, setCodeValue] = useState("");
   const navigate = useNavigate();
 
@@ -47,18 +44,8 @@ const QuizSelect = () => {
 
   const createSession = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_ROOT}/sessions/${userId}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await makeMultiplaySession(userId);
       const { sessionId, inviteCode, token } = response.data;
-      console.log("방만들었을 때 리스폰스");
-      console.log(response.data);
       // 방장으로서 세션에 참가
       navigate(`../multiplay/${sessionId}`, {
         state: { sessionId, token, inviteCode, isModerator: true },
@@ -73,15 +60,7 @@ const QuizSelect = () => {
     // 이 예시에서는 초대 코드가 세션 ID라고 가정
     try {
       // 입장 가능 여부 조회
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_ROOT}/quizrooms/isJoinable/${codeValue}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await joinMultiplaySession(codeValue);
 
       const isJoinable = response.data;
 
@@ -90,15 +69,7 @@ const QuizSelect = () => {
         handleNoMatchingRoom();
       } else {
         // 게임 진행 여부 조회
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_ROOT}/quizrooms/isPlaying/${codeValue}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await isPlayingSession(codeValue);
 
         const isPlaying = response.data;
 
@@ -106,15 +77,8 @@ const QuizSelect = () => {
           console.log(isPlaying.message);
           handleNoMatchingRoom();
         } else {
-          const response = await axios.post(
-            `${process.env.REACT_APP_API_ROOT}/sessions/${codeValue}/token/${userId}`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          );
+          const response = await enterSession(userId, codeValue);
+
           const { sessionId, token } = response.data;
 
           console.log(response.data);
@@ -262,7 +226,7 @@ const QuizSelect = () => {
                       value={codeValue}
                       onChange={(e) => setCodeValue(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      className="z-50 mx-1 text-center placeholder-gray-400 border-2 rounded-md border-custom-green h-9 cursor-text placeholder-opacity-80 px-6"
+                      className="z-50 px-6 mx-1 text-center placeholder-gray-400 border-2 rounded-md border-custom-green h-9 cursor-text placeholder-opacity-80"
                     />
                   </div>
                 </motion.div>
@@ -278,12 +242,6 @@ const QuizSelect = () => {
             </div>
           </div>
         </motion.div>
-
-        {/*<div className="w-1/6 p-1 border-4 border-pink-500">
-          <Link to="/tutorial">
-            <button>튜토리얼</button>
-          </Link>
-        </div>*/}
       </div>
 
       {/* modalOpen이 true일 때만 모달 렌더링! */}

@@ -8,14 +8,12 @@ import styles from "./FriendList.module.css";
 import PersonAddRoundedIcon from "@mui/icons-material/PersonAddRounded";
 import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import { pullFriends } from "../../../apis/mypageApi";
 
 const FriendList = ({ isMultiplay }) => {
   const storedId = sessionStorage.getItem("idStorage");
   const parsedId = JSON.parse(storedId);
   const userId = parsedId.state.userId;
-  const storedToken = sessionStorage.getItem("tokenStorage");
-  const parsedToken = JSON.parse(storedToken);
-  const accessToken = parsedToken.state.accessToken;
   const [friends, setFriends] = useState([]);
   const [filterFriend, setFilterFriend] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +23,6 @@ const FriendList = ({ isMultiplay }) => {
   const [toNickname, setToNickname] = useState("");
   const [selectedFriend, setSelectedFriend] = useState(null);
 
-  // 함수를 전달하여 클릭 시 모달 열기
   const openMakeModal = () => {
     setIsModalOpen(true);
   };
@@ -34,7 +31,6 @@ const FriendList = ({ isMultiplay }) => {
     setIsModalOpen(false);
   };
 
-  // 함수를 전달하여 클릭 시 모달 열기
   const openEndModal = (friendNickname) => {
     setToNickname(friendNickname);
     setEndModalOpen(true);
@@ -54,7 +50,6 @@ const FriendList = ({ isMultiplay }) => {
 
   const handleSearchFriend = (e) => {
     e.preventDefault();
-    // friends 리스트에서 searchValue를 포함하는 객체들을 filterFriend 리스트에 필터링하여 담는 부분
     const filteredFriends = friends.filter((friend) => friend.nickname.includes(searchValue));
     setFilterFriend(filteredFriends);
 
@@ -64,19 +59,11 @@ const FriendList = ({ isMultiplay }) => {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/${userId}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }); // API 경로
-        const data = await response.json();
-        console.log(data);
+        const data = await pullFriends(userId);
         // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
         if (data.status === 200 && data.data) {
           setFriends(data.data);
         } else {
-          // 응답이 성공이 아니거나 data.data가 없을 경우에 대한 처리
           console.error("Error fetching data:", data.message);
         }
       } catch (error) {
@@ -85,7 +72,7 @@ const FriendList = ({ isMultiplay }) => {
     };
 
     fetchFriends();
-  }, [endModalOpen]); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 호출
+  }, [endModalOpen]);
 
   return (
     <>
@@ -97,7 +84,7 @@ const FriendList = ({ isMultiplay }) => {
             ) : (
               <>
                 <div className="flex items-center justify-center">
-                  <div className="flex items-center justify-around gap  mt-2">
+                  <div className="flex items-center justify-around mt-2 gap">
                     <button className={styles.addButton} onClick={openMakeModal}>
                       <PersonAddRoundedIcon />
                     </button>
@@ -162,7 +149,6 @@ const FriendList = ({ isMultiplay }) => {
         )}
         {isModalOpen && <ModalMakeFriend onClose={closeMakeModal} />}
         {endModalOpen && <ModalEndFriendship onClose={closeEndModal} friendNickname={toNickname} />}{" "}
-        {/* 모달이 열려 있을 때만 렌더링 */}
       </div>
     </>
   );

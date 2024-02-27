@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { userInfo } from "../../apis/mypageApi";
+
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import styles from "./WaitingRoomSidebar.module.css";
 
@@ -38,18 +40,7 @@ const WaitingRoomSidebar = ({ session, isPlaying }) => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/mypage/${userId}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("서버 응답이 실패했습니다.");
-        }
-
-        const data = await response.json();
+        const data = await userInfo(userId);
         setUserInfoData(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);

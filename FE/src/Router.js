@@ -6,7 +6,6 @@ import QuizLobbyPage from "./pages/QuizLobbyPage";
 import SingleplayPage from "./pages/SingleplayPage";
 import MultiplayPage from "./pages/MultiplayPage";
 import SelectPage from "./pages/SelectPage";
-import BookmarkPage from "./pages/BookmarkPage";
 import LearningStartPage from "./pages/LearningStartPage";
 import KakaoCallback from "./feature/auth/login/KakaoCallback";
 import NaverCallback from "./feature/auth/login/NaverCallback";
@@ -31,7 +30,6 @@ function Router() {
           </Route>
           <Route path="learning">
             <Route index element={<SelectPage />} />
-            <Route path="bookmark" element={<BookmarkPage />} />
             <Route path="start" element={<LearningStartPage />} />
           </Route>
         </Route>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Container from "../components/Container";
-import Flashcard from "../feature/Learning/Flashcard";
-import SideMenu from "../feature/Learning/SideMenu";
+import Flashcard from "../feature/learning/Flashcard";
+import SideMenu from "../feature/learning/SideMenu";
 import { useLocation, useNavigate } from "react-router-dom";
-import { wordsfromCategory, AllWordWithSubject } from "../apis/learningApi";
-import MyCam from "../feature/Learning/MyCam";
+import { wordsfromCategory } from "../apis/learningApi";
+import MyCam from "../feature/learning/MyCam";
 import styles from "./LearningStartPage.module.css";
 
 export default function LearningStartPage() {

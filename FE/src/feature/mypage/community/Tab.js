@@ -54,7 +54,6 @@ function CustomTab({ selectedMain }) {
         >
           {activeTab === "FriendList" && <FriendList isMultiplay={false} />}
           {activeTab === "WaitingFriendList" && <WaitingFriendList />}
-          {/* 채팅 탭으로 바꿀 때 최근 채팅했던 친구를 넘겨줘야 됨 */}
         </motion.div>
       </div>
     </>

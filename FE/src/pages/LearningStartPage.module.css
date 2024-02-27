@@ -8,10 +8,9 @@
   margin: 0 30px;
   border-radius: 0.5rem;
   box-shadow: 0 0 6px -1px rgba(206, 73, 73, 0.1), 0 0 4px -1px rgba(0, 0, 0, 0.06);
-  transition: transform 0.5s; /* Tailwind의 transition duration-500 */
+  transition: transform 0.5s;
   background-color: #ffffff;
 }
-/* Flashcard.module.css의 container랑 유사 */
 
 .description {
   display: flex;
@@ -49,10 +48,10 @@
 
 .buttonContainer {
   display: flex;
-  justify-content: center;
-  /* align-items: center; */
-  /* margin-top: 1rem;
-  margin-right: 24.5rem; */
+}
+
+.highlight {
+  color: #0e0e0e;
 }
 
 .highlight {

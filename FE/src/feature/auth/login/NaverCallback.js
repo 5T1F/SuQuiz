@@ -9,6 +9,7 @@ import {
   useProviderStore,
   useTokenStore,
 } from "../../../app/store";
+import { oauthNaver, checkIsMember } from "../../../apis/usersApi";
 import backgroundVideo from "../../../assets/backgroundVideo.mp4";
 import styles from "./Callback.module.css";
 import ModalSignup from "../signup/ModalSignup";
@@ -34,9 +35,7 @@ const NaverCallback = () => {
 
   const fetchNickname = async (email, provider) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/checkNickname/${email}/${provider}`); // API 경로
-      const data = await response.json();
-      console.log(data);
+      const data = await checkIsMember(email, provider); // API 경로
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
       if (data.data) {
         setUserNickname(data.data.nickname);
@@ -53,22 +52,13 @@ const NaverCallback = () => {
 
   const handleOAuthNaver = async (code, state) => {
     try {
-      console.log(code);
-      console.log(state);
-      // 카카오로부터 받아온 code를 서버에 전달하여 카카오로 회원가입 & 로그인한다
-      const response = await axios.post(`${process.env.REACT_APP_API_ROOT}/users/login/naver`, {
-        authorizationCode: code,
-        state: state,
-      });
-      console.log(response.data.data);
-      console.log(response.data.data.email);
-      console.log("여기");
+      // 네이버로부터 받아온 code, state를 서버에 전달하여 네이버로 회원가입 & 로그인한다
+      const response = await oauthNaver(code, state);
       setUserId(response.data.data.userId);
       setUserEmail(response.data.data.email);
       setProvider(response.data.data.oauthProvider);
       setAccessToken(response.data.data.authTokens.accessToken);
       await fetchNickname(response.data.data.email, response.data.data.oauthProvider);
-      // window.location.replace("/");
     } catch (error) {
       alert(error);
     }

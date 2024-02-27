@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { listRequestFriend, acceptFriend } from "../../../apis/mypageApi";
 import styles from "./WaitingFriendList.module.css";
 
 const WaitingFriendList = () => {
@@ -9,16 +9,12 @@ const WaitingFriendList = () => {
   const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
-  const storedToken = sessionStorage.getItem("tokenStorage");
-  const parsedToken = JSON.parse(storedToken);
-  const accessToken = parsedToken.state.accessToken;
   const [requestList, setRequestList] = useState([]);
 
   useEffect(() => {
     const fetchFriendRequests = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/request/${userId}`);
-        const data = await response.json();
+        const data = await listRequestFriend(userId);
 
         // 데이터가 배열 형태인지 확인 후 업데이트
         if (Array.isArray(data.data)) {
@@ -34,21 +30,7 @@ const WaitingFriendList = () => {
 
   const handleAccept = async (waitingFriend) => {
     try {
-      const requestBody = {
-        fromNickname: userNickname,
-        toNickname: waitingFriend,
-      };
-
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/accept`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(requestBody),
-      });
-      const data = await response.json();
-      console.log(data);
+      const response = await acceptFriend(userNickname, waitingFriend);
       if (response.ok) {
         // 성공적으로 요청이 완료된 경우, requestList 상태를 갱신
         setRequestList((prevList) => prevList.filter((friend) => friend.nickname !== waitingFriend));

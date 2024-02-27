@@ -1,4 +1,22 @@
-import axios from "./https";
+import axios from "axios";
+
+// 카카오 로그인 API
+export async function KakaoLoginAPI() {
+  const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY; // 발급 받은 REST API KEY
+  const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI; // 작성했던 Callback URL
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+  const loginKakao = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
+  try {
+    loginKakao();
+  } catch (error) {
+    console.error("Error login Naver:", error);
+    throw error;
+  }
+}
 
 // 카카오 로그인 인가 코드 발급
 export async function oauthKakao(code) {
@@ -10,6 +28,25 @@ export async function oauthKakao(code) {
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+// 네이버 로그인 API
+export async function NaverLoginAPI() {
+  const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID; // 발급 받은 Client ID
+  const NAVER_CALLBACK_URL = process.env.REACT_APP_NAVER_CALLBACK_URL; // 작성했던 Callback URL
+  const STATE = "hLiDdL2uhPtsftcZ";
+  const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=${STATE}&redirect_url=${NAVER_CALLBACK_URL}`;
+
+  //cors 이슈로 인해 href 방식으로 호출
+  const loginNaver = () => {
+    window.location.href = NAVER_AUTH_URL;
+  };
+  try {
+    loginNaver();
+  } catch (error) {
+    console.error("Error login Naver:", error);
     throw error;
   }
 }
@@ -73,24 +110,28 @@ export async function modifyNickname(userId, checkValue) {
 }
 
 // 회원가입
-// export async function signupUser(user) {
-//   try {
-//     const response = await fetch(BASE_URL + "/users/signup", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(user),
-//     });
+export async function signupUser(userEmail, checkValue, provider) {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: userEmail,
+        nickname: checkValue,
+        provider: provider,
+      }),
+    });
 
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//     throw error;
-//   }
-// }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}

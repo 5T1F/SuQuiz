@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import WordList from "./WordList";
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
 import { allWordsByUser, wordsfromCategory, AllSubject, AllWordWithSubject } from "../../apis/learningApi";
@@ -17,15 +17,12 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
     const fetchData = async () => {
       try {
         if (activeTab === "단어장") {
-          // "단어장" 메인 카테고리에 해당하는 API 호출
           const data = await allWordsByUser(userId);
           setWordsProp(data.data.wordList);
         } else if (activeTab === "낱말" && activeSubCategory) {
-          // "낱말" 메인 카테고리 및 선택된 서브 카테고리에 해당하는 API 호출
           const wordData = await AllWordWithSubject(userId, activeSubCategory);
           setWordsProp(wordData.data.wordList);
         } else {
-          // 다른 메인 카테고리에 해당하는 API 호출
           const data = await wordsfromCategory(userId, activeTab);
           setWordsProp(data.data);
         }
@@ -33,7 +30,6 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
         if (activeTab === "낱말") {
           const subjectData = await AllSubject();
           console.log(subjectData.data);
-          // "테스트"와 "none"을 제외한 주제들만 필터링
           const filteredSubjects = subjectData.data.filter(
             (subject) => subject.subjectName !== "테스트" && subject.subjectName !== "none"
           );
@@ -65,7 +61,7 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
             <Tab
               key={category}
               value={category}
-              onClick={() => setActiveTab(category)} // 탭 클릭 시 activeTab 업데이트
+              onClick={() => setActiveTab(category)}
               className={`flex items-center h-9 mx-1 w-auto px-2 text-xl font-medium rounded-lg outline-none ${
                 activeTab === category
                   ? " text-custom-orange shadow bg-white"
@@ -81,7 +77,7 @@ function CustomTab({ selectedMain, selectedSub, setCurrentWord }) {
             (category) =>
               activeTab === category && (
                 <TabPanel key={category} value={category}>
-                  <div className="flex justify-around items-center px-3 rounded-xl text-xl overflow-x-auto">
+                  <div className="flex items-center justify-around px-3 overflow-x-auto text-xl rounded-xl">
                     {category === "낱말" &&
                       subCategories.map((item, index) => (
                         <button

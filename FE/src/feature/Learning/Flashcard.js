@@ -15,13 +15,13 @@ const BookmarkButton = ({ isBookmarked, toggleBookmark }) => {
     if (showAnimation) {
       const timer = setTimeout(() => {
         setShowAnimation(false);
-      }, 1000); // 애니메이션을 1초간 보여준 후 숨김
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [showAnimation]);
 
   const handleBookmarkClick = (e) => {
-    e.stopPropagation(); // 상위 요소로의 이벤트 전파 방지
+    e.stopPropagation();
     setShowAnimation(true);
     toggleBookmark(e);
   };
@@ -59,7 +59,7 @@ const Flashcard = ({ currentWord, setCurrentWord }) => {
   };
 
   const toggleBookmark = async (e) => {
-    e.stopPropagation(); // 상위 요소로의 이벤트 전파 방지
+    e.stopPropagation();
     try {
       let updatedIsBookmarked = !currentWord.isBookmarked;
       if (currentWord.isBookmarked) {
@@ -69,14 +69,12 @@ const Flashcard = ({ currentWord, setCurrentWord }) => {
         await addWordsByUser(userId, currentWord.wordName);
         console.log("북마크에 추가: ", currentWord);
       }
-      // 상태 업데이트로 UI 반영
       setCurrentWord((prevWord) => ({ ...prevWord, isBookmarked: updatedIsBookmarked }));
     } catch (error) {
       console.error("Error toggling bookmark:", error);
     }
   };
 
-  // 흔들리는 애니메이션을 위한 variant 정의
   const shakeAnimation = {
     shake: {
       x: [0, -10, 10, -10, 10, 0],

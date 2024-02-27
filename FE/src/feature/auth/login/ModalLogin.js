@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
 import styles from "./ModalLogin.module.css";
-import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 
 import Kakao from "./KakaoLogin";
 import Naver from "./NaverLogin";

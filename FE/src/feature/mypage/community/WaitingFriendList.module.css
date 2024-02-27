@@ -16,25 +16,25 @@
 }
 
 .addButton::after {
-  content: "친구 추가"; /* 툴팁 텍스트 */
+  content: "친구 추가";
   position: absolute;
   top: -30%;
   left: 100%;
-  transform: translateX(-50%); /* 정확한 중앙 정렬을 위해 */
-  background-color: rgba(128, 128, 128, 0.7); /* 툴팁 배경색 */
-  color: white; /* 텍스트 색상 */
-  padding: 0 2px; /* 패딩 */
-  border-radius: 3px; /* 모서리 둥글게 */
-  font-size: 10px; /* 툴팁 텍스트 크기 */
-  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-  opacity: 0; /* 기본적으로 툴팁을 숨김 */
-  visibility: hidden; /* 접근성을 위해 visibility 속성도 조절 */
-  transition: opacity 0.3s, visibility 0.3s; /* 부드러운 효과 */
+  transform: translateX(-50%);
+  background-color: rgba(128, 128, 128, 0.7);
+  color: white;
+  padding: 0 2px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
 }
 
 .addButton:hover::after {
-  opacity: 1; /* 호버 시 툴팁 표시 */
-  visibility: visible; /* 호버 시 보이게 함 */
+  opacity: 1;
+  visibility: visible;
 }
 
 .searchInput {
@@ -47,7 +47,7 @@
 }
 
 .searchInput:focus {
-  border-color: #bca79d; /* 포커스 시 테두리 색상 변경 */
+  border-color: #bca79d;
 }
 
 .searchButton {
@@ -68,35 +68,35 @@
 .friendItem {
   display: flex;
   align-items: center;
-  justify-content: space-around; /* 요소들이 공간을 균등하게 나누어 가질 수 있도록 */
-  height: 48px; /* 높이 조정 */
+  justify-content: space-around;
+  height: 48px;
   margin: 0px 20px 8px 20px;
-  padding: 0 10px; /* 내부 패딩 */
+  padding: 0 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .friendName,
 .friendLevel {
-  margin: 0; /* 기본 마진 제거 */
+  margin: 0;
 }
 
 .friendNickname {
-  color: #bca79d; /* 원하는 색상 코드로 변경 */
+  color: #bca79d;
 }
 
 .friendButton {
-  padding: 3px 10px; /* 버튼 패딩 */
-  border: none; /* 테두리 제거 */
-  border-radius: 5px; /* 버튼 모서리 둥글게 */
-  cursor: pointer; /* 마우스 오버시 커서 변경 */
-  border: 2px solid #ffbaab; /* 버튼 배경 색상 */
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  padding: 3px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 2px solid #ffbaab;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .friendButton:hover {
-  background-color: #f4b28e; /* 호버 효과 */
+  background-color: #f4b28e;
 }
 
 .deleteButton {
@@ -113,29 +113,29 @@
 .deleteButton:hover {
   padding: 3px;
   background-color: #efefef;
-  border: none; /* 테두리 제거 */
-  border-radius: 5px; /* 버튼 모서리 둥글게 */
-  cursor: pointer; /* 마우스 오버시 커서 변경 */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .deleteButton::after {
-  content: "친구 삭제"; /* 툴팁 텍스트 */
+  content: "친구 삭제";
   position: absolute;
   top: -30%;
   left: 180%;
-  transform: translateX(-50%); /* 정확한 중앙 정렬을 위해 */
-  background-color: rgba(128, 128, 128, 0.7); /* 툴팁 배경색 */
-  color: white; /* 텍스트 색상 */
-  padding: 0 2px; /* 패딩 */
-  border-radius: 3px; /* 모서리 둥글게 */
-  font-size: 10px; /* 툴팁 텍스트 크기 */
-  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-  opacity: 0; /* 기본적으로 툴팁을 숨김 */
-  visibility: hidden; /* 접근성을 위해 visibility 속성도 조절 */
-  transition: opacity 0.3s, visibility 0.3s; /* 부드러운 효과 */
+  transform: translateX(-50%);
+  background-color: rgba(128, 128, 128, 0.7);
+  color: white;
+  padding: 0 2px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
 }
 
 .deleteButton:hover::after {
-  opacity: 1; /* 호버 시 툴팁 표시 */
-  visibility: visible; /* 호버 시 보이게 함 */
+  opacity: 1;
+  visibility: visible;
 }

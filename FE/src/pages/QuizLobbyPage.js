@@ -4,8 +4,6 @@ import Container from "../components/Container";
 import RankingList from "../feature/quizLobby/RankingList";
 import QuizSelect from "../feature/quizLobby/QuizSelect";
 
-import styles from "./QuizLobbyPage.module.css";
-
 export default function QuizLobbyPage() {
   return (
     <Container>

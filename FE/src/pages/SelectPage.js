@@ -1,5 +1,5 @@
 import Container from "../components/Container";
-import SelectCategory from "../feature/Learning/SelectCategory";
+import SelectCategory from "../feature/learning/SelectCategory";
 
 export default function SelectPage() {
   return (

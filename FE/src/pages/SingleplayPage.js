@@ -5,7 +5,7 @@ import Slider from "react-slick";
 
 import Container from "../components/Container";
 import Wordle from "../feature/singleplay/Wordle";
-import MyCam from "../feature/Learning/MyCam";
+import MyCam from "../feature/learning/MyCam";
 import styles from "./SingleplayPage.module.css";
 
 import tutorialYellow from "../assets/images/tutorial_yellow.png";
@@ -13,7 +13,6 @@ import tutorialGreen from "../assets/images/tutorial_green.png";
 import tutorialCorrect from "../assets/images/tutorial_correct.png";
 
 export default function SingleplayPage() {
-  // motion detect value
   const [finger, setFinger] = useState("");
   const changeFinger = (value) => {
     setFinger(value);

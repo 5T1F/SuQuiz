@@ -1,14 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 
+import { endFriendship } from "../../../../apis/mypageApi";
+
 import styles from "./ModalEndFriendship.module.css";
 
 const ModalEndFriendship = ({ onClose, friendNickname }) => {
   const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
-  const storedToken = sessionStorage.getItem("tokenStorage");
-  const parsedToken = JSON.parse(storedToken);
-  const accessToken = parsedToken.state.accessToken;
   const modalRef = useRef();
 
   const handleClickInside = (event) => {
@@ -17,31 +16,14 @@ const ModalEndFriendship = ({ onClose, friendNickname }) => {
 
   const handleEndFriendship = async () => {
     try {
-      const requestBody = {
-        fromNickname: userNickname,
-        toNickname: friendNickname,
-      };
-
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/remove`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(requestBody),
-      });
-      const data = await response.json();
-      console.log(requestBody);
+      const data = await endFriendship(userNickname, friendNickname);
       if (data.status === 200) {
-        console.log(`친구 관계가 성공적으로 삭제되었습니다.`);
-        // 여기에 성공 처리에 대한 로직을 추가하세요.
+        alert(`친구 관계가 성공적으로 삭제되었습니다.`);
       } else {
         console.error("친구 관계 삭제 오류:", data.message);
-        // 여기에 실패 처리에 대한 로직을 추가하세요.
       }
     } catch (error) {
       console.error("친구 관계 삭제 중 오류 발생:", error);
-      // 여기에 오류 처리에 대한 로직을 추가하세요.
     }
 
     onClose(); // 처리가 완료되면 모달을 닫습니다.

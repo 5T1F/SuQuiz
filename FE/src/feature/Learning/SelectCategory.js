@@ -16,12 +16,10 @@ export default function SelectCategory() {
     const fetchData = async () => {
       try {
         const subjectData = await AllSubject();
-        // "테스트"와 "none"을 제외한 주제들만 필터링
         const filteredSubjects = subjectData.data.filter(
           (subject) => subject.subjectName !== "테스트" && subject.subjectName !== "none"
         );
 
-        // 중복 제거 로직 추가
         const uniqueSubjects = Array.from(new Set(filteredSubjects.map((sub) => sub.subjectName))).map(
           (subjectName) => {
             return filteredSubjects.find((sub) => sub.subjectName === subjectName);
@@ -63,25 +61,23 @@ export default function SelectCategory() {
     </button>
   );
 
-  // 부모 컨테이너에 적용할 variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2, // 자식 요소들이 0.2초 간격으로 차례대로 나타남
+        staggerChildren: 0.2,
       },
     },
   };
 
-  // 자식 요소에 적용할 variants
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 100,
       transition: {
-        duration: 0.5, // 애니메이션 지속 시간
+        duration: 0.5,
       },
     },
   };

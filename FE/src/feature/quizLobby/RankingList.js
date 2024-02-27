@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css"; // 스타일 시트 임포트
 
+import { userInfo } from "../../apis/mypageApi";
 import styles from "./RankingList.module.css";
 
 import goldMedal from "../../assets/icons/gold-medal.png"; // 금메달 이미지 경로
 import silverMedal from "../../assets/icons/silver-medal.png"; // 은메달 이미지 경로
 import bronzeMedal from "../../assets/icons/bronze-medal.png"; // 동메달 이미지 경로
 import flag from "../../assets/images/flag.png";
-import { flatMapDeep } from "lodash";
+import { pullRanking } from "../../apis/quizLobbyApi";
 
 const RankingList = () => {
   const storedId = sessionStorage.getItem("idStorage");
@@ -18,9 +18,6 @@ const RankingList = () => {
   const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
-  const storedToken = sessionStorage.getItem("tokenStorage");
-  const parsedToken = JSON.parse(storedToken);
-  const accessToken = parsedToken.state.accessToken;
 
   const [rankingData, setRankingData] = useState(null);
   const [userInfoData, setUserInfoData] = useState(null);
@@ -31,18 +28,10 @@ const RankingList = () => {
   useEffect(() => {
     const fetchRanking = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/ranking/${userId}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }); // API 경로
-        const data = await response.json();
-        console.log(data);
+        const data = await pullRanking(userId);
         // 만약 응답이 성공이면 그 값을 사용
         if (data.status === 200) {
           setRankingData(data.data);
-          console.log(data.data);
         } else {
           // 응답이 성공이 아니거나 data.data가 없을 경우에 대한 처리
           console.error("Error fetching data:", data.message);
@@ -54,18 +43,7 @@ const RankingList = () => {
 
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_ROOT}/mypage/${userId}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("서버 응답이 실패했습니다.");
-        }
-
-        const data = await response.json();
+        const data = await userInfo(userId);
         setUserInfoData(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);

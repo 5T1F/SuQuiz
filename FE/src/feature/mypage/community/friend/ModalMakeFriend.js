@@ -1,14 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 
+import { searchNickname, makeFriendship } from "../../../../apis/mypageApi";
+
 import styles from "./ModalMakeFriend.module.css";
 
 const Modal = ({ onClose }) => {
   const storedNickname = sessionStorage.getItem("nicknameStorage");
   const parsedNickname = JSON.parse(storedNickname);
   const userNickname = parsedNickname.state.userNickname;
-  const storedToken = sessionStorage.getItem("tokenStorage");
-  const parsedToken = JSON.parse(storedToken);
-  const accessToken = parsedToken.state.accessToken;
   const modalRef = useRef();
   const [searchValue, setSearchValue] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(0);
@@ -19,14 +18,7 @@ const Modal = ({ onClose }) => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends?search=${searchValue}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const data = await response.json();
+      const data = await searchNickname(searchValue);
       if (data.data === null) {
         setIsConfirmed(3);
       } else {
@@ -40,20 +32,7 @@ const Modal = ({ onClose }) => {
 
   const handleSendFriendRequest = async (searchValue) => {
     try {
-      const requestBody = {
-        fromNickname: userNickname,
-        toNickname: searchValue,
-      };
-
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/friends/request`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(requestBody),
-      });
-      console.log(response);
+      const response = await makeFriendship(userNickname, searchValue);
       if (response.status === 200) {
         // 성공적으로 요청이 완료된 경우
         console.log("Friend request sent successfully!");

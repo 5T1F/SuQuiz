@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 
 import { useAuthStore } from "../../../app/store";
+import { checkNickname, modifyNickname } from "../../../apis/usersApi";
 
 import styles from "./ModalModify.module.css";
 
@@ -20,8 +21,7 @@ const Modal = ({ onClose }) => {
 
   const handleCheck = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/validate/${checkValue}`); // API 경로
-      const data = await response.json();
+      const data = await checkNickname(checkValue);
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
       if (data.data) {
         if (checkCondition(checkValue)) {
@@ -39,17 +39,7 @@ const Modal = ({ onClose }) => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/mypage/modify`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          modifiedName: checkValue,
-        }),
-      }); // API 경로
-      const data = await response.json();
+      const data = await modifyNickname(userId, checkValue); // API 경로
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
       if (data.status === "success" && data.data) {
         console.log("회원정보 수정 완료");

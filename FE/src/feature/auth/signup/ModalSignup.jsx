@@ -1,13 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  useAuthStore,
-  useUserNicknameStore,
-  useTokenStore,
-  useUserEmailStore,
-  useProviderStore,
-} from "../../../app/store";
+import { useUserNicknameStore, useUserEmailStore, useProviderStore } from "../../../app/store";
+import { checkNickname, signupUser } from "../../../apis/usersApi";
 
 import styles from "./ModalSignup.module.css";
 
@@ -30,8 +25,7 @@ const Modal = ({ onClose, email }) => {
 
   const handleCheck = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/validate/${checkValue}`); // API 경로
-      const data = await response.json();
+      const data = await checkNickname(checkValue);
       // data.data가 true면 사용가능한 닉네임
       if (data.data) {
         if (checkCondition(checkValue)) {
@@ -49,19 +43,7 @@ const Modal = ({ onClose, email }) => {
 
   const handleSignup = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_ROOT}/users/login/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: userEmail,
-          nickname: checkValue,
-          provider: provider,
-        }),
-      }); // API 경로
-      const data = await response.json();
-      console.log(data);
+      const data = await signupUser(userEmail, checkValue, provider);
       // 만약 응답이 성공이고, data.data가 존재한다면 그 값을 사용
       if (data.data) {
         setUserNickname(checkValue);
