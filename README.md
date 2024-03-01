@@ -42,7 +42,7 @@
 
 
 
-&nbsp;
+
 
 ## 기술 스택
 
@@ -225,7 +225,12 @@
 
 [최종 프레젠테이션](https://github.com/5T1F/SuQuiz/blob/docs/docs/SuQuiz_%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C.pdf)
 
+&nbsp;
+
 ## 서비스 시연 영상
+
+[유튜브 링크](https://www.youtube.com/watch?v=dMiubbUUIAk)
+
 
 ## 제작 기간 및 참여 인원
 
