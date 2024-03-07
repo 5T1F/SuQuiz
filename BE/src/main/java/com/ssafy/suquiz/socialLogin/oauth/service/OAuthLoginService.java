@@ -77,10 +77,10 @@ public class OAuthLoginService {
 
     public NicknameResponse findEmailAndProvider(String email, String provider) {
         String nickname = null;
-        if(OAuthProvider.KAKAO.name().equalsIgnoreCase(provider)) {
+        if (OAuthProvider.KAKAO.name().equalsIgnoreCase(provider)) {
             User findUser = userRepository.findByEmailAndOAuthProvider(email, OAuthProvider.KAKAO);
             nickname = findUser.getNickname();
-        } else if(OAuthProvider.NAVER.name().equalsIgnoreCase(provider)) {
+        } else if (OAuthProvider.NAVER.name().equalsIgnoreCase(provider)) {
             User findUser = userRepository.findByEmailAndOAuthProvider(email, OAuthProvider.NAVER);
             nickname = findUser.getNickname();
         }
@@ -98,7 +98,7 @@ public class OAuthLoginService {
 
     private boolean checkNickname(String email, OAuthProvider provider) {
         User findUser = userRepository.findByEmailAndOAuthProvider(email, provider);
-        if(findUser == null) {
+        if (findUser == null) {
             return false;
         }
         String nickname = findUser.getNickname();

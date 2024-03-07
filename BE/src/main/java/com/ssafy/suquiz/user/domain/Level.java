@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Level {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "level_id")
     private Long id;
 

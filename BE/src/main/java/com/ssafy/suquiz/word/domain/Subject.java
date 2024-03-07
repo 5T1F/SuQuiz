@@ -17,7 +17,8 @@ import java.util.List;
 @Getter
 public class Subject {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subject_id", nullable = false)
     private Long id;
 

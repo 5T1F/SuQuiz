@@ -55,16 +55,14 @@ public class SingleHistoryController {
     }
 
 
-
     // 종료
     @PostMapping("/end")
     public ResponseEntity<CommonResponse<SingleHistoryDto.SaveResponse>> save(@RequestBody SingleHistoryDto.SaveRequest saveRequest) {
-        System.out.println(saveRequest.isCorrect());
         SingleHistoryDto.SaveResponse save = singleHistoryService.end(saveRequest);
         return new ResponseEntity<>(CommonResponse.<SingleHistoryDto.SaveResponse>builder()
                 .status(HttpStatus.OK.value())
                 .message("save daily single history")
-                .data(save != null ? save: "already saved")
+                .data(save != null ? save : "already saved")
                 .build(), HttpStatus.OK);
     }
 

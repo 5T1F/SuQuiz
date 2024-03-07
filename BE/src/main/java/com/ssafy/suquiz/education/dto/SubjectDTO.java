@@ -30,17 +30,5 @@ public class SubjectDTO {
         private String subjectName;
         private List<WordDTO.WordResponseDto> wordList;
 
-//        public static SubjectResponseDto entityToDto(Subject subject) {
-//            return SubjectResponseDto.builder()
-//                    .subjectName(subject.getSubjectName())
-//                    .wordList(mapWordEntitiesToDto(subject.getWordList()))
-//                    .build();
-//        }
-//
-//        private static List<WordResponseDto> mapWordEntitiesToDto(List<Word> wordList) {
-//            return wordList.stream()
-//                    .map(word -> WordResponseDto.builder().wordName(word.getWordName()).build())
-//                    .collect(Collectors.toList());
-//        }
     }
 }

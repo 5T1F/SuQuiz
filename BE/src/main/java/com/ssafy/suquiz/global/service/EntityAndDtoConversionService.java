@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 public class EntityAndDtoConversionService {
 
     private final UserRepository userRepository;
-    private final SubjectRepository subjectRepository;
     private final WordRepository wordRepository;
 
     // Subject Conversion
@@ -38,6 +37,7 @@ public class EntityAndDtoConversionService {
                 .wordList(mapWordEntitiesToDto(subject.getWordList()))
                 .build();
     }
+
     public List<WordDTO.WordResponseDto> mapWordEntitiesToDto(List<Word> wordList) {
         return wordList.stream()
                 .map(word -> WordDTO.WordResponseDto.builder().wordName(word.getWordName()).subjectName(word.getSubject().getSubjectName()).category(word.getCategory().name()).videoUrl(word.getVideoUrl()).build())

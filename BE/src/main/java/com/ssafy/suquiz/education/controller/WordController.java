@@ -37,10 +37,10 @@ public class WordController {
 
         BookmarkDTO.checkResponse allByUserId = bookmarkService.findAllByUserId(userId);
 
-        for( WordDTO.WordResponseDto word : wordsInCategory) {
-            for(int j=0; j<allByUserId.getWordList().size(); j++) {
+        for (WordDTO.WordResponseDto word : wordsInCategory) {
+            for (int j = 0; j < allByUserId.getWordList().size(); j++) {
                 WordDTO.WordResponseDto bookmarkword = allByUserId.getWordList().get(j);
-                if(word.getWordName().equals(bookmarkword.getWordName()))
+                if (word.getWordName().equals(bookmarkword.getWordName()))
                     word.updateBookmark();
             }
         }

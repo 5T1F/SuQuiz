@@ -25,7 +25,7 @@ public class QuizroomController {
     public ResponseEntity<CommonResponse> checkIsRoomJoinable(@PathVariable String inviteCode) {
         boolean isJoinable = quizroomService.checkIsRoomJoinable(inviteCode);
 
-        if(isJoinable) {
+        if (isJoinable) {
             return new ResponseEntity<>(CommonResponse.builder()
                     .status(HttpStatus.OK.value())
                     .message("퀴즈룸 입장 가능")
@@ -57,7 +57,7 @@ public class QuizroomController {
     @GetMapping("/isPlaying/{inviteCode}")
     public ResponseEntity<CommonResponse> checkQuizroomIsPlaying(@PathVariable String inviteCode) {
         boolean isPlaying = quizroomService.checkIsRoomPlaying(inviteCode);
-        if(isPlaying) {
+        if (isPlaying) {
             return new ResponseEntity<>(CommonResponse.builder()
                     .status(HttpStatus.OK.value())
                     .message("게임 진행중")
@@ -116,11 +116,6 @@ public class QuizroomController {
                 .data(result)
                 .build(), HttpStatus.OK);
     }
-
-
-
-
-
 
 
 }

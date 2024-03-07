@@ -13,7 +13,7 @@ public class RankingDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Response{
+    public static class Response {
         int myRank;
         List<RankDto> ranking;
     }

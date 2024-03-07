@@ -47,7 +47,6 @@ public class QuizroomServiceImpl implements QuizroomService {
             quizroomRepository.save(quizroom);
             user.changeQuizroom(quizroom);
             quizroom.addUser(user);
-            System.out.println("남은 유저 : " + quizroom.getUserList().size());
 
 
         }
@@ -111,7 +110,6 @@ public class QuizroomServiceImpl implements QuizroomService {
                 quizroom.updateIsPlaying();
 
             // 스코어에 따라 각 유저의 경험치 및 레벨 변화
-
             Optional<User> optionalUser = userRepository.findById(rq.getUserId());
             if (optionalUser.isPresent()) {
                 // 경험치 업데이트
@@ -161,7 +159,6 @@ public class QuizroomServiceImpl implements QuizroomService {
                     break;
                 }
             }
-            System.out.println("남은 유저 : " + userList.size());
             if (userList.isEmpty()) {
                 quizroomRepository.delete(quizroom);
             }
@@ -176,11 +173,9 @@ public class QuizroomServiceImpl implements QuizroomService {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalQuizroom.isPresent() && optionalUser.isPresent()) {
             Quizroom quizroom = optionalQuizroom.get();
-            System.out.println("기존 유저 : " + quizroom.getUserList().size());
             User user = optionalUser.get();
             quizroom.addUser(user);
             user.changeQuizroom(quizroom);
-            System.out.println("남은 유저 : " + quizroom.getUserList().size());
         }
     }
 
@@ -205,6 +200,7 @@ public class QuizroomServiceImpl implements QuizroomService {
     public List<QuestDto.DailyListResponse> multiQuest() {
         return findFivePhonemeList();
     }
+
     private List<QuestDto.DailyListResponse> findFivePhonemeList() {
 
         List<QuestDto.DailyListResponse> threeQuest = new ArrayList<>();
@@ -214,26 +210,21 @@ public class QuizroomServiceImpl implements QuizroomService {
         // 랜덤으로 하나 선택
         if (!words.isEmpty()) {
 
-            while(true) {
+            while (true) {
                 Random random = new Random();
-                //시연 시 단어 "단비"로 고정
-                Word word = wordRepository.findByWordName("문제");
-//                int index = random.nextInt(words.size());
-//                Word word = words.get(index);
-                //
-
-                System.out.println(word.getWordName());
+                int index = random.nextInt(words.size());
+                Word word = words.get(index);
 
                 char[] syllables = WordToSyllables.wordToSyllables(word.getWordName());
                 if (syllables.length != 5) continue;
 
                 List<Character> list = new ArrayList<>();
-                for (char c: syllables) {
+                for (char c : syllables) {
                     list.add(c);
                 }
 
                 boolean flag = true;
-                for (QuestDto.DailyListResponse entity: threeQuest) {
+                for (QuestDto.DailyListResponse entity : threeQuest) {
                     if (entity.getWordName().equals(word.getWordName())) {
                         flag = false;
                     }
@@ -248,8 +239,7 @@ public class QuizroomServiceImpl implements QuizroomService {
                             .syllables(list)
                             .build());
                 }
-                // 시연 시 단어개수 1로 고정
-                if (threeQuest.size() == 1) break;
+                if (threeQuest.size() == 3) break;
             }
         }
 

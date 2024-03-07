@@ -27,18 +27,18 @@ public class FriendController {
                 .status(HttpStatus.OK.value())
                 .message("친구 목록 블러옴")
                 .data(friendList)
-                .build(),HttpStatus.OK);
+                .build(), HttpStatus.OK);
     }
 
     // 친구 추가를 위한 유저 검색
     @GetMapping
-    ResponseEntity<CommonResponse> searchUser(@RequestParam(name="search") String nickname) {
+    ResponseEntity<CommonResponse> searchUser(@RequestParam(name = "search") String nickname) {
         FriendDto.Response user = friendRelationshipService.searchUser(nickname);
         return new ResponseEntity<>(CommonResponse.builder()
                 .status(HttpStatus.OK.value())
                 .message("닉네임으로 유저 검색")
                 .data(user)
-                .build(),HttpStatus.OK);
+                .build(), HttpStatus.OK);
     }
 
     // 친구 요청 전송
@@ -49,7 +49,7 @@ public class FriendController {
                 .status(HttpStatus.OK.value())
                 .message("친구 요청 성공")
                 .data("")
-                .build(),HttpStatus.OK);
+                .build(), HttpStatus.OK);
     }
 
     // 친구 요청 조회
@@ -60,7 +60,7 @@ public class FriendController {
                 .status(HttpStatus.OK.value())
                 .message("친구 요청 조회 성공")
                 .data(requestList)
-                .build(),HttpStatus.OK);
+                .build(), HttpStatus.OK);
     }
 
     // 친구 요청 수락
@@ -71,7 +71,7 @@ public class FriendController {
                 .status(HttpStatus.OK.value())
                 .message("친구 요청 수락")
                 .data("")
-                .build(),HttpStatus.OK);
+                .build(), HttpStatus.OK);
     }
 
     // 친구 삭제
@@ -82,7 +82,7 @@ public class FriendController {
                 .status(HttpStatus.OK.value())
                 .message("친구 제거 성공")
                 .data("")
-                .build(),HttpStatus.OK);
+                .build(), HttpStatus.OK);
     }
 
 }

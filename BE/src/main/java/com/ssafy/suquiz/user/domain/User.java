@@ -20,7 +20,8 @@ import java.util.List;
 @Getter
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
@@ -68,7 +69,7 @@ public class User {
     }
 
     public void addExp(int score) {
-        this.xp += score*5;
+        this.xp += score * 5;
     }
 
     public void updateExp(int exp) {
