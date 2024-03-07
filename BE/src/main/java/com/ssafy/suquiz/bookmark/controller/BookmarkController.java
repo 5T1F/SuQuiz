@@ -17,7 +17,7 @@ public class BookmarkController {
 
     @GetMapping("/words/{userId}")
     public ResponseEntity<CommonResponse> allWordsByUser(@PathVariable("userId") Long userId) {
-        BookmarkDTO.checkResponse allByUser = bookmarkService.findAllByUser(userId);  
+        BookmarkDTO.checkResponse allByUser = bookmarkService.findAllByUserId(userId);
         return new ResponseEntity<>(CommonResponse.builder()
                 .status(HttpStatus.OK.value())
                 .message("유저가 북마크한 모든 단어 조회 성공")

@@ -1,14 +1,9 @@
-//package com.example.entity.repository;
+//package com.ssafy.suquiz.repository;
 //
-//import com.example.entity.bookmark.domain.Bookmark;
-//import com.example.entity.bookmark.repository.BookmarkRepository;
-//import com.example.entity.user.domain.User;
-//import com.example.entity.user.repository.UserRepository;
-//import com.example.entity.word.domain.Category;
-//import com.example.entity.word.domain.Subject;
-//import com.example.entity.word.domain.Word;
-//import com.example.entity.word.repository.SubjectRepository;
-//import com.example.entity.word.repository.WordRepository;
+//import com.ssafy.suquiz.bookmark.repository.BookmarkRepository;
+//import com.ssafy.suquiz.user.repository.UserRepository;
+//import com.ssafy.suquiz.word.repository.SubjectRepository;
+//import com.ssafy.suquiz.word.repository.WordRepository;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;
