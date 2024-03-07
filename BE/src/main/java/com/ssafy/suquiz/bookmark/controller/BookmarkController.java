@@ -17,7 +17,7 @@ public class BookmarkController {
 
     @GetMapping("/words/{userId}")
     public ResponseEntity<CommonResponse> allWordsByUser(@PathVariable("userId") Long userId) {
-        BookmarkDTO.checkResponse allByUser = bookmarkService.findAllByUser(userId);
+        BookmarkDTO.checkResponse allByUser = bookmarkService.findAllByUserId(userId);
 //        BookmarkDTO.checkResponse user2 = bookmarkService.findAllByUser(userEmail);
 //
 //        Object[] obj = new Object[2];

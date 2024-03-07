@@ -1,18 +1,5 @@
-//package com.example.entity.bookmark.serviceImpl;
+//package com.ssafy.suquiz.bookmark.serviceImpl;
 //
-//import com.example.entity.bookmark.domain.Bookmark;
-//import com.example.entity.bookmark.dto.BookmarkDTO;
-//import com.example.entity.bookmark.repository.BookmarkRepository;
-//import com.example.entity.bookmark.service.BookmarkService;
-//import com.example.entity.education.dto.WordDTO;
-//import com.example.entity.user.domain.OAuthProvider;
-//import com.example.entity.user.domain.User;
-//import com.example.entity.user.repository.UserRepository;
-//import com.example.entity.word.domain.Category;
-//import com.example.entity.word.domain.Subject;
-//import com.example.entity.word.domain.Word;
-//import com.example.entity.word.repository.SubjectRepository;
-//import com.example.entity.word.repository.WordRepository;
 //import jakarta.persistence.EntityManager;
 //import jakarta.persistence.PersistenceContext;
 //import org.junit.jupiter.api.Test;
