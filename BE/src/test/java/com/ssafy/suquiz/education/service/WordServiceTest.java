@@ -6,6 +6,8 @@
 //
 //import com.example.entity.word.repository.SubjectRepository;
 //import com.example.entity.word.repository.WordRepository;
+//import com.ssafy.suquiz.education.service.SubjectService;
+//import com.ssafy.suquiz.education.service.WordService;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;
@@ -15,13 +17,14 @@
 //@SpringBootTest
 //class WordServiceImplTest {
 //
-//    @Autowired SubjectService subjectService;
-//    @Autowired WordService wordService;
+//    @Autowired
+//    SubjectService subjectService;
+//    @Autowired
+//    WordService wordService;
 //    @Autowired
 //    SubjectRepository subjectRepository;
 //    @Autowired
 //    WordRepository wordRepository;
-//
 //
 //    @Test
 //    public void 테스트2() throws Exception {
