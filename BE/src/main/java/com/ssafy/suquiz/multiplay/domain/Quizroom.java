@@ -17,7 +17,8 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class Quizroom {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quizroom_id")
     private Long id;
 
@@ -31,7 +32,6 @@ public class Quizroom {
     private boolean isPlaying = false;  // 게임 진행중 여부
 
     private String inviteCode;  // 초대 코드
-
 
 
     public void addUser(User user) {

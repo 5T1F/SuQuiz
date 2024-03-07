@@ -34,23 +34,7 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
     @Override
     @Scheduled(cron = "0/5 * * * * *")
     public void createDaily() {
-        System.out.println("create daily quest");
         findFivePhoneme();
-//        List<Word> words = wordRepository.findAll();
-//
-//        // 랜덤으로 하나 선택
-//        if (!words.isEmpty()) {
-//            Random random = new Random();
-//            int index = random.nextInt(words.size());
-//            Word word = words.get(index);
-//
-//            dailyResponse = QuestDto.DailyResponse.builder()
-//                    .category(word.getCategory())
-//                    .subject(word.getSubject().getSubjectName())
-//                    .wordName(word.getWordName())
-//                    .videoUrl(word.getVideoUrl())
-//                    .build();
-//        }
     }
 
 
@@ -227,7 +211,6 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
     private QuestDto.DailyStringResponse findFivePhoneme() {
 
-        System.out.println("create daily quest");
         List<Word> words = wordRepository.findByCategory(Category.낱말);
 
         // 랜덤으로 하나 선택
@@ -235,12 +218,9 @@ public class SingleHistoryServiceImpl implements SingleHistoryService {
 
             while(true) {
                 Random random = new Random();
-                //시연 시 단어 "인사"로 고정
-                Word word = wordRepository.findByWordName("인사");
-//                int index = random.nextInt(words.size());
-//                Word word = words.get(index);
 
-                System.out.println(word.getWordName());
+                int index = random.nextInt(words.size());
+                Word word = words.get(index);
 
                 char[] syllables = WordToSyllables.wordToSyllables(word.getWordName());
                 if (syllables.length != 5) continue;

@@ -36,7 +36,7 @@ public class KakaoInfoResponse implements OAuthInfoResponse {
 
     @Getter
     @JsonIgnoreProperties(ignoreUnknown = true)
-    static class KakaoProfile  {
+    static class KakaoProfile {
         private String nickname;
     }
 

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Getter
-public class Bookmark { // user - word
+public class Bookmark {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookmark_id")
@@ -24,6 +24,5 @@ public class Bookmark { // user - word
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "word_id")
     private Word word;
 }

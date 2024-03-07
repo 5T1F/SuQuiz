@@ -62,12 +62,11 @@ public class SessionService {
     // 초대 코드로 세션 ID 조회
     public String getSessionIdByInviteCode(String inviteCode) {
         Optional<Quizroom> quizroom = quizroomRepository.findByInviteCode(inviteCode);
-        if(quizroom.isPresent()) {
+        if (quizroom.isPresent()) {
             return quizroom.get().getSessionId();
         } else {
             return null;
         }
-
 
 
     }

@@ -6,13 +6,15 @@ import java.util.List;
 public class WordToSyllables {
 
     private static int getCHO(char syllable) {
-        return ((syllable - 0xAC00)/28)/21;
+        return ((syllable - 0xAC00) / 28) / 21;
     }
+
     private static int getJOONG(char syllable) {
-        return ((syllable - 0xAC00)/28%21);
+        return ((syllable - 0xAC00) / 28 % 21);
     }
+
     private static int getJONG(char syllable) {
-        return ((syllable - 0xAC00)%28);
+        return ((syllable - 0xAC00) % 28);
     }
 
     // 쌍자음 : 1, 4, 8, 10, 13
@@ -71,8 +73,8 @@ public class WordToSyllables {
             // 쌍자음일때
             if (getCHO(syllable) == 1 || getCHO(syllable) == 4 || getCHO(syllable) == 8 ||
                     getCHO(syllable) == 10 || getCHO(syllable) == 13) {
-                syllables.add(CHO[getCHO(syllable)-1]);
-                syllables.add(CHO[getCHO(syllable)-1]);
+                syllables.add(CHO[getCHO(syllable) - 1]);
+                syllables.add(CHO[getCHO(syllable) - 1]);
                 count += 2;
             } else {    // 단자음일때
                 syllables.add(cho);
@@ -107,8 +109,6 @@ public class WordToSyllables {
             }
             // ㅁ 16 ㅂ 17 ㅅ 19 ㅈ 22 ㅌ 25 ㅍ 26 ㅎ 27
             // {'', 'ㄱ', 'ㄲ', 'ᆪ', 'ᆫ', 'ᆬ', 'ᆭ', 'ㄷ', 'ㄹ', 'ᆰ', 'ᆱ', 'ᆲ', 'ᆳ', 'ᆴ', 'ᆵ', 'ᆶ', 'ㅁ', 'ㅂ', 'ᆹ', 'ᆺ', 'ᆻ', 'ᆼ', 'ᆽ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'};
-            System.out.println(getJONG(syllable));
-//            syllables.add(CHO[getJOONG()])
             switch (getJONG(syllable)) {
                 case 0:
                     break;
@@ -178,7 +178,6 @@ public class WordToSyllables {
         char[] charatersToChars = new char[listToCharaters.length];
         for (int i = 0; i < charatersToChars.length; i++) {
             charatersToChars[i] = listToCharaters[i];
-//            System.out.print(charatersToChars[i]);
         }
 
         return charatersToChars;

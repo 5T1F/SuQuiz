@@ -22,10 +22,11 @@ public class FriendRelationshipServiceImpl implements FriendRelationshipService 
     private final FriendRelationshipRepository friendRelationshipRepository;
     private final EntityAndDtoConversionService entityAndDtoConversionService;
     private final UserRepository userRepository;
+
     @Override
     public FriendDto.Response searchUser(String nickname) {
         Optional<User> optionalUser = userRepository.findByNickname(nickname);
-        if(optionalUser.isPresent()) {
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             return entityAndDtoConversionService.userEntityToFriendDtoResponse(user);
         }
@@ -38,7 +39,7 @@ public class FriendRelationshipServiceImpl implements FriendRelationshipService 
     public List<FriendDto.Response> getFriendList(long userId) {
         List<User> friendEntityList = friendRelationshipRepository.findAllFriendsById(userId);
         List<FriendDto.Response> friendList = new ArrayList<>();
-        for(User user : friendEntityList) {
+        for (User user : friendEntityList) {
             friendList.add(entityAndDtoConversionService.userEntityToFriendDtoResponse(user));
         }
 
@@ -50,7 +51,7 @@ public class FriendRelationshipServiceImpl implements FriendRelationshipService 
         User fromUser = userRepository.findByNickname(req.getFromNickname()).get();
         User toUser = userRepository.findByNickname(req.getToNickname()).get();
         FriendRelationship friendRequest = FriendRelationship.builder().fromUser(fromUser).toUser(toUser).build();
-        if(!friendRequest.isFriend())
+        if (!friendRequest.isFriend())
             friendRequest.updateIsFriend();
         FriendRelationship friendAccept = FriendRelationship.builder().fromUser(toUser).toUser(fromUser).build();
 
@@ -63,7 +64,7 @@ public class FriendRelationshipServiceImpl implements FriendRelationshipService 
 
         List<User> requestList = friendRelationshipRepository.findAllRequestById(userId);
         List<FriendDto.Response> resList = new ArrayList<>();
-        for(User user : requestList) {
+        for (User user : requestList) {
             resList.add(entityAndDtoConversionService.userEntityToFriendDtoResponse(user));
         }
 
@@ -74,10 +75,8 @@ public class FriendRelationshipServiceImpl implements FriendRelationshipService 
     @Transactional
     public void acceptFriend(FriendDto.Request req) {
         FriendRelationship friendRelationship = friendRelationshipRepository.findByFromUserAndToUser(req.getFromNickname(), req.getToNickname());
-        System.out.println("변경 전 " + friendRelationship.isFriend());
-        if(!friendRelationship.isFriend())
-        friendRelationship.updateIsFriend();
-        System.out.println("변경 후 : " + friendRelationship.isFriend());
+        if (!friendRelationship.isFriend())
+            friendRelationship.updateIsFriend();
     }
 
     @Override
